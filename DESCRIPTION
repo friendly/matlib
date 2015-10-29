@@ -1,0 +1,15 @@
+Package: matlib
+Type: Package
+Title: Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics
+Version: 0.2
+Date: 2015-10-28
+Author: Michael Friendly <friendly@yorku.ca> [aut, cre]
+Maintainer: Michael Friendly <friendly@yorku.ca>
+Description: A collection of matrix functions for teaching and learning matrix linear algebra
+    as used in multivariate statistical methods. These functions are mainly for tutorial purposes
+    in learning matrix algebra ideas using R. In some cases, functions are provided for concepts available
+    elsewhere in R, but where the function call or name is not obvious.  In other
+    cases, functions are provided to show or demonstrate an algorithm.
+License: GPL (>= 2)
+LazyData: TRUE
+Suggests: MASS
