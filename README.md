@@ -15,4 +15,6 @@ This package can be installed to your R library directly from this repo via
      library(devtools)
      install_github("friendly/matlib")
 
+This installs the package from the source, so you will need to have 
+R Tools installed on your system.  [R Tools for Windows](https://cran.r-project.org/bin/windows/Rtools/)
 
