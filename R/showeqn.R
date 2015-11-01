@@ -19,11 +19,11 @@
 #'                -3, -1, 2,
 #'                -2,  1, 2), 3, 3, byrow=TRUE)
 #'   b <- c(8, -11, -3)
-#'   showeqn(A, b)
+#'   showEqn(A, b)
 #'   x <- solve(A, b)
-#'   showeqn(A, b, vars=x)
+#'   showEqn(A, b, vars=x)
 
-showeqn <- function(A, b, vars) {
+showEqn <- function(A, b, vars) {
   if (missing(b)) {
     b <- A[,ncol(A)]   # assume last column of Ab
     A <- A[,-ncol(A)]  # remove b from A
