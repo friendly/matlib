@@ -12,16 +12,24 @@
 
 #' Rank of a Matrix
 #'
-#' Returns the rank of a matrix \code{x}, using the QR decomposition, \code{qr()}.
+#' Returns the rank of a matrix \code{X}, using the QR decomposition, \code{qr()}.
 #' Included here as a simple function, because \code{rank} does something different
 #' and it is not obvious what to use for matrix rank.
 #'
 #' @param x a matrix
-#' @return rank of \code{x}
+#' @return rank of \code{X}
 #'
-R <- function(x)  qr(x)$rank
+R <- function(X) {
+  if (!is.numeric(X) || !is.matrix(X)) stop("X must be a numeric matrix")
+  qr(X)$rank
+}
+
 
 #' Projection of Vector y on columns of X
+#'
+#' Fitting a linear model, \code{y ~ X}, by least squares can be thought of geometrically as the projection of
+#' \code{y} on the column space of \code{X}.  This function is designed to allow exploration of projections
+#' and orthogonality.
 #'
 #' @param y a vector, treated as a one-column matrix
 #' @param X a vector or matrix.  Number of rows of \code{y} and \code{X} must match

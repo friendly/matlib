@@ -15,7 +15,9 @@ proj(y, X)
 the projection of y on X
 }
 \description{
-Projection of Vector y on columns of X
+Fitting a linear model, \code{y ~ X}, by least squares can be thought of geometrically as the projection of
+\code{y} on the column space of \code{X}.  This function is designed to allow exploration of projections
+and orthogonality.
 }
 \examples{
 X <- matrix( c(1, 1, 1, 1, 1, -1, 1, -1), 4,2, byrow=TRUE)

@@ -7,7 +7,7 @@
 rowadd(x, from, to, mult)
 }
 \arguments{
-\item{x}{a matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.}
+\item{x}{a numeric matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.}
 
 \item{from}{the index of one or more source rows. If \code{from} is a vector, it must have the same length as \code{to}.}
 
@@ -16,7 +16,7 @@ rowadd(x, from, to, mult)
 \item{mult}{the multiplier(s)}
 }
 \value{
-the matrix \code{x},as modified
+the matrix \code{x}, as modified
 }
 \description{
 The elementary row operation \code{rowadd} adds multiples of one or more rows to other rows of a matrix.

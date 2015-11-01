@@ -11,11 +11,11 @@
 #' The functions \code{\link{rowmult}} and \code{\link{rowswap}} complete the basic operations used in reduction
 #' to row echelon form and Gaussian elimination. These functions are used for demonstration purposes.
 
-#' @param x a matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.
+#' @param x a numeric matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.
 #' @param from the index of one or more source rows. If \code{from} is a vector, it must have the same length as \code{to}.
 #' @param to the index of one or more destination rows
 #' @param mult the multiplier(s)
-#' @return the matrix \code{x},as modified
+#' @return the matrix \code{x}, as modified
 #' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
 #' @family elementary row operations
 #' @examples
@@ -38,6 +38,7 @@
 #'
 
 rowadd <- function(x, from, to, mult) {
+  if (!is.numeric(x) || !is.matrix(x)) stop("x must be a numeric matrix")
   y <- x
   y[to,] <- y[to,] + mult * y[from,]
   y
@@ -55,6 +56,7 @@ rowadd <- function(x, from, to, mult) {
 #' @family elementary row operations
 #'
 rowswap <- function(x, from, to) {
+  if (!is.numeric(x) || !is.matrix(x)) stop("x must be a numeric matrix")
   y <- x
   y[c(to,from),] <- y[c(from,to),]
   y
@@ -88,6 +90,7 @@ rowswap <- function(x, from, to) {
 #'
 
 rowmult <- function(x, row, mult) {
+  if (!is.numeric(x) || !is.matrix(x)) stop("x must be a numeric matrix")
   y <- x
   y[row,] <- mult * y[row,]
   y

@@ -4,16 +4,16 @@
 \alias{R}
 \title{Rank of a Matrix}
 \usage{
-R(x)
+R(X)
 }
 \arguments{
 \item{x}{a matrix}
 }
 \value{
-rank of \code{x}
+rank of \code{X}
 }
 \description{
-Returns the rank of a matrix \code{x}, using the QR decomposition, \code{qr()}.
+Returns the rank of a matrix \code{X}, using the QR decomposition, \code{qr()}.
 Included here as a simple function, because \code{rank} does something different
 and it is not obvious what to use for matrix rank.
 }
