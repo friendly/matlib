@@ -15,4 +15,7 @@ Description: A collection of matrix functions for teaching and learning matrix l
     cases, functions are provided to show or demonstrate an algorithm.
 License: GPL (>= 2)
 LazyData: TRUE
-Suggests: MASS
+Suggests: MASS,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

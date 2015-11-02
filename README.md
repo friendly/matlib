@@ -27,3 +27,24 @@ and can be installed via
 
     install.packages("http://www.psych.yorku.ca/lab/psy6140/R/matlib.zip", repos=NULL)
 
+## Contents
+
+1. convenience functions 
+
+  - `tr()` - trace of a matrix
+  - `R()` - rank of a matrix
+  - `proj(y, X)` - projection of vector y on colunms of X
+
+2. determinants
+
+  - `minor()` - Minor of A[i,j]
+  - `cofactor()` - Cofactor of A[i,j]
+  - `row_minors()` - Row minors of A[i,]
+  - `row_cofactors()` - Row cofactors of A[i,]
+
+3. elementary row operations
+
+  - `rowadd()` - Add multiples of rows to other rows
+  - `rowmult()` - Multiply rows by constants
+  - `rowswap()` - Interchange two rows of a matrix
+
