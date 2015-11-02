@@ -16,7 +16,7 @@
 #' @param lwd scalar or vector of line widths for the lines, recycled as necessary
 #' @param lty scalar or vector of line types for the lines, recycled as necessary
 #' @param axes logical; draw horizontal and vertical axes through (0,0)?
-#' @param labels logical, or a vector of character labels for the equations; not yet implemented
+#' @param labels logical, or a vector of character labels for the equations
 #' @examples
 #' # consistent equations
 #' A<- matrix(c(1,2,3, -1, 2, 1),3,2)
@@ -50,12 +50,21 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	if (length(lty) < neq) lty <- rep_len(lty, length=neq)
 
   if (missing(ylim)) {
-
+    ylim <- c(0, 0)
+    for (i in 1:neq) {
+      if (A[i,2] != 0) {
+        y <- (b[i] - A[i,1] * x) / A[i,2]
+        ylim <- range(c(ylim, y))
+      }
+    }
   }
+
 	if (is.logical(labels) && labels) {
-	  labels <- showEqn(A,b, vars)
+    labels <- showEqn(A,b, vars)
 	}
-	for (i in 1:nrow(A)) {
+	else labels=NULL
+
+		for (i in 1:nrow(A)) {
 	  # calculate y values for current equation
 	  # if A[i,2]==0 this will give Inf, so have to use abline()
 	  y <- (b[i] - A[i,1] * x) / A[i,2]
@@ -63,7 +72,7 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	    # FIXME: this will fail if A[1,2]==0
 	    plot(
 	      x, y, type = 'l', col = col[i], lwd = lwd[i], lty = lty[i],
-	      xlab = vars[1], ylab = vars[2], xlim = xlim
+	      xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim
 	    )
 	  else
 	  if (A[i,2] == 0)
@@ -71,6 +80,12 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	      abline( v = b[i] / A[i,1], col = col[i], lwd = lwd[i], lty = lty[i] )
 	  else
 	    lines( x, y, col = col[i], type = 'l', lwd = lwd[i], lty = lty[i] )
+
+	  if (!is.null(labels)) {
+	    xl <- x[1]
+	    yl <- y[1]
+	    text(xl, yl, labels[i], col=col[i], pos=4)
+	  }
 	}
 	if (axes) abline(h=0, v=0, col="gray")
 }

@@ -30,7 +30,7 @@ The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{axes}{logical; draw horizontal and vertical axes through (0,0)?}
 
-\item{labels}{logical, or a vector of character labels for the equations; not yet implemented}
+\item{labels}{logical, or a vector of character labels for the equations}
 }
 \description{
 Plot Linear Equations
