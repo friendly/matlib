@@ -11,6 +11,7 @@
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param xlim horizontal axis limits for the first variable
+#' @param ylim horizontal axis limits for the second variable
 #' @param col scalar or vector of colors for the lines, recycled as necessary
 #' @param lwd scalar or vector of line widths for the lines, recycled as necessary
 #' @param lty scalar or vector of line types for the lines, recycled as necessary
