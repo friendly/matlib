@@ -21,12 +21,12 @@
 #' # consistent equations
 #' A<- matrix(c(1,2,3, -1, 2, 1),3,2)
 #' b <- c(2,1,3)
-#' showeqn(A, b)
+#' showEqn(A, b)
 #' plotEqn(A,b)
 #'
 #' # inconsistent equations
 #' b <- c(2,1,6)
-#' showeqn(A, b)
+#' showEqn(A, b)
 #' plotEqn(A,b)
 
 
@@ -45,9 +45,9 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	x <- seq(xlim[1], xlim[2], length=10)
 
 	neq <- nrow(A)
-	if (length(col) < neq) col <- rep_len(col, length=neq)
-	if (length(lwd) < neq) lwd <- rep_len(lwd, length=neq)
-	if (length(lty) < neq) lty <- rep_len(lty, length=neq)
+	if (length(col) < neq) col <- rep_len(col, length.out=neq)
+	if (length(lwd) < neq) lwd <- rep_len(lwd, length.out=neq)
+	if (length(lty) < neq) lty <- rep_len(lty, length.out=neq)
 
   if (missing(ylim)) {
     ylim <- c(0, 0)

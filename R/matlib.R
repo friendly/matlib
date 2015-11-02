@@ -16,7 +16,7 @@
 #' Included here as a simple function, because \code{rank} does something different
 #' and it is not obvious what to use for matrix rank.
 #'
-#' @param x a matrix
+#' @param X a matrix
 #' @return rank of \code{X}
 #'
 R <- function(X) {

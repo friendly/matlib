@@ -7,7 +7,7 @@
 R(X)
 }
 \arguments{
-\item{x}{a matrix}
+\item{X}{a matrix}
 }
 \value{
 rank of \code{X}

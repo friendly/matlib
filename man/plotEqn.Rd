@@ -41,12 +41,12 @@ by plotting a line for each equation.
 # consistent equations
 A<- matrix(c(1,2,3, -1, 2, 1),3,2)
 b <- c(2,1,3)
-showeqn(A, b)
+showEqn(A, b)
 plotEqn(A,b)
 
 # inconsistent equations
 b <- c(2,1,6)
-showeqn(A, b)
+showEqn(A, b)
 plotEqn(A,b)
 }
 
