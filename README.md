@@ -29,22 +29,42 @@ and can be installed via
 
 ## Contents
 
-1. convenience functions 
+1. Convenience functions:  
 
   - `tr()` - trace of a matrix
   - `R()` - rank of a matrix
   - `proj(y, X)` - projection of vector y on colunms of X
+  - `mpower(A, p)` - matrix powers for a square symmetric matrix
 
-2. determinants
+2. Determinants: functions for calculating determinants by cofactor expansion
 
   - `minor()` - Minor of A[i,j]
   - `cofactor()` - Cofactor of A[i,j]
   - `row_minors()` - Row minors of A[i,]
   - `row_cofactors()` - Row cofactors of A[i,]
 
-3. elementary row operations
+3. Elementary row operations: functions for solving linear equations "manually" by the steps used in row echelon form and Gaussian elimination
 
   - `rowadd()` - Add multiples of rows to other rows
   - `rowmult()` - Multiply rows by constants
   - `rowswap()` - Interchange two rows of a matrix
+
+4. Linear equations: functions to illustrate linear equations of the form **$A x = b$**
+
+  - `showEqn(A, b)` - show matrices (A, b) as linear equations
+  - `plotEqn(A, b)` - plot matrices (A, b) as linear equations
+  
+5. Gaussian elimination: functions for illustrating Gaussian elimination for solving systems of linear equations of the form
+**$A x = b$**.  These functions provide a `verbose=TRUE` argument to show the intermediate steps.
+
+  - `gaussianElimination(A, B)` - reduces (A, B) to (I, A^{-1} B)
+  - `Inverse(X)` - uses `gaussianElimination` to find the inverse of X
+  - `echelon(X)` - uses `gaussianElimination` to find the reduced echelon form of X
+  - `Ginv(X)` - uses `gaussianElimination` to find the generalized inverse of X
+  - `cholesky()` - calculates a Cholesky square root of a matrix
+
+6. Eigenvalues -- functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
+
+  - `eig()` - eigenvalues and eigenvectors
+  - `SVD()` - singular value decomposition
 
