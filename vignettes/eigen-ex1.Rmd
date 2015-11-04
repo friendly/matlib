@@ -18,13 +18,13 @@ options(digits=4)
 ```
 ## Setup
 
-This vignette uses an example (from Johnson & Wichern,  Ex. 2.9) of a $3 \times 3$ matrix to illustrate some properties of
+This vignette uses an example of a $3 \times 3$ matrix to illustrate some properties of
 eigenvalues and eigenvectors.  We could consider this to be the variance-covariance matrix of three variables,
 but the main thing is that the matrix is **square** and **symmetric**, which guarrantees that the eigenvalues, $\lambda_i$ are
 real numbers, and non-negative, $\lambda_i \ge 0$.
 
 ```{r}
-A <- matrix(c(13, -4, 2, -4, 13, -2, 2, -2, 10), 3, 3, byrow=TRUE)
+A <- matrix(c(13, -4, 2, -4, 11, -2, 2, -2, 8), 3, 3, byrow=TRUE)
 A
 ```
 
@@ -36,7 +36,9 @@ ev <- eigen(A)
 (values <- ev$values)
 (vectors <- ev$vectors)
 ```
-Note that the eigenvalues are *not distinct* in this example.  
+The eigenvalues are always returned in decreasing order, and each column of `vectors` corresponds to the
+elements in `values`.
+
 
 ## Properties of eigenvalues and eigenvectors
 The following steps illustrate the main properties of eigenvalues and eigenvectors.  We use the notation
@@ -64,7 +66,8 @@ sum(A^2)
 sum(values^2)
 ```
 
-3. determinant = product of eigenvalues, $det(A) = \prod \lambda_i^2$.
+3. determinant = product of eigenvalues, $det(A) = \prod \lambda_i$. This means that the determinant will be zero
+if any $\lambda_i = 0$.
 ```{r}
 det(A)
 prod(values)
