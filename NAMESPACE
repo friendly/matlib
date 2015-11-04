@@ -1,6 +1,6 @@
 exportPattern("^[[:alpha:]]+")
 
 # satisfy CRAN nits
-importFrom("graphics", "abline", "lines", "plot", "text")
+importFrom("graphics", "abline", "lines", "plot", "text", "points")
 importFrom("stats", "var")
 

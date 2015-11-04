@@ -9,7 +9,7 @@ mpower(A, p, tol = sqrt(.Machine$double.eps))
 \arguments{
 \item{A}{a square symmetrix matrix}
 
-\item{p}{matrix power, not necessarily an integer}
+\item{p}{matrix power, not necessarily a positive integer}
 
 \item{tol}{tolerance for determining if the matrix is symmetric}
 }

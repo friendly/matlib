@@ -3,7 +3,7 @@
 #' A simple function to demonstrate the power of a square symmetrix matrix in terms of its eigenvalues and eigenvectors.
 #'
 #' @param A a square symmetrix matrix
-#' @param p matrix power, not necessarily an integer
+#' @param p matrix power, not necessarily a positive integer
 #' @param tol tolerance for determining if the matrix is symmetric
 #' @return \code{A} raised to the power \code{p}: \code{A^p}
 #' @details The matrix power \code{p} can be a fraction or other non-integer.  For example, \code{p=1/2} and
