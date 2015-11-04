@@ -7,7 +7,7 @@ Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn
 by plotting a line for each equation.}
 \usage{
 plotEqn(A, b, vars, xlim = c(-4, 4), ylim, col = 1:nrow(A), lwd = 2,
-  lty = 1, axes = TRUE, labels = TRUE)
+  lty = 1, axes = TRUE, labels = TRUE, solution = TRUE)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}}
@@ -20,7 +20,8 @@ The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{xlim}{horizontal axis limits for the first variable}
 
-\item{ylim}{horizontal axis limits for the second variable}
+\item{ylim}{horizontal axis limits for the second variable; if missing, \code{ylim} is calculated from the
+range of the set of equations over the \code{xlim}.}
 
 \item{col}{scalar or vector of colors for the lines, recycled as necessary}
 
@@ -30,7 +31,10 @@ The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{axes}{logical; draw horizontal and vertical axes through (0,0)?}
 
-\item{labels}{logical, or a vector of character labels for the equations}
+\item{labels}{logical, or a vector of character labels for the equations; if \code{TRUE}, each equation is labeled
+using the character string resulting from \code{\link{showEqn}}}
+
+\item{solution}{logical; should the solution points for pairs of equations be marked?}
 }
 \description{
 Plot Linear Equations
@@ -48,5 +52,11 @@ plotEqn(A,b)
 b <- c(2,1,6)
 showEqn(A, b)
 plotEqn(A,b)
+}
+\author{
+Michael Friendly
+}
+\seealso{
+\code{\link{showEqn}}
 }
 
