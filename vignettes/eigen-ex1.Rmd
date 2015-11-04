@@ -11,7 +11,7 @@ vignette: >
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
-  wanring = FALSE,
+  warning = FALSE,
   message = FALSE
 )
 options(digits=4)
