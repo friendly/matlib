@@ -1,7 +1,7 @@
 # matlib
 Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics
 
-Version 0.4.1
+Version 0.4.2
 
 These functions are mainly for tutorial purposes in learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts available
@@ -10,7 +10,11 @@ cases, functions are provided to show or demonstrate an algorithm.
 
 ## Installation
 
-This package can be installed to your R library directly from this repo via
+Get the released version from CRAN:
+
+     install.packages("matlib")
+
+The development version can be installed to your R library directly from this repo via:
 
      if (!require(devtools)) install.packages("devtools")
      library(devtools)
@@ -33,6 +37,7 @@ and can be installed via
 
   - `tr()` - trace of a matrix
   - `R()` - rank of a matrix
+  - `len()` - Euclidean length of a vector or columns of a matrix
   - `proj(y, X)` - projection of vector y on colunms of X
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
 
@@ -49,13 +54,13 @@ and can be installed via
   - `rowmult()` - Multiply rows by constants
   - `rowswap()` - Interchange two rows of a matrix
 
-4. Linear equations: functions to illustrate linear equations of the form **$A x = b$**
+4. Linear equations: functions to illustrate linear equations of the form $\mathbf{A x = b}$
 
   - `showEqn(A, b)` - show matrices (A, b) as linear equations
   - `plotEqn(A, b)` - plot matrices (A, b) as linear equations
   
 5. Gaussian elimination: functions for illustrating Gaussian elimination for solving systems of linear equations of the form
-**$A x = b$**.  These functions provide a `verbose=TRUE` argument to show the intermediate steps.
+$\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show the intermediate steps.
 
   - `gaussianElimination(A, B)` - reduces (A, B) to (I, A^{-1} B)
   - `Inverse(X)` - uses `gaussianElimination` to find the inverse of X
