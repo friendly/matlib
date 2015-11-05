@@ -63,7 +63,7 @@ and can be installed via
 $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show the intermediate steps.
 
   - `gaussianElimination(A, B)` - reduces (A, B) to (I, A^{-1} B)
-  - `Inverse(X)` - uses `gaussianElimination` to find the inverse of X
+  - `Inverse(X)`, `inv()` - uses `gaussianElimination` to find the inverse of X
   - `echelon(X)` - uses `gaussianElimination` to find the reduced echelon form of X
   - `Ginv(X)` - uses `gaussianElimination` to find the generalized inverse of X
   - `cholesky()` - calculates a Cholesky square root of a matrix

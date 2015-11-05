@@ -72,30 +72,14 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	else labels=NULL
 
 	for (i in 1:neq) {
-# 	  plot(xlim, ylim, type="n", xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim)
-#
-# 	  if (A[i,2] == 0) abline( v = b[i] / A[i,1], col = col[i], lwd = lwd[i], lty = lty[i] )
-# 	  else {
-# 	    # calculate y values for current equation
-# 	    y <- (b[i] - A[i,1] * x) / A[i,2]
-# 	    lines( x, y, col = col[i], type = 'l', lwd = lwd[i], lty = lty[i] )
-# 	  }
+	  if (i==1) plot(xlim, ylim, type="n", xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim)
 
-	  	  # calculate y values for current equation
-	  # if A[i,2]==0 this will give Inf, so have to use abline()
-	  y <- (b[i] - A[i,1] * x) / A[i,2]
-	  if (i == 1)
-	    # FIXME: this will fail if A[1,2]==0
-	    plot(
-	      x, y, type = 'l', col = col[i], lwd = lwd[i], lty = lty[i],
-	      xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim
-	    )
-	  else
-	    if (A[i,2] == 0)
-	      # a vertical line
-	      abline( v = b[i] / A[i,1], col = col[i], lwd = lwd[i], lty = lty[i] )
-	    else
+	  if (A[i,2] == 0) abline( v = b[i] / A[i,1], col = col[i], lwd = lwd[i], lty = lty[i] )
+	  else {
+	    # calculate y values for current equation
+	    y <- (b[i] - A[i,1] * x) / A[i,2]
 	    lines( x, y, col = col[i], type = 'l', lwd = lwd[i], lty = lty[i] )
+	  }
 
 	  if (!is.null(labels)) {
 	    xl <- x[1]
