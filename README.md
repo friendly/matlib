@@ -57,7 +57,7 @@ and can be installed via
 4. Linear equations: functions to illustrate linear equations of the form $\mathbf{A x = b}$
 
   - `showEqn(A, b)` - show matrices (A, b) as linear equations
-  - `plotEqn(A, b)` - plot matrices (A, b) as linear equations
+  - `plotEqn(A, b)`, `plotEqn3d(A, b)`  - plot matrices (A, b) as linear equations
   
 5. Gaussian elimination: functions for illustrating Gaussian elimination for solving systems of linear equations of the form
 $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show the intermediate steps.

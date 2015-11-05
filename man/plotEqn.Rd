@@ -3,16 +3,18 @@
 \name{plotEqn}
 \alias{plotEqn}
 \title{Plot Linear Equations
-Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b},
-by plotting a line for each equation.}
+Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b} with two unknowns,
+x1, x2, by plotting a line for each equation.}
 \usage{
 plotEqn(A, b, vars, xlim = c(-4, 4), ylim, col = 1:nrow(A), lwd = 2,
   lty = 1, axes = TRUE, labels = TRUE, solution = TRUE)
 }
 \arguments{
-\item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}}
+\item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}.
+The \code{A} matrix must have two columns.}
 
-\item{b}{if supplied, the vector of constants on the right hand side of the equations}
+\item{b}{if supplied, the vector of constants on the right hand side of the equations, of length matching
+the number of rows of \code{A}.}
 
 \item{vars}{a numeric or character vector of names of the variables.
 If supplied, the length must be equal to the number of unknowns in the equations.
@@ -36,10 +38,13 @@ using the character string resulting from \code{\link{showEqn}}}
 
 \item{solution}{logical; should the solution points for pairs of equations be marked?}
 }
+\value{
+nothing; used for the side effect of making a plot
+}
 \description{
 Plot Linear Equations
-Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b},
-by plotting a line for each equation.
+Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b} with two unknowns,
+x1, x2, by plotting a line for each equation.
 }
 \examples{
 # consistent equations
