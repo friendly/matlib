@@ -8,6 +8,9 @@
 #' @param recenter logical; if \code{TRUE}, the result has same means as the original \code{y}, else means = 0 for cols 2:p
 #' @param rescale  logical; if \code{TRUE}, the result has same sd as original, else, sd = residual sd
 #' @param adjnames logical; if \code{TRUE}, colnames are adjusted to Y1, Y2.1, Y3.12, ...
+#' @return a matrix/data frame with uncorrelated columns
+#'
+#' @importFrom stats var
 
 # Return a matrix/data frame with uncorrelated columns
 #   recenter=TRUE -> result has same means as original, else means = 0 for cols 2:p

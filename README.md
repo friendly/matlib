@@ -25,11 +25,12 @@ R Tools installed on your system.  [R Tools for Windows](https://cran.r-project.
 takes you to the download page for Windows.  [R Tools for Mac OS X](https://cran.r-project.org/bin/macosx/tools/)
 has the required programs for Mac OS X.
 
-
 Alternatively, a Windows binary (not always current) is available at http://www.psych.yorku.ca/lab/psy6140/R/matlib.zip
 and can be installed via
 
     install.packages("http://www.psych.yorku.ca/lab/psy6140/R/matlib.zip", repos=NULL)
+
+This will usually be more current than the CRAN version, but less current than the GitHub version.
 
 ## Contents
 

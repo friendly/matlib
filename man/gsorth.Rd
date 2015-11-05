@@ -17,6 +17,9 @@ gsorth(y, order, recenter = TRUE, rescale = TRUE, adjnames = TRUE)
 
 \item{adjnames}{logical; if \code{TRUE}, colnames are adjusted to Y1, Y2.1, Y3.12, ...}
 }
+\value{
+a matrix/data frame with uncorrelated columns
+}
 \description{
 Calculates a matrix with uncorrelated columns using the Gram-Schmidt process
 }

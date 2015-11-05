@@ -7,7 +7,6 @@
 #' @param X a numberic vector or matrix
 #'
 #' @return a scalar or vector containing the
-#' @export
 #' @seealso \code{\link[base]{norm}} for more general matrix norms
 #' @examples
 #' len(1:3)

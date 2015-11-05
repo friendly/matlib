@@ -13,6 +13,7 @@
 
 #' @docType package
 #' @name matlib
+#' @exportPattern "^[[:alpha:]]+"
 
 NULL
 

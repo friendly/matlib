@@ -23,7 +23,9 @@
 #'      using the character string resulting from \code{\link{showEqn}}
 #' @param solution logical; should the solution points for pairs of equations be marked?
 #' @return nothing; used for the side effect of making a plot
+#'
 #' @author Michael Friendly
+#' @importFrom graphics abline lines plot text points
 #' @seealso \code{\link{showEqn}}
 
 #' @examples
