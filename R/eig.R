@@ -50,11 +50,11 @@ eig <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=TR
 #' of singular values, such that \eqn{X = U diag(d) V'}.
 #' Singular values of zero are not retained in the solution.
 #'
-#' @param X a square symmetrix matrix
+#' @param X a square symmetric matrix
 #' @param tol tolerance passed to \code{\link{QR}}
 #' @return a list of three elements: \code{d}-- singular values, \code{U}-- left singular vectors, \code{V}-- right singular vectors
 #' @author John Fox and Georges Monette
-#' @seealso \code{\link[base]{svd}}
+#' @seealso \code{\link[base]{svd}}, the standard svd function
 #' @seealso \code{\link{eig}}
 #' @examples
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric

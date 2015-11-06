@@ -12,14 +12,16 @@
 #' @param vars a numeric or character vector of names of the variables.
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
 #'        The default is \code{paste0("x", 1:ncol(A)}.
-#' @return a character matrix, one row for each equation
+#' @return a one-column character matrix, one row for each equation
 #' @author Michael Friendly
+#' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
 #' @examples
 #'   A <- matrix(c(2, 1, -1,
 #'                -3, -1, 2,
 #'                -2,  1, 2), 3, 3, byrow=TRUE)
 #'   b <- c(8, -11, -3)
 #'   showEqn(A, b)
+#'   # show numerically
 #'   x <- solve(A, b)
 #'   showEqn(A, b, vars=x)
 
@@ -34,6 +36,7 @@ showEqn <- function(A, b, vars) {
     res[i] <- paste(A[i,], "*", vars, sep="", collapse=" + ")
     res[i] <- paste(res[i], "  =  ", b[i])
   }
+  res <- gsub("+ -", "- ", res, fixed=TRUE)  # map "+ -3" -> "-3"
   matrix(res, ncol=1)
 }
 

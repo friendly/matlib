@@ -138,6 +138,7 @@ inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
 #' @param X a matrix
 #' @param ... other arguments passed to \code{gaussianElimination}
 #' @return the reduced echelon form of \code{X}.
+#' @author John Fox
 #' @examples
 #' A <- matrix(c(2, 1, -1,
 #'              -3, -1, 2,
@@ -175,6 +176,8 @@ echelon <- function(X, ...) gaussianElimination(X, ...)
 #' @param fractions logical; if \code{TRUE}, try to express nonintegers as rational numbers
 #' @return the generalized inverse of \code{A}, expressed as fractions if \code{fractions=TRUE}, or rounded
 #' @seealso \code{\link[MASS]{ginv}} for a more generally usable function
+#' @author John Fox
+#'
 #' @examples
 #' A <- matrix(c(1,2,3,4,5,6,7,8,10), 3, 3) # a nonsingular matrix
 #' A
@@ -224,6 +227,7 @@ Ginv <- function(A, tol=sqrt(.Machine$double.eps), verbose=FALSE,
 #' @references Kennedy W.J. Jr, Gentle J.E. (1980). \emph{Statistical Computing}. Marcel Dekker.
 #' @seealso \code{\link[base]{chol}} for the base R function
 #' @seealso \code{\link{gsorth}} for Gram-Schmidt orthogonalization of a data matrix
+#' @author John Fox
 #' @examples
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' C

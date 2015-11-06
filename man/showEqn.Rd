@@ -16,7 +16,7 @@ If supplied, the length must be equal to the number of unknowns in the equations
 The default is \code{paste0("x", 1:ncol(A)}.}
 }
 \value{
-a character matrix, one row for each equation
+a one-column character matrix, one row for each equation
 }
 \description{
 Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b}, but written out
@@ -28,10 +28,14 @@ as a set of equations.
                -2,  1, 2), 3, 3, byrow=TRUE)
   b <- c(8, -11, -3)
   showEqn(A, b)
+  # show numerically
   x <- solve(A, b)
   showEqn(A, b, vars=x)
 }
 \author{
 Michael Friendly
+}
+\seealso{
+\code{\link{plotEqn}}, \code{\link{plotEqn3d}}
 }
 

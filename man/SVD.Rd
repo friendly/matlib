@@ -7,7 +7,7 @@
 SVD(X, tol = sqrt(.Machine$double.eps))
 }
 \arguments{
-\item{X}{a square symmetrix matrix}
+\item{X}{a square symmetric matrix}
 
 \item{tol}{tolerance passed to \code{\link{QR}}}
 }
@@ -29,7 +29,7 @@ SVD(C)
 John Fox and Georges Monette
 }
 \seealso{
-\code{\link[base]{svd}}
+\code{\link[base]{svd}}, the standard svd function
 
 \code{\link{eig}}
 }

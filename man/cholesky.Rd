@@ -25,6 +25,9 @@ cholesky(C)
 cholesky(C) \%*\% t(cholesky(C))  # check
 
 }
+\author{
+John Fox
+}
 \references{
 Kennedy W.J. Jr, Gentle J.E. (1980). \emph{Statistical Computing}. Marcel Dekker.
 }
