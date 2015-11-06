@@ -1,3 +1,5 @@
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/matlib)](http://cran.r-project.org/package=matlib)
+
 # matlib
 Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics
 
