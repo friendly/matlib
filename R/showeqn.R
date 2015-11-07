@@ -12,6 +12,7 @@
 #' @param vars a numeric or character vector of names of the variables.
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
 #'        The default is \code{paste0("x", 1:ncol(A)}.
+#' @param simplify logical; try to simplify the equations?
 #' @return a one-column character matrix, one row for each equation
 #' @author Michael Friendly
 #' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
@@ -25,7 +26,7 @@
 #'   x <- solve(A, b)
 #'   showEqn(A, b, vars=x)
 
-showEqn <- function(A, b, vars) {
+showEqn <- function(A, b, vars, simplify=FALSE) {
   if (missing(b)) {
     b <- A[,ncol(A)]   # assume last column of Ab
     A <- A[,-ncol(A)]  # remove b from A
@@ -37,6 +38,9 @@ showEqn <- function(A, b, vars) {
     res[i] <- paste(res[i], "  =  ", b[i])
   }
   res <- gsub("+ -", "- ", res, fixed=TRUE)  # map "+ -3" -> "-3"
+  if (simplify) {
+    res <- gsub("1*", "", res, fixed=TRUE)    # "1*x" -> "x"
+  }
   matrix(res, ncol=1)
 }
 
