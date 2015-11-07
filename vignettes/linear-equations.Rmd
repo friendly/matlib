@@ -45,7 +45,7 @@ have a unique solution if all lines intersect in a point.
 
 ### Two consistent equations
 ```{r}
-A<- matrix(c(1, 2, -1, 2), 2, 2)
+A <- matrix(c(1, 2, -1, 2), 2, 2)
 b <- c(2,1)
 showEqn(A, b)
 c( R(A), R(cbind(A,b)) )          # show ranks
@@ -60,9 +60,11 @@ plotEqn(A,b)
 
 ### Three consistent equations
 ```{r}
-A<- matrix(c(1,2,3, -1, 2, 1), 3, 2)
+A <- matrix(c(1,2,3, -1, 2, 1), 3, 2)
 b <- c(2,1,3)
 showEqn(A, b)
+c( R(A), R(cbind(A,b)) )          # show ranks
+all.equal( R(A), R(cbind(A,b)) )  # consistent?
 ```
 Plot them:
 ```{r, echo=2}
@@ -88,9 +90,8 @@ showEqn(A, b)
 
 Are the equations consistent?
 ```{r}
-R(A)
-Ab <- cbind(A, b)
-R(Ab)
+c( R(A), R(cbind(A,b)) )          # show ranks
+all.equal( R(A), R(cbind(A,b)) )  # consistent?
 ```
 Solve for x
 
