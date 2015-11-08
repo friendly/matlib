@@ -18,6 +18,18 @@
 #' Proj(y, X[,1])  # project y on unit vector
 #' Proj(y, X[,2])
 #' Proj(y, X)
+#'
+#' # orthogonal complements
+#' yp <-Proj(y, X, list=TRUE)
+#' yp$y
+#' P <- yp$P
+#' IP <- diag(4) - P
+#' yc <- c(IP %*% y)
+#' crossprod(yp$y, yc)
+#'
+#' # P is idempotent:  P P = P
+#' P %*% P
+#' all.equal(P, P %*% P)
 
 Proj <- function(y, X, list=FALSE) {
   if (is.vector(y)) y <- matrix(y, ncol=1)
@@ -25,6 +37,6 @@ Proj <- function(y, X, list=FALSE) {
   XPX <- crossprod(X)   # t(X) %*% X
   P <- X %*% MASS::ginv(XPX) %*% t(X)
   #   P <- X %*% Ginv(XPX) %*% t(X)
-  if (!list) return(P %*% y)
-  else return(list(y=P %*% y, P=P))
+  if (!list) return(c(P %*% y))
+  else return(list(y=c(P %*% y), P=P))
 }

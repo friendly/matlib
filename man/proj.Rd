@@ -31,6 +31,18 @@ y <- 1:4
 Proj(y, X[,1])  # project y on unit vector
 Proj(y, X[,2])
 Proj(y, X)
+
+# orthogonal complements
+yp <-Proj(y, X, list=TRUE)
+yp$y
+P <- yp$P
+IP <- diag(4) - P
+yc <- c(IP \%*\% y)
+crossprod(yp$y, yc)
+
+# P is idempotent:  P P = P
+P \%*\% P
+all.equal(P, P \%*\% P)
 }
 \author{
 Michael Friendly
