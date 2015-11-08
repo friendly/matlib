@@ -22,7 +22,7 @@ Fitting a linear model, \code{lm(y ~ X)}, by least squares can be thought of geo
 and orthogonality.
 }
 \details{
-The projection is defined as \eqn{P y} where \eqn{P = x (x'X)^- X'}
+The projection is defined as \eqn{P y} where \eqn{P = X (X'X)^- X'}
 and \eqn{X^-} is a generalized inverse.
 }
 \examples{
@@ -46,5 +46,8 @@ all.equal(P, P \%*\% P)
 }
 \author{
 Michael Friendly
+}
+\seealso{
+vectors
 }
 

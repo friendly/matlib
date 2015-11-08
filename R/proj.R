@@ -4,7 +4,7 @@
 #' \code{y} on the column space of \code{X}. This function is designed to allow exploration of projections
 #' and orthogonality.
 #'
-#' The projection is defined as \eqn{P y} where \eqn{P = x (x'X)^- X'}
+#' The projection is defined as \eqn{P y} where \eqn{P = X (X'X)^- X'}
 #' and \eqn{X^-} is a generalized inverse.
 #'
 #' @param y a vector, treated as a one-column matrix
@@ -12,6 +12,7 @@
 #' @param list logical; if FALSE, return just the projected vector; otherwise returns a list
 #' @return the projection of \code{y} on \code{X} (if \code{list=FALSE}) or a list with elements \code{y} and \code{P}
 #' @author Michael Friendly
+#' @seealso vectors
 #' @examples
 #' X <- matrix( c(1, 1, 1, 1, 1, -1, 1, -1), 4,2, byrow=TRUE)
 #' y <- 1:4
