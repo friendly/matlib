@@ -43,6 +43,7 @@ This will usually be more current than the CRAN version, but less current than t
   - `len()` - Euclidean length of a vector or columns of a matrix
   - `Proj(y, X)` - projection of vector y on colunms of X
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
+  - `vectors()` - plot geometric vectors
 
 2. Determinants: functions for calculating determinants by cofactor expansion
 
