@@ -41,7 +41,7 @@ This will usually be more current than the CRAN version, but less current than t
   - `tr()` - trace of a matrix
   - `R()` - rank of a matrix
   - `len()` - Euclidean length of a vector or columns of a matrix
-  - `proj(y, X)` - projection of vector y on colunms of X
+  - `Proj(y, X)` - projection of vector y on colunms of X
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
 
 2. Determinants: functions for calculating determinants by cofactor expansion

@@ -4,7 +4,7 @@
 \alias{showEqn}
 \title{Show Matrices (A, b) as Linear Equations}
 \usage{
-showEqn(A, b, vars)
+showEqn(A, b, vars, simplify = FALSE)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}}
@@ -14,6 +14,8 @@ showEqn(A, b, vars)
 \item{vars}{a numeric or character vector of names of the variables.
 If supplied, the length must be equal to the number of unknowns in the equations.
 The default is \code{paste0("x", 1:ncol(A)}.}
+
+\item{simplify}{logical; try to simplify the equations?}
 }
 \value{
 a one-column character matrix, one row for each equation
