@@ -45,7 +45,7 @@ rowadd <- function(x, from, to, mult) {
 }
 
 #' Interchange two rows of a matrix
-
+#'
 #' This elementary row operation corresponds to interchanging two equations.
 #'
 #' @param x a matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.

@@ -14,6 +14,7 @@
 #' @param ... other arguments passed on to graphics functions
 #'
 #' @return none
+#' @importFrom graphics arrows
 #'
 #' @examples
 #' # shows addition of vectors

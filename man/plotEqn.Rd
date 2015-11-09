@@ -2,9 +2,7 @@
 % Please edit documentation in R/plotEqn.R
 \name{plotEqn}
 \alias{plotEqn}
-\title{Plot Linear Equations
-Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b} with two unknowns,
-x1, x2, by plotting a line for each equation.}
+\title{Plot Linear Equations}
 \usage{
 plotEqn(A, b, vars, xlim = c(-4, 4), ylim, col = 1:nrow(A), lwd = 2,
   lty = 1, axes = TRUE, labels = TRUE, solution = TRUE)
@@ -22,7 +20,7 @@ The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{xlim}{horizontal axis limits for the first variable}
 
-\item{ylim}{horizontal axis limits for the second variable; if missing, \code{ylim} is calculated from the
+\item{ylim}{vertical axis limits for the second variable; if missing, \code{ylim} is calculated from the
 range of the set of equations over the \code{xlim}.}
 
 \item{col}{scalar or vector of colors for the lines, recycled as necessary}
@@ -42,7 +40,6 @@ using the character string resulting from \code{\link{showEqn}}}
 nothing; used for the side effect of making a plot
 }
 \description{
-Plot Linear Equations
 Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b} with two unknowns,
 x1, x2, by plotting a line for each equation.
 }

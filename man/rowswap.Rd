@@ -2,8 +2,7 @@
 % Please edit documentation in R/rowops.R
 \name{rowswap}
 \alias{rowswap}
-\title{Interchange two rows of a matrix
-This elementary row operation corresponds to interchanging two equations.}
+\title{Interchange two rows of a matrix}
 \usage{
 rowswap(x, from, to)
 }
@@ -18,7 +17,6 @@ rowswap(x, from, to)
 the matrix \code{x}, with rows \code{from} and \code{to} interchanged
 }
 \description{
-Interchange two rows of a matrix
 This elementary row operation corresponds to interchanging two equations.
 }
 \seealso{

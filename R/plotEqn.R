@@ -1,7 +1,5 @@
-#####################################################
-
 #' Plot Linear Equations
-
+#'
 #' Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b} with two unknowns,
 #' x1, x2, by plotting a line for each equation.
 #'
@@ -13,7 +11,7 @@
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param xlim horizontal axis limits for the first variable
-#' @param ylim horizontal axis limits for the second variable; if missing, \code{ylim} is calculated from the
+#' @param ylim vertical axis limits for the second variable; if missing, \code{ylim} is calculated from the
 #'        range of the set of equations over the \code{xlim}.
 #' @param col scalar or vector of colors for the lines, recycled as necessary
 #' @param lwd scalar or vector of line widths for the lines, recycled as necessary

@@ -1,19 +1,19 @@
 #' QR Decomposition by Graham-Schmidt Orthonormalization
 #'
-#' \code{QR} computes the QR decomposition of a matrix, \eqn{X}, that is an orthonormal matrix, eqn{Q} and an upper triangular
+#' \code{QR} computes the QR decomposition of a matrix, \eqn{X}, that is an orthonormal matrix, \eqn{Q} and an upper triangular
 #' matrix, \eqn{R}, such that \eqn{X = Q R}.
 #'
 #' The QR decomposition plays an important role in many statistical techniques.
 #' In particular it can be used to solve the equation \eqn{Ax = b} for given matrix \eqn{A} and vector \eqn{b}.
 #' The function is included here simply to show the algorithm of Gram-Schmidt orthogonalization.  The standard
-#' \code{link[base]{qr}} function is faster and more accurate.
+#' \code{\link[base]{qr}} function is faster and more accurate.
 #'
 #' @param X a numeric matrix
 #' @param tol tolerance for detecting linear dependencies in the columns of \code{X}
 #' @return a list of three elements, consisting of an orthonormal matrix \code{Q}, an upper triangular matrix \code{R}, and the \code{rank}
 #'     of the matrix \code{X}
 #' @author John Fox and Georges Monette
-#' @seealso \code{link[base]{qr}}
+#' @seealso \code{\link[base]{qr}}
 #' @examples
 #' A <- matrix(c(1,2,3,4,5,6,7,8,10), 3, 3) # a nonsingular matrix
 #' res <- QR(A)

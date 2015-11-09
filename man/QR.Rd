@@ -16,14 +16,14 @@ a list of three elements, consisting of an orthonormal matrix \code{Q}, an upper
     of the matrix \code{X}
 }
 \description{
-\code{QR} computes the QR decomposition of a matrix, \eqn{X}, that is an orthonormal matrix, eqn{Q} and an upper triangular
+\code{QR} computes the QR decomposition of a matrix, \eqn{X}, that is an orthonormal matrix, \eqn{Q} and an upper triangular
 matrix, \eqn{R}, such that \eqn{X = Q R}.
 }
 \details{
 The QR decomposition plays an important role in many statistical techniques.
 In particular it can be used to solve the equation \eqn{Ax = b} for given matrix \eqn{A} and vector \eqn{b}.
 The function is included here simply to show the algorithm of Gram-Schmidt orthogonalization.  The standard
-\code{link[base]{qr}} function is faster and more accurate.
+\code{\link[base]{qr}} function is faster and more accurate.
 }
 \examples{
 A <- matrix(c(1,2,3,4,5,6,7,8,10), 3, 3) # a nonsingular matrix
@@ -41,6 +41,6 @@ QR(B)
 John Fox and Georges Monette
 }
 \seealso{
-\code{link[base]{qr}}
+\code{\link[base]{qr}}
 }
 

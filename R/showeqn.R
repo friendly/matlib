@@ -40,6 +40,9 @@ showEqn <- function(A, b, vars, simplify=FALSE) {
   res <- gsub("+ -", "- ", res, fixed=TRUE)  # map "+ -3" -> "-3"
   if (simplify) {
     res <- gsub("1*", "", res, fixed=TRUE)    # "1*x" -> "x"
+    V <- substr(vars[1], 1,1)
+    res <- gsub(paste0("0\\*", V, "\\d [+-] "), "", res)   # "+ 0*x" -> ""
+    res <- gsub("  ", " ", res, fixed=TRUE)
   }
   matrix(res, ncol=1)
 }
