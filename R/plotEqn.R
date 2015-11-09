@@ -71,7 +71,7 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
   }
 
 	if (is.logical(labels) && labels) {
-    labels <- showEqn(A,b, vars)
+    labels <- showEqn(A,b, vars, simplify=TRUE)
 	}
 	else labels=NULL
 

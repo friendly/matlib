@@ -35,13 +35,14 @@ showEqn <- function(A, b, vars, simplify=FALSE) {
   res <- character(nrow(A))
   for (i in 1:nrow(A)) {
     res[i] <- paste(A[i,], "*", vars, sep="", collapse=" + ")
-    res[i] <- paste(res[i], "  =  ", b[i])
+    res[i] <- paste(res[i], " = ", b[i])
   }
   res <- gsub("+ -", "- ", res, fixed=TRUE)  # map "+ -3" -> "-3"
   if (simplify) {
     res <- gsub("1*", "", res, fixed=TRUE)    # "1*x" -> "x"
     V <- substr(vars[1], 1,1)
-    res <- gsub(paste0("0\\*", V, "\\d [+-] "), "", res)   # "+ 0*x" -> ""
+    pat <- gsub("x", V, "0\\*x\\d\\s+[+-]|[+-]\\s+0\\*x\\d")
+    res <- gsub(pat, "", res)   # "+ 0*x" -> ""
     res <- gsub("  ", " ", res, fixed=TRUE)
   }
   matrix(res, ncol=1)
