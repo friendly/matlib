@@ -184,4 +184,13 @@ plotEqn3d <- function( A, b, vars, xlim=c(-2,2), ylim=c(-2,2), zlim,
     x <- try(solve(A,b), silent=TRUE)
     if (!inherits(x, "try-error")) rgl::spheres3d(solve(A,b), radius=0.2)
   }
+
+#   if (!is.null(labels)) {
+#     for (i in 1:neq) {
+#       xl <- xlim[1]
+#       yl <- ylim[1]
+#       zl <- if (A[i,3] != 0) min((b[i] - A[i,1] * xl - A[i,2] * yl) / A[i,3]) else 0
+#       rgl::text3d(xl, yl, zl, labels[i])
+#     }
+#   }
 }
