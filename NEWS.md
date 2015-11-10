@@ -1,3 +1,7 @@
+# matlib 0.5.2
+
+- added `swp()` function
+
 # matlib 0.5.1
 
 - added `len()` convenience function for Euclidean lengths

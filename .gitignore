@@ -4,3 +4,8 @@
 *.Rproj
 
 inst/doc
+vignettes/*.R
+vignettes/*.html
+vignettes/*.png
+
+
