@@ -2,7 +2,7 @@
 % Please edit documentation in R/vectors.R
 \name{vectors}
 \alias{vectors}
-\title{Title Draw Geometric Vectors}
+\title{Draw Geometric Vectors}
 \usage{
 vectors(X, origin = c(0, 0), lwd = 2, angle = 10, length = 0.15,
   labels = TRUE, cex.lab = 1.5, pos.lab = 4, ...)

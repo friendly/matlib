@@ -1,4 +1,4 @@
-#' Title Draw Geometric Vectors
+#' Draw Geometric Vectors
 #'
 #' This function draws vectors in a 2D plot, in a way that facilitates constructing vector diagrams.
 #'
