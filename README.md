@@ -78,3 +78,7 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
   - `eig()` - eigenvalues and eigenvectors
   - `SVD()` - singular value decomposition
 
+### Vignettes
+
+A small collection of vignettes is now available.  Use `browseVignettes("matlib")` to see them.
+
