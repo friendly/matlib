@@ -46,7 +46,7 @@ head(class)
 
 Reorder the predictors we want, forming a numeric matrix, `X`.
 ```{r class3}
-X <- as.matrix(class[,c(3,2,4,5)])
+X <- as.matrix(class[,c(3,4,2,5)])
 head(X)
 ```
 
@@ -107,7 +107,7 @@ We carry out two regressions of `IQ` on the variables in `X` and in `Z`. These a
 
 - The $R^2$ and MSE are the same in both models
 - Residuals are the same
-- The Type I tests given by `anova()` should be the same^[In theory.  I'm not sure why some of the `Sum Sq` differ in this example.]
+- The Type I tests given by `anova()` are the same.
 
 ```{r class2IQ}
 class2 <- data.frame(Z, IQ=class$IQ)
@@ -124,3 +124,6 @@ mod2 <- lm(IQ ~ height + weight + age + male, data=class2)
 anova(mod2)
 ```
 
+This illustrates that `anova()` tests for linear models are *sequential* tests.  They test hypotheses about the
+extra contribution of each variable over and above all previous ones, in a given order.  These usually do not make
+substantive sense, except in testing ordered ("hierarchical") models.
