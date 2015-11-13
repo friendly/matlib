@@ -10,7 +10,7 @@ len(X)
 \item{X}{a numberic vector or matrix}
 }
 \value{
-a scalar or vector containing the
+a scalar or vector containing the length(s)
 }
 \description{
 \code{len} calculates the Euclidean length (also called Euclidean norm) of a vector or the

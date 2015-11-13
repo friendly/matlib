@@ -6,7 +6,7 @@
 #'
 #' @param X a numberic vector or matrix
 #'
-#' @return a scalar or vector containing the
+#' @return a scalar or vector containing the length(s)
 #' @seealso \code{\link[base]{norm}} for more general matrix norms
 #' @examples
 #' len(1:3)
