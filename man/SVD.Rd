@@ -24,6 +24,17 @@ Singular values of zero are not retained in the solution.
 C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 C
 SVD(C)
+
+# least squares by the SVD
+data("workers")
+X <- cbind(1, as.matrix(workers[, c("Experience", "Skill")]))
+head(X)
+y <- workers$Income
+head(y)
+(svd <- SVD(X))
+VdU <- svd$V \%*\% diag(1/svd$d) \%*\%t(svd$U)
+(b <- Vdu \%*\% y)
+coef(lm(Income ~ Experience + Skill, data=workers))
 }
 \author{
 John Fox and Georges Monette

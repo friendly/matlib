@@ -48,6 +48,7 @@ eig <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=TR
 #' Compute the singular-value decomposition of a matrix \eqn{X} from the eigenstructure of \eqn{X'X}.
 #' The result consists of two orthonormal matrices, \eqn{U}, and \eqn{V} and the vector \eqn{d}
 #' of singular values, such that \eqn{X = U diag(d) V'}.
+
 #' Singular values of zero are not retained in the solution.
 #'
 #' @param X a square symmetric matrix
@@ -60,6 +61,18 @@ eig <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=TR
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' C
 #' SVD(C)
+#'
+#' # least squares by the SVD
+#' data("workers")
+#' X <- cbind(1, as.matrix(workers[, c("Experience", "Skill")]))
+#' head(X)
+#' y <- workers$Income
+#' head(y)
+#' (svd <- SVD(X))
+#' VdU <- svd$V %*% diag(1/svd$d) %*%t(svd$U)
+#' (b <- Vdu %*% y)
+#' coef(lm(Income ~ Experience + Skill, data=workers))
+
 
 SVD <- function(X, tol=sqrt(.Machine$double.eps)){
   # compute the singular-value decomposition of a matrix X from the eigenstructure of X'X
