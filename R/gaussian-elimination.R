@@ -165,12 +165,14 @@ echelon <- function(X, ...) gaussianElimination(X, ...)
 
 #' Generalized Inverse of a Matrix
 #'
-#' Returns an arbitrary generalized inverse of the matrix \code{A}, using \code{gaussianElimination}.
+#' \code{Ginv} returns an arbitrary generalized inverse of the matrix \code{A}, using \code{gaussianElimination}.
 #'
-#' Its purpose is only to show how the generalized inverse can be computed using
+#' A generalized inverse is a matrix \eqn{\mathbf{A}^-} satisfying \eqn{\mathbf{A A^- A} = \mathbf{A}}.
+#'
+#' The purpose of this function is mainly to show how the generalized inverse can be computed using
 #' Gaussian elimination.
 #'
-#' @param A coefficient matrix
+#' @param A numerical matrix
 #' @param tol tolerance for checking for 0 pivot
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
 #' @param fractions logical; if \code{TRUE}, try to express nonintegers as rational numbers

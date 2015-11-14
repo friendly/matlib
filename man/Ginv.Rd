@@ -8,7 +8,7 @@ Ginv(A, tol = sqrt(.Machine$double.eps), verbose = FALSE,
   fractions = FALSE)
 }
 \arguments{
-\item{A}{coefficient matrix}
+\item{A}{numerical matrix}
 
 \item{tol}{tolerance for checking for 0 pivot}
 
@@ -20,10 +20,12 @@ Ginv(A, tol = sqrt(.Machine$double.eps), verbose = FALSE,
 the generalized inverse of \code{A}, expressed as fractions if \code{fractions=TRUE}, or rounded
 }
 \description{
-Returns an arbitrary generalized inverse of the matrix \code{A}, using \code{gaussianElimination}.
+\code{Ginv} returns an arbitrary generalized inverse of the matrix \code{A}, using \code{gaussianElimination}.
 }
 \details{
-Its purpose is only to show how the generalized inverse can be computed using
+A generalized inverse is a matrix \eqn{\mathbf{A}^-} satisfying \eqn{\mathbf{A A^- A} = \mathbf{A}}.
+
+The purpose of this function is mainly to show how the generalized inverse can be computed using
 Gaussian elimination.
 }
 \examples{

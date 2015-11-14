@@ -52,7 +52,7 @@ head(X)
 
 ## Orthogonalization by projections
 
-The Gram-Schmidt process treats the variables in a give order, according to the columns in `X`.
+The Gram-Schmidt process treats the variables in a given order, according to the columns in `X`.
 We start with a new matrix `Z` consisting of `X[,1]`.
 Then, find a new variable `Z[,2]` orthogonal to `Z[,1]` by subtracting the projection of `X[,2]` on `Z[,1]`.
 
