@@ -5,7 +5,7 @@
 \title{Draw Geometric Vectors}
 \usage{
 vectors(X, origin = c(0, 0), lwd = 2, angle = 10, length = 0.15,
-  labels = TRUE, cex.lab = 1.5, pos.lab = 4, ...)
+  labels = TRUE, cex.lab = 1.5, pos.lab = 4, frac.lab = 1, ...)
 }
 \arguments{
 \item{X}{a vector or two-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row}
@@ -21,11 +21,15 @@ vectors(X, origin = c(0, 0), lwd = 2, angle = 10, length = 0.15,
 \item{labels}{a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
 labels are taken from \code{rownames(X)}. If \code{NULL}, no labels are drawn.}
 
-\item{cex.lab}{character expansion applied to vector labels}
+\item{cex.lab}{character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
+rows of \code{X}, recycled as necessary.}
 
-\item{pos.lab}{label position relative to the label point}
+\item{pos.lab}{label position relative to the label point as in \code{\link[graphics]{text}}, recycled as necessary.}
 
-\item{...}{other arguments passed on to graphics functions}
+\item{frac.lab}{location of label point, as a fraction of the distance between \code{origin} and \code{X}, recycled as necessary.
+Values \code{frac.lab > 1} locate the label beyond the end of the vector.}
+
+\item{...}{other arguments passed on to graphics functions.}
 }
 \value{
 none
@@ -45,7 +49,7 @@ ylim <- c(0,5)
 plot( xlim, ylim, type="n", xlab="X", ylab="Y", asp=1)
 abline(v=0, h=0, col="gray")
 
-vectors(rbind(u,v,`u+v`=sum), col=c("red", "blue", "purple"))
+vectors(rbind(u,v,`u+v`=sum), col=c("red", "blue", "purple"), cex.lab=c(2, 2, 2.2))
 # show the opposing sides of the parallelogram
 vectors(sum, origin=u, col="red", lty=2)
 vectors(sum, origin=v, col="blue", lty=2)
@@ -53,5 +57,8 @@ vectors(sum, origin=v, col="blue", lty=2)
 # projection of vectors
 vectors(Proj(v,u), labels="P(v,u)", lwd=3)
 vectors(v, origin=Proj(v,u))
+}
+\seealso{
+\code{\link[graphics]{arrows}}, code{\link[graphics]{text}}
 }
 

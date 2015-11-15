@@ -33,7 +33,7 @@ y <- workers$Income
 head(y)
 (svd <- SVD(X))
 VdU <- svd$V \%*\% diag(1/svd$d) \%*\%t(svd$U)
-(b <- Vdu \%*\% y)
+(b <- VdU \%*\% y)
 coef(lm(Income ~ Experience + Skill, data=workers))
 }
 \author{

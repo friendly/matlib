@@ -70,7 +70,7 @@ eig <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=TR
 #' head(y)
 #' (svd <- SVD(X))
 #' VdU <- svd$V %*% diag(1/svd$d) %*%t(svd$U)
-#' (b <- Vdu %*% y)
+#' (b <- VdU %*% y)
 #' coef(lm(Income ~ Experience + Skill, data=workers))
 
 
