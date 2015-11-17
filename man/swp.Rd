@@ -16,9 +16,10 @@ to the number or rows or columns in \code{M}.  If missing, the function sweeps o
 the matrix \code{M} with rows and columns in \code{indices}
 }
 \description{
-The \code{swp} function "sweeps" a matrix on the rows and columns given in \code{index} to produce a new matrix
-with those rows and columns partialled out. This was defined as a fundamental statistical operation in
-multivariate methods by Beaton (1964) and expanded by Dempster (1969).
+The \code{swp} function \dQuote{sweeps} a matrix on the rows and columns given in \code{index} to produce a new matrix
+with those rows and columns \dQuote{partialled out} by orthogonalization. This was defined as a fundamental statistical operation in
+multivariate methods by Beaton (1964) and expanded by Dempster (1969). It is closely related to orthogonal projection,
+but applied to a cross-products or covariance matrix, rather than to data.
 }
 \details{
 If \code{M} is the partitioned matrix
@@ -40,5 +41,8 @@ swp(M, 1:2)
 Beaton, A. E. (1964), \emph{The Use of Special Matrix Operations in Statistical Calculus}, Princeton, NJ: Educational Testing Service.
 
      Dempster, A. P. (1969) \emph{Elements of Continuous Multivariate Analysis}. Addison-Wesley Publ. Co., Reading, Mass.
+}
+\seealso{
+\code{\link{Proj}}, \code{\link{QR}}
 }
 

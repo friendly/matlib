@@ -2,9 +2,10 @@
 
 #' The Matrix Sweep Operator
 #'
-#' The \code{swp} function "sweeps" a matrix on the rows and columns given in \code{index} to produce a new matrix
-#' with those rows and columns partialled out. This was defined as a fundamental statistical operation in
-#' multivariate methods by Beaton (1964) and expanded by Dempster (1969).
+#' The \code{swp} function \dQuote{sweeps} a matrix on the rows and columns given in \code{index} to produce a new matrix
+#' with those rows and columns \dQuote{partialled out} by orthogonalization. This was defined as a fundamental statistical operation in
+#' multivariate methods by Beaton (1964) and expanded by Dempster (1969). It is closely related to orthogonal projection,
+#' but applied to a cross-products or covariance matrix, rather than to data.
 #'
 #' If \code{M} is the partitioned matrix
 #' \deqn{\left[ \begin{array}{cc} \mathbf {R} &  \mathbf {S} \\ \mathbf {T} &  \mathbf {U} \end{array} \right]}
@@ -20,6 +21,7 @@
 #'
 #'      Dempster, A. P. (1969) \emph{Elements of Continuous Multivariate Analysis}. Addison-Wesley Publ. Co., Reading, Mass.
 #'
+#' @seealso \code{\link{Proj}}, \code{\link{QR}}
 #' @examples
 #' data(therapy)
 #' mod3 <- lm(therapy ~ perstest + IE + sex, data=therapy)

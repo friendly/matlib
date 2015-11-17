@@ -3,7 +3,7 @@
 # matlib
 Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics
 
-Version 0.5.1
+Version 0.5.2
 
 These functions are mainly for tutorial purposes in learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts available
@@ -71,9 +71,14 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
   - `echelon(X)` - uses `gaussianElimination` to find the reduced echelon form of X
   - `Ginv(X)` - uses `gaussianElimination` to find the generalized inverse of X
   - `cholesky()` - calculates a Cholesky square root of a matrix
+  - `swp()` - matrix sweep operator
 
 6. Eigenvalues -- functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
 
   - `eig()` - eigenvalues and eigenvectors
   - `SVD()` - singular value decomposition
+
+### Vignettes
+
+A small collection of vignettes is now available.  Use `browseVignettes("matlib")` to see them.
 
