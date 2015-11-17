@@ -1,6 +1,6 @@
 ## Test environments
 * local Windows 7 install, R 3.1.2
-* win-builder (devel)
+* win-builder (R-release 3.2.2 (2015-08-14), R-devel)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs
@@ -9,13 +9,10 @@ There were no ERRORs or WARNINGs
 There were no NOTEs
 
 ## Comments
-This is a minor release, offering the following new functionality
+This is a minor release, offering the following new functionality and correcting some documentation
+problems.
 
-- added `len()` convenience function for Euclidean lengths
-- added `plotEqn3d()` function using rgl to plot equations in 3 unknowns
-- reorganized `matlib.R` to become a package .Rd document
-- renamed `proj()` -> `Proj()` to avoid conflict with `stats::proj()`
-- added `vectors()` for plotting geometric diagrams
-- added vignettes/linear-equations
+- added `swp()` function
+- added `vignette("gramreg") - *Gram-Schmidt Orthogonalization and Regression*
 
 
