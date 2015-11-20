@@ -1,7 +1,7 @@
 # matlib 0.5.2
 
 - added `swp()` function
-- added `vignette("gramreg") - *Gram-Schmidt Orthogonalization and Regression*
+- added `vignette("gramreg")` - *Gram-Schmidt Orthogonalization and Regression*
 
 # matlib 0.5.1
 
