@@ -1,3 +1,9 @@
+# matlib 0.5.3
+
+- added `vandermode()` function
+- added `vec()` function
+
+
 # matlib 0.5.2
 
 - added `swp()` function
