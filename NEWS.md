@@ -2,6 +2,7 @@
 
 - added `vandermode()` function
 - added `vec()` function
+- added 'is_square_matrix()` tests
 
 
 # matlib 0.5.2
