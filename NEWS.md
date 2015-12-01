@@ -2,7 +2,8 @@
 
 - added `vandermode()` function
 - added `vec()` function
-- added 'is_square_matrix()` tests
+- added `is_square_matrix()` tests
+- added `power_method()`, power method for dominant eigenvector (thx: Gaston Sanchez)
 
 
 # matlib 0.5.2

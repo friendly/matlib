@@ -21,6 +21,6 @@ is_square_matrix <- function (x)
 is_symmetric_matrix <- function (x)
 {
   tol <- 10*sqrt(.Machine$double.eps)
-  return (is_square_matrix(X) && all(abs(X - t(X)) < tol))
+  return (is_square_matrix(x) && all(abs(x - t(x)) < tol))
 }
 
