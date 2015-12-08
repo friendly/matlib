@@ -1,0 +1,156 @@
+# code taken from pca3d:  objects3d.R
+
+
+
+# return the basic cone mesh
+# scale is necessary because of the dependence on the aspect ratio
+.getcone <- function( r, h, scale= NULL ) {
+
+  ## for drawing circles in 3D, precalculate some values
+  .sin.t <- sin(seq(0, 2 * pi, len= 10))
+  .cos.t <- cos(seq(0, 2 * pi, len= 10))
+
+  n  <- length( .sin.t )
+  xv <- r * .sin.t
+  yv <- rep( 0, n )
+  zv <- r * .cos.t
+
+  if( missing( scale ) ) scale <- rep( 1, 3 )
+
+  scale <- 1 / scale
+  sx <- scale[1]
+  sy <- scale[2]
+  sz <- scale[3]
+
+  tmp <- NULL
+  for( i in 1:(n-1) ) {
+    tmp <- rbind( tmp,
+      c( 0, 0, 0 ),
+      scale3d( c( xv[i],   yv[i],   zv[i]   ), sx, sy, sz ),
+      scale3d( c( xv[i+1], yv[i+1], zv[i+1] ), sx, sy, sz ) )
+  }
+  for( i in 1:(n-1) ) {
+    tmp <- rbind( tmp,
+      c( 0, h, 0 ),
+      scale3d( c( xv[i],   yv[i],   zv[i]   ), sx, sy, sz ),
+      scale3d( c( xv[i+1], yv[i+1], zv[i+1] ), sx, sy, sz ) )
+  }
+  tmp
+}
+
+# vector cross product
+.cross3 <- function(a,b) {
+  c(a[2]*b[3]-a[3]*b[2], -a[1]*b[3]+a[3]*b[1], a[1]*b[2]-a[2]*b[1])
+}
+
+# draw a cone (e.g. tip of an arrow)
+#' Title Draw a 3d cone
+#'
+#' @param base   coordinates of base of the cone
+#' @param tip    coordinates of tip of the cone
+#' @param radius radius of the base
+#' @param col    color
+#' @param scale  scale factor for base and tip
+#' @param ...    rgl arguments passed down
+#'
+#' @return       returns the integer object ID of the shape that was added to the scene
+#' @author       January Weiner, from pca3d
+#' @export
+#' @import rgl
+#'
+#' @examples
+#' # none yet
+
+cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
+  start <- rep( 0, 3 )
+
+  if( missing( scale ) ) scale= 1 # was: rep( 1, 0 )
+  else scale <- max( scale ) / scale
+
+
+  tip  <- as.vector( tip ) * scale
+  base <- as.vector( base ) * scale
+
+  v1 <- tip
+  v2 <- c( 0, 100, 0 )
+  o <- .cross3( v1, v2 )
+  theta <- acos( sum( v1 * v2 ) / ( sqrt(sum( v1  *  v1 )) * sqrt(sum( v2  *  v2 )) ) )
+  vl <- sqrt( sum( tip^2 ) )
+
+  tmp <- .getcone( radius, vl )
+  tmp <- translate3d( rotate3d( tmp, theta, o[1], o[2], o[3] ), base[1], base[2], base[3] )
+  scale <- 1 / scale
+  tmp <- t( apply( tmp, 1, function( x ) x * scale ) )
+  triangles3d( tmp, col= col, ... )
+}
+
+
+#' Draw 3d Arrows
+#'
+#' Draws nice 3d arrows with \code{cone3d}s at their tips
+#'
+#' @param coords     A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs
+#' @param headlength Length of the arrow heads, in device units
+#' @param head       Position of the arrow head, e.g., "end"
+#' @param scale      scale factor for base and tip of arrow head
+#' @param radius     radius of the base of the arrow head
+#' @param ...        rgl arguments passed down to \code{segments3d} and \code{cone3d}
+#'
+#' @return           none
+#' @author       January Weiner, from pca3d
+#' @export
+#'
+#' @examples
+#' # none yet
+arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radius = NULL, ... ) {
+
+  head <- match.arg( head, c( "start", "end", "both" ) )
+  narr <- nrow( coords ) / 2
+  n    <- nrow( coords )
+
+  starts <- coords[ seq( 1, n, by= 2 ), ]
+  ends   <- coords[ seq( 2, n, by= 2 ), ]
+  if( missing( radius ) ) radius <- ( max( coords ) - min( coords ) ) / 50
+
+  segments3d( coords, ... )
+  if( head == "end" | head == "both" ) {
+    for( i in 1:narr ) {
+      s <- starts[i,]
+      e <- ends[i,]
+      base <- e - ( e - s ) * headlength
+      tip  <- ( e - s ) * headlength
+      cone3d( base, tip, radius= radius, scale= scale, ... )
+    }
+  }
+
+}
+
+.show.axes <- function(axes.color, ranges) {
+  axes <- rbind(
+    c(ranges[1,1], 0, 0),
+    c(ranges[2,1], 0, 0),
+    c(0, ranges[1,2], 0),
+    c(0, ranges[2,2], 0),
+    c(0, 0, ranges[1,3]),
+    c(0, 0, ranges[2,3])
+   )
+  segments3d(axes, col= axes.color)
+
+  radius <- 10
+
+  scale <- c(1, 1, 1)
+  if(! missing(ranges)) {
+    scale <- ranges[2,]
+    radius <- max(scale) / 50
+  }
+
+  arrows3d(axes, radius= radius, scale= scale,  col= axes.color)
+}
+
+# TESTME <- FALSE
+# if (TESTME) {
+#   ranges <- rbind(min=c(0,0,0), max=c(1,1,1))
+#   open3d()
+#   .show.axes(c("red", "green", "blue"), ranges)
+# }
+

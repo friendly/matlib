@@ -23,6 +23,7 @@ LazyData: TRUE
 Suggests:
     MASS,
     knitr,
+    rglwidget,
     rmarkdown
 Imports:
     rgl
