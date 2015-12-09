@@ -28,15 +28,16 @@
 #' @examples
 #' vec <- rbind(diag(3), c(1,1,1))
 #' rownames(vec) <- c("X", "Y", "Z", "J")
+#' library(rgl)
 #' open3d()
 #' vectors3d(vec, col=c(rep("black",3), "red"), lwd=2)
 #' # draw the XZ plane, whose equation is Y=0
 #' planes3d(0, 0, 1, 0, col="gray", alpha=0.2)
 #' # show projections of the unit vector J
-#' segments3d(rbind( c(1,1,1), c(1, 1, 0)))
-#' segments3d(rbind( c(0,0,0), c(1, 1, 0)))
-#' segments3d(rbind( c(1,0,0), c(1, 1, 0)))
-#' segments3d(rbind( c(0,1,0), c(1, 1, 0)))
+#' segments3d(v1 <- rbind(c(1,1,1), c(1, 1, 0)))
+#' segments3d(v2 <- rbind(c(0,0,0), c(1, 1, 0)))
+#' segments3d(v3 <- rbind(c(1,0,0), c(1, 1, 0)))
+#' segments3d(v4 <- rbind(c(0,1,0), c(1, 1, 0)))
 #' rgl.bringtotop()
 
 vectors3d <- function(X, origin=c(0,0,0),
