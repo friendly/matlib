@@ -3,12 +3,12 @@
 # matlib
 Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics
 
-Version 0.5.2
+Version 0.5.3
 
 These functions are mainly for tutorial purposes in learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts available
 elsewhere in R, but where the function call or name is not obvious.  In other
-cases, functions are provided to show or demonstrate an algorithm.
+cases, functions are provided to show or demonstrate an algorithm.  
 
 ## Installation
 
@@ -38,7 +38,7 @@ has the required programs for Mac OS X.
   - `vec()` - vectorize a matrix
   - `Proj(y, X)` - projection of vector y on colunms of X
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
-  - `vectors()` - plot geometric vectors
+  - `vectors()`, `vectors3d()` - plot geometric vector diagrams
 
 2. Determinants: functions for calculating determinants by cofactor expansion
 
@@ -72,6 +72,7 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
 
   - `eig()` - eigenvalues and eigenvectors
   - `SVD()` - singular value decomposition
+  - `power_method()` - find dominant eigenvector using the power method 
 
 ### Vignettes
 
