@@ -1,6 +1,7 @@
-#' Draw Geometric Vectors
+#' Draw geometric vectors
 #'
-#' This function draws vectors in a 2D plot, in a way that facilitates constructing vector diagrams.
+#' This function draws vectors in a 2D plot, in a way that facilitates constructing vector diagrams. It allows vectors to be
+#' specified as rows of a matrix, and can draw labels on the vectors.
 #'
 #' @param X a vector or two-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row
 #' @param origin the origin from which they are drawn, a vector of length 2.

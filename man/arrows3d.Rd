@@ -2,13 +2,14 @@
 % Please edit documentation in R/arrows3d.R
 \name{arrows3d}
 \alias{arrows3d}
-\title{Draw 3d Arrows}
+\title{Draw 3D arrows}
 \usage{
 arrows3d(coords, headlength = 0.035, head = "end", scale = NULL,
   radius = NULL, ...)
 }
 \arguments{
-\item{coords}{A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs}
+\item{coords}{A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs.  The first vector
+in each pair is taken as the starting coordinates of the arrow, the second as the end coordinates.}
 
 \item{headlength}{Length of the arrow heads, in device units}
 
@@ -24,12 +25,20 @@ arrows3d(coords, headlength = 0.035, head = "end", scale = NULL,
 none
 }
 \description{
-Draws nice 3d arrows with \code{cone3d}s at their tips
+Draws nice 3D arrows with \code{cone3d}s at their tips
+}
+\details{
+This function is meant to be analogous to \code{\link[graphics]{arrows}}, but for 3D plots using \code{\link[rgl]{rgl}}.
+\code{headlength}, \code{scale} and \code{radius} set the length, scale factor and base radius of the arrow head, a
+3D cone. The units of these are all in terms of the ranges of the current rgl 3D scene.
 }
 \examples{
 # none yet
 }
 \author{
-January Weiner, from pca3d
+January Weiner, borrowed from from \code{\link[pca3d]{pca3d}}
+}
+\seealso{
+\code{\link{vectors3d}}
 }
 

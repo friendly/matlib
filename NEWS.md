@@ -5,6 +5,7 @@
 - added `is_square_matrix()` tests
 - added `power_method()`, power method for dominant eigenvector (thx: Gaston Sanchez)
 - added `arrows3d()` for 3D geometric diagrams
+- added `vectors3d()` for 3D geometric diagrams
 
 
 # matlib 0.5.2

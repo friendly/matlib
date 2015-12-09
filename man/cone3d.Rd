@@ -2,7 +2,7 @@
 % Please edit documentation in R/arrows3d.R
 \name{cone3d}
 \alias{cone3d}
-\title{Title Draw a 3d cone}
+\title{Title Draw a 3D cone}
 \usage{
 cone3d(base, tip, radius = 10, col = "grey", scale = NULL, ...)
 }
@@ -23,12 +23,12 @@ cone3d(base, tip, radius = 10, col = "grey", scale = NULL, ...)
 returns the integer object ID of the shape that was added to the scene
 }
 \description{
-Title Draw a 3d cone
+Title Draw a 3D cone
 }
 \examples{
 # none yet
 }
 \author{
-January Weiner, from pca3d
+January Weiner, borrowed from from \code{\link[pca3d]{pca3d}}
 }
 

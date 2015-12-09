@@ -3,6 +3,7 @@
 export(arrows3d)
 export(cone3d)
 export(power_method)
+export(vectors3d)
 exportPattern("^[[:alpha:]]+")
 import(rgl)
 importFrom(graphics,abline)
