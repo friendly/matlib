@@ -13,6 +13,12 @@
 #' @param tol tolerance for determining if the matrix is symmetric
 #' @return \code{A} raised to the power \code{p}: \code{A^p}
 #' @seealso The \code{\link[expm]{\%^\%}} operator in the \code{expm} package is far more efficient
+#' @examples
+#' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
+#' C
+#' mpower(C, 2)
+#' zapsmall(mpower(C, -1))
+#' solve(C)    # check
 
 mpower <- function(A, p, tol=sqrt(.Machine$double.eps)) {
   if (!is.numeric(A) || !is.matrix(A) || nrow(A) != ncol(A) || any(abs(A - t(A)) > tol))

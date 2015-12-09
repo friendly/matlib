@@ -38,7 +38,7 @@ has the required programs for Mac OS X.
   - `vec()` - vectorize a matrix
   - `Proj(y, X)` - projection of vector y on colunms of X
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
-  - `vectors()`, `vectors3d()` - plot geometric vector diagrams
+  - `vectors()`, `vectors3d()` - plot geometric vector diagrams 
 
 2. Determinants: functions for calculating determinants by cofactor expansion
 

@@ -26,6 +26,13 @@ The matrix power \code{p} can be a fraction or other non-integer.  For example, 
      Negative powers are also allowed. For example, \code{p=-1} gives the inverse and \code{p=-1/2}
      gives the inverse square-root.
 }
+\examples{
+C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
+C
+mpower(C, 2)
+zapsmall(mpower(C, -1))
+solve(C)    # check
+}
 \seealso{
 The \code{\link[expm]{\%^\%}} operator in the \code{expm} package is far more efficient
 }
