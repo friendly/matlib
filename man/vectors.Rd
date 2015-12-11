@@ -58,6 +58,7 @@ vectors(sum, origin=v, col="blue", lty=2)
 # projection of vectors
 vectors(Proj(v,u), labels="P(v,u)", lwd=3)
 vectors(v, origin=Proj(v,u))
+corner(c(0,0), Proj(v,u), v, col="grey")
 }
 \seealso{
 \code{\link[graphics]{arrows}}, code{\link[graphics]{text}}

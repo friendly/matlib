@@ -42,6 +42,7 @@
 #' # projection of vectors
 #' vectors(Proj(v,u), labels="P(v,u)", lwd=3)
 #' vectors(v, origin=Proj(v,u))
+#' corner(c(0,0), Proj(v,u), v, col="grey")
 
 vectors <- function(X, origin=c(0,0),
                     lwd=2, angle=10, length=0.15,
