@@ -2,7 +2,7 @@
 % Please edit documentation in R/vectors.R
 \name{vectors}
 \alias{vectors}
-\title{Draw geometric vectors}
+\title{Draw geometric vectors in 2D}
 \usage{
 vectors(X, origin = c(0, 0), lwd = 2, angle = 10, length = 0.15,
   labels = TRUE, cex.lab = 1.5, pos.lab = 4, frac.lab = 1, ...)
@@ -61,5 +61,9 @@ vectors(v, origin=Proj(v,u))
 }
 \seealso{
 \code{\link[graphics]{arrows}}, code{\link[graphics]{text}}
+
+Other vector diagrams: \code{\link{Proj}},
+  \code{\link{corner}}, \code{\link{point_on_line}},
+  \code{\link{vectors3d}}
 }
 

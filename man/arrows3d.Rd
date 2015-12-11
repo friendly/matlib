@@ -13,7 +13,7 @@ in each pair is taken as the starting coordinates of the arrow, the second as th
 
 \item{headlength}{Length of the arrow heads, in device units}
 
-\item{head}{Position of the arrow head, e.g., "end"}
+\item{head}{Position of the arrow head. Only "end" is presently implemented.}
 
 \item{scale}{scale factor for base and tip of arrow head}
 
@@ -25,7 +25,7 @@ in each pair is taken as the starting coordinates of the arrow, the second as th
 none
 }
 \description{
-Draws nice 3D arrows with \code{cone3d}s at their tips
+Draws nice 3D arrows with \code{cone3d}s at their tips.
 }
 \details{
 This function is meant to be analogous to \code{\link[graphics]{arrows}}, but for 3D plots using \code{\link[rgl]{rgl}}.
@@ -36,7 +36,7 @@ This function is meant to be analogous to \code{\link[graphics]{arrows}}, but fo
 # none yet
 }
 \author{
-January Weiner, borrowed from from \code{\link[pca3d]{pca3d}}
+January Weiner, borrowed from \code{\link[pca3d]{pca3d}}
 }
 \seealso{
 \code{\link{vectors3d}}

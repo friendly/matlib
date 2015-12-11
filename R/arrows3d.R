@@ -43,19 +43,23 @@
   c(a[2]*b[3]-a[3]*b[2], -a[1]*b[3]+a[3]*b[1], a[1]*b[2]-a[2]*b[1])
 }
 
-#' Title Draw a 3D cone
+#' Draw a 3D cone
+#'
+#' Draws a cone in 3D from a \code{base} point to a \code{tip} point, with a given \code{radius} at the base.
+#' This is used to draw nice arrow heads in \code{\link{arrows3d}}.
 #'
 #' @param base   coordinates of base of the cone
 #' @param tip    coordinates of tip of the cone
 #' @param radius radius of the base
 #' @param col    color
 #' @param scale  scale factor for base and tip
-#' @param ...    rgl arguments passed down
+#' @param ...    rgl arguments passed down; see \code{\link[rgl]{rgl.material}}
 #'
 #' @return       returns the integer object ID of the shape that was added to the scene
 #' @author       January Weiner, borrowed from from \code{\link[pca3d]{pca3d}}
 #' @export
 #' @import rgl
+#' @seealso \code{\link{arrows3d}}
 #'
 #' @examples
 #' # none yet
@@ -86,7 +90,7 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 
 #' Draw 3D arrows
 #'
-#' Draws nice 3D arrows with \code{cone3d}s at their tips
+#' Draws nice 3D arrows with \code{cone3d}s at their tips.
 #'
 #' This function is meant to be analogous to \code{\link[graphics]{arrows}}, but for 3D plots using \code{\link[rgl]{rgl}}.
 #' \code{headlength}, \code{scale} and \code{radius} set the length, scale factor and base radius of the arrow head, a
@@ -95,13 +99,13 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #' @param coords     A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs.  The first vector
 #'                   in each pair is taken as the starting coordinates of the arrow, the second as the end coordinates.
 #' @param headlength Length of the arrow heads, in device units
-#' @param head       Position of the arrow head, e.g., "end"
+#' @param head       Position of the arrow head. Only "end" is presently implemented.
 #' @param scale      scale factor for base and tip of arrow head
 #' @param radius     radius of the base of the arrow head
 #' @param ...        rgl arguments passed down to \code{segments3d} and \code{cone3d}
 #'
 #' @return           none
-#' @author           January Weiner, borrowed from from \code{\link[pca3d]{pca3d}}
+#' @author           January Weiner, borrowed from \code{\link[pca3d]{pca3d}}
 #' @seealso          \code{\link{vectors3d}}
 #' @export
 #'

@@ -23,6 +23,7 @@
 #' @export
 #' @author Michael Friendly
 #' @seealso \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}
+#' @family vector diagrams
 #' @import rgl
 #'
 #' @examples

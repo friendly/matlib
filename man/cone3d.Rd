@@ -2,7 +2,7 @@
 % Please edit documentation in R/arrows3d.R
 \name{cone3d}
 \alias{cone3d}
-\title{Title Draw a 3D cone}
+\title{Draw a 3D cone}
 \usage{
 cone3d(base, tip, radius = 10, col = "grey", scale = NULL, ...)
 }
@@ -17,18 +17,22 @@ cone3d(base, tip, radius = 10, col = "grey", scale = NULL, ...)
 
 \item{scale}{scale factor for base and tip}
 
-\item{...}{rgl arguments passed down}
+\item{...}{rgl arguments passed down; see \code{\link[rgl]{rgl.material}}}
 }
 \value{
 returns the integer object ID of the shape that was added to the scene
 }
 \description{
-Title Draw a 3D cone
+Draws a cone in 3D from a \code{base} point to a \code{tip} point, with a given \code{radius} at the base.
+This is used to draw nice arrow heads in \code{\link{arrows3d}}.
 }
 \examples{
 # none yet
 }
 \author{
 January Weiner, borrowed from from \code{\link[pca3d]{pca3d}}
+}
+\seealso{
+\code{\link{arrows3d}}
 }
 

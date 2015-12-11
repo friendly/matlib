@@ -1,4 +1,4 @@
-#' Draw geometric vectors
+#' Draw geometric vectors in 2D
 #'
 #' This function draws vectors in a 2D plot, in a way that facilitates constructing vector diagrams. It allows vectors to be
 #' specified as rows of a matrix, and can draw labels on the vectors.
@@ -19,6 +19,7 @@
 #'
 #' @return none
 #' @seealso \code{\link[graphics]{arrows}}, code{\link[graphics]{text}}
+#' @family vector diagrams
 #' @importFrom graphics arrows
 #'
 #' @examples

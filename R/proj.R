@@ -12,7 +12,7 @@
 #' @param list logical; if FALSE, return just the projected vector; otherwise returns a list
 #' @return the projection of \code{y} on \code{X} (if \code{list=FALSE}) or a list with elements \code{y} and \code{P}
 #' @author Michael Friendly
-#' @seealso vectors
+#' @family vector diagrams
 #' @examples
 #' X <- matrix( c(1, 1, 1, 1, 1, -1, 1, -1), 4,2, byrow=TRUE)
 #' y <- 1:4

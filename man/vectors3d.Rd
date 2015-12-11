@@ -58,5 +58,9 @@ Michael Friendly
 }
 \seealso{
 \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}
+
+Other vector diagrams: \code{\link{Proj}},
+  \code{\link{corner}}, \code{\link{point_on_line}},
+  \code{\link{vectors}}
 }
 
