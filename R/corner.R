@@ -50,8 +50,9 @@ point_on_line <- function(x1, x2, d, absolute=TRUE) {
 #' @examples
 #' # none yet
 corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
-  if (!all.equal(lens <- lengths(list(p1, p2, p3)))) stop("Arguments p1, p2, p3 must be of the same length")
-  if (any(lens) < 2 | any(lens) > 3) stop("Only works for 2D or 3D")
+  lens <- lens <- lengths(list(p1, p2, p3))
+  if (!all(diff(lens) ==0)) stop("Arguments p1, p2, p3 must be of the same length")
+  if (any(lens < 2) | any(lens > 3)) stop("Only works for 2D or 3D")
 
 	p21 <- point_on_line(p2, p1, d=d, absolute=absolute)
 	p23 <- point_on_line(p2, p3, d=d, absolute=absolute)
@@ -92,18 +93,6 @@ corner(p1, p2, p3, col="red")
 corner(p1, p4, p2, col="red")
 #corner(p1, p5, p2, col="red")
 corner(p1, p4, p3, col="blue")
-
-#(p21 <- point_on_line(p2, p1, .10))
-#(p23 <- point_on_line(p2, p3, .10))
-#p123 <- p2 + (p23-p2) + (p21-p2)
-#p123
-#
-#points3d(rbind(p21, p23, p123), size=5, col="red")
-#
-#segments3d(rbind(p21, p123, p123, p23))
-
-
-corner(p1, p2, p3, col="red")
 }
 
 
