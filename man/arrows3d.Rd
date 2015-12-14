@@ -19,7 +19,7 @@ in each pair is taken as the starting coordinates of the arrow, the second as th
 
 \item{radius}{radius of the base of the arrow head}
 
-\item{...}{rgl arguments passed down to \code{segments3d} and \code{cone3d}}
+\item{...}{rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}}
 }
 \value{
 none
@@ -40,5 +40,9 @@ January Weiner, borrowed from \code{\link[pca3d]{pca3d}}
 }
 \seealso{
 \code{\link{vectors3d}}
+
+Other vector diagrams: \code{\link{Proj}},
+  \code{\link{corner}}, \code{\link{point_on_line}},
+  \code{\link{vectors3d}}, \code{\link{vectors}}
 }
 

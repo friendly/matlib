@@ -36,7 +36,7 @@ a line from \code{p1} to \code{p2}, and another line from \code{p2} to \code{p3}
 }
 \seealso{
 Other vector diagrams: \code{\link{Proj}},
-  \code{\link{point_on_line}}, \code{\link{vectors3d}},
-  \code{\link{vectors}}
+  \code{\link{arrows3d}}, \code{\link{point_on_line}},
+  \code{\link{vectors3d}}, \code{\link{vectors}}
 }
 

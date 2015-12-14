@@ -13,7 +13,7 @@ swp(M, index)
 to the number or rows or columns in \code{M}.  If missing, the function sweeps on all rows/columns \code{1:min(dim(M))}.}
 }
 \value{
-the matrix \code{M} with rows and columns in \code{indices}
+the matrix \code{M} with rows and columns in \code{indices} swept.
 }
 \description{
 The \code{swp} function \dQuote{sweeps} a matrix on the rows and columns given in \code{index} to produce a new matrix

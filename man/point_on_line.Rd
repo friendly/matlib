@@ -36,7 +36,7 @@ point_on_line(y1, y2, 0.5, absolute=FALSE)
 }
 \seealso{
 Other vector diagrams: \code{\link{Proj}},
-  \code{\link{corner}}, \code{\link{vectors3d}},
-  \code{\link{vectors}}
+  \code{\link{arrows3d}}, \code{\link{corner}},
+  \code{\link{vectors3d}}, \code{\link{vectors}}
 }
 

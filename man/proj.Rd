@@ -48,8 +48,8 @@ all.equal(P, P \%*\% P)
 Michael Friendly
 }
 \seealso{
-Other vector diagrams: \code{\link{corner}},
-  \code{\link{point_on_line}}, \code{\link{vectors3d}},
-  \code{\link{vectors}}
+Other vector diagrams: \code{\link{arrows3d}},
+  \code{\link{corner}}, \code{\link{point_on_line}},
+  \code{\link{vectors3d}}, \code{\link{vectors}}
 }
 

@@ -10,6 +10,7 @@
 
 #' @docType package
 #' @name matlib
+#' @aliases matlib-package
 #' @exportPattern "^[[:alpha:]]+"
 
 NULL

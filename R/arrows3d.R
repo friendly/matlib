@@ -102,11 +102,12 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #' @param head       Position of the arrow head. Only "end" is presently implemented.
 #' @param scale      scale factor for base and tip of arrow head
 #' @param radius     radius of the base of the arrow head
-#' @param ...        rgl arguments passed down to \code{segments3d} and \code{cone3d}
+#' @param ...        rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}
 #'
 #' @return           none
 #' @author           January Weiner, borrowed from \code{\link[pca3d]{pca3d}}
 #' @seealso          \code{\link{vectors3d}}
+#' @family vector diagrams
 #' @export
 #'
 #' @examples

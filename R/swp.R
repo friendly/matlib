@@ -16,7 +16,7 @@
 #' @param index a numeric vector indicating the rows/columns to be swept.  The entries must be less than or equal
 #'     to the number or rows or columns in \code{M}.  If missing, the function sweeps on all rows/columns \code{1:min(dim(M))}.
 #'
-#' @return the matrix \code{M} with rows and columns in \code{indices}
+#' @return the matrix \code{M} with rows and columns in \code{indices} swept.
 #' @references Beaton, A. E. (1964), \emph{The Use of Special Matrix Operations in Statistical Calculus}, Princeton, NJ: Educational Testing Service.
 #'
 #'      Dempster, A. P. (1969) \emph{Elements of Continuous Multivariate Analysis}. Addison-Wesley Publ. Co., Reading, Mass.

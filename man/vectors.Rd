@@ -64,7 +64,7 @@ corner(c(0,0), Proj(v,u), v, col="grey")
 \code{\link[graphics]{arrows}}, code{\link[graphics]{text}}
 
 Other vector diagrams: \code{\link{Proj}},
-  \code{\link{corner}}, \code{\link{point_on_line}},
-  \code{\link{vectors3d}}
+  \code{\link{arrows3d}}, \code{\link{corner}},
+  \code{\link{point_on_line}}, \code{\link{vectors3d}}
 }
 

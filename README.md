@@ -38,7 +38,6 @@ has the required programs for Mac OS X.
   - `vec()` - vectorize a matrix
   - `Proj(y, X)` - projection of vector y on colunms of X
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
-  - `vectors()`, `vectors3d()` - plot geometric vector diagrams 
 
 2. Determinants: functions for calculating determinants by cofactor expansion
 
@@ -73,6 +72,13 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
   - `eig()` - eigenvalues and eigenvectors
   - `SVD()` - singular value decomposition
   - `power_method()` - find dominant eigenvector using the power method 
+
+7. Vector diagrams -- functions for drawing vector diagrams in 2D and 3D
+
+  - `arrows3d()` - draw nice 3D arrows
+  - `corner()` -  draw a corner showing the angle between two vectors
+  - `point_on_line()` - position of a point along a line
+  - `vectors()`, `vectors3d()` - plot geometric vector diagrams 
 
 ### Vignettes
 
