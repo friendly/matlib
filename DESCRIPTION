@@ -2,8 +2,8 @@ Package: matlib
 Type: Package
 Title: Matrix Functions for Teaching and Learning Linear Algebra and
     Multivariate Statistics
-Version: 0.5.3
-Date: 2015-11-28
+Version: 0.6.0
+Date: 2015-12-14
 Authors@R: c(person(given = "Michael", family = "Friendly", role=c("aut", "cre"), email="friendly@yorku.ca"),
             person(given = "John", family = "Fox", role="ctb"),
             person(given = "Georges", family = "Monette", role="ctb"),
@@ -19,6 +19,7 @@ Description: A collection of matrix functions for teaching and learning matrix
     to show or demonstrate an algorithm.
 License: GPL (>= 2)
 URL: https://github.com/friendly/matlib
+BugReports: https://github.com/friendly/matlib/issues
 LazyData: TRUE
 Suggests:
     MASS,

@@ -1,12 +1,13 @@
-# matlib 0.5.3
+# matlib 0.6.0
 
 - added `vandermode()` function
-- added `vec()` function
+- added `vec()` convenience function to vectorize a matrix
 - added `is_square_matrix()` tests
 - added `power_method()`, power method for dominant eigenvector (thx: Gaston Sanchez)
 - added `arrows3d()` for 3D geometric diagrams
 - added `vectors3d()` for 3D geometric diagrams
 - added `corner()` for 2D, 3D geometric diagrams
+- added more documentation content to `man/matlib.Rd` from `README.md`
 
 
 # matlib 0.5.2
