@@ -28,7 +28,8 @@ takes you to the download page for Windows.  [R Tools for Mac OS X](https://cran
 has the required programs for Mac OS X.
 
 
-## Contents
+## Topics
+The functions in this package are grouped under the following topics
 
 1. Convenience functions:  
 
@@ -67,13 +68,13 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
   - `cholesky()` - calculates a Cholesky square root of a matrix
   - `swp()` - matrix sweep operator
 
-6. Eigenvalues -- functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
+6. Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
 
   - `eig()` - eigenvalues and eigenvectors
   - `SVD()` - singular value decomposition
   - `power_method()` - find dominant eigenvector using the power method 
 
-7. Vector diagrams -- functions for drawing vector diagrams in 2D and 3D
+7. Vector diagrams: functions for drawing vector diagrams in 2D and 3D
 
   - `arrows3d()` - draw nice 3D arrows
   - `corner()` -  draw a corner showing the angle between two vectors
