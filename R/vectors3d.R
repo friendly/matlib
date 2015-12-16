@@ -39,6 +39,15 @@
 #' segments3d(v2 <- rbind(c(0,0,0), c(1, 1, 0)))
 #' segments3d(v3 <- rbind(c(1,0,0), c(1, 1, 0)))
 #' segments3d(v4 <- rbind(c(0,1,0), c(1, 1, 0)))
+#' # show some orthogonal vectors
+#' p1 <- c(0,0,0)
+#' p2 <- c(1,1,0)
+#' p3 <- c(1,1,1)
+#' p4 <- c(1,0,0)
+#' corner(p1, p2, p3, col="red")
+#' corner(p1, p4, p2, col="red")
+#' corner(p1, p4, p3, col="blue")
+
 #' rgl.bringtotop()
 
 vectors3d <- function(X, origin=c(0,0,0),

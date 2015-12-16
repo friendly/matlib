@@ -1,3 +1,7 @@
+# matlib 0.6.1
+
+- use `corner()` in vectors3d.Rd
+
 # matlib 0.6.0
 
 - added `vandermode()` function
