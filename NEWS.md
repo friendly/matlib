@@ -1,6 +1,7 @@
 # matlib 0.6.1
 
 - use `corner()` in vectors3d.Rd
+- added `arc()` for 2D, 3D vector diagrams
 
 # matlib 0.6.0
 

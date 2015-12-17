@@ -1,6 +1,6 @@
 ## Test environments
 * local Windows 7 install, R 3.1.2
-* win-builder (R-release 3.2.2 (2015-08-14), R-devel)
+* win-builder (R-release 3.2.3 (2015-12-10), R-devel (2015-12-15 r69777))
 
 ## R CMD check results
 There were no ERRORs or WARNINGs or NOTEs
