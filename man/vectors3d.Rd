@@ -68,7 +68,8 @@ Michael Friendly
 \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}
 
 Other vector diagrams: \code{\link{Proj}},
-  \code{\link{arrows3d}}, \code{\link{corner}},
-  \code{\link{point_on_line}}, \code{\link{vectors}}
+  \code{\link{arc}}, \code{\link{arrows3d}},
+  \code{\link{corner}}, \code{\link{point_on_line}},
+  \code{\link{vectors}}
 }
 
