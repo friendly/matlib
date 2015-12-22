@@ -103,6 +103,9 @@ therapy.vec
 plot(therapy.vec)
 plot(therapy.vec, dimension="2")
 }
+\references{
+Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
+}
 \seealso{
 \code{\link{plot.regvec3d}}
 

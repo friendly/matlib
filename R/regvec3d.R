@@ -29,6 +29,7 @@
 #'                The columns effectively represent \code{x1}, \code{x2}, and \code{y}, but
 #'                are named \code{"x"}, \code{"y"} and \code{"z"}.}
 #' @seealso  \code{\link{plot.regvec3d}}
+#' @references        Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
 #' @family vector diagrams
 #' @export
 #'
@@ -183,7 +184,7 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #' @param ...         Parameters passed down to functions [unused now]
 #'
 #' @return            None
-#' @references        Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, Sage, Chapter 10.
+#' @references        Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
 #' @seealso  \code{\link{regvec3d}}
 #' @family vector diagrams
 #' @export

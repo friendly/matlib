@@ -69,7 +69,7 @@ plot(regvec3d(prestige ~ income + education, data=Duncan))
 }
 }
 \references{
-Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, Sage, Chapter 10.
+Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
 }
 \seealso{
 \code{\link{regvec3d}}
