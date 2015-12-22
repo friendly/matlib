@@ -44,12 +44,23 @@ None
 None
 }
 \description{
-Plot method for regvec3d objects
+The plot method for \code{regvec3d} objects uses the low-level graphics tools in this package to draw 3D and 2D
+vector diagrams reflecting the partial and marginal
+relations of \code{y} to \code{x1} and \code{x2} in a bivariate multiple linear regression model,
+\code{lm(y ~ x1 + x2)}.
 
 The \code{summary} method prints the vectors and their vector lengths, followed by the \code{summary}
 for the model.
 
 Print method for regvec3d objects
+}
+\details{
+A 3D diagram shows the vector \code{y} and the plane formed by the predictors,
+\code{x1} and \code{x2}, where all variables are represented in deviation form, so that
+the intercept need not be included.
+
+A 2D diagram, using the first two columns of the result, can be used to show the projection
+of the space in the \code{x1}, \code{x2} plane.
 }
 \examples{
 if (require(car)) {
@@ -57,7 +68,12 @@ data("Duncan", package="car")
 plot(regvec3d(prestige ~ income + education, data=Duncan))
 }
 }
+\references{
+Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, Sage, Chapter 10.
+}
 \seealso{
+\code{\link{regvec3d}}
+
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},
   \code{\link{corner}}, \code{\link{point_on_line}},

@@ -14,7 +14,7 @@
 #' A 2D diagram, using the first two columns of the result, can be used to show the projection
 #' of the space in the \code{x1}, \code{x2} plane.
 #'
-#' The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the plot method only work
+#' The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
 #' reasonably well if the variables are shown on commensurate scales, i.e., with
 #' either \code{scale=TRUE} or \code{normalize=TRUE}.
 #'
@@ -28,6 +28,7 @@
 #'                and the marginal fits of \code{y} on \code{x1} and \code{x2}.
 #'                The columns effectively represent \code{x1}, \code{x2}, and \code{y}, but
 #'                are named \code{"x"}, \code{"y"} and \code{"z"}.}
+#' @seealso  \code{\link{plot.regvec3d}}
 #' @family vector diagrams
 #' @export
 #'
@@ -156,6 +157,19 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 
 #' Plot method for regvec3d objects
 #'
+#' The plot method for \code{regvec3d} objects uses the low-level graphics tools in this package to draw 3D and 2D
+#' vector diagrams reflecting the partial and marginal
+#' relations of \code{y} to \code{x1} and \code{x2} in a bivariate multiple linear regression model,
+#' \code{lm(y ~ x1 + x2)}.
+#'
+#' A 3D diagram shows the vector \code{y} and the plane formed by the predictors,
+#' \code{x1} and \code{x2}, where all variables are represented in deviation form, so that
+#' the intercept need not be included.
+#'
+#' A 2D diagram, using the first two columns of the result, can be used to show the projection
+#' of the space in the \code{x1}, \code{x2} plane.
+
+#'
 #' @param x           A \dQuote{regvec3d} object
 #' @param y           Ignored; only included for compatibility with the S3 generic
 #' @param dimension   Number of dimensions to plot: \code{"3"} (default) or \code{"2"}
@@ -169,6 +183,8 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #' @param ...         Parameters passed down to functions [unused now]
 #'
 #' @return            None
+#' @references        Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, Sage, Chapter 10.
+#' @seealso  \code{\link{regvec3d}}
 #' @family vector diagrams
 #' @export
 #'

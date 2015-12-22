@@ -86,7 +86,7 @@ the intercept need not be included.
 A 2D diagram, using the first two columns of the result, can be used to show the projection
 of the space in the \code{x1}, \code{x2} plane.
 
-The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the plot method only work
+The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
 reasonably well if the variables are shown on commensurate scales, i.e., with
 either \code{scale=TRUE} or \code{normalize=TRUE}.
 }
@@ -104,6 +104,8 @@ plot(therapy.vec)
 plot(therapy.vec, dimension="2")
 }
 \seealso{
+\code{\link{plot.regvec3d}}
+
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},
   \code{\link{corner}}, \code{\link{plot.regvec3d}},
