@@ -5,18 +5,19 @@ Title: Matrix Functions for Teaching and Learning Linear Algebra and
 Version: 0.6.1
 Date: 2015-12-16
 Authors@R: c(person(given = "Michael", family = "Friendly", role=c("aut", "cre"), email="friendly@yorku.ca"),
-            person(given = "John", family = "Fox", role="ctb"),
+            person(given = "John", family = "Fox", role="aut"),
             person(given = "Georges", family = "Monette", role="ctb"),
             person(given = "Gaston", family = "Sanchez", role="ctb")
             )
-Author: Michael Friendly [aut, cre], John Fox [ctb], Georges Monette [ctb], Gaston Sanchez [ctb]
+Author: Michael Friendly [aut, cre], John Fox [aut], Georges Monette [ctb], Gaston Sanchez [ctb]
 Maintainer: Michael Friendly <friendly@yorku.ca>
 Description: A collection of matrix functions for teaching and learning matrix
     linear algebra as used in multivariate statistical methods. These functions are
     mainly for tutorial purposes in learning matrix algebra ideas using R. In some
     cases, functions are provided for concepts available elsewhere in R, but where
     the function call or name is not obvious. In other cases, functions are provided
-    to show or demonstrate an algorithm.
+    to show or demonstrate an algorithm. In addition, a collection of functions are
+    provided for drawing vector diagrams in 2D and 3D.
 License: GPL (>= 2)
 URL: https://github.com/friendly/matlib
 BugReports: https://github.com/friendly/matlib/issues
@@ -25,7 +26,8 @@ Suggests:
     MASS,
     knitr,
     rglwidget,
-    rmarkdown
+    rmarkdown,
+    car
 Imports:
     rgl
 VignetteBuilder: knitr

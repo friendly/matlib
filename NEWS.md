@@ -2,13 +2,14 @@
 
 - use `corner()` in vectors3d.Rd
 - added `arc()` for 2D, 3D vector diagrams
+- added `regvec3d()` for 2D, 3D vector diagrams representing a bivariate multiple regression model, `lm(y ~ x1 + x2)` [thx: John Fox]
 
 # matlib 0.6.0
 
 - added `vandermode()` function
 - added `vec()` convenience function to vectorize a matrix
 - added `is_square_matrix()` tests
-- added `power_method()`, power method for dominant eigenvector (thx: Gaston Sanchez)
+- added `power_method()`, power method for dominant eigenvector [thx: Gaston Sanchez]
 - added `arrows3d()` for 3D geometric diagrams
 - added `vectors3d()` for 3D geometric diagrams
 - added `corner()` for 2D, 3D geometric diagrams

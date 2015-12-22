@@ -65,7 +65,8 @@ corner(c(0,0), Proj(v,u), v, col="grey")
 
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},
-  \code{\link{corner}}, \code{\link{point_on_line}},
+  \code{\link{corner}}, \code{\link{plot.regvec3d}},
+  \code{\link{point_on_line}}, \code{\link{regvec3d}},
   \code{\link{vectors3d}}
 }
 

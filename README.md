@@ -8,7 +8,8 @@ Version 0.6.1
 These functions are mainly for tutorial purposes in learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts available
 elsewhere in R, but where the function call or name is not obvious.  In other
-cases, functions are provided to show or demonstrate an algorithm.  
+cases, functions are provided to show or demonstrate an algorithm.  In addition, 
+a collection of functions are provided for drawing vector diagrams in 2D and 3D.
 
 ## Installation
 
@@ -80,6 +81,7 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
   - `corner()` -  draw a corner showing the angle between two vectors
   - `point_on_line()` - position of a point along a line
   - `vectors()`, `vectors3d()` - plot geometric vector diagrams 
+  - `regvec3d()` - calculate and plot vectors representing a bivariate regression model, `y ~ x1 + x2`.
 
 ### Vignettes
 
