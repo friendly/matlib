@@ -40,8 +40,6 @@ the plane is drawn thicker}
 }
 \value{
 None
-
-None
 }
 \description{
 The plot method for \code{regvec3d} objects uses the low-level graphics tools in this package to draw 3D and 2D

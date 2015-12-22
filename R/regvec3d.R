@@ -239,7 +239,6 @@ plot.regvec3d <- function(x, y, dimension=c("3", "2"),
 #' @param object A \code{regvec3d} object for the \code{summary} method
 #' @rdname plot.regvec3d
 #'
-#' @return     None
 #' @export
 #'
 summary.regvec3d <- function(object, ...){
