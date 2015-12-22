@@ -31,6 +31,7 @@
 #' @seealso  \code{\link{plot.regvec3d}}
 #' @references        Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
 #' @family vector diagrams
+#' @import stats
 #' @export
 #'
 regvec3d <- function(x1, ...){
