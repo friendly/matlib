@@ -36,14 +36,14 @@ specified as rows of a matrix, and can draw labels on the vectors.
 }
 \section{Bugs}{
 
-At present, the color (\code{col=}) argument is not handled as expected.
+At present, the color (\code{color=}) argument is not handled as expected.
 }
 \examples{
 vec <- rbind(diag(3), c(1,1,1))
 rownames(vec) <- c("X", "Y", "Z", "J")
 library(rgl)
 open3d()
-vectors3d(vec, col=c(rep("black",3), "red"), lwd=2)
+vectors3d(vec, color=c(rep("black",3), "red"), lwd=2)
 # draw the XZ plane, whose equation is Y=0
 planes3d(0, 0, 1, 0, col="gray", alpha=0.2)
 # show projections of the unit vector J
@@ -65,7 +65,7 @@ rgl.bringtotop()
 Michael Friendly
 }
 \seealso{
-\code{\link{arrows3d}}, code{\link[rgl]{texts3d}}
+\code{\link{arrows3d}}, code{\link[rgl]{texts3d}}, code{\link[rgl]{rgl.material}}
 
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},

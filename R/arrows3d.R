@@ -99,10 +99,10 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #' @param coords     A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs.  The first vector
 #'                   in each pair is taken as the starting coordinates of the arrow, the second as the end coordinates.
 #' @param headlength Length of the arrow heads, in device units
-#' @param head       Position of the arrow head. Only "end" is presently implemented.
+#' @param head       Position of the arrow head. Only \code{head="end"} is presently implemented.
 #' @param scale      scale factor for base and tip of arrow head
 #' @param radius     radius of the base of the arrow head
-#' @param ...        rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}
+#' @param ...        rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}
 #'
 #' @return           none
 #' @author           January Weiner, borrowed from \code{\link[pca3d]{pca3d}}

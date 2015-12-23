@@ -7,8 +7,8 @@
 \title{Plot method for regvec3d objects}
 \usage{
 \method{plot}{regvec3d}(x, y, dimension = c("3", "2"), col = c("black",
-  "red", "blue", "magenta"), col.plane = "gray", show.plane = 2,
-  show.marginal = FALSE, grid = FALSE, add = FALSE, ...)
+  "red", "blue", "brown"), col.plane = "gray", cex.lab = 1.2,
+  show.plane = 2, show.marginal = FALSE, grid = FALSE, add = FALSE, ...)
 
 \method{summary}{regvec3d}(object, ...)
 
@@ -24,6 +24,9 @@
 \item{col}{A vector of 4 colors}
 
 \item{col.plane}{Color of the base plane in a 3D plot or axes in a 2D plot}
+
+\item{cex.lab}{character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
+rows of \code{X}, recycled as necessary.}
 
 \item{show.plane}{If \code{show.plane > 0}, draws the base plane in a 3D plot; if \code{show.plane > 1},
 the plane is drawn thicker}
@@ -62,15 +65,18 @@ of the space in the \code{x1}, \code{x2} plane.
 }
 \examples{
 if (require(car)) {
-data("Duncan", package="car")
-plot(regvec3d(prestige ~ income + education, data=Duncan))
+   data("Duncan", package="car")
+   dunc.reg <- regvec3d(prestige ~ income + education, data=Duncan)
+   plot(dunc.reg)
+   plot(dunc.reg, dimension="2")
+   summary(dunc.reg)
 }
 }
 \references{
 Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
 }
 \seealso{
-\code{\link{regvec3d}}
+\code{\link{regvec3d}}, \code{\link{vectors3d}}
 
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},

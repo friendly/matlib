@@ -177,6 +177,8 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #' @param dimension   Number of dimensions to plot: \code{"3"} (default) or \code{"2"}
 #' @param col         A vector of 4 colors
 #' @param col.plane   Color of the base plane in a 3D plot or axes in a 2D plot
+#' @param cex.lab     character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
+#'        rows of \code{X}, recycled as necessary.
 #' @param show.plane  If \code{show.plane > 0}, draws the base plane in a 3D plot; if \code{show.plane > 1},
 #'                    the plane is drawn thicker
 #' @param show.marginal  If \code{TRUE} also draws lines showing the marginal relations of \code{y} on \code{x1} and on \code{x2}
@@ -186,24 +188,29 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'
 #' @return            None
 #' @references        Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
-#' @seealso  \code{\link{regvec3d}}
+#' @seealso  \code{\link{regvec3d}}, \code{\link{vectors3d}}
+
 #' @family vector diagrams
 #' @export
 #'
 #' @examples
 #' if (require(car)) {
-#' data("Duncan", package="car")
-#' plot(regvec3d(prestige ~ income + education, data=Duncan))
+#'    data("Duncan", package="car")
+#'    dunc.reg <- regvec3d(prestige ~ income + education, data=Duncan)
+#'    plot(dunc.reg)
+#'    plot(dunc.reg, dimension="2")
+#'    summary(dunc.reg)
 #' }
 
 plot.regvec3d <- function(x, y, dimension=c("3", "2"),
-    col=c("black", "red", "blue", "magenta"), col.plane="gray",
+    col=c("black", "red", "blue", "brown"), col.plane="gray",
+    cex.lab=1.2,
     show.plane=2, show.marginal=FALSE, grid=FALSE, add=FALSE, ...){
     dimension <- match.arg(dimension)
     vectors <- x$vectors
     if (dimension == "3"){
 			if (!add) open3d()
-	    vectors3d(vectors[1:7, ], color=col[1], lwd=2)
+	    vectors3d(vectors[1:7, ], color=col[1], lwd=2, cex.lab=cex.lab)
 	    if (show.plane > 0) planes3d(0, 0, 1, 0, color=col.plane, alpha=0.2)
 	    if (show.plane > 1) planes3d(0, 0, 1, -.01, color=col.plane, alpha=0.1)
 	    lines3d(vectors[c(3, 5), ], color=col[2], lwd=2)     # y -> yhat
@@ -211,20 +218,20 @@ plot.regvec3d <- function(x, y, dimension=c("3", "2"),
 	    lines3d(vectors[c(5, 6), ], color=col[3])            # yhat -> b1
 	    lines3d(vectors[c(5, 7), ], color=col[3])            # yhat -> b2
 	    if (show.marginal){
-	        vectors3d(vectors[8:9, ], color=col[1])
+	        vectors3d(vectors[8:9, ], color=col[1], cex.lab=cex.lab)
 	        lines3d(vectors[c(3, 8), ], color=col[4])
 	        lines3d(vectors[c(3, 9), ], color=col[4])
 	    }
 	    if (grid) grid3d("z", col="darkgray", lty=2, n=8)
-	    #  arc(vectors[5, ], c(0, 0, 0),vectors[3, ], color=col[3])
-	    corner(vectors[5, ], c(0, 0, 0),vectors[4, ], color=col[4], absolute=FALSE)
+	    #  arc(vectors[5, ], c(0, 0, 0), vectors[3, ], color=col[3])
+	    corner(vectors[5, ], c(0, 0, 0), vectors[4, ], color=col[4], d=0.05, absolute=FALSE)
     }
     else {
         vecs2D <- vectors[c(1,2,5,6,7), 1:2]
         xlim <- range(vecs2D[,1]) + c(-.1, .1)
         ylim <- range(vecs2D[,2]) + c(-.1, .1)
         if (!add) plot(xlim, ylim, type="n", xlab="", ylab="", asp=1, axes=FALSE)
-        vectors(vecs2D, pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], xpd=TRUE)
+        vectors(vecs2D, pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], cex.lab=cex.lab, xpd=TRUE)
         abline(h=0, v=0, col=col.plane)
         lines(vecs2D[c(3, 4),], col=col[4], lwd=2)
         lines(vecs2D[c(3, 5),], col=col[4], lwd=2)

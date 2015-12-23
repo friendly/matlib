@@ -13,13 +13,13 @@ in each pair is taken as the starting coordinates of the arrow, the second as th
 
 \item{headlength}{Length of the arrow heads, in device units}
 
-\item{head}{Position of the arrow head. Only "end" is presently implemented.}
+\item{head}{Position of the arrow head. Only \code{head="end"} is presently implemented.}
 
 \item{scale}{scale factor for base and tip of arrow head}
 
 \item{radius}{radius of the base of the arrow head}
 
-\item{...}{rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}}
+\item{...}{rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}}
 }
 \value{
 none
