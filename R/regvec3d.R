@@ -174,13 +174,14 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'
 #' @param x           A \dQuote{regvec3d} object
 #' @param y           Ignored; only included for compatibility with the S3 generic
-#' @param dimension   Number of dimensions to plot: \code{"3"} (default) or \code{"2"}
+#' @param dimension   Number of dimensions to plot: \code{3} (default) or \code{2}
 #' @param col         A vector of 4 colors
 #' @param col.plane   Color of the base plane in a 3D plot or axes in a 2D plot
 #' @param cex.lab     character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
 #'        rows of \code{X}, recycled as necessary.
-#' @param show.plane  If \code{show.plane > 0}, draws the base plane in a 3D plot; if \code{show.plane > 1},
+#' @param show.base  If \code{show.base > 0}, draws the base plane in a 3D plot; if \code{show.base > 1},
 #'                    the plane is drawn thicker
+#' @param show.hplane If \code{TRUE}, draws the plane defined by \code{y}, \code{yhat} and the origin in the 3D
 #' @param show.marginal  If \code{TRUE} also draws lines showing the marginal relations of \code{y} on \code{x1} and on \code{x2}
 #' @param grid        If \code{TRUE}, draws a light grid on the base plane
 #' @param add         If \code{TRUE}, add to the current plot; otherwise start a new rgl or plot window
@@ -198,21 +199,23 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'    data("Duncan", package="car")
 #'    dunc.reg <- regvec3d(prestige ~ income + education, data=Duncan)
 #'    plot(dunc.reg)
-#'    plot(dunc.reg, dimension="2")
+#'    plot(dunc.reg, dimension=2)
 #'    summary(dunc.reg)
 #' }
 
-plot.regvec3d <- function(x, y, dimension=c("3", "2"),
+plot.regvec3d <- function(x, y, dimension=3,
     col=c("black", "red", "blue", "brown"), col.plane="gray",
     cex.lab=1.2,
-    show.plane=2, show.marginal=FALSE, grid=FALSE, add=FALSE, ...){
-    dimension <- match.arg(dimension)
+    show.base=2, show.marginal=FALSE, show.hplane=TRUE,
+    grid=FALSE, add=FALSE, ...){
+#    dimension <- match.arg(dimension)
     vectors <- x$vectors
-    if (dimension == "3"){
+    origin <- c(0,0,0)
+    if (dimension == 3){
 			if (!add) open3d()
 	    vectors3d(vectors[1:7, ], color=col[1], lwd=2, cex.lab=cex.lab)
-	    if (show.plane > 0) planes3d(0, 0, 1, 0, color=col.plane, alpha=0.2)
-	    if (show.plane > 1) planes3d(0, 0, 1, -.01, color=col.plane, alpha=0.1)
+	    if (show.base > 0) planes3d(0, 0, 1, 0, color=col.plane, alpha=0.2)
+	    if (show.base > 1) planes3d(0, 0, 1, -.01, color=col.plane, alpha=0.1)
 	    lines3d(vectors[c(3, 5), ], color=col[2], lwd=2)     # y -> yhat
 	    lines3d(vectors[c(3, 4), ], color=col[2])            # y -> e
 	    lines3d(vectors[c(5, 6), ], color=col[3])            # yhat -> b1
@@ -222,9 +225,10 @@ plot.regvec3d <- function(x, y, dimension=c("3", "2"),
 	        lines3d(vectors[c(3, 8), ], color=col[4])
 	        lines3d(vectors[c(3, 9), ], color=col[4])
 	    }
+	    if (show.hplane) triangles3d(rbind(vectors[c(3,5),], origin), color=col[2], alpha=0.2)
 	    if (grid) grid3d("z", col="darkgray", lty=2, n=8)
-	    #  arc(vectors[5, ], c(0, 0, 0), vectors[3, ], color=col[3])
-	    corner(vectors[5, ], c(0, 0, 0), vectors[4, ], color=col[4], d=0.05, absolute=FALSE)
+	    #  arc(vectors[5, ], origin, vectors[3, ], color=col[3])
+	    corner(vectors[5, ], origin, vectors[4, ], color=col[4], d=0.05, absolute=FALSE)
     }
     else {
         vecs2D <- vectors[c(1,2,5,6,7), 1:2]

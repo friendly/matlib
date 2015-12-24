@@ -6,9 +6,10 @@
 \alias{summary.regvec3d}
 \title{Plot method for regvec3d objects}
 \usage{
-\method{plot}{regvec3d}(x, y, dimension = c("3", "2"), col = c("black",
-  "red", "blue", "brown"), col.plane = "gray", cex.lab = 1.2,
-  show.plane = 2, show.marginal = FALSE, grid = FALSE, add = FALSE, ...)
+\method{plot}{regvec3d}(x, y, dimension = 3, col = c("black", "red", "blue",
+  "brown"), col.plane = "gray", cex.lab = 1.2, show.base = 2,
+  show.marginal = FALSE, show.hplane = TRUE, grid = FALSE, add = FALSE,
+  ...)
 
 \method{summary}{regvec3d}(object, ...)
 
@@ -19,7 +20,7 @@
 
 \item{y}{Ignored; only included for compatibility with the S3 generic}
 
-\item{dimension}{Number of dimensions to plot: \code{"3"} (default) or \code{"2"}}
+\item{dimension}{Number of dimensions to plot: \code{3} (default) or \code{2}}
 
 \item{col}{A vector of 4 colors}
 
@@ -28,10 +29,12 @@
 \item{cex.lab}{character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
 rows of \code{X}, recycled as necessary.}
 
-\item{show.plane}{If \code{show.plane > 0}, draws the base plane in a 3D plot; if \code{show.plane > 1},
+\item{show.base}{If \code{show.base > 0}, draws the base plane in a 3D plot; if \code{show.base > 1},
 the plane is drawn thicker}
 
 \item{show.marginal}{If \code{TRUE} also draws lines showing the marginal relations of \code{y} on \code{x1} and on \code{x2}}
+
+\item{show.hplane}{If \code{TRUE}, draws the plane defined by \code{y}, \code{yhat} and the origin in the 3D}
 
 \item{grid}{If \code{TRUE}, draws a light grid on the base plane}
 
@@ -68,7 +71,7 @@ if (require(car)) {
    data("Duncan", package="car")
    dunc.reg <- regvec3d(prestige ~ income + education, data=Duncan)
    plot(dunc.reg)
-   plot(dunc.reg, dimension="2")
+   plot(dunc.reg, dimension=2)
    summary(dunc.reg)
 }
 }
