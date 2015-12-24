@@ -14,6 +14,11 @@
 #' A 2D diagram, using the first two columns of the result, can be used to show the projection
 #' of the space in the \code{x1}, \code{x2} plane.
 #'
+#' In these views, the ANOVA representation of the various sums of squares for the regression
+#' predictors appears as the lengths of the various vectors.  For example, the error sum of
+#' squares is the squared length of the \code{e} vector, and the regression sum of squares is
+#' the squared length of the \code{yhat} vector.
+#'
 #' The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
 #' reasonably well if the variables are shown on commensurate scales, i.e., with
 #' either \code{scale=TRUE} or \code{normalize=TRUE}.
@@ -170,7 +175,10 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'
 #' A 2D diagram, using the first two columns of the result, can be used to show the projection
 #' of the space in the \code{x1}, \code{x2} plane.
-
+#'
+#' The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{plot.regvec3d} method only work
+#' reasonably well if the variables are shown on commensurate scales, i.e., with
+#' either \code{scale=TRUE} or \code{normalize=TRUE}.
 #'
 #' @param x           A \dQuote{regvec3d} object
 #' @param y           Ignored; only included for compatibility with the S3 generic
@@ -189,7 +197,7 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'
 #' @return            None
 #' @references        Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
-#' @seealso  \code{\link{regvec3d}}, \code{\link{vectors3d}}
+#' @seealso  \code{\link{regvec3d}}, \code{\link{vectors3d}}, \code{\link{vectors}}
 
 #' @family vector diagrams
 #' @export
@@ -212,7 +220,10 @@ plot.regvec3d <- function(x, y, dimension=3,
     vectors <- x$vectors
     origin <- c(0,0,0)
     if (dimension == 3){
-			if (!add) open3d()
+			if (!add) {
+			  open3d()
+			  aspect3d("iso")
+			}
 	    vectors3d(vectors[1:7, ], color=col[1], lwd=2, cex.lab=cex.lab)
 	    if (show.base > 0) planes3d(0, 0, 1, 0, color=col.plane, alpha=0.2)
 	    if (show.base > 1) planes3d(0, 0, 1, -.01, color=col.plane, alpha=0.1)
@@ -235,8 +246,8 @@ plot.regvec3d <- function(x, y, dimension=3,
         xlim <- range(vecs2D[,1]) + c(-.1, .1)
         ylim <- range(vecs2D[,2]) + c(-.1, .1)
         if (!add) plot(xlim, ylim, type="n", xlab="", ylab="", asp=1, axes=FALSE)
-        vectors(vecs2D, pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], cex.lab=cex.lab, xpd=TRUE)
         abline(h=0, v=0, col=col.plane)
+        vectors(vecs2D, pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], cex.lab=cex.lab, xpd=TRUE)
         lines(vecs2D[c(3, 4),], col=col[4], lwd=2)
         lines(vecs2D[c(3, 5),], col=col[4], lwd=2)
     }

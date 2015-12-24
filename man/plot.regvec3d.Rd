@@ -65,6 +65,10 @@ the intercept need not be included.
 
 A 2D diagram, using the first two columns of the result, can be used to show the projection
 of the space in the \code{x1}, \code{x2} plane.
+
+The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{plot.regvec3d} method only work
+reasonably well if the variables are shown on commensurate scales, i.e., with
+either \code{scale=TRUE} or \code{normalize=TRUE}.
 }
 \examples{
 if (require(car)) {
@@ -79,7 +83,7 @@ if (require(car)) {
 Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
 }
 \seealso{
-\code{\link{regvec3d}}, \code{\link{vectors3d}}
+\code{\link{regvec3d}}, \code{\link{vectors3d}}, \code{\link{vectors}}
 
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},
