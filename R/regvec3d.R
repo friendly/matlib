@@ -238,8 +238,11 @@ plot.regvec3d <- function(x, y, dimension=3,
 	    }
 	    if (show.hplane) triangles3d(rbind(vectors[c(3,5),], origin), color=col[2], alpha=0.2)
 	    if (grid) grid3d("z", col="darkgray", lty=2, n=8)
-	    #  arc(vectors[5, ], origin, vectors[3, ], color=col[3])
+	    arc(vectors[5, ], origin, vectors[3, ], color=col[3])
 	    corner(vectors[5, ], origin, vectors[4, ], color=col[4], d=0.05, absolute=FALSE)
+	    corner(origin, vectors[5, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
+	    corner(origin, vectors[8, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
+	    corner(origin, vectors[9, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
     }
     else {
         vecs2D <- vectors[c(1,2,5,6,7), 1:2]
