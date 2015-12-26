@@ -36,7 +36,7 @@ This function is meant to be analogous to \code{\link[graphics]{arrows}}, but fo
 # none yet
 }
 \author{
-January Weiner, borrowed from \code{\link[pca3d]{pca3d}}
+January Weiner, borrowed from the \pkg{pca3d} package
 }
 \seealso{
 \code{\link{vectors3d}}

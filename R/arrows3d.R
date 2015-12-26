@@ -56,7 +56,7 @@
 #' @param ...    rgl arguments passed down; see \code{\link[rgl]{rgl.material}}
 #'
 #' @return       returns the integer object ID of the shape that was added to the scene
-#' @author       January Weiner, borrowed from from \code{\link[pca3d]{pca3d}}
+#' @author       January Weiner, borrowed from from the \pkg{pca3d} package
 #' @export
 #' @import rgl
 #' @seealso \code{\link{arrows3d}}
@@ -105,7 +105,7 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #' @param ...        rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}
 #'
 #' @return           none
-#' @author           January Weiner, borrowed from \code{\link[pca3d]{pca3d}}
+#' @author           January Weiner, borrowed from the \pkg{pca3d} package
 #' @seealso          \code{\link{vectors3d}}
 #' @family vector diagrams
 #' @export

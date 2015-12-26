@@ -209,6 +209,11 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'    plot(dunc.reg)
 #'    plot(dunc.reg, dimension=2)
 #'    summary(dunc.reg)
+#'
+#'    # Example showing Simpson's paradox
+#'    states.vec <- regvec3d(SATM ~ pay + percent, data=car::States, scale=TRUE)
+#'    plot(states.vec, show.marginal=TRUE)
+#'    summary(states.vec)
 #' }
 
 plot.regvec3d <- function(x, y, dimension=3,

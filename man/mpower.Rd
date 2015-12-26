@@ -34,6 +34,6 @@ zapsmall(mpower(C, -1))
 solve(C)    # check
 }
 \seealso{
-The \code{\link[expm]{\%^\%}} operator in the \code{expm} package is far more efficient
+The \code{{\%^\%}} operator in the \pkg{expm} package is far more efficient
 }
 
