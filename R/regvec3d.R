@@ -235,14 +235,17 @@ plot.regvec3d <- function(x, y, dimension=3,
 	        vectors3d(vectors[8:9, ], color=col[1], cex.lab=cex.lab)
 	        lines3d(vectors[c(3, 8), ], color=col[4])
 	        lines3d(vectors[c(3, 9), ], color=col[4])
+	        corner(origin, vectors[8, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
+	        corner(origin, vectors[9, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
 	    }
 	    if (show.hplane) triangles3d(rbind(vectors[c(3,5),], origin), color=col[2], alpha=0.2)
 	    if (grid) grid3d("z", col="darkgray", lty=2, n=8)
+	    R2 <- summary(x$model)$r.squared
+	    angle <- acos(sqrt(R2))*180/pi
+	    text3d(0.1*(vectors[3, ] + vectors[5, ]), texts=paste(round(angle, 1), "deg."))
 	    arc(vectors[5, ], origin, vectors[3, ], color=col[3])
 	    corner(vectors[5, ], origin, vectors[4, ], color=col[4], d=0.05, absolute=FALSE)
 	    corner(origin, vectors[5, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
-	    corner(origin, vectors[8, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
-	    corner(origin, vectors[9, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
     }
     else {
         vecs2D <- vectors[c(1,2,5,6,7), 1:2]
