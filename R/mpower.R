@@ -12,7 +12,7 @@
 #' @param p matrix power, not necessarily a positive integer
 #' @param tol tolerance for determining if the matrix is symmetric
 #' @return \code{A} raised to the power \code{p}: \code{A^p}
-#' @seealso The \code{\link[expm]{\%^\%}} operator in the \code{expm} package is far more efficient
+#' @seealso The \code{{\%^\%}} operator in the \pkg{expm} package is far more efficient
 #' @examples
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' C

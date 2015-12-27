@@ -30,7 +30,7 @@ This is used to draw nice arrow heads in \code{\link{arrows3d}}.
 # none yet
 }
 \author{
-January Weiner, borrowed from from \code{\link[pca3d]{pca3d}}
+January Weiner, borrowed from from the \pkg{pca3d} package
 }
 \seealso{
 \code{\link{arrows3d}}
