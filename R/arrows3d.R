@@ -100,22 +100,26 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #'                   in each pair is taken as the starting coordinates of the arrow, the second as the end coordinates.
 #' @param headlength Length of the arrow heads, in device units
 #' @param head       Position of the arrow head. Only \code{head="end"} is presently implemented.
-#' @param scale      scale factor for base and tip of arrow head
-#' @param radius     radius of the base of the arrow head
+#' @param scale      Scale factor for base and tip of arrow head, a vector of length 3, giving relative scale factors for X, Y, Z
+#' @param radius     Radius of the base of the arrow head
+#' @param ref.length Used to attempt to equate the lengths of the arrow heads for vectors of different lengths. If not specified,
+#'                   the maximum length of the vectors defined by \code{coords} is used, and the actual length of each arrow
+#'                   head is scaled by \code{ref.length / length[i]}.
 #' @param ...        rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}
 #'
-#' @return           none
-#' @author           January Weiner, borrowed from the \pkg{pca3d} package
+#' @return           Invisibly, the reference length value used for drawing arrow heads.
+#' @author           January Weiner, borrowed from the \pkg{pca3d} package, modified for use here.
 #' @seealso          \code{\link{vectors3d}}
 #' @family vector diagrams
 #' @export
 #'
 #' @examples
-#' # none yet
+#'  #none yet
 arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radius = NULL,
                       ref.length=NULL, ... ) {
 
   head <- match.arg( head, c( "start", "end", "both" ) )
+  # FIXME:  check whether coords is a matrix of 3 cols, and an even # of rows
   narr <- nrow( coords ) / 2
   n    <- nrow( coords )
 
@@ -139,7 +143,7 @@ arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radiu
       cone3d( base, tip, radius= radius, scale= scale, ... )
     }
   }
-  return(c(ref.length=ref.length))
+  invisible(c(ref.length=ref.length))
 }
 
 .show.axes <- function(axes.color, ranges) {

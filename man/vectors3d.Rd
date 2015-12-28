@@ -14,6 +14,8 @@ vectors3d(X, origin = c(0, 0, 0), headlength = 0.035, ref.length = NULL,
 
 \item{headlength}{the \code{headlength} argument passed to \code{\link{arrows3d}} determining the length of arrow heads}
 
+\item{ref.length}{the \code{ref.length} argument passed to \code{\link{arrows3d}} determining the reference length of arrow heads.}
+
 \item{labels}{a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
 labels are taken from \code{rownames(X)}. If \code{NULL}, no labels are drawn.}
 
@@ -28,7 +30,7 @@ Values \code{frac.lab > 1} locate the label beyond the end of the vector.}
 \item{...}{other arguments passed on to graphics functions.}
 }
 \value{
-none
+the reference length value used for drawing arrow heads.
 }
 \description{
 This function draws vectors in a 3D plot, in a way that facilitates constructing vector diagrams. It allows vectors to be
@@ -36,7 +38,7 @@ specified as rows of a matrix, and can draw labels on the vectors.
 }
 \section{Bugs}{
 
-At present, the color (\code{color=}) argument is not handled as expected.
+At present, the color (\code{color=}) argument is not handled as expected when more than one vector is to be drawn.
 }
 \examples{
 vec <- rbind(diag(3), c(1,1,1))
@@ -46,7 +48,7 @@ open3d()
 vectors3d(vec, color=c(rep("black",3), "red"), lwd=2)
 # draw the XZ plane, whose equation is Y=0
 planes3d(0, 0, 1, 0, col="gray", alpha=0.2)
-##FIXME:  vectors3d(c(1,1,0), col="green", lwd=2)
+vectors3d(c(1,1,0), col="green", lwd=2)
 # show projections of the unit vector J
 segments3d(rbind(c(1,1,1), c(1, 1, 0)))
 segments3d(rbind(c(0,0,0), c(1, 1, 0)))

@@ -5,11 +5,12 @@
 #' specified as rows of a matrix, and can draw labels on the vectors.
 #'
 #' @section Bugs:
-#' At present, the color (\code{color=}) argument is not handled as expected.
+#' At present, the color (\code{color=}) argument is not handled as expected when more than one vector is to be drawn.
 #'
 #' @param X a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row
 #' @param origin the origin from which they are drawn, a vector of length 3.
 #' @param headlength the \code{headlength} argument passed to \code{\link{arrows3d}} determining the length of arrow heads
+#' @param ref.length the \code{ref.length} argument passed to \code{\link{arrows3d}} determining the reference length of arrow heads.
 #' @param labels a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
 #'        labels are taken from \code{rownames(X)}. If \code{NULL}, no labels are drawn.
 #' @param cex.lab character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
@@ -19,7 +20,7 @@
 #'        Values \code{frac.lab > 1} locate the label beyond the end of the vector.
 #' @param ... other arguments passed on to graphics functions.
 #'
-#' @return none
+#' @return the reference length value used for drawing arrow heads.
 #' @export
 #' @author Michael Friendly
 #' @seealso \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}, code{\link[rgl]{rgl.material}}
