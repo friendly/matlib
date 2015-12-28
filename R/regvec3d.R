@@ -229,7 +229,7 @@ plot.regvec3d <- function(x, y, dimension=3,
 			  open3d()
 			  aspect3d("iso")
 			}
-	    vectors3d(vectors[1:7, ], color=col[1], lwd=2, cex.lab=cex.lab)
+	    ref.length <- vectors3d(vectors[1:7, ], color=col[1], lwd=2, cex.lab=cex.lab)
 	    if (show.base > 0) planes3d(0, 0, 1, 0, color=col.plane, alpha=0.2)
 	    if (show.base > 1) planes3d(0, 0, 1, -.01, color=col.plane, alpha=0.1)
 	    lines3d(vectors[c(3, 5), ], color=col[2], lwd=2)     # y -> yhat
@@ -237,7 +237,7 @@ plot.regvec3d <- function(x, y, dimension=3,
 	    lines3d(vectors[c(5, 6), ], color=col[3])            # yhat -> b1
 	    lines3d(vectors[c(5, 7), ], color=col[3])            # yhat -> b2
 	    if (show.marginal){
-	        vectors3d(vectors[8:9, ], color=col[1], cex.lab=cex.lab)
+	        vectors3d(vectors[8:9, ], color=col[1], cex.lab=cex.lab, ref.length=ref.length)
 	        lines3d(vectors[c(3, 8), ], color=col[4])
 	        lines3d(vectors[c(3, 9), ], color=col[4])
 	        corner(origin, vectors[8, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)

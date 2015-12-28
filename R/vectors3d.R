@@ -51,7 +51,7 @@
 #' rgl.bringtotop()
 
 vectors3d <- function(X, origin=c(0,0,0),
-                       headlength=0.05,
+                       headlength=0.035, ref.length=NULL,
                        labels=TRUE, cex.lab=1.2, adj.lab=0.5, frac.lab=1.1,  ...) {
 
   if (is.vector(X)) X <- matrix(X, ncol=3)
@@ -61,7 +61,8 @@ vectors3d <- function(X, origin=c(0,0,0),
 
   scale <- c(1, 1, 1)
   radius <- 1/60
-  arrows3d(OX, headlength=headlength, scale=scale, radius=radius, ...)
+  ref.length <- arrows3d(OX, headlength=headlength, scale=scale, radius=radius, 
+                         ref.length=ref.length, ...)
 
   if (is.logical(labels) && labels) {
     labels <- rownames(X)
@@ -74,6 +75,6 @@ vectors3d <- function(X, origin=c(0,0,0),
     zl = origin[3] + frac.lab * (X[,3]-origin[3])
     text3d(xl, yl, zl, labels, cex=cex.lab, adj=adj.lab, ...)
   }
-
+  return(ref.length)
 }
 

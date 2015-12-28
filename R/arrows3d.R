@@ -65,9 +65,9 @@
 #' # none yet
 
 cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
-  start <- rep( 0, 3 )
+#  start <- rep( 0, 3 )
 
-  if( missing( scale ) ) scale= 1 # was: rep( 1, 0 )
+  if( missing( scale ) ) scale <- 1 # was: rep( 1, 0 )
   else scale <- max( scale ) / scale
 
 
@@ -112,7 +112,8 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #'
 #' @examples
 #' # none yet
-arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radius = NULL, ... ) {
+arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radius = NULL, 
+                      ref.length=NULL, ... ) {
 
   head <- match.arg( head, c( "start", "end", "both" ) )
   narr <- nrow( coords ) / 2
@@ -121,18 +122,24 @@ arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radiu
   starts <- coords[ seq( 1, n, by= 2 ), ]
   ends   <- coords[ seq( 2, n, by= 2 ), ]
   if( missing( radius ) ) radius <- ( max( coords ) - min( coords ) ) / 50
+  
+  lengths <- sqrt(rowSums(ends - starts)^2)
+  
+  if (is.null(ref.length)){
+    ref.length <- max(lengths)
+  }
 
   segments3d( coords, ... )
   if( head == "end" | head == "both" ) {
     for( i in 1:narr ) {
       s <- starts[i,]
       e <- ends[i,]
-      base <- e - ( e - s ) * headlength
-      tip  <- ( e - s ) * headlength
+      base <- e - ( e - s ) * headlength * ref.length/lengths[i]
+      tip  <- ( e - s ) * headlength * ref.length/lengths[i]
       cone3d( base, tip, radius= radius, scale= scale, ... )
     }
   }
-
+  return(c(ref.length=ref.length))
 }
 
 .show.axes <- function(axes.color, ranges) {
