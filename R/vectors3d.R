@@ -10,7 +10,8 @@
 #' @param X a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row
 #' @param origin the origin from which they are drawn, a vector of length 3.
 #' @param headlength the \code{headlength} argument passed to \code{\link{arrows3d}} determining the length of arrow heads
-#' @param ref.length the \code{ref.length} argument passed to \code{\link{arrows3d}} determining the reference length of arrow heads.
+#' @param ref.length vector length to be used in scalling arrow heads so that they are all the same size; if \code{NULL}
+#'        the longest vector is used to scale the arrow heads
 #' @param labels a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
 #'        labels are taken from \code{rownames(X)}. If \code{NULL}, no labels are drawn.
 #' @param cex.lab character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
@@ -20,7 +21,7 @@
 #'        Values \code{frac.lab > 1} locate the label beyond the end of the vector.
 #' @param ... other arguments passed on to graphics functions.
 #'
-#' @return the reference length value used for drawing arrow heads.
+#' @return invisibly returns the vector length used to scale arrow heads
 #' @export
 #' @author Michael Friendly
 #' @seealso \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}, code{\link[rgl]{rgl.material}}
@@ -77,6 +78,6 @@ vectors3d <- function(X, origin=c(0,0,0),
     zl = origin[3] + frac.lab * (X[,3]-origin[3])
     text3d(xl, yl, zl, labels, cex=cex.lab, adj=adj.lab, ...)
   }
-  return(ref.length)
+  invisible(c(ref.length=ref.length))
 }
 

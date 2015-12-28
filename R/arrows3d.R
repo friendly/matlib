@@ -101,14 +101,13 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #' @param headlength Length of the arrow heads, in device units
 #' @param head       Position of the arrow head. Only \code{head="end"} is presently implemented.
 #' @param scale      Scale factor for base and tip of arrow head, a vector of length 3, giving relative scale factors for X, Y, Z
-#' @param radius     Radius of the base of the arrow head
-#' @param ref.length Used to attempt to equate the lengths of the arrow heads for vectors of different lengths. If not specified,
-#'                   the maximum length of the vectors defined by \code{coords} is used, and the actual length of each arrow
-#'                   head is scaled by \code{ref.length / length[i]}.
+#' @param radius     radius of the base of the arrow head
+#' @param ref.length length of vector to be used to scale all of the arrow heads (permits drawing arrow heads of the same size as in a previous call);
+#'                   if \code{NULL}, arrows are scaled relative to the longest vector
 #' @param ...        rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}
 #'
-#' @return           Invisibly, the reference length value used for drawing arrow heads.
-#' @author           January Weiner, borrowed from the \pkg{pca3d} package, modified for use here.
+#' @return           invisibly returns the length of the vector used to scale the arrow heads
+#' @author           January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox
 #' @seealso          \code{\link{vectors3d}}
 #' @family vector diagrams
 #' @export

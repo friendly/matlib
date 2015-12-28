@@ -17,16 +17,15 @@ in each pair is taken as the starting coordinates of the arrow, the second as th
 
 \item{scale}{Scale factor for base and tip of arrow head, a vector of length 3, giving relative scale factors for X, Y, Z}
 
-\item{radius}{Radius of the base of the arrow head}
+\item{radius}{radius of the base of the arrow head}
 
-\item{ref.length}{Used to attempt to equate the lengths of the arrow heads for vectors of different lengths. If not specified,
-the maximum length of the vectors defined by \code{coords} is used, and the actual length of each arrow
-head is scaled by \code{ref.length / length[i]}.}
+\item{ref.length}{length of vector to be used to scale all of the arrow heads (permits drawing arrow heads of the same size as in a previous call);
+if \code{NULL}, arrows are scaled relative to the longest vector}
 
 \item{...}{rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}}
 }
 \value{
-Invisibly, the reference length value used for drawing arrow heads.
+invisibly returns the length of the vector used to scale the arrow heads
 }
 \description{
 Draws nice 3D arrows with \code{cone3d}s at their tips.
@@ -40,7 +39,7 @@ This function is meant to be analogous to \code{\link[graphics]{arrows}}, but fo
  #none yet
 }
 \author{
-January Weiner, borrowed from the \pkg{pca3d} package, modified for use here.
+January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox
 }
 \seealso{
 \code{\link{vectors3d}}

@@ -189,8 +189,10 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'        rows of \code{X}, recycled as necessary.
 #' @param show.base  If \code{show.base > 0}, draws the base plane in a 3D plot; if \code{show.base > 1},
 #'                    the plane is drawn thicker
-#' @param show.hplane If \code{TRUE}, draws the plane defined by \code{y}, \code{yhat} and the origin in the 3D
 #' @param show.marginal  If \code{TRUE} also draws lines showing the marginal relations of \code{y} on \code{x1} and on \code{x2}
+#' @param show.hplane If \code{TRUE}, draws the plane defined by \code{y}, \code{yhat} and the origin in the 3D
+#' @param show.angles If \code{TRUE}, draw and label the angle between the \code{x1} and \code{x2} and between \code{y} and \code{yhat},
+#'                     corresponding respectively to the correlation between the xs and the multiple correlation
 #' @param grid        If \code{TRUE}, draws a light grid on the base plane
 #' @param add         If \code{TRUE}, add to the current plot; otherwise start a new rgl or plot window
 #' @param ...         Parameters passed down to functions [unused now]
@@ -219,7 +221,7 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 plot.regvec3d <- function(x, y, dimension=3,
     col=c("black", "red", "blue", "brown"), col.plane="gray",
     cex.lab=1.2,
-    show.base=2, show.marginal=FALSE, show.hplane=TRUE,
+    show.base=2, show.marginal=FALSE, show.hplane=TRUE, show.angles=TRUE,
     grid=FALSE, add=FALSE, ...){
 #    dimension <- match.arg(dimension)
     vectors <- x$vectors
@@ -242,13 +244,23 @@ plot.regvec3d <- function(x, y, dimension=3,
 	        lines3d(vectors[c(3, 9), ], color=col[4])
 	        corner(origin, vectors[8, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
 	        corner(origin, vectors[9, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
+	        lines3d(vectors[c(5, 8), ], color=col[3])
+	        lines3d(vectors[c(5, 9), ], color=col[3])
+	        corner(origin, vectors[8, ], vectors[5, ], color=col[3], d=0.05, absolute=FALSE)
+	        corner(origin, vectors[9, ], vectors[5, ], color=col[3], d=0.05, absolute=FALSE)
 	    }
 	    if (show.hplane) triangles3d(rbind(vectors[c(3,5),], origin), color=col[2], alpha=0.2)
 	    if (grid) grid3d("z", col="darkgray", lty=2, n=8)
-	    R2 <- summary(x$model)$r.squared
-	    angle <- acos(sqrt(R2))*180/pi
-	    text3d(0.1*(vectors[3, ] + vectors[5, ]), texts=paste(round(angle, 1), "deg."))
-	    arc(vectors[5, ], origin, vectors[3, ], color=col[3])
+	    if (show.angles){
+    	    R2 <- summary(x$model)$r.squared
+    	    angle <- acos(sqrt(R2))*180/pi
+    	    text3d(0.1*(vectors[3, ] + vectors[5, ]), texts=paste(round(angle, 1), "deg."), color=col[4])
+    	    arc(vectors[5, ], origin, vectors[3, ], color=col[4])
+    	    r12 <- crossprod(vectors[1, ], vectors[2, ])/(len(vectors[1, ])*len(vectors[2, ]))
+    	    angle12 <- acos(r12)*180/pi
+    	    text3d(0.1*(vectors[1, ] + vectors[2, ]), texts=paste(round(angle12, 1), "deg."), color=col[3])
+    	    arc(vectors[1, ], origin, vectors[2, ], color=col[3])
+	    }
 	    corner(vectors[5, ], origin, vectors[4, ], color=col[4], d=0.05, absolute=FALSE)
 	    corner(origin, vectors[5, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
     }
