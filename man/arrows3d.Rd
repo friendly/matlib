@@ -5,7 +5,7 @@
 \title{Draw 3D arrows}
 \usage{
 arrows3d(coords, headlength = 0.035, head = "end", scale = NULL,
-  radius = NULL, ...)
+  radius = NULL, ref.length = NULL, ...)
 }
 \arguments{
 \item{coords}{A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs.  The first vector

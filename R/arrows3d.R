@@ -112,19 +112,19 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #'
 #' @examples
 #' # none yet
-arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radius = NULL, 
+arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radius = NULL,
                       ref.length=NULL, ... ) {
 
   head <- match.arg( head, c( "start", "end", "both" ) )
   narr <- nrow( coords ) / 2
   n    <- nrow( coords )
 
-  starts <- coords[ seq( 1, n, by= 2 ), ]
-  ends   <- coords[ seq( 2, n, by= 2 ), ]
+  starts <- coords[ seq( 1, n, by= 2 ), , drop=FALSE]
+  ends   <- coords[ seq( 2, n, by= 2 ), , drop=FALSE]
   if( missing( radius ) ) radius <- ( max( coords ) - min( coords ) ) / 50
-  
+
   lengths <- sqrt(rowSums(ends - starts)^2)
-  
+
   if (is.null(ref.length)){
     ref.length <- max(lengths)
   }

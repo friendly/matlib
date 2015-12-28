@@ -34,11 +34,12 @@
 #' vectors3d(vec, color=c(rep("black",3), "red"), lwd=2)
 #' # draw the XZ plane, whose equation is Y=0
 #' planes3d(0, 0, 1, 0, col="gray", alpha=0.2)
+#' vectors3d(c(1,1,0), col="green", lwd=2)
 #' # show projections of the unit vector J
-#' segments3d(v1 <- rbind(c(1,1,1), c(1, 1, 0)))
-#' segments3d(v2 <- rbind(c(0,0,0), c(1, 1, 0)))
-#' segments3d(v3 <- rbind(c(1,0,0), c(1, 1, 0)))
-#' segments3d(v4 <- rbind(c(0,1,0), c(1, 1, 0)))
+#' segments3d(rbind(c(1,1,1), c(1, 1, 0)))
+#' segments3d(rbind(c(0,0,0), c(1, 1, 0)))
+#' segments3d(rbind(c(1,0,0), c(1, 1, 0)))
+#' segments3d(rbind(c(0,1,0), c(1, 1, 0)))
 #' # show some orthogonal vectors
 #' p1 <- c(0,0,0)
 #' p2 <- c(1,1,0)
@@ -47,7 +48,7 @@
 #' corner(p1, p2, p3, col="red")
 #' corner(p1, p4, p2, col="red")
 #' corner(p1, p4, p3, col="blue")
-
+#'
 #' rgl.bringtotop()
 
 vectors3d <- function(X, origin=c(0,0,0),
@@ -61,7 +62,7 @@ vectors3d <- function(X, origin=c(0,0,0),
 
   scale <- c(1, 1, 1)
   radius <- 1/60
-  ref.length <- arrows3d(OX, headlength=headlength, scale=scale, radius=radius, 
+  ref.length <- arrows3d(OX, headlength=headlength, scale=scale, radius=radius,
                          ref.length=ref.length, ...)
 
   if (is.logical(labels) && labels) {
