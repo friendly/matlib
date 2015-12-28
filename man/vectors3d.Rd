@@ -4,8 +4,8 @@
 \alias{vectors3d}
 \title{Draw 3D vectors}
 \usage{
-vectors3d(X, origin = c(0, 0, 0), headlength = 0.05, labels = TRUE,
-  cex.lab = 1.2, adj.lab = 0.5, frac.lab = 1.1, ...)
+vectors3d(X, origin = c(0, 0, 0), headlength = 0.035, ref.length = NULL,
+  labels = TRUE, cex.lab = 1.2, adj.lab = 0.5, frac.lab = 1.1, ...)
 }
 \arguments{
 \item{X}{a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row}
@@ -13,6 +13,9 @@ vectors3d(X, origin = c(0, 0, 0), headlength = 0.05, labels = TRUE,
 \item{origin}{the origin from which they are drawn, a vector of length 3.}
 
 \item{headlength}{the \code{headlength} argument passed to \code{\link{arrows3d}} determining the length of arrow heads}
+
+\item{ref.length}{vector length to be used in scalling arrow heads so that they are all the same size; if \code{NULL}
+the longest vector is used to scale the arrow heads}
 
 \item{labels}{a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
 labels are taken from \code{rownames(X)}. If \code{NULL}, no labels are drawn.}
@@ -28,7 +31,7 @@ Values \code{frac.lab > 1} locate the label beyond the end of the vector.}
 \item{...}{other arguments passed on to graphics functions.}
 }
 \value{
-none
+invisibly returns the vector length used to scale arrow heads
 }
 \description{
 This function draws vectors in a 3D plot, in a way that facilitates constructing vector diagrams. It allows vectors to be

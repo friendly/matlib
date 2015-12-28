@@ -5,7 +5,7 @@
 \title{Draw 3D arrows}
 \usage{
 arrows3d(coords, headlength = 0.035, head = "end", scale = NULL,
-  radius = NULL, ...)
+  radius = NULL, ref.length = NULL, ...)
 }
 \arguments{
 \item{coords}{A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs.  The first vector
@@ -19,10 +19,13 @@ in each pair is taken as the starting coordinates of the arrow, the second as th
 
 \item{radius}{radius of the base of the arrow head}
 
+\item{ref.length}{length of vector to be used to scale all of the arrow heads (permits drawing arrow heads of the same size as in a previous call); 
+if \code{NULL}, arrows are scaled relative to the longest vector}
+
 \item{...}{rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}}
 }
 \value{
-none
+invisibly returns the length of the vector used to scale the arrow heads
 }
 \description{
 Draws nice 3D arrows with \code{cone3d}s at their tips.
@@ -36,7 +39,7 @@ This function is meant to be analogous to \code{\link[graphics]{arrows}}, but fo
 # none yet
 }
 \author{
-January Weiner, borrowed from the \pkg{pca3d} package
+January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox
 }
 \seealso{
 \code{\link{vectors3d}}

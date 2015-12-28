@@ -102,10 +102,12 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #' @param head       Position of the arrow head. Only \code{head="end"} is presently implemented.
 #' @param scale      scale factor for base and tip of arrow head
 #' @param radius     radius of the base of the arrow head
+#' @param ref.length length of vector to be used to scale all of the arrow heads (permits drawing arrow heads of the same size as in a previous call); 
+#'                   if \code{NULL}, arrows are scaled relative to the longest vector
 #' @param ...        rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}
 #'
-#' @return           none
-#' @author           January Weiner, borrowed from the \pkg{pca3d} package
+#' @return           invisibly returns the length of the vector used to scale the arrow heads
+#' @author           January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox
 #' @seealso          \code{\link{vectors3d}}
 #' @family vector diagrams
 #' @export
@@ -139,7 +141,7 @@ arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radiu
       cone3d( base, tip, radius= radius, scale= scale, ... )
     }
   }
-  return(c(ref.length=ref.length))
+  invisible(c(ref.length=ref.length))
 }
 
 .show.axes <- function(axes.color, ranges) {

@@ -8,8 +8,8 @@
 \usage{
 \method{plot}{regvec3d}(x, y, dimension = 3, col = c("black", "red", "blue",
   "brown"), col.plane = "gray", cex.lab = 1.2, show.base = 2,
-  show.marginal = FALSE, show.hplane = TRUE, grid = FALSE, add = FALSE,
-  ...)
+  show.marginal = FALSE, show.hplane = TRUE, show.angles = TRUE,
+  grid = FALSE, add = FALSE, ...)
 
 \method{summary}{regvec3d}(object, ...)
 
@@ -35,6 +35,9 @@ the plane is drawn thicker}
 \item{show.marginal}{If \code{TRUE} also draws lines showing the marginal relations of \code{y} on \code{x1} and on \code{x2}}
 
 \item{show.hplane}{If \code{TRUE}, draws the plane defined by \code{y}, \code{yhat} and the origin in the 3D}
+
+\item{show.angles}{If \code{TRUE}, draw and label the angle between the \code{x1} and \code{x2} and between \code{y} and \code{yhat},
+corresponding respectively to the correlation between the xs and the multiple correlation}
 
 \item{grid}{If \code{TRUE}, draws a light grid on the base plane}
 
