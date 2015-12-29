@@ -7,21 +7,22 @@
 #' @section Bugs:
 #' At present, the color (\code{color=}) argument is not handled as expected when more than one vector is to be drawn.
 #'
-#' @param X a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row
-#' @param origin the origin from which they are drawn, a vector of length 3.
+#' @param X          a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row
+#' @param origin     the origin from which they are drawn, a vector of length 3.
 #' @param headlength the \code{headlength} argument passed to \code{\link{arrows3d}} determining the length of arrow heads
 #' @param ref.length vector length to be used in scalling arrow heads so that they are all the same size; if \code{NULL}
 #'        the longest vector is used to scale the arrow heads
-#' @param labels a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
+#' @param radius     radius of the base of the arrow heads
+#' @param labels     a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
 #'        labels are taken from \code{rownames(X)}. If \code{NULL}, no labels are drawn.
-#' @param cex.lab character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
+#' @param cex.lab    character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
 #'        rows of \code{X}, recycled as necessary.
-#' @param adj.lab label position relative to the label point as in \code{\link[rgl]{text3d}}, recycled as necessary.
-#' @param frac.lab location of label point, as a fraction of the distance between \code{origin} and \code{X}, recycled as necessary.
+#' @param adj.lab    label position relative to the label point as in \code{\link[rgl]{text3d}}, recycled as necessary.
+#' @param frac.lab   location of label point, as a fraction of the distance between \code{origin} and \code{X}, recycled as necessary.
 #'        Values \code{frac.lab > 1} locate the label beyond the end of the vector.
-#' @param ... other arguments passed on to graphics functions.
+#' @param ...        other arguments passed on to graphics functions.
 #'
-#' @return invisibly returns the vector length used to scale arrow heads
+#' @return invisibly returns the vector \code{ref.length} used to scale arrow heads
 #' @export
 #' @author Michael Friendly
 #' @seealso \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}, code{\link[rgl]{rgl.material}}
@@ -54,7 +55,7 @@
 #' rgl.bringtotop()
 
 vectors3d <- function(X, origin=c(0,0,0),
-                       headlength=0.035, ref.length=NULL,
+                       headlength=0.035, ref.length=NULL, radius=1/60,
                        labels=TRUE, cex.lab=1.2, adj.lab=0.5, frac.lab=1.1,  ...) {
 
   if (is.vector(X)) X <- matrix(X, ncol=3)
@@ -63,7 +64,7 @@ vectors3d <- function(X, origin=c(0,0,0),
   OX <- X[ as.vector(rbind(1:n, n+1:n)), ]
 
   scale <- c(1, 1, 1)
-  radius <- 1/60
+#  radius <- 1/60
   ref.length <- arrows3d(OX, headlength=headlength, scale=scale, radius=radius,
                          ref.length=ref.length, ...)
 
