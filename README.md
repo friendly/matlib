@@ -78,7 +78,7 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
 7. Vector diagrams: functions for drawing vector diagrams in 2D and 3D
 
   - `arrows3d()` - draw nice 3D arrows
-  - `corner()` -  draw a corner showing the angle between two vectors
+  - `corner()`, `arc()` -  draw a corner or arc showing the angle between two vectors in 2D/3D
   - `point_on_line()` - position of a point along a line
   - `vectors()`, `vectors3d()` - plot geometric vector diagrams 
   - `regvec3d()` - calculate and plot vectors representing a bivariate regression model, `y ~ x1 + x2`.
