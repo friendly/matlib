@@ -24,7 +24,7 @@ is calculated as a relative distance, i.e., a fraction of the length of the vect
 none
 }
 \description{
-A utility function for drawing vector diagrams. Draws a circular arc to show the angle between two vectors.
+A utility function for drawing vector diagrams. Draws a circular arc to show the angle between two vectors in 2D or 3D.
 }
 \details{
 In this implementation, the two vectors are specified by three points, \code{p1}, \code{p2}, \code{p3}, meaning

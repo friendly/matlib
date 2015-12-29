@@ -67,7 +67,7 @@ corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
 
 #' Draw an arc showing the angle between vectors
 #'
-#' A utility function for drawing vector diagrams. Draws a circular arc to show the angle between two vectors.
+#' A utility function for drawing vector diagrams. Draws a circular arc to show the angle between two vectors in 2D or 3D.
 #'
 #'
 #' In this implementation, the two vectors are specified by three points, \code{p1}, \code{p2}, \code{p3}, meaning
