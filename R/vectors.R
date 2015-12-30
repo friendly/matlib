@@ -45,11 +45,11 @@
 #' corner(c(0,0), Proj(v,u), v, col="grey")
 
 vectors <- function(X, origin=c(0,0),
-                    lwd=2, angle=10, length=0.15,
+                    lwd=2, angle=13, length=0.15,
                     labels=TRUE, cex.lab=1.5, pos.lab=4, frac.lab=1,  ...) {
 
   if (is.vector(X)) X <- matrix(X, ncol=2)
-  arrows(origin[1], origin[2], X[,1], X[,2], lwd=lwd, angle=angle, length=length, ...)
+  .arrows(origin[1], origin[2], X[,1], X[,2], lwd=lwd, length=length, angle=angle, ...)
   if (is.logical(labels) && labels) {
     labels <- rownames(X)
   }
@@ -60,4 +60,11 @@ vectors <- function(X, origin=c(0,0),
     yl = origin[2] + frac.lab * (X[,2]-origin[2])
     text(xl, yl, labels, cex=cex.lab, pos=pos.lab, ...)
   }
+}
+
+# the following function isn't exported
+
+.arrows <- function(..., angle=13){
+  angles <- seq(1, angle, by=2)
+  for (ang in angles) arrows(..., angle=ang)
 }

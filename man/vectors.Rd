@@ -4,7 +4,7 @@
 \alias{vectors}
 \title{Draw geometric vectors in 2D}
 \usage{
-vectors(X, origin = c(0, 0), lwd = 2, angle = 10, length = 0.15,
+vectors(X, origin = c(0, 0), lwd = 2, angle = 13, length = 0.15,
   labels = TRUE, cex.lab = 1.5, pos.lab = 4, frac.lab = 1, ...)
 }
 \arguments{

@@ -273,6 +273,14 @@ plot.regvec3d <- function(x, y, dimension=3,
         vectors(vecs2D, pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], cex.lab=cex.lab, xpd=TRUE)
         lines(vecs2D[c(3, 4),], col=col[4], lwd=2)
         lines(vecs2D[c(3, 5),], col=col[4], lwd=2)
+        if (show.angles){
+          arc(vecs2D[1, ], c(0, 0), vecs2D[2, ], d=0.2, absolute=FALSE, col=col[3])
+          r12 <- crossprod(vectors[1, ], vectors[2, ])/(len(vectors[1, ])*len(vectors[2, ]))
+          angle12 <- acos(r12)*180/pi
+          txt.coords <- 0.2*(vecs2D[1, ] + vecs2D[2, ])
+          text(txt.coords[1], txt.coords[2], paste(round(angle12, 1), "deg."), 
+               col=col[3])
+        }
     }
 }
 
