@@ -215,6 +215,7 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'    # Example showing Simpson's paradox
 #'    states.vec <- regvec3d(SATM ~ pay + percent, data=car::States, scale=TRUE)
 #'    plot(states.vec, show.marginal=TRUE)
+#'    plot(states.vec, show.marginal=TRUE, dimension=2)
 #'    summary(states.vec)
 #' }
 
@@ -265,14 +266,21 @@ plot.regvec3d <- function(x, y, dimension=3,
 	    corner(origin, vectors[5, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
     }
     else {
-        vecs2D <- vectors[c(1,2,5,6,7), 1:2]
+        vecs2D <- vectors[c(1,2,5,6,7,8,9), 1:2]
         xlim <- range(vecs2D[,1]) + c(-.1, .1)
         ylim <- range(vecs2D[,2]) + c(-.1, .1)
         if (!add) plot(xlim, ylim, type="n", xlab="", ylab="", asp=1, axes=FALSE)
         abline(h=0, v=0, col=col.plane)
-        vectors(vecs2D, pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], cex.lab=cex.lab, xpd=TRUE)
-        lines(vecs2D[c(3, 4),], col=col[4], lwd=2)
-        lines(vecs2D[c(3, 5),], col=col[4], lwd=2)
+        if (show.marginal){
+            vectors(vecs2D[6:7, ], pos.lab=c(4, 4), col=col[c(1, 1)], cex.lab=cex.lab, xpd=TRUE)
+            lines(vecs2D[c(3, 6), ], col=col[4], lty=2)
+            lines(vecs2D[c(3, 7), ], col=col[4], lty=2)
+            corner(c(0, 0), vecs2D[6, ], vecs2D[3, ], col=col[4])
+            corner(c(0, 0), vecs2D[7, ], vecs2D[3, ], col=col[4])
+        }
+        vectors(vecs2D[1:5, ], pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], cex.lab=cex.lab, xpd=TRUE)
+        lines(vecs2D[c(3, 4),], col=col[3], lty=2)
+        lines(vecs2D[c(3, 5),], col=col[3], lty=2)
         if (show.angles){
           arc(vecs2D[1, ], c(0, 0), vecs2D[2, ], d=0.2, absolute=FALSE, col=col[3])
           r12 <- crossprod(vectors[1, ], vectors[2, ])/(len(vectors[1, ])*len(vectors[2, ]))

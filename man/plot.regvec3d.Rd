@@ -84,6 +84,7 @@ if (require(car)) {
    # Example showing Simpson's paradox
    states.vec <- regvec3d(SATM ~ pay + percent, data=car::States, scale=TRUE)
    plot(states.vec, show.marginal=TRUE)
+   plot(states.vec, show.marginal=TRUE, dimension=2)
    summary(states.vec)
 }
 }
