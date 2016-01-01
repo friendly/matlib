@@ -275,8 +275,8 @@ plot.regvec3d <- function(x, y, dimension=3,
             vectors(vecs2D[6:7, ], pos.lab=c(4, 4), col=col[c(1, 1)], cex.lab=cex.lab, xpd=TRUE)
             lines(vecs2D[c(3, 6), ], col=col[4], lty=2)
             lines(vecs2D[c(3, 7), ], col=col[4], lty=2)
-            corner(c(0, 0), vecs2D[6, ], vecs2D[3, ], col=col[4])
-            corner(c(0, 0), vecs2D[7, ], vecs2D[3, ], col=col[4])
+            corner(c(0, 0), vecs2D[6, ], vecs2D[3, ], col=col[4], absolute=FALSE)
+            corner(c(0, 0), vecs2D[7, ], vecs2D[3, ], col=col[4], absolute=FALSE)
         }
         vectors(vecs2D[1:5, ], pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], cex.lab=cex.lab, xpd=TRUE)
         lines(vecs2D[c(3, 4),], col=col[3], lty=2)
