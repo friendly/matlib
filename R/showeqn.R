@@ -31,21 +31,39 @@ showEqn <- function(A, b, vars, simplify=FALSE) {
     b <- A[,ncol(A)]   # assume last column of Ab
     A <- A[,-ncol(A)]  # remove b from A
   }
+  else b <- as.character(b)
   if (missing(vars)) vars <- paste0("x", 1:ncol(A))
+  V <- substr(vars[1], 1, 1)
+  pat <- gsub("x", V, "0\\*x\\d\\s+[+-]|[+-]\\s+0\\*x\\d")
   res <- character(nrow(A))
-  for (i in 1:nrow(A)) {
-    res[i] <- paste(A[i,], "*", vars, sep="", collapse=" + ")
+  res.matrix <- matrix("", nrow(A), ncol(A))
+  for (i in 1:nrow(A)){
+    for (j in 1:ncol(A)){
+      res.matrix[i, j] <- paste0(A[i, j], "*", vars[j])
+      if (j > 1) res.matrix[i, j] <- paste0(" + ", res.matrix[i, j])
+      res.matrix[i, j] <- gsub("+ -", "- ", res.matrix[i, j], fixed=TRUE)  # map "+ -3" -> "-3"
+      if (simplify) {
+        res.matrix[i, j] <- gsub("1*", "", res.matrix[i, j], fixed=TRUE)    # "1*x" -> "x"
+        res.matrix[i, j] <- gsub(pat, "", res.matrix[i, j])   # "+ 0*x" -> ""
+        res.matrix[i, j] <- gsub("  ", " ", res.matrix[i, j], fixed=TRUE)
+      }
+    }
+  }
+  max.chars <- apply(res.matrix, 2, function(x) max(nchar(x)))
+  max.chars.b <- max(nchar(b))
+  for (i in 1:nrow(A)){
+    for (j in 1:ncol(A)){
+      res.matrix[i, j] <- paste0(paste(rep(" ", max.chars[j] - nchar(res.matrix[i, j])), collapse=""), 
+                                 res.matrix[i, j])
+    }
+    res[i] <- paste0(res.matrix[i, ], collapse="")
+    b[i] <- paste0(paste(rep(" ", max.chars.b - nchar(b[i])), collapse=""), b[i])
     res[i] <- paste(res[i], " = ", b[i])
   }
-  res <- gsub("+ -", "- ", res, fixed=TRUE)  # map "+ -3" -> "-3"
-  if (simplify) {
-    res <- gsub("1*", "", res, fixed=TRUE)    # "1*x" -> "x"
-    V <- substr(vars[1], 1,1)
-    pat <- gsub("x", V, "0\\*x\\d\\s+[+-]|[+-]\\s+0\\*x\\d")
-    res <- gsub(pat, "", res)   # "+ 0*x" -> ""
-    res <- gsub("  ", " ", res, fixed=TRUE)
+  for (i in 1:length(res)){
+    cat(res[i], "\n")
   }
-  matrix(res, ncol=1)
+  invisible(res)
 }
 
 
