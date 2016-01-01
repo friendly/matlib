@@ -36,7 +36,7 @@ The general conditions for solutions are:
 - the equations are *consistent* (solutions exist) if $r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A})$
     - the solution is *unique* if $r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A}) = n$
     - the solution is *underdetermined* if $r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A}) < n$
-- the equations are *inconsistent* (no solutions) if $r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A})$
+- the equations are *inconsistent* (no solutions) if $r( \mathbf{A} | \mathbf{b}) > r( \mathbf{A})$
 
 We use `c( R(A), R(cbind(A,b)) )` to show the ranks, and `all.equal( R(A), R(cbind(A,b)) )` to test
 for consistency.
