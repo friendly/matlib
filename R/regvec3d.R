@@ -83,14 +83,17 @@ regvec3d.formula <- function(formula, data=NULL, which=1:2, name.x1, name.x2,
         y <- residuals(lm.fit(X1, y))
         x1 <- residuals(lm.fit(X1, X[, which[1]]))
         x2 <- residuals(lm.fit(X1, X[, which[2]]))
+        const.names <- if (ncol(X) <= 4) paste("|", paste(colnames(X)[-which], collapse=", "))
+                                else "| others"
     }
     else{
         x1 <- X[, 1]
         x2 <- X[, 2]
+        const.names <-""
     }
-    if (missing(name.x1)) name.x1 <- colnames(X)[which[1]]
-    if (missing(name.x2)) name.x2 <- colnames(X)[which[2]]
-    if (missing(name.y)) name.y <- as.character(formula[2])
+    if (missing(name.x1)) name.x1 <- paste(colnames(X)[which[1]], const.names)
+    if (missing(name.x2)) name.x2 <- paste(colnames(X)[which[2]], const.names)
+    if (missing(name.y)) name.y <- paste(as.character(formula[2]), const.names)
     if (abbreviate > 0){
         name.x1 <- abbreviate(name.x1, abbreviate)
         name.x2 <- abbreviate(name.x2, abbreviate)
@@ -127,9 +130,13 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
     force(name.b2.x2)
     force(name.y1.hat)
     force(name.y2.hat)
-    formula <- as.formula(paste(name.y, "~", name.x1, "+", name.x2))
+    nms <- make.names(c(name.y, name.x1, name.x2), unique=TRUE)
+    nm.y <- nms[1]
+    nm.x1 <- nms[2]
+    nm.x2 <- nms[3]
+    formula <- as.formula(paste(nm.y, "~",nm.x1, "+", nm.x2))
     Data <- data.frame(y, x1, x2)
-    names(Data) <- c(name.y, name.x1, name.x2)
+    names(Data) <- nms
     model <- lm(formula, data=Data)
     len <- function(x) sqrt(sum(x^2))
     n <- length(y)
