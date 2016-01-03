@@ -16,7 +16,7 @@ check:
 	Rscript -e "devtools::check(document = FALSE, args = '--as-cran')"
 
 news:
-	sed -e 's/^-/  -/' -e 's/^## *//' -e 's/^# //' <NEWS.md | fmt -80 >NEWS
+	sed -e 's/^-/  -/' -e 's/^## *//' -e 's/^# //' <NEWS.md > NEWS
 
 vignettes:
 	Rscript -e "setwd('vignettes');library('knitr');files=dir("*.Rmd");for(file in files) knit2html(file)"

@@ -3,6 +3,10 @@
 - use `corner()` in vectors3d.Rd
 - added `arc()` for 2D, 3D vector diagrams
 - added `regvec3d()` for 2D, 3D vector diagrams representing a bivariate multiple regression model, `lm(y ~ x1 + x2)` [thx: John Fox]
+- added internal `.arrows()` to produce nice arrows in 2D `vector()` diagrams
+- fixed numerous small problems in vector diagrams
+- fixed some erroneous statements in vignettes
+- `showEqn()` now aligns terms vertically and prints without quotes
 
 # matlib 0.6.0
 
