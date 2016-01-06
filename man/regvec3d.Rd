@@ -26,7 +26,7 @@ regvec3d(x1, ...)
 
 \item{formula}{A two-sided formula for the linear regression model. It must contain two quantitative predictors
 (\code{x1} and \code{x2}) on the right-hand-side.  If further predictors are included, \code{y},
-\code{x1} and \code{x2} are taken as residuals from the}
+\code{x1} and \code{x2} are taken as residuals from the their linear fits on these variables.}
 
 \item{data}{A data frame in which the variables in the model are found}
 
@@ -73,12 +73,16 @@ An object of class \dQuote{regvec3d}, containing the following components
 }
 \description{
 \code{regvec3d} calculates the 3D vectors that represent the projection of a two-variable multiple
-regression model from n-D observation space into the 3D mean-deviation space that they span, thus
-showing the regression of \code{y} on \code{x1} and \code{x2}.
+regression model from n-D \emph{observation} space into the 3D mean-deviation \emph{variable} space that they span, thus
+showing the regression of \code{y} on \code{x1} and \code{x2} in the model \code{lm(y ~ x1 + x2)}.
 The result can be used to draw 2D and 3D vector diagrams accurately reflecting the partial and marginal
 relations of \code{y} to \code{x1} and \code{x2} as vectors in this representation.
 }
 \details{
+If additional variables are included in the model, e.g., \code{lm(y ~ x1 + x2 + x3 + ...)}, then
+\code{y}, \code{x1} and \code{x2} are all taken as \emph{residuals} from their separate linear fits
+on \code{x3 + ...}, thus showing their partial relations net of (or adjusting for) these additional predictors.
+
 A 3D diagram shows the vector \code{y} and the plane formed by the predictors,
 \code{x1} and \code{x2}, where all variables are represented in deviation form, so that
 the intercept need not be included.

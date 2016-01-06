@@ -51,7 +51,7 @@ corresponding respectively to the correlation between the xs and the multiple co
 None
 }
 \description{
-The plot method for \code{regvec3d} objects uses the low-level graphics tools in this package to draw 3D and 2D
+The plot method for \code{regvec3d} objects uses the low-level graphics tools in this package to draw 3D and 3D
 vector diagrams reflecting the partial and marginal
 relations of \code{y} to \code{x1} and \code{x2} in a bivariate multiple linear regression model,
 \code{lm(y ~ x1 + x2)}.
@@ -69,7 +69,7 @@ the intercept need not be included.
 A 2D diagram, using the first two columns of the result, can be used to show the projection
 of the space in the \code{x1}, \code{x2} plane.
 
-The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{plot.regvec3d} method only work
+The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
 reasonably well if the variables are shown on commensurate scales, i.e., with
 either \code{scale=TRUE} or \code{normalize=TRUE}.
 }

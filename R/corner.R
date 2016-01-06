@@ -2,11 +2,18 @@
 #'
 #' A utility function for drawing vector diagrams. Find position of an interpolated point along a line from \code{x1} to \code{x2}.
 #'
+#' The function takes a step of length \code{d} along the line defined by the difference between the two points, \code{x2 - x1}.
+#' When \code{absolute=FALSE}, this step is proportional to the difference,
+#' while when \code{absolute=TRUE}, the difference is first scaled to unit length so that the step is always of length \code{d}.
+#' Note that the physical length of a line in different directions in a graph depends on the aspect ratio of the plot axes,
+#' and lines of the same length will only appear equal if the aspect ratio is one
+#' (\code{asp=1} in 2D, or \code{aspect3d("iso")} in 3D).
+#'
 #' @param x1  A vector of length 2 or 3, representing the starting point of a line in  2D or 3D space
 #' @param x2  A vector of length 2 or 3, representing the ending point of a line in  2D or 3D space
-#' @param d   The distance along the line from \code{x1} to \code{x2} of the point to be found
+#' @param d   The distance along the line from \code{x1} to \code{x2} of the point to be found.
 #' @param absolute logical; if \code{TRUE}, \code{d} is taken as an absolute distance along the line; otherwise it
-#'            is calculated as a relative distance, i.e., a fraction of the length of the line
+#'            is calculated as a relative distance, i.e., a fraction of the length of the line.
 #' @return The interpolated point, a vector of the same length as \code{x1}
 #' @family vector diagrams
 #' @examples
@@ -23,7 +30,7 @@
 
 point_on_line <- function(x1, x2, d, absolute=TRUE) {
 	v <- x2 - x1
-	if (!absolute) v <- v / len(v)
+	if (absolute) v <- v / len(v)
 	x1 + d * v
 }
 
@@ -42,6 +49,7 @@ point_on_line <- function(x1, x2, d, absolute=TRUE) {
 #' @param d  The distance from \code{p2} along each vector for drawing their corner
 #' @param absolute logical; if \code{TRUE}, \code{d} is taken as an absolute distance along the vectors; otherwise it
 #'            is calculated as a relative distance, i.e., a fraction of the length of the vectors.
+#'            See \code{\link{point_on_line}} for the precise definition.
 #' @param ... Arguments passed to \code{link[graphics]{lines}} or to \code{link[rgl]{lines3d}}
 #'
 #' @return none
@@ -105,9 +113,9 @@ corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
 #' p3 <- c(1,1,1)
 #' p4 <- c(1,0,0)
 #' # show some angles
-#' arc(p1, p2, p3, d=.2, absolute=FALSE)
-#' arc(p4, p1, p2, d=.2, absolute=FALSE)
-#' arc(p3, p1, p2, d=.2, absolute=FALSE)
+#' arc(p1, p2, p3, d=.2)
+#' arc(p4, p1, p2, d=.2)
+#' arc(p3, p1, p2, d=.2)
 
 arc <- function (p1, p2, p3, d=.10, absolute=TRUE, ... ) {
   A <- point_on_line(p2, p1, d=d, absolute=absolute)

@@ -2,10 +2,14 @@
 #' Vector space representation of a two-variable regression model
 #'
 #' \code{regvec3d} calculates the 3D vectors that represent the projection of a two-variable multiple
-#' regression model from n-D observation space into the 3D mean-deviation space that they span, thus
-#' showing the regression of \code{y} on \code{x1} and \code{x2}.
+#' regression model from n-D \emph{observation} space into the 3D mean-deviation \emph{variable} space that they span, thus
+#' showing the regression of \code{y} on \code{x1} and \code{x2} in the model \code{lm(y ~ x1 + x2)}.
 #' The result can be used to draw 2D and 3D vector diagrams accurately reflecting the partial and marginal
 #' relations of \code{y} to \code{x1} and \code{x2} as vectors in this representation.
+#'
+#' If additional variables are included in the model, e.g., \code{lm(y ~ x1 + x2 + x3 + ...)}, then
+#' \code{y}, \code{x1} and \code{x2} are all taken as \emph{residuals} from their separate linear fits
+#' on \code{x3 + ...}, thus showing their partial relations net of (or adjusting for) these additional predictors.
 #'
 #' A 3D diagram shows the vector \code{y} and the plane formed by the predictors,
 #' \code{x1} and \code{x2}, where all variables are represented in deviation form, so that
@@ -45,7 +49,7 @@ regvec3d <- function(x1, ...){
 
 #' @param formula     A two-sided formula for the linear regression model. It must contain two quantitative predictors
 #'                    (\code{x1} and \code{x2}) on the right-hand-side.  If further predictors are included, \code{y},
-#'                    \code{x1} and \code{x2} are taken as residuals from the
+#'                    \code{x1} and \code{x2} are taken as residuals from the their linear fits on these variables.
 #' @param data        A data frame in which the variables in the model are found
 #' @param which       Indices of predictors variables in the model taken as \code{x1} and \code{x2}
 #' @param name.x1     Name for \code{x1} to be used in the result and plots. By default, this is taken as the
@@ -171,7 +175,7 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 
 #' Plot method for regvec3d objects
 #'
-#' The plot method for \code{regvec3d} objects uses the low-level graphics tools in this package to draw 3D and 2D
+#' The plot method for \code{regvec3d} objects uses the low-level graphics tools in this package to draw 3D and 3D
 #' vector diagrams reflecting the partial and marginal
 #' relations of \code{y} to \code{x1} and \code{x2} in a bivariate multiple linear regression model,
 #' \code{lm(y ~ x1 + x2)}.
@@ -183,7 +187,7 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #' A 2D diagram, using the first two columns of the result, can be used to show the projection
 #' of the space in the \code{x1}, \code{x2} plane.
 #'
-#' The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{plot.regvec3d} method only work
+#' The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
 #' reasonably well if the variables are shown on commensurate scales, i.e., with
 #' either \code{scale=TRUE} or \code{normalize=TRUE}.
 #'
@@ -231,9 +235,15 @@ plot.regvec3d <- function(x, y, dimension=3,
     cex.lab=1.2,
     show.base=2, show.marginal=FALSE, show.hplane=TRUE, show.angles=TRUE,
     grid=FALSE, add=FALSE, ...){
-#    dimension <- match.arg(dimension)
+
+    angle <- function(v1, v2) {
+      r12 <- crossprod(v1, v2)/(len(v1)*len(v2))
+      acos(r12)*180/pi
+    }
+
     vectors <- x$vectors
     origin <- c(0,0,0)
+    abs <- TRUE
     if (dimension == 3){
 			if (!add) {
 			  open3d()
@@ -250,50 +260,48 @@ plot.regvec3d <- function(x, y, dimension=3,
 	        vectors3d(vectors[8:9, ], color=col[1], cex.lab=cex.lab, ref.length=ref.length)
 	        lines3d(vectors[c(3, 8), ], color=col[4])
 	        lines3d(vectors[c(3, 9), ], color=col[4])
-	        corner(origin, vectors[8, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
-	        corner(origin, vectors[9, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
+	        corner(origin, vectors[8, ], vectors[3, ], color=col[4], d=0.05, absolute=abs)
+	        corner(origin, vectors[9, ], vectors[3, ], color=col[4], d=0.05, absolute=abs)
 	        lines3d(vectors[c(5, 8), ], color=col[3])
 	        lines3d(vectors[c(5, 9), ], color=col[3])
-	        corner(origin, vectors[8, ], vectors[5, ], color=col[3], d=0.05, absolute=FALSE)
-	        corner(origin, vectors[9, ], vectors[5, ], color=col[3], d=0.05, absolute=FALSE)
+	        corner(origin, vectors[8, ], vectors[5, ], color=col[3], d=0.05, absolute=abs)
+	        corner(origin, vectors[9, ], vectors[5, ], color=col[3], d=0.05, absolute=abs)
 	    }
 	    if (show.hplane) triangles3d(rbind(vectors[c(3,5),], origin), color=col[2], alpha=0.2)
 	    if (grid) grid3d("z", col="darkgray", lty=2, n=8)
 	    if (show.angles){
     	    R2 <- summary(x$model)$r.squared
-    	    angle <- acos(sqrt(R2))*180/pi
-    	    text3d(0.1*(vectors[3, ] + vectors[5, ]), texts=paste(round(angle, 1), "deg."), color=col[4])
+    	    angleR2 <- acos(sqrt(R2))*180/pi
+    	    text3d(0.1*(vectors[3, ] + vectors[5, ]), texts=paste(round(angleR2, 1), "deg."), color=col[4])
     	    arc(vectors[5, ], origin, vectors[3, ], color=col[4])
-    	    r12 <- crossprod(vectors[1, ], vectors[2, ])/(len(vectors[1, ])*len(vectors[2, ]))
-    	    angle12 <- acos(r12)*180/pi
+    	    angle12 <- angle(vectors[1,], vectors[2,])
     	    text3d(0.1*(vectors[1, ] + vectors[2, ]), texts=paste(round(angle12, 1), "deg."), color=col[3])
     	    arc(vectors[1, ], origin, vectors[2, ], color=col[3])
 	    }
-	    corner(vectors[5, ], origin, vectors[4, ], color=col[4], d=0.05, absolute=FALSE)
-	    corner(origin, vectors[5, ], vectors[3, ], color=col[4], d=0.05, absolute=FALSE)
+	    corner(vectors[5, ], origin, vectors[4, ], color=col[4], d=0.05, absolute=abs)
+	    corner(origin, vectors[5, ], vectors[3, ], color=col[4], d=0.05, absolute=abs)
     }
     else {
         vecs2D <- vectors[c(1,2,5,6,7,8,9), 1:2]
         xlim <- range(vecs2D[,1]) + c(-.1, .1)
         ylim <- range(vecs2D[,2]) + c(-.1, .1)
-        if (!add) plot(xlim, ylim, type="n", xlab="", ylab="", asp=1, axes=FALSE)
+        if (!add) plot(xlim, ylim, type="n", xlab="", ylab="", asp=1, axes=abs)
         abline(h=0, v=0, col=col.plane)
         if (show.marginal){
             vectors(vecs2D[6:7, ], pos.lab=c(4, 4), col=col[c(1, 1)], cex.lab=cex.lab, xpd=TRUE)
             lines(vecs2D[c(3, 6), ], col=col[4], lty=2)
             lines(vecs2D[c(3, 7), ], col=col[4], lty=2)
-            corner(c(0, 0), vecs2D[6, ], vecs2D[3, ], col=col[4], absolute=FALSE)
-            corner(c(0, 0), vecs2D[7, ], vecs2D[3, ], col=col[4], absolute=FALSE)
+            corner(c(0, 0), vecs2D[6, ], vecs2D[3, ], col=col[4], absolute=abs)
+            corner(c(0, 0), vecs2D[7, ], vecs2D[3, ], col=col[4], absolute=abs)
         }
         vectors(vecs2D[1:5, ], pos.lab=c(4, 4, 4, 1, 2), col=col[c(1, 1, 2, 3, 3)], cex.lab=cex.lab, xpd=TRUE)
         lines(vecs2D[c(3, 4),], col=col[3], lty=2)
         lines(vecs2D[c(3, 5),], col=col[3], lty=2)
         if (show.angles){
-          arc(vecs2D[1, ], c(0, 0), vecs2D[2, ], d=0.2, absolute=FALSE, col=col[3])
-          r12 <- crossprod(vectors[1, ], vectors[2, ])/(len(vectors[1, ])*len(vectors[2, ]))
-          angle12 <- acos(r12)*180/pi
+          arc(vecs2D[1, ], c(0, 0), vecs2D[2, ], d=0.2, absolute=abs, col=col[3])
+          angle12 <- angle(vectors[1,], vectors[2,])
           txt.coords <- 0.2*(vecs2D[1, ] + vecs2D[2, ])
-          text(txt.coords[1], txt.coords[2], paste(round(angle12, 1), "deg."), 
+          text(txt.coords[1], txt.coords[2], paste(round(angle12, 1), "deg."),
                col=col[3])
         }
     }

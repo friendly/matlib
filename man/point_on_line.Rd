@@ -11,16 +11,24 @@ point_on_line(x1, x2, d, absolute = TRUE)
 
 \item{x2}{A vector of length 2 or 3, representing the ending point of a line in  2D or 3D space}
 
-\item{d}{The distance along the line from \code{x1} to \code{x2} of the point to be found}
+\item{d}{The distance along the line from \code{x1} to \code{x2} of the point to be found.}
 
 \item{absolute}{logical; if \code{TRUE}, \code{d} is taken as an absolute distance along the line; otherwise it
-is calculated as a relative distance, i.e., a fraction of the length of the line}
+is calculated as a relative distance, i.e., a fraction of the length of the line.}
 }
 \value{
 The interpolated point, a vector of the same length as \code{x1}
 }
 \description{
 A utility function for drawing vector diagrams. Find position of an interpolated point along a line from \code{x1} to \code{x2}.
+}
+\details{
+The function takes a step of length \code{d} along the line defined by the difference between the two points, \code{x2 - x1}.
+When \code{absolute=FALSE}, this step is proportional to the difference,
+while when \code{absolute=TRUE}, the difference is first scaled to unit length so that the step is always of length \code{d}.
+Note that the physical length of a line in different directions in a graph depends on the aspect ratio of the plot axes,
+and lines of the same length will only appear equal if the aspect ratio is one
+(\code{asp=1} in 2D, or \code{aspect3d("iso")} in 3D).
 }
 \examples{
 x1 <- c(0, 0)

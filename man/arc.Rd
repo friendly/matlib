@@ -52,9 +52,9 @@ p2 <- c(1,1,0)
 p3 <- c(1,1,1)
 p4 <- c(1,0,0)
 # show some angles
-arc(p1, p2, p3, d=.2, absolute=FALSE)
-arc(p4, p1, p2, d=.2, absolute=FALSE)
-arc(p3, p1, p2, d=.2, absolute=FALSE)
+arc(p1, p2, p3, d=.2)
+arc(p4, p1, p2, d=.2)
+arc(p3, p1, p2, d=.2)
 }
 \references{
 \url{http://math.stackexchange.com/questions/1507248/find-arc-between-two-tips-of-vectors-in-3d}
