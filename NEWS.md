@@ -1,3 +1,8 @@
+# matlib 0.7.1
+
+- added argument `error.sphere` to `plot.regvec3d()` [JF]
+
+
 # matlib 0.7.0
 
 - use `corner()` in vectors3d.Rd
