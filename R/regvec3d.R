@@ -204,7 +204,8 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #' @param show.hplane If \code{TRUE}, draws the plane defined by \code{y}, \code{yhat} and the origin in the 3D
 #' @param show.angles If \code{TRUE}, draw and label the angle between the \code{x1} and \code{x2} and between \code{y} and \code{yhat},
 #'                     corresponding respectively to the correlation between the xs and the multiple correlation
-#' @param error.sphere Plot a sphere of radius equal to the length of the residual vector, centered either at the origin (\code{"e"})
+#' @param error.sphere Plot a sphere (or in 2D, a circle) of radius equal to the length of 
+#'                     the residual vector, centered either at the origin (\code{"e"})
 #'                     or at the fitted-values vector (\code{"y.hat"}; the default is \code{"none"}.)
 #' @param grid        If \code{TRUE}, draws a light grid on the base plane
 #' @param add         If \code{TRUE}, add to the current plot; otherwise start a new rgl or plot window
@@ -294,8 +295,14 @@ plot.regvec3d <- function(x, y, dimension=3,
         vecs2D <- vectors[c(1,2,5,6,7,8,9), 1:2]
         xlim <- range(vecs2D[,1]) + c(-.1, .1)
         ylim <- range(vecs2D[,2]) + c(-.1, .1)
-        if (!add) plot(xlim, ylim, type="n", xlab="", ylab="", asp=1, axes=abs)
-        abline(h=0, v=0, col=col.plane)
+        if (!add) plot(xlim, ylim, type="n", xlab="", ylab="", asp=1, axes=FALSE)
+#        abline(h=0, v=0, col=col.plane)
+        if ("e" == error.sphere) symbols(0, 0, circles=len(vectors[4, ]),
+                                         fg=col[5], bg=col[5], add=TRUE, inches=FALSE, 
+                                         xpd=TRUE)
+        else if ("y.hat" == error.sphere) symbols(vecs2D[3, 1], vecs2D[3, 2], circles=len(vectors[4, ]), 
+                                                  fg=col[5], bg=col[5], add=TRUE, inches=FALSE, 
+                                                  xpd=TRUE)
         if (show.marginal){
             vectors(vecs2D[6:7, ], pos.lab=c(4, 4), col=col[c(1, 1)], cex.lab=cex.lab, xpd=TRUE)
             lines(vecs2D[c(3, 6), ], col=col[4], lty=2)

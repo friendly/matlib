@@ -39,7 +39,8 @@ the plane is drawn thicker}
 \item{show.angles}{If \code{TRUE}, draw and label the angle between the \code{x1} and \code{x2} and between \code{y} and \code{yhat},
 corresponding respectively to the correlation between the xs and the multiple correlation}
 
-\item{error.sphere}{Plot a sphere of radius equal to the length of the residual vector, centered either at the origin (\code{"e"})
+\item{error.sphere}{Plot a sphere (or in 2D, a circle) of radius equal to the length of 
+the residual vector, centered either at the origin (\code{"e"})
 or at the fitted-values vector (\code{"y.hat"}; the default is \code{"none"}.)}
 
 \item{grid}{If \code{TRUE}, draws a light grid on the base plane}
