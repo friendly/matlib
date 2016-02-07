@@ -1,6 +1,7 @@
-# matlib 0.7.1
+# matlib 0.7.2
 
 - added argument `error.sphere` to `plot.regvec3d()` [JF]
+- remove use of `lengths()` in `corner()` to avoid R version dependency
 
 
 # matlib 0.7.0
