@@ -58,7 +58,8 @@ point_on_line <- function(x1, x2, d, absolute=TRUE) {
 #' @examples
 #' # none yet
 corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
-  lens <- lens <- lengths(list(p1, p2, p3))
+#  lens <- lengths(list(p1, p2, p3))
+  lens <- sapply(list(p1, p2, p3), length)
   if (!all(diff(lens) ==0)) stop("Arguments p1, p2, p3 must be of the same length")
   if (any(lens < 2) | any(lens > 3)) stop("Only works for 2D or 3D")
 
