@@ -20,6 +20,7 @@
 #' @param adj.lab    label position relative to the label point as in \code{\link[rgl]{text3d}}, recycled as necessary.
 #' @param frac.lab   location of label point, as a fraction of the distance between \code{origin} and \code{X}, recycled as necessary.
 #'        Values \code{frac.lab > 1} locate the label beyond the end of the vector.
+#' @param draw       if \code{TRUE} (the default), draw the vector(s).
 #' @param ...        other arguments passed on to graphics functions.
 #'
 #' @return invisibly returns the vector \code{ref.length} used to scale arrow heads

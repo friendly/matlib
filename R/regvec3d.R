@@ -56,7 +56,7 @@ regvec3d <- function(x1, ...){
 #'                    name of the \code{x1} variable in the \code{formula}, possibly abbreviated according to \code{abbreviate}.
 #' @param name.x2     Ditto for the name of \code{x2}
 #' @param name.y      Ditto for the name of \code{y}
-#' @param name.e      Name for the residual vector. Default: \code{"e"}
+#' @param name.e      Name for the residual vector. Default: \code{"residuals"}
 #' @param name.y.hat  Name for the fitted vector
 #' @param name.b1.x1  Name for the vector corresponding to the partial coefficient of \code{x1}
 #' @param name.b2.x2  Name for the vector corresponding to the partial coefficient of \code{x2}

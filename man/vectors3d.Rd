@@ -6,7 +6,7 @@
 \usage{
 vectors3d(X, origin = c(0, 0, 0), headlength = 0.035, ref.length = NULL,
   radius = 1/60, labels = TRUE, cex.lab = 1.2, adj.lab = 0.5,
-  frac.lab = 1.1, ...)
+  frac.lab = 1.1, draw = TRUE, ...)
 }
 \arguments{
 \item{X}{a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row}
@@ -30,6 +30,8 @@ rows of \code{X}, recycled as necessary.}
 
 \item{frac.lab}{location of label point, as a fraction of the distance between \code{origin} and \code{X}, recycled as necessary.
 Values \code{frac.lab > 1} locate the label beyond the end of the vector.}
+
+\item{draw}{if \code{TRUE} (the default), draw the vector(s).}
 
 \item{...}{other arguments passed on to graphics functions.}
 }

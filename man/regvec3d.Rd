@@ -14,10 +14,10 @@ regvec3d(x1, ...)
 
 \method{regvec3d}{default}(x1, x2, y, scale = FALSE, normalize = TRUE,
   name.x1 = deparse(substitute(x1)), name.x2 = deparse(substitute(x2)),
-  name.y = deparse(substitute(y)), name.e = "e",
-  name.y.hat = paste0(name.y, ".hat"), name.b1.x1 = paste0("b1.", name.x1),
-  name.b2.x2 = paste0("b2.", name.x2), name.y1.hat = paste0(name.y,
-  "hat.1"), name.y2.hat = paste0(name.y, "hat.2"), ...)
+  name.y = deparse(substitute(y)), name.e = "residuals",
+  name.y.hat = paste0(name.y, "hat"), name.b1.x1 = paste0("b1", name.x1),
+  name.b2.x2 = paste0("b2", name.x2), name.y1.hat = paste0(name.y, "hat 1"),
+  name.y2.hat = paste0(name.y, "hat 2"), ...)
 }
 \arguments{
 \item{x1}{The generic argument or the first predictor passed to the default method}
@@ -39,7 +39,7 @@ name of the \code{x1} variable in the \code{formula}, possibly abbreviated accor
 
 \item{name.y}{Ditto for the name of \code{y}}
 
-\item{name.e}{Name for the residual vector. Default: \code{"e"}}
+\item{name.e}{Name for the residual vector. Default: \code{"residuals"}}
 
 \item{name.y.hat}{Name for the fitted vector}
 
