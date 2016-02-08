@@ -104,6 +104,7 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #' @param radius     radius of the base of the arrow head
 #' @param ref.length length of vector to be used to scale all of the arrow heads (permits drawing arrow heads of the same size as in a previous call);
 #'                   if \code{NULL}, arrows are scaled relative to the longest vector
+#' @param draw       if \code{TRUE} (the default) draw the arrow(s)
 #' @param ...        rgl arguments passed down to \code{\link[rgl]{segments3d}} and \code{cone3d}, for example, \code{col} and \code{lwd}
 #'
 #' @return           invisibly returns the length of the vector used to scale the arrow heads
@@ -115,7 +116,7 @@ cone3d <- function( base, tip, radius= 10, col= "grey", scale= NULL, ... ) {
 #' @examples
 #'  #none yet
 arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radius = NULL,
-                      ref.length=NULL, ... ) {
+                      ref.length=NULL, draw=TRUE, ... ) {
 
   head <- match.arg( head, c( "start", "end", "both" ) )
   # FIXME:  check whether coords is a matrix of 3 cols, and an even # of rows
@@ -131,15 +132,17 @@ arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radiu
   if (is.null(ref.length)){
     ref.length <- max(lengths)
   }
-
-  segments3d( coords, ... )
-  if( head == "end" | head == "both" ) {
-    for( i in 1:narr ) {
-      s <- starts[i,]
-      e <- ends[i,]
-      base <- e - ( e - s ) * headlength * ref.length/lengths[i]
-      tip  <- ( e - s ) * headlength * ref.length/lengths[i]
-      cone3d( base, tip, radius= radius, scale= scale, ... )
+  
+  if (draw){
+    segments3d( coords, ... )
+    if( head == "end" | head == "both" ) {
+      for( i in 1:narr ) {
+        s <- starts[i,]
+        e <- ends[i,]
+        base <- e - ( e - s ) * headlength * ref.length/lengths[i]
+        tip  <- ( e - s ) * headlength * ref.length/lengths[i]
+        cone3d( base, tip, radius= radius, scale= scale, ... )
+      }
     }
   }
   invisible(c(ref.length=ref.length))

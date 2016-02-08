@@ -103,9 +103,9 @@ regvec3d.formula <- function(formula, data=NULL, which=1:2, name.x1, name.x2,
         name.x2 <- abbreviate(name.x2, abbreviate)
         name.y <- abbreviate(name.y, abbreviate)
     }
-    if (missing(name.e)) name.e <- "e"
-    if (missing(name.b1.x1)) name.b1.x1 <- paste0("b1.", name.x1)
-    if (missing(name.b2.x2)) name.b2.x2 <- paste0("b2.", name.x2)
+    if (missing(name.e)) name.e <- "residuals"
+    if (missing(name.b1.x1)) name.b1.x1 <- paste("b1", name.x1)
+    if (missing(name.b2.x2)) name.b2.x2 <- paste("b2", name.x2)
     regvec3d(x1, x2, y, name.x1=name.x1, name.x2=name.x2, name.y=name.y,
         name.e=name.e, name.b1.x1=name.b1.x1, name.b2.x2=name.b2.x2, ...)
 }
@@ -122,9 +122,9 @@ regvec3d.formula <- function(formula, data=NULL, which=1:2, name.x1, name.x2,
 #'
 regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
     name.x1=deparse(substitute(x1)), name.x2=deparse(substitute(x2)),
-    name.y=deparse(substitute(y)), name.e="e", name.y.hat=paste0(name.y, ".hat"),
-    name.b1.x1=paste0("b1.", name.x1), name.b2.x2=paste0("b2.", name.x2),
-    name.y1.hat=paste0(name.y, "hat.1"), name.y2.hat=paste0(name.y, "hat.2"), ...){
+    name.y=deparse(substitute(y)), name.e="residuals", name.y.hat=paste0(name.y, "hat"),
+    name.b1.x1=paste0("b1", name.x1), name.b2.x2=paste0("b2", name.x2),
+    name.y1.hat=paste0(name.y, "hat 1"), name.y2.hat=paste0(name.y, "hat 2"), ...){
     force(name.x1)
     force(name.x2)
     force(name.y)
@@ -255,7 +255,9 @@ plot.regvec3d <- function(x, y, dimension=3,
 			  open3d()
 			  aspect3d("iso")
 			}
-	    ref.length <- vectors3d(vectors[1:7, ], color=col[1], lwd=2, cex.lab=cex.lab)
+      ref.length <- vectors3d(vectors[1:7, ], draw=FALSE)
+	    vectors3d(vectors[3:4, ], color=col[1], lwd=2, cex.lab=cex.lab, ref.length=ref.length)
+	    vectors3d(vectors[c(1:2, 5:7), ], color=col.plane, lwd=2, cex.lab=cex.lab, ref.length=ref.length)
 	    if (show.base > 0) planes3d(0, 0, 1, 0, color=col.plane, alpha=0.2)
 	    if (show.base > 1) planes3d(0, 0, 1, -.01, color=col.plane, alpha=0.1)
 	    lines3d(vectors[c(3, 5), ], color=col[2], lwd=2)     # y -> yhat
@@ -263,7 +265,7 @@ plot.regvec3d <- function(x, y, dimension=3,
 	    lines3d(vectors[c(5, 6), ], color=col[3])            # yhat -> b1
 	    lines3d(vectors[c(5, 7), ], color=col[3])            # yhat -> b2
 	    if (show.marginal){
-	        vectors3d(vectors[8:9, ], color=col[1], cex.lab=cex.lab, ref.length=ref.length)
+	        vectors3d(vectors[8:9, ], color=col.plane, cex.lab=cex.lab, ref.length=ref.length)
 	        lines3d(vectors[c(3, 8), ], color=col[4])
 	        lines3d(vectors[c(3, 9), ], color=col[4])
 	        corner(origin, vectors[8, ], vectors[3, ], color=col[4], d=0.05, absolute=abs)
