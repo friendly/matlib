@@ -37,24 +37,6 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     # fractions: try to express nonintegers as rational numbers
     # If B is absent returns the reduced row-echelon form of A.
     # If B is present, reduces A to RREF carrying B along.
-  
-  # elementary row operations:
-  
-  e1 <- function(X, i, z){ # multiply row by constant (E1)
-    X[i, ] <- z*X[i, ]
-    X
-  }
-  
-  e2 <- function(X, i, j, z){ # add multiple of one row to another (E2)
-    X[j, ] <- X[j, ] + z*X[i, ]
-    X
-  }
-  
-  e3 <- function(X, i, j){ # row interchange (E3)
-    X[c(i, j), ] <- X[c(j, i), ]
-    X
-  }
-
   if (fractions) {
     mass <- requireNamespace("MASS", quietly=TRUE)
     if (!mass) stop("fractions=TRUE needs MASS package")
@@ -81,16 +63,11 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                 j <- j + 1
                 next
                 }
-#            if (which > i) A[c(i, which),] <- A[c(which, i),]  # exchange rows
-            if (which > i) A <- e3(A, i, which) # exchange rows (E3)
-#            A[i,] <- A[i,]/pivot            # pivot
-            A <- e1(A, i, 1/pivot) # pivot (E1)
-            # row <- A[i,]
-            # A <- A - outer(A[,j], row)      # sweep
-            # A[i,] <- row                    # restore current row
+            if (which > i) A <- rowswap(A, i, which) # exchange rows (E3)
+            A <- rowmult(A, i, 1/pivot) # pivot (E1)
             for (k in 1:m){
               if (k == j) next
-              A <- e2(A, i, k, -A[k, j]) # sweep column j (E2)
+              A <- rowadd(A, i, k, -A[k, j]) # sweep column j (E2)
             }
             if (verbose) cat("row:", i, "\n")
             if (verbose) if (fractions) print(MASS::fractions(A))

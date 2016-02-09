@@ -7,7 +7,7 @@
 rowadd(x, from, to, mult)
 }
 \arguments{
-\item{x}{a numeric matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.}
+\item{x}{a numeric matrix, possibly consisting of the coefficient matrix, A, joined with a vector of constants, b.}
 
 \item{from}{the index of one or more source rows. If \code{from} is a vector, it must have the same length as \code{to}.}
 

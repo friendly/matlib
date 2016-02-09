@@ -7,14 +7,14 @@
 rowmult(x, row, mult)
 }
 \arguments{
-\item{x}{a matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.}
+\item{x}{a matrix, possibly consisting of the coefficient matrix, A, joined with a vector of constants, b.}
 
 \item{row}{index of one or more rows.}
 
 \item{mult}{row multiplier(s)}
 }
 \value{
-the matrix \code{x}, with rows \code{from} and \code{to} interchanged
+the matrix \code{x}, modified
 }
 \description{
 Multiplies one or more rows of a matrix by constants. This corresponds to multiplying or dividing equations

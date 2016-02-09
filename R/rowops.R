@@ -11,7 +11,7 @@
 #' The functions \code{\link{rowmult}} and \code{\link{rowswap}} complete the basic operations used in reduction
 #' to row echelon form and Gaussian elimination. These functions are used for demonstration purposes.
 
-#' @param x a numeric matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.
+#' @param x a numeric matrix, possibly consisting of the coefficient matrix, A, joined with a vector of constants, b.
 #' @param from the index of one or more source rows. If \code{from} is a vector, it must have the same length as \code{to}.
 #' @param to the index of one or more destination rows
 #' @param mult the multiplier(s)
@@ -48,7 +48,7 @@ rowadd <- function(x, from, to, mult) {
 #'
 #' This elementary row operation corresponds to interchanging two equations.
 #'
-#' @param x a matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.
+#' @param x a matrix, possibly consisting of the coefficient matrix, A, joined with a vector of constants, b.
 #' @param from source row.
 #' @param to destination row
 #' @return the matrix \code{x}, with rows \code{from} and \code{to} interchanged
@@ -67,10 +67,10 @@ rowswap <- function(x, from, to) {
 #' Multiplies one or more rows of a matrix by constants. This corresponds to multiplying or dividing equations
 #' by constants.
 #'
-#' @param x a matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.
+#' @param x a matrix, possibly consisting of the coefficient matrix, A, joined with a vector of constants, b.
 #' @param row index of one or more rows.
 #' @param mult row multiplier(s)
-#' @return the matrix \code{x}, with rows \code{from} and \code{to} interchanged
+#' @return the matrix \code{x}, modified
 #' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
 #' @family elementary row operations
 #' @examples

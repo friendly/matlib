@@ -7,7 +7,7 @@
 rowswap(x, from, to)
 }
 \arguments{
-\item{x}{a matrix, often consisting of the coeficient matrix, A, joined with a vector of constants, b.}
+\item{x}{a matrix, possibly consisting of the coefficient matrix, A, joined with a vector of constants, b.}
 
 \item{from}{source row.}
 
