@@ -5,7 +5,7 @@
 #' Minor of A[i,j]
 #'
 #' Returns the minor of element (i,j) of the square matrix A, i.e., the determinant of the
-#' submatrix that results when row i and column j are deleted.
+#' sub-matrix that results when row i and column j are deleted.
 #'
 #' @param A a square matrix
 #' @param i row index
@@ -29,7 +29,7 @@ minor <- function(A, i, j) {
 #' Cofactor of A[i,j]
 #'
 #' Returns the cofactor of element (i,j) of the square matrix A, i.e., the signed minor of the
-#' submatrix that results when row i and column j are deleted.
+#' sub-matrix that results when row i and column j are deleted.
 #'
 #' @param A a square matrix
 #' @param i row index

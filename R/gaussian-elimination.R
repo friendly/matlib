@@ -14,7 +14,7 @@
 #'        side of the equations with coefficients in \code{A}.
 #' @param tol tolerance for checking for 0 pivot
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
-#' @param fractions logical; if \code{TRUE}, try to express nonintegers as rational numbers
+#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @return If \code{B} is absent, returns the reduced row-echelon form of \code{A}.
 #'         If \code{B} is present, returns the reduced row-echelon form of \code{A}, with the
 #'         same operations applied to \code{B}.
@@ -176,7 +176,7 @@ echelon <- function(X, ...) gaussianElimination(X, ...)
 #' @param A numerical matrix
 #' @param tol tolerance for checking for 0 pivot
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
-#' @param fractions logical; if \code{TRUE}, try to express nonintegers as rational numbers
+#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @return the generalized inverse of \code{A}, expressed as fractions if \code{fractions=TRUE}, or rounded
 #' @seealso \code{\link[MASS]{ginv}} for a more generally usable function
 #' @author John Fox
@@ -224,7 +224,7 @@ Ginv <- function(A, tol=sqrt(.Machine$double.eps), verbose=FALSE,
 #' Returns the Cholesky square root of the non-singular, symmetric matrix \code{X}.
 #' The purpose is mainly to demonstrate the algorithm used by Kennedy & Gentle (1980).
 #'
-#' @param X a square symmetrix matrix
+#' @param X a square symmetric matrix
 #' @param tol tolerance for checking for 0 pivot
 #' @return the Cholesky square root of \code{X}
 #' @references Kennedy W.J. Jr, Gentle J.E. (1980). \emph{Statistical Computing}. Marcel Dekker.
