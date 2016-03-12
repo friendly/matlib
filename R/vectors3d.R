@@ -10,7 +10,7 @@
 #' @param X          a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row
 #' @param origin     the origin from which they are drawn, a vector of length 3.
 #' @param headlength the \code{headlength} argument passed to \code{\link{arrows3d}} determining the length of arrow heads
-#' @param ref.length vector length to be used in scalling arrow heads so that they are all the same size; if \code{NULL}
+#' @param ref.length vector length to be used in scaling arrow heads so that they are all the same size; if \code{NULL}
 #'        the longest vector is used to scale the arrow heads
 #' @param radius     radius of the base of the arrow heads
 #' @param labels     a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,

@@ -1,8 +1,8 @@
-#' Eigen Decomposition of a Square Symmetrix Matrix
+#' Eigen Decomposition of a Square Symmetric Matrix
 #'
 #' \code{eig} calculates the eigenvalues and eigenvectors of a square, symmetric matrix using the iterated QR decomposition
 #'
-#' @param X a square symmetrix matrix
+#' @param X a square symmetric matrix
 #' @param tol tolerance passed to \code{\link{QR}}
 #' @param max.iter maximum number of QR iterations
 #' @param retain.zeroes logical; retain 0 eigenvalues?

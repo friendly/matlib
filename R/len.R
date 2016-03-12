@@ -4,7 +4,7 @@
 #' \code{len} calculates the Euclidean length (also called Euclidean norm) of a vector or the
 #' length of each column of a numeric matrix.
 #'
-#' @param X a numberic vector or matrix
+#' @param X a numeric vector or matrix
 #'
 #' @return a scalar or vector containing the length(s)
 #' @seealso \code{\link[base]{norm}} for more general matrix norms

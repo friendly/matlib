@@ -12,11 +12,11 @@ is_square_matrix <- function (x)
   return(is.matrix(x) && nrow(x) == ncol(x))
 }
 
-#' Test for square, symmetrix matrix
+#' Test for square, symmetric matrix
 #'
 #' @param x A numeric matrix
 #'
-#' @return \code{TRUE} if \code{x} is a square, symmetrix matrix, else \code{FALSE}
+#' @return \code{TRUE} if \code{x} is a square, symmetric matrix, else \code{FALSE}
 #' @keywords internal
 #' @rdname is_square
 #'
