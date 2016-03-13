@@ -52,6 +52,9 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         A <- cbind(A, B)
         }
     i <- j <- 1
+    if (verbose) cat("\nrow:", 0, "\n")
+    if (verbose) if (fractions) print(MASS::fractions(A))
+    else print(round(A, round(abs(log(tol,10)))))
     while (i <= n && j <= m){
         while (j <= m){
             currentColumn <- A[,j]
@@ -69,7 +72,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
               if (k == j) next
               A <- rowadd(A, i, k, -A[k, j]) # sweep column j (E2)
             }
-            if (verbose) cat("row:", i, "\n")
+            if (verbose) cat("\nrow:", i, "\n")
             if (verbose) if (fractions) print(MASS::fractions(A))
                 else print(round(A, round(abs(log(tol,10)))))
             j <- j + 1
@@ -85,7 +88,9 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         A <- rbind(A, zeroRows)
         }
     rownames(A) <- NULL
-    if (fractions) MASS::fractions (A) else round(A, round(abs(log(tol, 10))))
+    ret <- if (fractions) MASS::fractions (A) else round(A, round(abs(log(tol, 10))))
+    if(verbose) return(invisible(ret))
+    ret
     }
 
 #' Inverse of a Matrix
