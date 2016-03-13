@@ -13,6 +13,7 @@
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param simplify logical; try to simplify the equations?
+#' @param latex logical; print equations in a form suitable for LaTeX output?
 #' @return a one-column character matrix, one row for each equation
 #' @author Michael Friendly
 #' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
@@ -70,7 +71,7 @@ showEqn <- function(A, b, vars, simplify=FALSE, latex = FALSE) {
     res <- gsub(' \\- ', ' &-& ', res) 
     res <- gsub(' \\= ', ' &=& ', res)
     res <- paste0(res, ' \\\\')
-    cat(sprintf('\\begin{array}{%s}\n', paste0(rep('r', ncol(A)*2+1), collapse = '')))
+    cat(sprintf('\\begin{array}{%s}\n', paste0(rep('l', ncol(A)*2+1), collapse = '')))
   }
   for (i in 1:length(res)){
       cat(res[i], "\n")

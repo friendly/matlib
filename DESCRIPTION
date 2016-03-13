@@ -27,6 +27,7 @@ Suggests:
     knitr,
     rglwidget,
     rmarkdown,
+    xtable,
     car
 Imports:
     rgl
