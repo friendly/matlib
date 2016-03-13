@@ -28,6 +28,7 @@
 #'   b <- c(8, -11, -3)
 #'   gaussianElimination(A, b)
 #'   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE)
+#'   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE, latex=TRUE)
 #'
 #'
 gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
@@ -59,7 +60,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         }
     i <- j <- 1
     if (verbose){
-      cat("\nrow:", 0, "\n")
+      cat("\nInitial form\n")
       if(latex){
         if (fractions) print(xtable::xtableMatharray(as.character(MASS::fractions(A))))
         else print(xtable::xtableMatharray(round(A, round(abs(log(tol,10))))))
@@ -86,7 +87,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
               A <- rowadd(A, i, k, -A[k, j]) # sweep column j (E2)
             }
             if (verbose){
-              cat("\nrow:", 0, "\n")
+              cat("\nrow:", i, "\n")
               if(latex){
                 if (fractions) print(xtable::xtableMatharray(as.character(MASS::fractions(A))))
                 else print(xtable::xtableMatharray(round(A, round(abs(log(tol,10))))))
