@@ -9,7 +9,12 @@
 #' @param rescale  logical; if \code{TRUE}, the result has same sd as original, else, sd = residual sd
 #' @param adjnames logical; if \code{TRUE}, colnames are adjusted to Y1, Y2.1, Y3.12, ...
 #' @return a matrix/data frame with uncorrelated columns
-#'
+#' @examples
+#'  set.seed(1234)
+#'  A <- matrix(c(1:60 + rnorm(60)), 20, 3)
+#'  cor(A)
+#'  G <- gsorth(A)
+#'  zapsmall(cor(G))
 
 # Return a matrix/data frame with uncorrelated columns
 #   recenter=TRUE -> result has same means as original, else means = 0 for cols 2:p

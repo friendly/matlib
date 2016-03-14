@@ -14,6 +14,8 @@
 #'        side of the equations with coefficients in \code{A}.
 #' @param tol tolerance for checking for 0 pivot
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
+#' @param latex logical; if \code{TRUE}, and verbose is \code{TRUE}, print intermediate steps using LaTeX
+#'   equation outputs rather than R output 
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @return If \code{B} is absent, returns the reduced row-echelon form of \code{A}.
 #'         If \code{B} is present, returns the reduced row-echelon form of \code{A}, with the
@@ -26,10 +28,11 @@
 #'   b <- c(8, -11, -3)
 #'   gaussianElimination(A, b)
 #'   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE)
+#'   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE, latex=TRUE)
 #'
 #'
 gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
-    verbose=FALSE, fractions=FALSE){
+    verbose=FALSE, latex = FALSE, fractions=FALSE){
     # A: coefficient matrix
     # B: right-hand side vector or matrix
     # tol: tolerance for checking for 0 pivot
@@ -40,6 +43,10 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
   if (fractions) {
     mass <- requireNamespace("MASS", quietly=TRUE)
     if (!mass) stop("fractions=TRUE needs MASS package")
+  }
+  if (latex) {
+    xtable <- requireNamespace("xtable", quietly=TRUE)
+    if (!xtable) stop("latex=TRUE needs xtable package")
   }
   if ((!is.matrix(A)) || (!is.numeric(A)))
         stop("argument must be a numeric matrix")
@@ -52,6 +59,16 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         A <- cbind(A, B)
         }
     i <- j <- 1
+    if (verbose){
+      cat("\nInitial form\n")
+      if(latex){
+        if (fractions) print(xtable::xtableMatharray(as.character(MASS::fractions(A))))
+        else print(xtable::xtableMatharray(round(A, round(abs(log(tol,10))))))
+      } else {
+        if (fractions) print(MASS::fractions(A))
+        else print(round(A, round(abs(log(tol,10)))))
+      }
+    }
     while (i <= n && j <= m){
         while (j <= m){
             currentColumn <- A[,j]
@@ -69,9 +86,16 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
               if (k == j) next
               A <- rowadd(A, i, k, -A[k, j]) # sweep column j (E2)
             }
-            if (verbose) cat("row:", i, "\n")
-            if (verbose) if (fractions) print(MASS::fractions(A))
+            if (verbose){
+              cat("\nrow:", i, "\n")
+              if(latex){
+                if (fractions) print(xtable::xtableMatharray(as.character(MASS::fractions(A))))
+                else print(xtable::xtableMatharray(round(A, round(abs(log(tol,10))))))
+              } else {
+                if (fractions) print(MASS::fractions(A))
                 else print(round(A, round(abs(log(tol,10)))))
+              }
+            }
             j <- j + 1
             break
             }
@@ -85,7 +109,9 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         A <- rbind(A, zeroRows)
         }
     rownames(A) <- NULL
-    if (fractions) MASS::fractions (A) else round(A, round(abs(log(tol, 10))))
+    ret <- if (fractions) MASS::fractions (A) else round(A, round(abs(log(tol, 10))))
+    if(verbose) return(invisible(ret))
+    ret
     }
 
 #' Inverse of a Matrix
