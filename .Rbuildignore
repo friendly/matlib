@@ -3,7 +3,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^cran-comments\.md$
-^NEWS\.md$
 ^announce\.md$
 ^Makefile$
 .travis.yml

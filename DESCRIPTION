@@ -7,9 +7,10 @@ Date: 2016-02-08
 Authors@R: c(person(given = "Michael", family = "Friendly", role=c("aut", "cre"), email="friendly@yorku.ca"),
             person(given = "John", family = "Fox", role="aut"),
             person(given = "Georges", family = "Monette", role="ctb"),
-            person(given = "Gaston", family = "Sanchez", role="ctb")
+            person(given = "Gaston", family = "Sanchez", role="ctb"),
+            person(given = "Phil", family = "Chalmers", role="ctb")
             )
-Author: Michael Friendly [aut, cre], John Fox [aut], Georges Monette [ctb], Gaston Sanchez [ctb]
+Author: Michael Friendly [aut, cre], John Fox [aut], Georges Monette [ctb], Gaston Sanchez [ctb], Phil Chalmers [ctb]
 Maintainer: Michael Friendly <friendly@yorku.ca>
 Description: A collection of matrix functions for teaching and learning matrix
     linear algebra as used in multivariate statistical methods. These functions are
