@@ -122,6 +122,7 @@ rowmult <- function(x, row, mult) {
 #' @param x a matrix A, joined with a vector of constants, b, that has been passed to
 #'   \code{\link{gaussianElimination}} or the row operator functions
 #' @param all logical; print individual tranformation matricies?
+#' @param ... additional arguments
 #' @return the tranformation matrix or a list of individual transformation matricies
 #' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
 #' @family matrix of elementary row operations
@@ -166,8 +167,16 @@ buildTmat <- function(x, all = FALSE){
   T
 }
 
-print.trace <- function(x, ...){
+#' @rdname buildTmat
+#' @export
+as.matrix.trace <- function(x, ...){
   class(x) <- 'matrix'
   attr(x, 'T') <- NULL
-  print(x)
+  x
+}
+
+#' @rdname buildTmat
+#' @export
+print.trace <- function(x, ...){
+  print(as.matrix(x))
 }

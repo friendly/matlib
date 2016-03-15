@@ -44,10 +44,6 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     mass <- requireNamespace("MASS", quietly=TRUE)
     if (!mass) stop("fractions=TRUE needs MASS package")
   }
-  if (latex) {
-    xtable <- requireNamespace("xtable", quietly=TRUE)
-    if (!xtable) stop("latex=TRUE needs xtable package")
-  }
   if ((!is.matrix(A)) || (!is.numeric(A)))
         stop("argument must be a numeric matrix")
     n <- nrow(A)
@@ -62,8 +58,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     if (verbose){
       cat("\nInitial form\n")
       if(latex){
-        if (fractions) print(xtable::xtableMatharray(as.character(MASS::fractions(A))))
-        else print(xtable::xtableMatharray(round(A, round(abs(log(tol,10))))))
+        matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
       } else {
         if (fractions) print(MASS::fractions(A))
         else print(round(A, round(abs(log(tol,10)))))
@@ -89,11 +84,10 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             if (verbose){
               cat("\nrow:", i, "\n")
               if(latex){
-                if (fractions) print(xtable::xtableMatharray(as.character(MASS::fractions(A))))
-                else print(xtable::xtableMatharray(round(A, round(abs(log(tol,10))))))
+                matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
               } else {
-                if (fractions) print(MASS::fractions(A))
-                else print(round(A, round(abs(log(tol,10)))))
+                if (fractions) print(MASS::fractions(as.matrix(A)))
+                else print(round(as.matrix(A), round(abs(log(tol,10)))))
               }
             }
             j <- j + 1
