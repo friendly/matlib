@@ -15,7 +15,7 @@
 #' @param tol tolerance for checking for 0 pivot
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
 #' @param latex logical; if \code{TRUE}, and verbose is \code{TRUE}, print intermediate steps using LaTeX
-#'   equation outputs rather than R output 
+#'   equation outputs rather than R output
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @return If \code{B} is absent, returns the reduced row-echelon form of \code{A}.
 #'         If \code{B} is present, returns the reduced row-echelon form of \code{A}, with the
@@ -30,6 +30,12 @@
 #'   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE)
 #'   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE, latex=TRUE)
 #'
+#'   # determine whether matrix is solvable
+#'   gaussianElimination(A, numeric(3))
+#'
+#'   # find inverse matrix by elimination: A = I -> A^-1 A = A^-1 I -> I = A^-1
+#'   gaussianElimination(A, diag(3))
+#'   inv(A)
 #'
 gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     verbose=FALSE, latex = FALSE, fractions=FALSE){
@@ -43,10 +49,6 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
   if (fractions) {
     mass <- requireNamespace("MASS", quietly=TRUE)
     if (!mass) stop("fractions=TRUE needs MASS package")
-  }
-  if (latex) {
-    xtable <- requireNamespace("xtable", quietly=TRUE)
-    if (!xtable) stop("latex=TRUE needs xtable package")
   }
   if ((!is.matrix(A)) || (!is.numeric(A)))
         stop("argument must be a numeric matrix")
@@ -62,8 +64,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     if (verbose){
       cat("\nInitial form\n")
       if(latex){
-        if (fractions) print(xtable::xtableMatharray(as.character(MASS::fractions(A))))
-        else print(xtable::xtableMatharray(round(A, round(abs(log(tol,10))))))
+        matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
       } else {
         if (fractions) print(MASS::fractions(A))
         else print(round(A, round(abs(log(tol,10)))))
@@ -89,11 +90,10 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             if (verbose){
               cat("\nrow:", i, "\n")
               if(latex){
-                if (fractions) print(xtable::xtableMatharray(as.character(MASS::fractions(A))))
-                else print(xtable::xtableMatharray(round(A, round(abs(log(tol,10))))))
+                matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
               } else {
-                if (fractions) print(MASS::fractions(A))
-                else print(round(A, round(abs(log(tol,10)))))
+                if (fractions) print(MASS::fractions(as.matrix(A)))
+                else print(round(as.matrix(A), round(abs(log(tol,10)))))
               }
             }
             j <- j + 1

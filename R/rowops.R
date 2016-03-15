@@ -41,6 +41,11 @@ rowadd <- function(x, from, to, mult) {
   if (!is.numeric(x) || !is.matrix(x)) stop("x must be a numeric matrix")
   y <- x
   y[to,] <- y[to,] + mult * y[from,]
+  if(is.null(attr(y, 'T'))) attr(y, 'T') <- list()
+  T <- diag(nrow(x))
+  T[to, from] <- mult
+  attr(y, 'T')[[length(attr(y, 'T')) + 1L]] <- T
+  class(y) <- c('trace', 'matrix')
   y
 }
 
@@ -59,6 +64,12 @@ rowswap <- function(x, from, to) {
   if (!is.numeric(x) || !is.matrix(x)) stop("x must be a numeric matrix")
   y <- x
   y[c(to,from),] <- y[c(from,to),]
+  if(is.null(attr(y, 'T'))) attr(y, 'T') <- list()
+  T <- diag(nrow(x))
+  T[from, from] <- T[to, to] <- 0
+  T[from, to] <- T[to, from] <- 1
+  attr(y, 'T')[[length(attr(y, 'T')) + 1L]] <- T
+  class(y) <- c('trace', 'matrix')
   y
 }
 
@@ -93,6 +104,79 @@ rowmult <- function(x, row, mult) {
   if (!is.numeric(x) || !is.matrix(x)) stop("x must be a numeric matrix")
   y <- x
   y[row,] <- mult * y[row,]
+  if(is.null(attr(y, 'T'))) attr(y, 'T') <- list()
+  T <- diag(nrow(x))
+  T[row, row] <- mult
+  attr(y, 'T')[[length(attr(y, 'T')) + 1L]] <- T
+  class(y) <- c('trace', 'matrix')
   y
 }
 
+#' Build/Get tranformation matricies
+#'
+#' Recover the history of the row operations that have been performed.
+#' This function combines the transformation matricies into a single transformation matrix
+#' representing all row operations or may optionally print all the individual operations which have
+#' been performed.
+#'
+#' @param x a matrix A, joined with a vector of constants, b, that has been passed to
+#'   \code{\link{gaussianElimination}} or the row operator functions
+#' @param all logical; print individual tranformation matricies?
+#' @param ... additional arguments
+#' @return the tranformation matrix or a list of individual transformation matricies
+#' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
+#' @family matrix of elementary row operations
+#' @examples
+#' A <- matrix(c(2, 1, -1,
+#'              -3, -1, 2,
+#'              -2,  1, 2), 3, 3, byrow=TRUE)
+#' b <- c(8, -11, -3)
+#'
+#' # using row operations to reduce below diagonal to 0
+#' Abt <- Ab <- cbind(A, b)
+#' Abt <- rowadd(Abt, 1, 2, 3/2)
+#' Abt <- rowadd(Abt, 1, 3, 1)
+#' Abt <- rowadd(Abt, 2, 3, -4)
+#' Abt
+#'
+#' # build T matrix and multiply by original form
+#' (T <- buildTmat(Abt))
+#' T %*% Ab    # same as Abt
+#'
+#' # print all transformation matricies
+#' buildTmat(Abt, TRUE)
+#'
+#' # invert transformation matrix to reverse operations
+#' inv(T) %*% Abt
+#'
+#' # gaussian elimination
+#' (soln <- gaussianElimination(A, b))
+#' T <- buildTmat(soln)
+#' inv(T) %*% soln
+#'
+buildTmat <- function(x, all = FALSE){
+  if(is.null(attr(x, 'T'))) stop('No trace objects were found')
+  Tlist <- attr(x, 'T')
+  if(all){
+    names(Tlist) <- paste0('T', 1:length(Tlist))
+    return(Tlist)
+  }
+  T <- Tlist[[1L]]
+  for(i in 2L:length(Tlist))
+    T <- Tlist[[i]] %*% T
+  T
+}
+
+#' @rdname buildTmat
+#' @export
+as.matrix.trace <- function(x, ...){
+  class(x) <- 'matrix'
+  attr(x, 'T') <- NULL
+  x
+}
+
+#' @rdname buildTmat
+#' @export
+print.trace <- function(x, ...){
+  print(as.matrix(x))
+}
