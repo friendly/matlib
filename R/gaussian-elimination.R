@@ -30,6 +30,12 @@
 #'   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE)
 #'   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE, latex=TRUE)
 #'
+#'   # determine whether matrix is solvable
+#'   gaussianElimination(A, numeric(3))
+#'
+#'   # find inverse matrix by elimination: A = I -> A^-1 A = A^-1 I -> I = A^-1
+#'   gaussianElimination(A, diag(3))
+#'   inv(A)
 #'
 gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     verbose=FALSE, latex = FALSE, fractions=FALSE){
