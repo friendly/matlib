@@ -15,7 +15,7 @@
 #' @param tol tolerance for checking for 0 pivot
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
 #' @param latex logical; if \code{TRUE}, and verbose is \code{TRUE}, print intermediate steps using LaTeX
-#'   equation outputs rather than R output 
+#'   equation outputs rather than R output
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @return If \code{B} is absent, returns the reduced row-echelon form of \code{A}.
 #'         If \code{B} is present, returns the reduced row-echelon form of \code{A}, with the
