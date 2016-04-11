@@ -18,7 +18,7 @@ the cofactor of A[i,j]
 }
 \description{
 Returns the cofactor of element (i,j) of the square matrix A, i.e., the signed minor of the
-submatrix that results when row i and column j are deleted.
+sub-matrix that results when row i and column j are deleted.
 }
 \examples{
 M <- matrix(c(4, -12, -4,

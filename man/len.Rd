@@ -7,7 +7,7 @@
 len(X)
 }
 \arguments{
-\item{X}{a numberic vector or matrix}
+\item{X}{a numeric vector or matrix}
 }
 \value{
 a scalar or vector containing the length(s)

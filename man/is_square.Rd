@@ -22,14 +22,14 @@ is_orthogonal_matrix(x)
 \value{
 \code{TRUE} if \code{x} is a square matrix, else \code{FALSE}
 
-\code{TRUE} if \code{x} is a square, symmetrix matrix, else \code{FALSE}
+\code{TRUE} if \code{x} is a square, symmetric matrix, else \code{FALSE}
 
 \code{TRUE} if \code{x} is an orthogonal matrix, else \code{FALSE}
 }
 \description{
 Test for square matrix
 
-Test for square, symmetrix matrix
+Test for square, symmetric matrix
 
 Test for orthogonal matrix
 }

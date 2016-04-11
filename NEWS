@@ -1,6 +1,6 @@
 matlib 0.7.3
 
-- Changed gaussianElimination() by defining local ERO functions to make the algorithm clearer.
+- Changed gaussianElimination() by defining local ERO functions to make the algorithm clearer; in verbose mode, show each ERO.
 - Added a draw argument to `vectors3d()` and `arrows3d()`, which defaults to TRUE. If FALSE, just returns
   returns the "reg.length" to help in scaling.
 - Small cosmetic changes to regvec3d().

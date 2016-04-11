@@ -5,7 +5,7 @@
 \title{Gaussian Elimination}
 \usage{
 gaussianElimination(A, B, tol = sqrt(.Machine$double.eps), verbose = FALSE,
-  fractions = FALSE)
+  latex = FALSE, fractions = FALSE)
 }
 \arguments{
 \item{A}{coefficient matrix}
@@ -17,7 +17,10 @@ side of the equations with coefficients in \code{A}.}
 
 \item{verbose}{logical; if \code{TRUE}, print intermediate steps}
 
-\item{fractions}{logical; if \code{TRUE}, try to express nonintegers as rational numbers}
+\item{latex}{logical; if \code{TRUE}, and verbose is \code{TRUE}, print intermediate steps using LaTeX
+equation outputs rather than R output}
+
+\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
 }
 \value{
 If \code{B} is absent, returns the reduced row-echelon form of \code{A}.
@@ -36,7 +39,14 @@ and \code{fractions} may be used to see how the algorithm works.
   b <- c(8, -11, -3)
   gaussianElimination(A, b)
   gaussianElimination(A, b, verbose=TRUE, fractions=TRUE)
+  gaussianElimination(A, b, verbose=TRUE, fractions=TRUE, latex=TRUE)
 
+  # determine whether matrix is solvable
+  gaussianElimination(A, numeric(3))
+
+  # find inverse matrix by elimination: A = I -> A^-1 A = A^-1 I -> I = A^-1
+  gaussianElimination(A, diag(3))
+  inv(A)
 
 }
 \author{

@@ -15,7 +15,7 @@ vectors3d(X, origin = c(0, 0, 0), headlength = 0.035, ref.length = NULL,
 
 \item{headlength}{the \code{headlength} argument passed to \code{\link{arrows3d}} determining the length of arrow heads}
 
-\item{ref.length}{vector length to be used in scalling arrow heads so that they are all the same size; if \code{NULL}
+\item{ref.length}{vector length to be used in scaling arrow heads so that they are all the same size; if \code{NULL}
 the longest vector is used to scale the arrow heads}
 
 \item{radius}{radius of the base of the arrow heads}

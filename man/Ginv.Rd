@@ -14,7 +14,7 @@ Ginv(A, tol = sqrt(.Machine$double.eps), verbose = FALSE,
 
 \item{verbose}{logical; if \code{TRUE}, print intermediate steps}
 
-\item{fractions}{logical; if \code{TRUE}, try to express nonintegers as rational numbers}
+\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
 }
 \value{
 the generalized inverse of \code{A}, expressed as fractions if \code{fractions=TRUE}, or rounded

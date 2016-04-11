@@ -23,4 +23,11 @@ a matrix/data frame with uncorrelated columns
 \description{
 Calculates a matrix with uncorrelated columns using the Gram-Schmidt process
 }
+\examples{
+ set.seed(1234)
+ A <- matrix(c(1:60 + rnorm(60)), 20, 3)
+ cor(A)
+ G <- gsorth(A)
+ zapsmall(cor(G))
+}
 

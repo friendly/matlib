@@ -7,7 +7,7 @@
 cholesky(X, tol = sqrt(.Machine$double.eps))
 }
 \arguments{
-\item{X}{a square symmetrix matrix}
+\item{X}{a square symmetric matrix}
 
 \item{tol}{tolerance for checking for 0 pivot}
 }

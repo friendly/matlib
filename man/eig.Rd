@@ -2,13 +2,13 @@
 % Please edit documentation in R/eig.R
 \name{eig}
 \alias{eig}
-\title{Eigen Decomposition of a Square Symmetrix Matrix}
+\title{Eigen Decomposition of a Square Symmetric Matrix}
 \usage{
 eig(X, tol = sqrt(.Machine$double.eps), max.iter = 100,
   retain.zeroes = TRUE)
 }
 \arguments{
-\item{X}{a square symmetrix matrix}
+\item{X}{a square symmetric matrix}
 
 \item{tol}{tolerance passed to \code{\link{QR}}}
 

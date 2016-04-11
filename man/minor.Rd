@@ -18,7 +18,7 @@ the minor of A[i,j]
 }
 \description{
 Returns the minor of element (i,j) of the square matrix A, i.e., the determinant of the
-submatrix that results when row i and column j are deleted.
+sub-matrix that results when row i and column j are deleted.
 }
 \examples{
 M <- matrix(c(4, -12, -4,
