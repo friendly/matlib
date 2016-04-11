@@ -38,7 +38,7 @@
 #'   inv(A)
 #'
 gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
-    verbose=FALSE, latex = FALSE, fractions=FALSE){
+                                verbose=FALSE, latex = FALSE, fractions=FALSE){
     # A: coefficient matrix
     # B: right-hand side vector or matrix
     # tol: tolerance for checking for 0 pivot
@@ -46,31 +46,38 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     # fractions: try to express nonintegers as rational numbers
     # If B is absent returns the reduced row-echelon form of A.
     # If B is present, reduces A to RREF carrying B along.
-  if (fractions) {
-    mass <- requireNamespace("MASS", quietly=TRUE)
-    if (!mass) stop("fractions=TRUE needs MASS package")
-  }
-  if ((!is.matrix(A)) || (!is.numeric(A)))
+    printMatrix <- function(A){
+        if (latex) {
+            matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
+        }
+        else {
+            if (fractions) print(fraction(as.matrix(A)))
+            else print(round(as.matrix(A), round(abs(log(tol,10)))))
+        }
+    }
+    if (fractions) {
+        mass <- requireNamespace("MASS", quietly=TRUE)
+        if (!mass) stop("fractions=TRUE needs MASS package")
+        fraction <- MASS::fractions
+        frac <- function(x) as.character(fraction(x))
+    }
+    if ((!is.matrix(A)) || (!is.numeric(A)))
         stop("argument must be a numeric matrix")
     n <- nrow(A)
     m <- ncol(A)
     if (!missing(B)){
         B <- as.matrix(B)
         if (!(nrow(B) == nrow(A)) || !is.numeric(B))
-          stop("argument must be numeric and must match the number of row of A")
+            stop("argument must be numeric and must match the number of row of A")
         A <- cbind(A, B)
-        }
+    }
     i <- j <- 1
     if (verbose){
-      cat("\nInitial form\n")
-      if(latex){
-        matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
-      } else {
-        if (fractions) print(MASS::fractions(A))
-        else print(round(A, round(abs(log(tol,10)))))
-      }
+        cat("\nInitial matrix:\n")
+        printMatrix(A)
     }
     while (i <= n && j <= m){
+        if (verbose) cat("\nrow:", i, "\n")
         while (j <= m){
             currentColumn <- A[,j]
             currentColumn[1:n < i] <- 0
@@ -80,39 +87,48 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             if (abs(pivot) <= tol) { # check for 0 pivot
                 j <- j + 1
                 next
-                }
-            if (which > i) A <- rowswap(A, i, which) # exchange rows (E3)
-            A <- rowmult(A, i, 1/pivot) # pivot (E1)
-            for (k in 1:m){
-              if (k == j) next
-              A <- rowadd(A, i, k, -A[k, j]) # sweep column j (E2)
             }
+            if (which > i) {
+                A <- rowswap(A, i, which) # exchange rows (E3)
+                if (verbose) {
+                    cat("\n exchange rows", i, "and", which, "\n")
+                    printMatrix(A)
+                }
+            }
+            A <- rowmult(A, i, 1/pivot) # pivot (E1)
             if (verbose){
-              cat("\nrow:", i, "\n")
-              if(latex){
-                matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
-              } else {
-                if (fractions) print(MASS::fractions(as.matrix(A)))
-                else print(round(as.matrix(A), round(abs(log(tol,10)))))
-              }
+                cat("\n multiply row", i, "by", 
+                    if (fractions) frac(1/pivot) else 1/pivot, "\n")
+                printMatrix(A)
+            }
+            for (k in 1:m){
+                if (k == j) next
+                factor <- A[k, j]
+                if (abs(factor) < tol) next
+                A <- rowadd(A, i, k, -factor) # sweep column j (E2)
+                if (verbose){
+                    cat("\n multiply row", i, "by",
+                        if (fractions) frac(abs(factor)) else abs(factor),
+                        if (factor > 0) "and subtract from row" else "and add to row", k, "\n")
+                    printMatrix(A)
+                }
             }
             j <- j + 1
             break
-            }
-        i <- i + 1
         }
-     # 0 rows to bottom
+        i <- i + 1
+    }
+    # 0 rows to bottom
     zeros <- which(apply(A[,1:m], 1, function(x) max(abs(x)) <= tol))
     if (length(zeros) > 0){
         zeroRows <- A[zeros,]
         A <- A[-zeros,]
         A <- rbind(A, zeroRows)
-        }
-    rownames(A) <- NULL
-    ret <- if (fractions) MASS::fractions (A) else round(A, round(abs(log(tol, 10))))
-    if(verbose) return(invisible(ret))
-    ret
     }
+    rownames(A) <- NULL
+    ret <- if (fractions) fraction(A) else round(A, round(abs(log(tol, 10))))
+    if (verbose) invisible(ret) else ret
+}
 
 #' Inverse of a Matrix
 #'
@@ -141,7 +157,7 @@ Inverse <- function(X, tol=sqrt(.Machine$double.eps), ...){
         stop("X must be a square numeric matrix")
     n <- nrow(X)
     X <- gaussianElimination(X, diag(n), tol=tol, ...) # append identity matrix
-        # check for 0 rows in the RREF of X:
+    # check for 0 rows in the RREF of X:
     if (any(apply(abs(X[,1:n]) <= sqrt(.Machine$double.eps), 1, all)))
         stop ("X is numerically singular")
     X[,(n + 1):(2*n)]  # return inverse
@@ -222,27 +238,27 @@ echelon <- function(X, ...) gaussianElimination(X, ...)
 
 Ginv <- function(A, tol=sqrt(.Machine$double.eps), verbose=FALSE,
                  fractions=FALSE){
-  # return an arbitrary generalized inverse of the matrix A
-  # A: a matrix
-  # tol: tolerance for checking for 0 pivot
-  # verbose: if TRUE, print intermediate steps
-  # fractions: try to express nonintegers as rational numbers
-  if (fractions) {
-    mass <- requireNamespace("MASS", quietly=TRUE)
-    if (!mass) stop("fractions=TRUE needs MASS package")
-  }
-  m <- nrow(A)
-  n <- ncol(A)
-  B <- gaussianElimination(A, diag(m), tol=tol, verbose=verbose,
-                           fractions=fractions)
-  L <- B[,-(1:n)]
-  AR <- B[,1:n]
-  C <- gaussianElimination(t(AR), diag(n), tol=tol, verbose=verbose,
-                           fractions=fractions)
-  R <- t(C[,-(1:m)])
-  AC <- t(C[,1:m])
-  ginv <- R %*% t(AC) %*% L
-  if (fractions) MASS::fractions (ginv) else round(ginv, round(abs(log(tol, 10))))
+    # return an arbitrary generalized inverse of the matrix A
+    # A: a matrix
+    # tol: tolerance for checking for 0 pivot
+    # verbose: if TRUE, print intermediate steps
+    # fractions: try to express nonintegers as rational numbers
+    if (fractions) {
+        mass <- requireNamespace("MASS", quietly=TRUE)
+        if (!mass) stop("fractions=TRUE needs MASS package")
+    }
+    m <- nrow(A)
+    n <- ncol(A)
+    B <- gaussianElimination(A, diag(m), tol=tol, verbose=verbose,
+                             fractions=fractions)
+    L <- B[,-(1:n)]
+    AR <- B[,1:n]
+    C <- gaussianElimination(t(AR), diag(n), tol=tol, verbose=verbose,
+                             fractions=fractions)
+    R <- t(C[,-(1:m)])
+    AC <- t(C[,1:m])
+    ginv <- R %*% t(AC) %*% L
+    if (fractions) MASS::fractions (ginv) else round(ginv, round(abs(log(tol, 10))))
 }
 
 #' Cholesky Square Root of a Matrix
@@ -284,9 +300,9 @@ cholesky <- function(X, tol=sqrt(.Machine$double.eps)){
         i <- (j + 1):n
         L[i, j] <- (X[i, j] -
                         colSums(L[j, k] * t(L[i, k, drop=FALSE]) * D[k]))/D[j]
-        }
+    }
     k <- 1:(n - 1)
     D[n] <- X[n, n] - sum((L[n, k]^2) * D[k])
     if (abs(D[n]) < tol) stop("matrix is numerically singular")
     L %*% diag(sqrt(D))
-    }
+}
