@@ -3,8 +3,10 @@
 - Changed gaussianElimination() by defining local ERO functions to make the algorithm clearer; in verbose mode, show each ERO.
 - Added a draw argument to `vectors3d()` and `arrows3d()`, which defaults to TRUE. If FALSE, just returns 
   returns the "reg.length" to help in scaling.
+- Optionally scale error spheres (and circles) produced by regvec3d() so that they project confidence intervals on the x1 and x2 axes.
 - Small cosmetic changes to regvec3d().
 - `showEqn()` and `gaussianElimination()` get `latex` arguments, to print results in LaTeX format [thx: Philo Chalmers]
+
 
 
 # matlib 0.7.2

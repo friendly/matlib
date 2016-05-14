@@ -9,7 +9,8 @@
 \method{plot}{regvec3d}(x, y, dimension = 3, col = c("black", "red", "blue",
   "brown", "lightgray"), col.plane = "gray", cex.lab = 1.2, show.base = 2,
   show.marginal = FALSE, show.hplane = TRUE, show.angles = TRUE,
-  error.sphere = c("none", "e", "y.hat"), grid = FALSE, add = FALSE, ...)
+  error.sphere = c("none", "e", "y.hat"), scale.error.sphere = x$scale,
+  level.error.sphere = 0.95, grid = FALSE, add = FALSE, ...)
 
 \method{summary}{regvec3d}(object, ...)
 
@@ -39,9 +40,15 @@ the plane is drawn thicker}
 \item{show.angles}{If \code{TRUE}, draw and label the angle between the \code{x1} and \code{x2} and between \code{y} and \code{yhat},
 corresponding respectively to the correlation between the xs and the multiple correlation}
 
-\item{error.sphere}{Plot a sphere (or in 2D, a circle) of radius equal to the length of
+\item{error.sphere}{Plot a sphere (or in 2D, a circle) of radius proportional to the length of
 the residual vector, centered either at the origin (\code{"e"})
 or at the fitted-values vector (\code{"y.hat"}; the default is \code{"none"}.)}
+
+\item{scale.error.sphere}{Whether to scale the error sphere if \code{error.sphere="y.hat"}; defaults to \code{TRUE} if the
+vectors representing the variables are scaled, in which case the oblique projections of the error spheres
+can represent confidence intervals for the coefficients; otherwise defaults to \code{FALSE}.}
+
+\item{level.error.sphere}{The confidence level for the error sphere, applied if \code{scale.error.sphere=TRUE}.}
 
 \item{grid}{If \code{TRUE}, draws a light grid on the base plane}
 
