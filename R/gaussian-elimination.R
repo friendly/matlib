@@ -96,13 +96,13 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                 }
             }
             A <- rowmult(A, i, 1/pivot) # pivot (E1)
-            if (verbose){
+            if (verbose && abs(pivot - 1) > tol){
                 cat("\n multiply row", i, "by", 
                     if (fractions) frac(1/pivot) else 1/pivot, "\n")
                 printMatrix(A)
             }
-            for (k in 1:m){
-                if (k == j) next
+            for (k in 1:n){
+                if (k == i) next
                 factor <- A[k, j]
                 if (abs(factor) < tol) next
                 A <- rowadd(A, i, k, -factor) # sweep column j (E2)
