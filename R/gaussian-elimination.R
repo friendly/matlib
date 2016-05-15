@@ -107,9 +107,15 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                 if (abs(factor) < tol) next
                 A <- rowadd(A, i, k, -factor) # sweep column j (E2)
                 if (verbose){
+                  if (abs(factor - 1) > tol){
                     cat("\n multiply row", i, "by",
                         if (fractions) frac(abs(factor)) else abs(factor),
                         if (factor > 0) "and subtract from row" else "and add to row", k, "\n")
+                  }
+                  else{
+                    if (factor > 0) cat("\n subtract row", i, "from row", k, "\n")
+                    else cat("\n add row", i, "from row", k, "\n")
+                  }
                     printMatrix(A)
                 }
             }
