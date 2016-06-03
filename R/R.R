@@ -6,7 +6,7 @@
 #'
 #' @param X a matrix
 #' @return rank of \code{X}
-#' @seealso \code{\link[base]{QR}}
+#' @seealso \code{\link[base]{qr}}
 #'
 #' @examples
 #' M <- outer(1:3, 3:1)

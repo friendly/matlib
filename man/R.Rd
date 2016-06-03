@@ -13,7 +13,7 @@ R(X)
 rank of \code{X}
 }
 \description{
-Returns the rank of a matrix \code{X}, using the QR decomposition, \code{qr()}.
+Returns the rank of a matrix \code{X}, using the QR decomposition, \code{\link{QR}}.
 Included here as a simple function, because \code{rank} does something different
 and it is not obvious what to use for matrix rank.
 }

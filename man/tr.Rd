@@ -13,7 +13,7 @@ tr(X)
 a numeric value, the sum of \code{diag(X)}
 }
 \description{
-Calculates the trace of a numeric matrix, i.e., the sum of its diagonal elements
+Calculates the trace of a square numeric matrix, i.e., the sum of its diagonal elements
 }
 \examples{
 X <- matrix(1:9, 3, 3)

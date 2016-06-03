@@ -28,9 +28,9 @@ Suggests:
     knitr,
     rglwidget,
     rmarkdown,
-    xtable,
-    car
+    xtable
 Imports:
-    rgl
+    rgl,
+    car
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1

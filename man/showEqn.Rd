@@ -35,7 +35,7 @@ as a set of equations.
   # show numerically
   x <- solve(A, b)
   showEqn(A, b, vars=x)
-  
+
   showEqn(A, b, simplify=TRUE)
   showEqn(A, b, latex=TRUE)
 }

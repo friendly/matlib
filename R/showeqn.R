@@ -26,7 +26,7 @@
 #'   # show numerically
 #'   x <- solve(A, b)
 #'   showEqn(A, b, vars=x)
-#'   
+#'
 #'   showEqn(A, b, simplify=TRUE)
 #'   showEqn(A, b, latex=TRUE)
 
@@ -57,7 +57,7 @@ showEqn <- function(A, b, vars, simplify=FALSE, latex = FALSE) {
   max.chars.b <- max(nchar(b))
   for (i in 1:nrow(A)){
     for (j in 1:ncol(A)){
-      res.matrix[i, j] <- paste0(paste(rep(" ", max.chars[j] - nchar(res.matrix[i, j])), collapse=""), 
+      res.matrix[i, j] <- paste0(paste(rep(" ", max.chars[j] - nchar(res.matrix[i, j])), collapse=""),
                                  res.matrix[i, j])
     }
     res[i] <- paste0(res.matrix[i, ], collapse="")
@@ -68,7 +68,7 @@ showEqn <- function(A, b, vars, simplify=FALSE, latex = FALSE) {
     res <- gsub('x', 'x_', res)
     res <- gsub('\\*', ' \\\\cdot ', res)
     res <- gsub(' \\+ ', ' &+& ', res)
-    res <- gsub(' \\- ', ' &-& ', res) 
+    res <- gsub(' \\- ', ' &-& ', res)
     res <- gsub(' \\= ', ' &=& ', res)
     res <- paste0(res, ' \\\\')
     cat(sprintf('\\begin{array}{%s}\n', paste0(rep('l', ncol(A)*2+1), collapse = '')))

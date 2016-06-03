@@ -5,7 +5,7 @@
 \title{Plot Linear Equations in 3D}
 \usage{
 plotEqn3d(A, b, vars, xlim = c(-2, 2), ylim = c(-2, 2), zlim,
-  col = 2:(nrow(A) + 1), alpha = 0.5, labels = FALSE, solution = TRUE)
+  col = 2:(nrow(A) + 1), alpha = 1, labels = FALSE, solution = TRUE)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}
