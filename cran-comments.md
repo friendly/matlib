@@ -1,16 +1,19 @@
 ## Test environments
 * local Windows 7 install, R 3.1.2
-* win-builder (R version 3.2.3 Patched (2016-02-04 r70085), R-devel (2016-02-06 r70117))
+* win-builder (R version 3.3.0 (2016-05-03), R-devel (2016-02-06 r70117))
 
 ## R CMD check results
 There were no ERRORs or WARNINGs or NOTEs
 
 ## Comments
-This is a patch release, fixing a problem reported, "does not work with R < 3.2.0"
+This is a mid-size release, improving some functions and adding one new visualization method
 
-# matlib 0.7.2
+# matlib 0.7.3
 
-- added argument `error.sphere` to `plot.regvec3d()` [JF]
-- remove use of `lengths()` in `corner()` to avoid R version dependency
+- Changed gaussianElimination() by defining local ERO functions to make the algorithm clearer; in verbose mode, show each ERO.
+- Added a draw argument to `vectors3d()` and `arrows3d()`, which defaults to TRUE. If FALSE, just returns
+  returns the "reg.length" to help in scaling.
+- Small cosmetic changes to regvec3d().
+- Added a `showEig` function to draw eigenvectors superimposed on a dataEllipse [MF]
 
 
