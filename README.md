@@ -82,6 +82,7 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
   - `point_on_line()` - position of a point along a line
   - `vectors()`, `vectors3d()` - plot geometric vector diagrams in 2D/3D 
   - `regvec3d()` - calculate and plot vectors representing a bivariate regression model, `lm(y ~ x1 + x2)` in mean-deviation form.
+  - `showEig()` - draw eigenvectors on a 2D scatterplot with a dataEllipse
 
 ### Vignettes
 
