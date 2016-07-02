@@ -37,6 +37,8 @@ showEqn <- function(A, b, vars, simplify=FALSE, fractions=FALSE, latex = FALSE) 
     A <- A[,-ncol(A)]  # remove b from A
   }
   else b <- if (fractions){
+    mass <- requireNamespace("MASS", quietly=TRUE)
+    if (!mass) stop("fractions=TRUE needs MASS package")
     as.character(MASS::fractions(b))
   }
       else as.character(b)
