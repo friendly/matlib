@@ -13,9 +13,10 @@
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param simplify logical; try to simplify the equations?
+#' @param fractions logical; express numbers as rational fractions?
 #' @param latex logical; print equations in a form suitable for LaTeX output?
 #' @return a one-column character matrix, one row for each equation
-#' @author Michael Friendly
+#' @author Michael Friendly and John Fox
 #' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
 #' @examples
 #'   A <- matrix(c(2, 1, -1,
@@ -30,17 +31,22 @@
 #'   showEqn(A, b, simplify=TRUE)
 #'   showEqn(A, b, latex=TRUE)
 
-showEqn <- function(A, b, vars, simplify=FALSE, latex = FALSE) {
+showEqn <- function(A, b, vars, simplify=FALSE, fractions=FALSE, latex = FALSE) {
   if (missing(b)) {
     b <- A[,ncol(A)]   # assume last column of Ab
     A <- A[,-ncol(A)]  # remove b from A
   }
-  else b <- as.character(b)
+  else b <- if (fractions){
+    as.character(MASS::fractions(b))
+  }
+      else as.character(b)
   if (missing(vars)) vars <- paste0("x", 1:ncol(A))
   V <- substr(vars[1], 1, 1)
   pat <- gsub("x", V, "0\\*x\\d\\s+[+-]|[+-]\\s+0\\*x\\d")
+  pat2 <- gsub("x", V, "0\\*x\\d")
   res <- character(nrow(A))
   res.matrix <- matrix("", nrow(A), ncol(A))
+  if (fractions) A <- as.character(MASS::fractions(A))
   for (i in 1:nrow(A)){
     for (j in 1:ncol(A)){
       res.matrix[i, j] <- paste0(A[i, j], "*", vars[j])
@@ -49,8 +55,22 @@ showEqn <- function(A, b, vars, simplify=FALSE, latex = FALSE) {
       if (simplify) {
         res.matrix[i, j] <- gsub("1*", "", res.matrix[i, j], fixed=TRUE)    # "1*x" -> "x"
         res.matrix[i, j] <- gsub(pat, "", res.matrix[i, j])   # "+ 0*x" -> ""
+        res.matrix[i, j] <- gsub(pat2, "", res.matrix[i, j])  # "0*x -> ""
         res.matrix[i, j] <- gsub("  ", " ", res.matrix[i, j], fixed=TRUE)
       }
+    }
+  }
+  res.matrix[res.matrix == " "] <- ""
+  if (simplify){
+    for (i in 1:nrow(res.matrix)){
+      for (j in 1:ncol(res.matrix)){
+        if (res.matrix[i, j] == "") next
+        else{
+          res.matrix[i, j] <- sub("^ [+] ", "", res.matrix[i, j])
+          break
+        }
+      }
+      if (all(res.matrix[i, ] == "")) res.matrix[i, ncol(res.matrix)] <- "0"
     }
   }
   max.chars <- apply(res.matrix, 2, function(x) max(nchar(x)))

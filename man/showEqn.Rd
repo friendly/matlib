@@ -4,7 +4,7 @@
 \alias{showEqn}
 \title{Show Matrices (A, b) as Linear Equations}
 \usage{
-showEqn(A, b, vars, simplify = FALSE, latex = FALSE)
+showEqn(A, b, vars, simplify = FALSE, fractions = FALSE, latex = FALSE)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}}
@@ -16,6 +16,8 @@ If supplied, the length must be equal to the number of unknowns in the equations
 The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{simplify}{logical; try to simplify the equations?}
+
+\item{fractions}{logical; express numbers as rational fractions?}
 
 \item{latex}{logical; print equations in a form suitable for LaTeX output?}
 }
@@ -40,7 +42,7 @@ as a set of equations.
   showEqn(A, b, latex=TRUE)
 }
 \author{
-Michael Friendly
+Michael Friendly and John Fox
 }
 \seealso{
 \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
