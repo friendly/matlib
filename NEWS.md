@@ -1,6 +1,7 @@
 # matlib 0.8.0
 
 - add a vignette on properties of determinants (`det-ex1`)
+- add a vignette on evaluation of determinants (`det-ex2`)
 
 # matlib 0.7.3
 

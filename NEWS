@@ -1,3 +1,8 @@
+matlib 0.8.0
+
+- add a vignette on properties of determinants (`det-ex1`)
+- add a vignette on evaluation of determinants (`det-ex2`)
+
 matlib 0.7.3
 
 - Changed gaussianElimination() by defining local ERO functions to make the algorithm clearer; in verbose mode, show each ERO.
