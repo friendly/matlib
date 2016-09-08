@@ -1,0 +1,98 @@
+---
+title: "Properties of determinants"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Properties of determinants}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+options(digits=4)
+par(mar=c(5,4,1,1)+.1)
+```
+
+The following examples illustrate the basic properties of the determinant of a matrix.
+
+### Create a 2 x 2 matrix
+
+```{r }
+A <- matrix(c(3, 1, 
+              2, 4), nrow=2, byrow=TRUE)
+A
+det(A)
+```
+
+### 1. Interchange two rows or cols changes the sign: -> -1 * det(A)
+
+```{r }
+det(A[ 2:1, ])
+det(A[, 2:1 ])
+```
+
+### 2. transpose -> det (A) unchanged
+
+```{r }
+det( t(A) )
+```
+
+### 3. multiply row * k -> k * det(A)
+
+Note that to multiply rows by *different* constants requires a diagonal matrix on the left.
+
+```{r }
+diag(c(3, 1)) %*% A
+det( diag(c(3, 1))  %*% A)
+```
+
+### 4. multiply matrix * k -> k^2 * det(A)
+
+This is because multipling a matrix by a constant multiplies **each** row.
+
+```{r }
+det(3 * A)
+3^2 * det(A)
+```
+
+### 5. det (A  B) ->  det(A) * det(B)
+
+The determinant of a product is the product of the determinants.  The same holds for
+any number of terms in a matrix product.
+
+```{r }
+B <- matrix(c(4, 2, 
+             3, 5), nrow=2, byrow=TRUE)
+B
+det(A %*% B)
+det(A) * det(B)
+```
+
+### 6. proportional rows or columns -> `det() == 0`
+
+Here we just add an additional copy of column 1 of a matrix, so `C[,3] == C[,1]`.
+The determinant is 0 because the columns are linearly dependent.
+
+```{r }
+C <- matrix(c(1, 5, 
+             2, 6,
+             4, 4), nrow=3, byrow=TRUE)
+C <- cbind(C, C[,1])
+C
+det(C)
+```
+
+### 7. Add multiple of one row to another -> det unchanged
+
+This is the principle behind elementary row operations.
+
+```{r }
+A[2,] <- A[2,] - 2*A[1,]
+det(A)
+```
+
