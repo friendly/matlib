@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 options(digits=4)
-par(mar=c(5,4,1,1)+.1)
+par(mar=c(3,3,1,1)+.1)
 ```
 
 The following examples illustrate the basic properties of the determinant of a matrix.
@@ -94,5 +94,35 @@ This is the principle behind elementary row operations.
 ```{r }
 A[2,] <- A[2,] - 2*A[1,]
 det(A)
+```
+
+### 8.  Geometric interpretation
+
+For $2 \times 2$ matrices, the determinant is the **area** of the parallelogram
+defined by the rows (or columns), plotted in a 2D space.
+(For $3 \times 3$ matrices, determinant is a volume.)
+```{r}
+A <- matrix(c(3, 1, 
+              2, 4), nrow=2, byrow=TRUE)
+A
+det(A)
+```
+The `matlib` package has some handy functions (`vectors()`) for drawing geometric diagrams.
+```{r fig.width=5, fig.height=5}
+library(matlib)
+xlim <- c(0,6)
+ylim <- c(0,6)
+par(mar=c(3,3,1,1)+.1)
+plot(xlim, ylim, type="n", xlab="X1", ylab="X2", asp=1)
+sum <- A[1,] + A[2,]
+# draw the parallelogram determined by the rows of A
+polygon( rbind(c(0,0), A[1,], sum, A[2,]), col=rgb(1,0,0,.2))
+vectors(A, labels=c("a1", "a2"), pos.lab=c(4,2))
+vectors(sum, origin=A[1,], col="gray")
+vectors(sum, origin=A[2,], col="gray")
+# add some annotations
+text(0,6, "det(A) is the area of its row vectors", pos=4)
+text(mean(A[,1]), mean(A[,2]), "det(A)", cex=1.25)
+
 ```
 
