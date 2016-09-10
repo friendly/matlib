@@ -12,7 +12,9 @@ vignette: >
 ```{r nomessages, echo = FALSE}
 knitr::opts_chunk$set(
   warning = FALSE,
-  message = FALSE
+  message = FALSE,
+  fig.height = 5,
+  fig.width = 5
 )
 options(digits=4)
 par(mar=c(3,3,1,1)+.1)
@@ -98,9 +100,10 @@ det(A)
 
 ### 8.  Geometric interpretation
 
+Many aspects of matrices and vectors have geometric interpretations.
 For $2 \times 2$ matrices, the determinant is the **area** of the parallelogram
 defined by the rows (or columns), plotted in a 2D space.
-(For $3 \times 3$ matrices, determinant is a volume.)
+(For $3 \times 3$ matrices, the determinant is the **volume** of a parallelpiped in 3D space.)
 ```{r}
 A <- matrix(c(3, 1, 
               2, 4), nrow=2, byrow=TRUE)
@@ -123,6 +126,41 @@ vectors(sum, origin=A[2,], col="gray")
 # add some annotations
 text(0,6, "det(A) is the area of its row vectors", pos=4)
 text(mean(A[,1]), mean(A[,2]), "det(A)", cex=1.25)
+
+```
+
+There is a simple [visual proof of this fact about determinants](http://math.stackexchange.com/questions/29128/why-determinant-of-a-2-by-2-matrix-is-the-area-of-a-parallelogram)
+but it is easiest to
+see in the case of a diagnonal matrix, where the row vectors are orthogonal, so area
+is just height x width.
+
+```{r}
+(D <- 2 * diag(2))
+det(D)
+```
+Plot this as before:
+```{r fig.width=4, fig.height=4}
+par(mar=c(3,3,1,1)+.1)
+plot(c(0,2), c(0,2), type="n", xlab="X1", ylab="X2", asp=1)
+sum <- D[1,] + D[2,]
+polygon( rbind(c(0,0), D[1,], sum, D[2,]), col=rgb(0,1,0,.2))
+vectors(D, labels=c("d1", "d2"), pos.lab=c(3,4))
+vectors(sum, origin=D[1,], col="gray")
+vectors(sum, origin=D[2,], col="gray")
+text(mean(D[,1]), mean(D[,2]), "det(D)", cex=1.25)
+```
+
+Finally, we can also see why the determinant is zero when the rows or columns are proportional.
+
+```{r}
+(B <- matrix(c(1, 2, 2, 4), 2,2))
+det(B)
+```
+Such vectors are called *collinear*.  They enclose no *area*.
+```{r fig.width=4, fig.height=4}
+par(mar=c(3,3,1,1)+.1)
+plot(c(0,4), c(0,4), type="n", xlab="X1", ylab="X2", asp=1)
+vectors(B, labels=c("b1", "b2"), pos.lab=c(4,2))
 
 ```
 
