@@ -4,6 +4,7 @@ matlib 0.8.0
 - add a vignette on evaluation of determinants (`det-ex2`)
 - add vignette on matrix inverse (`inv-ex1`)
 - now use travis-ci to check builds
+- add vignette on matrix inverse using EROs (`inv-ex2`)
 
 matlib 0.7.3
 
