@@ -21,6 +21,7 @@ par(mar=c(3,3,1,1)+.1)
 ```
 
 The following examples illustrate the basic properties of the determinant of a matrix.
+We do this first with simple numerical examples and then using geometric diagrams.
 
 ### Create a 2 x 2 matrix
 
@@ -91,7 +92,7 @@ det(C)
 
 ### 7. Add multiple of one row to another -> det unchanged
 
-This is the principle behind elementary row operations.
+This is the principle behind one of the elementary row operations.
 
 ```{r }
 A[2,] <- A[2,] - 2*A[1,]
