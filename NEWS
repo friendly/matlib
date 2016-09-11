@@ -6,6 +6,7 @@ matlib 0.8.0
 - now use travis-ci to check builds
 - add vignette on matrix inverse using EROs (`inv-ex2`)
 - extended use of geometric diagrams in vignettes
+- add vignette on generalized inverse (`ginv`)
 
 matlib 0.7.3
 
