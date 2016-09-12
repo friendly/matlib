@@ -7,6 +7,7 @@ matlib 0.8.0
 - add vignette on matrix inverse using EROs (`inv-ex2`)
 - extended use of geometric diagrams in vignettes
 - add vignette on generalized inverse (`ginv`)
+- added `J()` for unit vectors, matrices
 
 matlib 0.7.3
 

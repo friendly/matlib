@@ -22,8 +22,10 @@ J <- function(..., constant=1, dimnames=NULL) {
   if (any(unlist(args)) < 0)
     stop("Supply only non-negative dimension sizes")
 
-  if (length(args) == 1)
-    res <- matrix(constant, nrow=args[[1]], dimnames=dimnames)
+  if (length(args) == 1) {
+    res <- rep(constant, args[[1]])
+    # TODO: handle dimnames
+  }
   else # if (length(args) == 2)
     res <- array(constant, dim=unlist(args), dimnames=dimnames)
 
