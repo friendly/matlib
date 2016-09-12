@@ -23,10 +23,10 @@ The development version can be installed to your R library directly from this re
 
      if (!require(devtools)) install.packages("devtools")
      library(devtools)
-     install_github("friendly/matlib")
+     install_github("friendly/matlib", build_vignettes = TRUE)
 
-This installs the package from the source, so you will need to have 
-R Tools installed on your system.  [R Tools for Windows](https://cran.r-project.org/bin/windows/Rtools/)
+This installs the package from the source and creates the package vignettes, 
+so you will need to have R Tools installed on your system.  [R Tools for Windows](https://cran.r-project.org/bin/windows/Rtools/)
 takes you to the download page for Windows.  [R Tools for Mac OS X](https://cran.r-project.org/bin/macosx/tools/)
 has the required programs for Mac OS X.
 
