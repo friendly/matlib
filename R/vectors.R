@@ -18,7 +18,7 @@
 #' @param ... other arguments passed on to graphics functions.
 #'
 #' @return none
-#' @seealso \code{\link[graphics]{arrows}}, code{\link[graphics]{text}}
+#' @seealso \code{\link[graphics]{arrows}}, \code{\link[graphics]{text}}
 #' @family vector diagrams
 #' @importFrom graphics arrows
 #'
