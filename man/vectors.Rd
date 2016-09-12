@@ -61,7 +61,7 @@ vectors(v, origin=Proj(v,u))
 corner(c(0,0), Proj(v,u), v, col="grey")
 }
 \seealso{
-\code{\link[graphics]{arrows}}, code{\link[graphics]{text}}
+\code{\link[graphics]{arrows}}, \code{\link[graphics]{text}}
 
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},
