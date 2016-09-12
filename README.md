@@ -62,7 +62,8 @@ The functions in this package are grouped under the following topics
   - `plotEqn(A, b)`, `plotEqn3d(A, b)`  - plot matrices (A, b) as linear equations
   
 5. Gaussian elimination: functions for illustrating Gaussian elimination for solving systems of linear equations of the form
-$\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show the intermediate steps.
+$\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show the intermediate steps
+and a `fractions=TRUE` argument to show results using `MASS::fractions`.
 
   - `gaussianElimination(A, B)` - reduces (A, B) to (I, A^{-1} B)
   - `Inverse(X)`, `inv()` - uses `gaussianElimination` to find the inverse of X
@@ -75,7 +76,7 @@ $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show t
 
   - `eig()` - eigenvalues and eigenvectors
   - `SVD()` - singular value decomposition
-  - `power_method()` - find dominant eigenvector using the power method 
+  - `power_method()` - find the dominant eigenvector using the power method 
   - `showEig()` - draw eigenvectors on a 2D scatterplot with a dataEllipse
 
 7. Vector diagrams: functions for drawing vector diagrams in 2D and 3D
