@@ -13,13 +13,20 @@
 #' @examples
 #' J(3)
 #' J(2,3)
+#' J(2,3,2)
+#' J(2,3, constant=2, dimnames=list(letters[1:2], LETTERS[1:3]))
+#'
+#' X <- matrix(1:6, nrow=2, ncol=3)
+#' dimnames(X) <- list(sex=c("M", "F"), day=c("Mon", "Wed", "Fri"))
+#' J(2) %*% X      # column sums
+#' X %*% J(3)      # row sums
 
 J <- function(..., constant=1, dimnames=NULL) {
   is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
   args <- list(...)
   if (!all(sapply(args, is.wholenumber)))
     stop("Supply only integers for the dimensions of the array")
-  if (any(unlist(args)) < 0)
+  if (any(unlist(args) < 0))
     stop("Supply only non-negative dimension sizes")
 
   if (length(args) == 1) {
