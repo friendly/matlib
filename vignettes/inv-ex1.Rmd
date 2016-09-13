@@ -1,8 +1,10 @@
 ---
 title: "Inverse of a matrix"
 author: "Michael Friendly"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  rmarkdown::html_vignette:
+    toc: no
 vignette: >
   %\VignetteIndexEntry{Inverse of a matrix}
   %\VignetteEngine{knitr::rmarkdown}
