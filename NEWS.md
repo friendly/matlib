@@ -8,6 +8,7 @@ matlib 0.8.0
 - extended use of geometric diagrams in vignettes
 - add vignette on generalized inverse (`ginv`)
 - added `J()` for unit vectors, matrices
+- added `LU()` for LU decomposition
 
 # matlib 0.7.3
 

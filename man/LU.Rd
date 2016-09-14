@@ -16,6 +16,10 @@ LU(A, b, tol = sqrt(.Machine$double.eps), fractions = FALSE)
 
 \item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
 }
+\value{
+A list of matrix components of the solution, \code{P}, \code{L} and \code{U}. If \code{b}
+       is supplied, the vectors \eqn{d} and \code{x} are also returned.
+}
 \description{
 \code{LU} computes the LU decomposition of a matrix, \eqn{A}, such that \eqn{P A = L U},
 where \eqn{L} is a lower triangle matrix, \eqn{U} is an upper triangle, and \eqn{P} is a

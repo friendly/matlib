@@ -18,8 +18,8 @@ This function creates a vector, matrix or array of constants, typically used for
 the unit vector or unit matrix in matrix expressions.
 }
 \details{
-The "dimnames" attribute is optional: if present it is a list with one component for each dimension,
-either NULL or a character vector of the length given by the element of the "dim" attribute for that
+The \code{"dimnames"} attribute is optional: if present it is a list with one component for each dimension,
+either \code{NULL} or a character vector of the length given by the element of the \code{"dim"} attribute for that
 dimension. The list can be named, and the list names will be used as names for the dimensions.
 }
 \examples{
