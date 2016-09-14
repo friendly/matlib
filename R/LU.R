@@ -16,6 +16,7 @@
 #' @param tol tolerance for checking for 0 pivot
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @author Phil Chalmers
+#' @export
 #' @examples
 #'
 #'   A <- matrix(c(2, 1, -1,
