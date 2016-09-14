@@ -3,8 +3,8 @@
 #' This function creates a vector, matrix or array of constants, typically used for
 #' the unit vector or unit matrix in matrix expressions.
 #'
-#' The "dimnames" attribute is optional: if present it is a list with one component for each dimension,
-#' either NULL or a character vector of the length given by the element of the "dim" attribute for that
+#' The \code{"dimnames"} attribute is optional: if present it is a list with one component for each dimension,
+#' either \code{NULL} or a character vector of the length given by the element of the \code{"dim"} attribute for that
 #' dimension. The list can be named, and the list names will be used as names for the dimensions.
 #'
 #' @param ...      One or more arguments supplying the dimensions of the array, all non-negative integers
@@ -31,7 +31,7 @@ J <- function(..., constant=1, dimnames=NULL) {
 
   if (length(args) == 1) {
     res <- rep(constant, args[[1]])
-    # TODO: handle dimnames
+    if (!is.null(dimnames)) names(res) <- dimnames[[1]]
   }
   else # if (length(args) == 2)
     res <- array(constant, dim=unlist(args), dimnames=dimnames)
