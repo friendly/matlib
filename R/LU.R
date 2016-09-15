@@ -101,8 +101,8 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE){
     ret$d <- fbsolve(L, b)
     ret$x <- fbsolve(A, ret$d)
   }
+  ret <- lapply(ret, as.matrix)
   ret <- if (fractions) lapply(ret, MASS::fractions)
   else lapply(ret, function(x) round(x, round(abs(log(tol, 10)))))
-  ret <- lapply(ret, function(x){attr(x, 'T') <- NULL; x})
   ret
 }
