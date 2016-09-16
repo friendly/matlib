@@ -70,6 +70,7 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions`.
   - `Inverse(X)`, `inv()` - uses `gaussianElimination` to find the inverse of X
   - `echelon(X)` - uses `gaussianElimination` to find the reduced echelon form of X
   - `Ginv(X)` - uses `gaussianElimination` to find the generalized inverse of X
+  - `LU(X)` - LU decomposition of a matrix X
   - `cholesky()` - calculates a Cholesky square root of a matrix
   - `swp()` - matrix sweep operator
 

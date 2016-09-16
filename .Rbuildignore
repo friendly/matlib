@@ -6,5 +6,5 @@
 ^announce\.md$
 ^Makefile$
 .travis.yml
-
+README.md
 ^\.travis\.yml$
