@@ -8,3 +8,4 @@
 .travis.yml
 README.md
 ^\.travis\.yml$
+old/
