@@ -1,15 +1,14 @@
 Dear useRs
 
-A new package, "matlib" has been under development and the latest version, 0.5.2,
-will shortly be on CRAN.
+A new release of the "matlib" package, v. 0.8.1 was recently submitted to CRAN,
 http://cran.us.r-project.org/web/packages/matlib/
 
 The package is designed to provide a collection of functions and vignettes
 for teaching and learning linear algebra and multivariate statistics.
 
-In some cases, convenience functions are provided for concepts available
-elsewhere in R, but where the function call or name is not obvious.  In other
-cases, functions are provided to show or demonstrate an algorithm.
+This release adds five more vignettes covering determinants and matrix inverses,
+some with geometric diagrams illustrating concepts and using functions in the
+package.
 
 The topics covered in the package include:
 
