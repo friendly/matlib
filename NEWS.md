@@ -1,3 +1,7 @@
+matlib 0.8.1
+
+- remove inst/doc to satisfy CRAN
+
 matlib 0.8.0
 
 - add a vignette on properties of determinants (`det-ex1`)
