@@ -1,6 +1,6 @@
 Dear useRs
 
-A new release of the "matlib" package, v. 0.8.1 was recently submitted to CRAN,
+A new release of the "matlib" package, v. 0.8.1 is now on CRAN,
 http://cran.us.r-project.org/web/packages/matlib/
 
 The package is designed to provide a collection of functions and vignettes
