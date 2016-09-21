@@ -19,13 +19,30 @@ These are not meant for production uses. Other methods are more efficient for la
 
 The functions in this package are grouped under the following topics
 \itemize{
-  \item Convenience functions
-  \item Determinants: functions for calculating determinants by cofactor expansion
-  \item Elementary row operations: functions for solving linear equations "manually" by the steps used in row echelon form and Gaussian elimination
-  \item Linear equations: functions to illustrate linear equations of the form $A x = b$
-  \item Gaussian elimination: functions for illustrating Gaussian elimination for solving systems of linear equations of the form $A x = b$.
-  \item Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
-  \item Vector diagrams: functions for drawing vector diagrams in 2D and 3D
+  \item Convenience functions: \cr
+        \code{\link{tr}}, \code{\link{R}}, \code{\link{J}}, \code{\link{len}},
+        \code{\link{vec}}, \code{\link{Proj}}, \code{\link{mpower}}, \code{\link{vandermode}}
+  \item Determinants: functions for calculating determinants by cofactor expansion \cr
+        \code{\link{minor}}, \code{\link{cofactor}}, \code{\link{row_minors}}, \code{\link{row_cofactors}}
+  \item Elementary row operations: functions for solving linear equations "manually" by the steps used in
+        row echelon form and Gaussian elimination \cr
+        \code{\link{rowadd}}, \code{\link{rowmult}}, \code{\link{rowswap}}
+  \item Linear equations: functions to illustrate linear equations of the form $A x = b$ \cr
+        \code{\link{showEqn}}, \code{\link{plotEqn}}
+  \item Gaussian elimination: functions for illustrating Gaussian elimination for solving
+        systems of linear equations of the form $A x = b$. \cr
+        \code{\link{gaussianElimination}}, \code{\link{Inverse}}, \code{\link{inv}}, \code{\link{echelon}},
+        \code{\link{Ginv}}, \code{\link{LU}}, \code{\link{cholesky}}, \code{\link{swp}}
+  \item Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues
+        and eigenvectors \cr
+        \code{\link{eig}}, \code{\link{SVD}}, \code{\link{power_method}}, \code{\link{showEig}}
+  \item Vector diagrams: functions for drawing vector diagrams in 2D and 3D \cr
+        \code{\link{arrows3d}}, \code{\link{corner}}, \code{\link{arc}}, \code{\link{point_on_line}},
+        \code{\link{vectors}}, \code{\link{vectors3d}}, \code{\link{regvec3d}}
 }
+}
+\references{
+Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
+Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 }
 

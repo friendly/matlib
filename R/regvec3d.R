@@ -64,6 +64,8 @@ regvec3d <- function(x1, ...){
 #'                    are abbreviated to this length before being combined with the other \code{name.*} arguments
 #'
 #' @describeIn regvec3d Formula method for regvec3d
+#' @references Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
+#' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 #' @export
 #'
 #' @examples
@@ -243,14 +245,14 @@ plot.regvec3d <- function(x, y, dimension=3,
                           col=c("black", "red", "blue", "brown", "lightgray"), col.plane="gray",
                           cex.lab=1.2,
                           show.base=2, show.marginal=FALSE, show.hplane=TRUE, show.angles=TRUE,
-                          error.sphere=c("none", "e", "y.hat"), scale.error.sphere=x$scale, level.error.sphere=0.95, 
+                          error.sphere=c("none", "e", "y.hat"), scale.error.sphere=x$scale, level.error.sphere=0.95,
                           grid=FALSE, add=FALSE, ...){
-  
+
   angle <- function(v1, v2) {
     r12 <- crossprod(v1, v2)/(len(v1)*len(v2))
     acos(r12)*180/pi
   }
-  
+
   error.sphere <- match.arg(error.sphere)
   vectors <- x$vectors
   origin <- c(0,0,0)
@@ -297,8 +299,8 @@ plot.regvec3d <- function(x, y, dimension=3,
                                        color=col[5], alpha=0.1)
     else if ("y.hat" == error.sphere) {
       sqrt.vif <- sqrt(1/(1 - (cos(angle(vectors[1,], vectors[2,])*pi/180))^2))
-      spheres3d(x$vectors[5, ], 
-                radius= rad <- if (scale.error.sphere) 
+      spheres3d(x$vectors[5, ],
+                radius= rad <- if (scale.error.sphere)
                   sqrt.vif*qt((1 - level.error.sphere)/2, df=x$model$df.residual, lower.tail=FALSE)*len(vectors[4, ])/sqrt(x$model$df.residual)
                 else len(vectors[4, ]),
                 color=col[5], alpha=0.25)
@@ -316,7 +318,7 @@ plot.regvec3d <- function(x, y, dimension=3,
                                      xpd=TRUE)
     else if ("y.hat" == error.sphere) {
       sqrt.vif <- sqrt(1/(1 - (cos(angle(vectors[1,], vectors[2,])*pi/180))^2))
-      symbols(vecs2D[3, 1], vecs2D[3, 2], circles=if(scale.error.sphere) 
+      symbols(vecs2D[3, 1], vecs2D[3, 2], circles=if(scale.error.sphere)
         sqrt.vif*qt((1 - level.error.sphere)/2, df=x$model$df.residual, lower.tail=FALSE)*len(vectors[4, ])/sqrt(x$model$df.residual)
         else len(vectors[4, ]),
         fg=col[5], bg=col[5], add=TRUE, inches=FALSE,
@@ -377,7 +379,7 @@ circle3d <- function(center, radius, segments=100, fill=FALSE, ...){
   #'
   #' A utility function for drawing a horizontal circle in a 3D graph
   #'
-  #' @param center  A vector of length 3. 
+  #' @param center  A vector of length 3.
   #' @param radius  A positive number.
   #' @param segments  An integer specifying the number of line segments to use to draw the circle (default, 100).
   #' @param fill logical; if \code{TRUE}, the circle is filled (the default is \code{FALSE}).

@@ -114,6 +114,9 @@ plot(therapy.vec, dimension="2")
 }
 \references{
 Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.
+
+Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
+Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 }
 \seealso{
 \code{\link{plot.regvec3d}}

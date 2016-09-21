@@ -17,6 +17,8 @@
 #' @param latex logical; print equations in a form suitable for LaTeX output?
 #' @return a one-column character matrix, one row for each equation
 #' @author Michael Friendly and John Fox
+#' @references Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
+#' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 #' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
 #' @examples
 #'   A <- matrix(c(2, 1, -1,
