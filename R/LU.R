@@ -88,13 +88,6 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE){
     }
     i <- i + 1
   }
-  # 0 rows to bottom
-  zeros <- which(apply(A[,1:m], 1, function(x) max(abs(x)) <= tol))
-  if (length(zeros) > 0){
-    zeroRows <- A[zeros,]
-    A <- A[-zeros,]
-    A <- rbind(A, zeroRows)
-  }
   rownames(A) <- NULL
   ret <- list(P=P, L=L, U=A)
   if(!wasmissing){
