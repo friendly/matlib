@@ -21,7 +21,7 @@ the longest vector is used to scale the arrow heads}
 \item{radius}{radius of the base of the arrow heads}
 
 \item{labels}{a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
-labels are taken from \code{rownames(X)}. If \code{NULL}, no labels are drawn.}
+labels are taken from \code{rownames(X)}. If \code{FALSE} or \code{NULL}, no labels are drawn.}
 
 \item{cex.lab}{character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
 rows of \code{X}, recycled as necessary.}

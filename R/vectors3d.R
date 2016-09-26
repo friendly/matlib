@@ -14,7 +14,7 @@
 #'        the longest vector is used to scale the arrow heads
 #' @param radius     radius of the base of the arrow heads
 #' @param labels     a logical or a character vector of labels for the vectors. If \code{TRUE} and \code{X} is a matrix,
-#'        labels are taken from \code{rownames(X)}. If \code{NULL}, no labels are drawn.
+#'        labels are taken from \code{rownames(X)}. If \code{FALSE} or \code{NULL}, no labels are drawn.
 #' @param cex.lab    character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
 #'        rows of \code{X}, recycled as necessary.
 #' @param adj.lab    label position relative to the label point as in \code{\link[rgl]{text3d}}, recycled as necessary.
@@ -68,10 +68,11 @@ vectors3d <- function(X, origin=c(0,0,0),
 #  radius <- 1/60
   ref.length <- arrows3d(OX, headlength=headlength, scale=scale, radius=radius,
                          ref.length=ref.length, draw=draw, ...)
-  
+
   if (draw){
-    if (is.logical(labels) && labels) {
-      labels <- rownames(X)
+    if (is.logical(labels)) {
+      if (labels) labels <- rownames(X)
+      else labels <- NULL
     }
     if (!is.null(labels)) {
       # DONE: allow for labels to be positioned some fraction of the way from origin to X
