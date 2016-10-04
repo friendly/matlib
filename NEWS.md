@@ -1,13 +1,15 @@
-matlib 0.8.2
+# matlib 0.8.2
 
 - rename functions for consistency: `eig()` -> `Eigen()`, `point_on_line()` -> `pointOnLine()`, `power_method()` -> `powerMethod()`, `row_cofactors()` -> `rowCofactors()`, `row_minors()` -> `rowMinors()`.
 
+- add `Det()` to compute determinants by elimination, from eigenvalues, or by minors and cofactors
 
-matlib 0.8.1
+
+# matlib 0.8.1
 
 - remove inst/doc to satisfy CRAN
 
-matlib 0.8.0
+# matlib 0.8.0
 
 - add a vignette on properties of determinants (`det-ex1`)
 - add a vignette on evaluation of determinants (`det-ex2`)

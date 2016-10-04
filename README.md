@@ -5,7 +5,7 @@
 # matlib
 Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics
 
-Version 0.8.1
+Version 0.8.2
 
 These functions are mainly for tutorial purposes in learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts available
@@ -50,6 +50,7 @@ The functions in this package are grouped under the following topics
   - `cofactor()` - Cofactor of A[i,j]
   - `rowMinors()` - Row minors of A[i,]
   - `rowCofactors()` - Row cofactors of A[i,]
+  - `Det()` - Determinants by elimination or eigenvalues
 
 3. Elementary row operations: functions for solving linear equations "manually" by the steps used in row echelon form and Gaussian elimination
 

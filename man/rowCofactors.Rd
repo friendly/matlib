@@ -15,7 +15,7 @@ rowCofactors(A, i)
 a vector of the cofactors of A[i,]
 }
 \description{
-Returns the vector of cofactors of row i of the square matrix A.  The determinant, \code{det(A)},
+Returns the vector of cofactors of row i of the square matrix A.  The determinant, \code{Det(A)},
 can then be found as \code{M[i,] \%*\% rowCofactors(M,i)} for any row, i.
 }
 \examples{
@@ -26,7 +26,7 @@ minor(M, 1, 1)
 minor(M, 1, 2)
 minor(M, 1, 3)
 rowCofactors(M, 1)
-det(M)
+Det(M)
 # expansion by cofactors of row 1
 M[1,] \%*\% rowCofactors(M,1)
 
@@ -35,9 +35,10 @@ M[1,] \%*\% rowCofactors(M,1)
 Michael Friendly
 }
 \seealso{
-\code{\link[base]{det}} for the determinant
+\code{\link{Det}} for the determinant
 
-Other determinants: \code{\link{cofactor}},
-  \code{\link{minor}}, \code{\link{rowMinors}}
+Other determinants: \code{\link{Det}},
+  \code{\link{cofactor}}, \code{\link{minor}},
+  \code{\link{rowMinors}}
 }
 

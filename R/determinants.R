@@ -2,6 +2,44 @@
 # determinants: minor and cofactor
 ##################################
 
+#' Determinant of a Square Matrix
+#'
+#' Returns the determinant of a square matrix \code{X},
+#' computed either by Gaussian elimination or as the product of the eigenvalues of the matrix.
+#' If the latter, \code{X} must be symmstric.
+#'
+#' @param X a square matrix
+#' @param method one of `"elimination"` (the default), `"eigenvalues"`, or `"cofactors"` (for computation by minors and cofactors)
+#' @param ... arguments passed to \code{\link{gaussianElimination}} or \code{\link{Eigen}}
+#' @return the determinant of \code{X}
+#' @family determinants
+#' @seealso \code{\link[base]{det}} for the base R function
+#' @seealso \code{\link{gaussianElimination}}, \code{\link{Eigen}}
+#' @author John Fox
+#' @examples
+#' A <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
+#' A
+#' Det(A)
+#' B <- matrix(1:9, 3, 3) # a singular matrix
+#' B
+#' Det(B)
+#' C <- matrix(c(1, .5, .5, 1), 2, 2) # square, symmetric, nonsingular
+#' Det(C)
+#' Det(C, method="eigenvalues")
+#' Det(C, method="cofactors")
+
+Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), ...){
+    if (length(X) == 1) return(X)
+    if (!(is.matrix(X) && nrow(X) == ncol(X))) stop("X must be a square matrix")
+    method <- match.arg(method)
+    if (method == "elimination") attr(gaussianElimination(X, ...), "det")
+    else if (method == "eigenvalues") prod(Eigen(X, ...)$values)
+    else {
+        as.vector(X[1,] %*% rowCofactors(X, 1))
+    }
+}
+
+
 #' Minor of A[i,j]
 #'
 #' Returns the minor of element (i,j) of the square matrix A, i.e., the determinant of the
@@ -23,7 +61,7 @@
 #' minor(M, 1, 3)
 
 minor <- function(A, i, j) {
-  det(A[-i, -j])
+  Det(A[-i, -j], method="cofactors")
 }
 
 #' Cofactor of A[i,j]
@@ -80,14 +118,14 @@ rowMinors <- function(A, i) {
 
 #' Row Cofactors of A[i,]
 #'
-#' Returns the vector of cofactors of row i of the square matrix A.  The determinant, \code{det(A)},
+#' Returns the vector of cofactors of row i of the square matrix A.  The determinant, \code{Det(A)},
 #' can then be found as \code{M[i,] \%*\% rowCofactors(M,i)} for any row, i.
 #'
 #' @param A a square matrix
 #' @param i row index
 #' @return a vector of the cofactors of A[i,]
 #' @family determinants
-#' @seealso \code{\link[base]{det}} for the determinant
+#' @seealso \code{\link{Det}} for the determinant
 #' @author Michael Friendly
 #' @examples
 #' M <- matrix(c(4, -12, -4,
@@ -97,7 +135,7 @@ rowMinors <- function(A, i) {
 #' minor(M, 1, 2)
 #' minor(M, 1, 3)
 #' rowCofactors(M, 1)
-#' det(M)
+#' Det(M)
 #' # expansion by cofactors of row 1
 #' M[1,] %*% rowCofactors(M,1)
 #'

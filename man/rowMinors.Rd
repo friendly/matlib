@@ -30,7 +30,8 @@ rowMinors(M, 1)
 Michael Friendly
 }
 \seealso{
-Other determinants: \code{\link{cofactor}},
-  \code{\link{minor}}, \code{\link{rowCofactors}}
+Other determinants: \code{\link{Det}},
+  \code{\link{cofactor}}, \code{\link{minor}},
+  \code{\link{rowCofactors}}
 }
 

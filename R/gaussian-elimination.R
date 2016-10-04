@@ -333,34 +333,3 @@ cholesky <- function(X, tol=sqrt(.Machine$double.eps)){
     if (abs(D[n]) < tol) stop("matrix is numerically singular")
     L %*% diag(sqrt(D))
 }
-
-#' Determinant of a Square Matrix
-#'
-#' Returns the determinant of a square matrix \code{X},
-#' computed either by Gaussian elimination or as the product of the eigenvalues of the matrix.
-#' If the latter, \code{X} must be symmstric.
-#'
-#' @param X a square matrix
-#' @param method one of `"elimination"` (the default) or `"eigenvalues"`
-#' @param ... arguments passed to \code{\link{gaussianElimination}} or \code{\link{Eigen}}
-#' @return the determinant of \code{X}
-#' @seealso \code{\link[base]{det}} for the base R function
-#' @seealso \code{\link{gaussianElimination}}, \code{\link{Eigen}}
-#' @author John Fox
-#' @examples
-#' A <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
-#' A
-#' Det(A)
-#' B <- matrix(1:9, 3, 3) # a singular matrix
-#' B
-#' Det(B)
-#' C <- matrix(c(1, .5, .5, 1), 2, 2) # square, symmetric, nonsingular
-#' Det(C)
-#' Det(C, method="eigenvalues")
-
-Det <- function(X, method=c("elimination", "eigenvalues"), ...){
-    if (!(is.matrix(X) && nrow(X) == ncol(X))) stop("X must be a square matrix")
-    method <- match.arg(method)
-    if (method == "elimination") attr(gaussianElimination(X, ...), "det")
-    else prod(Eigen(X, ...)$values)
-}
