@@ -65,6 +65,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         stop("argument must be a numeric matrix")
     n <- nrow(A)
     m <- ncol(A)
+    det <- 1
     if (!missing(B)){
         B <- as.matrix(B)
         if (!(nrow(B) == nrow(A)) || !is.numeric(B))
@@ -84,12 +85,14 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             # find maximum pivot in current column at or below current row
             which <- which.max(abs(currentColumn))
             pivot <- currentColumn[which]
+            det <- det*pivot
             if (abs(pivot) <= tol) { # check for 0 pivot
                 j <- j + 1
                 next
             }
             if (which > i) {
                 A <- rowswap(A, i, which) # exchange rows (E3)
+                det <- -det
                 if (verbose) {
                     cat("\n exchange rows", i, "and", which, "\n")
                     printMatrix(A)
@@ -133,7 +136,25 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     }
     rownames(A) <- NULL
     ret <- if (fractions) fraction(A) else round(A, round(abs(log(tol, 10))))
+    if (m == n) {
+        attr(ret, "det") <- det
+        class(ret) <- c("enhancedMatrix", "matrix")
+    }
     if (verbose) invisible(ret) else ret
+}
+
+#' Print method for enhancedMatrix objects
+#'
+#' @param x matrix to print
+#' @param ... arguments to pass down
+#' @rdname gaussianElimination
+#' @export
+#'
+print.enhancedMatrix <- function(x, ...){
+    attr(x, "det") <- NULL
+    attr(x, "T") <- NULL
+    class(x) <- "matrix"
+    print(x, ...)
 }
 
 #' Inverse of a Matrix
@@ -311,4 +332,35 @@ cholesky <- function(X, tol=sqrt(.Machine$double.eps)){
     D[n] <- X[n, n] - sum((L[n, k]^2) * D[k])
     if (abs(D[n]) < tol) stop("matrix is numerically singular")
     L %*% diag(sqrt(D))
+}
+
+#' Determinant of a Square Matrix
+#'
+#' Returns the determinant of a square matrix \code{X},
+#' computed either by Gaussian elimination or as the product of the eigenvalues of the matrix.
+#' If the latter, \code{X} must be symmstric.
+#'
+#' @param X a square matrix
+#' @param method one of `"elimination"` (the default) or `"eigenvalues"`
+#' @param ... arguments passed to \code{\link{gaussianElimination}} or \code{\link{Eigen}}
+#' @return the determinant of \code{X}
+#' @seealso \code{\link[base]{det}} for the base R function
+#' @seealso \code{\link{gaussianElimination}}, \code{\link{Eigen}}
+#' @author John Fox
+#' @examples
+#' A <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
+#' A
+#' Det(A)
+#' B <- matrix(1:9, 3, 3) # a singular matrix
+#' B
+#' Det(B)
+#' C <- matrix(c(1, .5, .5, 1), 2, 2) # square, symmetric, nonsingular
+#' Det(C)
+#' Det(C, method="eigenvalues")
+
+Det <- function(X, method=c("elimination", "eigenvalues"), ...){
+    if (!(is.matrix(X) && nrow(X) == ncol(X))) stop("X must be a square matrix")
+    method <- match.arg(method)
+    if (method == "elimination") attr(gaussianElimination(X, ...), "det")
+    else prod(Eigen(X, ...)$values)
 }

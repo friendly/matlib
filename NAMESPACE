@@ -2,6 +2,7 @@
 
 S3method(as.matrix,trace)
 S3method(plot,regvec3d)
+S3method(print,enhancedMatrix)
 S3method(print,regvec3d)
 S3method(print,trace)
 S3method(regvec3d,default)
