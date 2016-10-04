@@ -80,7 +80,7 @@ Michael Friendly
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},
   \code{\link{corner}}, \code{\link{plot.regvec3d}},
-  \code{\link{point_on_line}}, \code{\link{regvec3d}},
+  \code{\link{pointOnLine}}, \code{\link{regvec3d}},
   \code{\link{vectors}}
 }
 

@@ -14,23 +14,23 @@
 #' @author Gaston Sanchez (from matrixkit)
 #' @examples
 #' A = cbind(c(2, 1), c(12, 5))
-#' power_method(A)
+#' powerMethod(A)
 #' eigen(A)$vectors[,1]  # check
 #'
 #' B = cbind(c(1, 2, 0), c(2, 1, 3), c(0, 3, 1))
-#' power_method(B)
+#' powerMethod(B)
 
-power_method <- function(X, v = NULL, eps = 1e-6, maxiter = 100, verbose=FALSE)
+powerMethod <- function(X, v = NULL, eps = 1e-6, maxiter = 100, verbose=FALSE)
 {
   if (!is_square_matrix(X))
-    stop("'power_method()' requires a square numeric matrix")
+    stop("'powerMethod()' requires a square numeric matrix")
 
   if (!is.null(v))
   {
     if (!is.vector(v) || !is.numeric(v))
-      stop("'power_method()' requires 'v' to be a numeric vector")
+      stop("'powerMethod()' requires 'v' to be a numeric vector")
     if (nrow(X) != length(v))
-      stop("'X' is not conformable with 'v' in 'power_method()'")
+      stop("'X' is not conformable with 'v' in 'powerMethod()'")
   } else {
     v = rep(1, nrow(X))
   }

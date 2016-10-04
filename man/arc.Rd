@@ -62,7 +62,7 @@ arc(p3, p1, p2, d=.2)
 \seealso{
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arrows3d}}, \code{\link{corner}},
-  \code{\link{plot.regvec3d}}, \code{\link{point_on_line}},
+  \code{\link{plot.regvec3d}}, \code{\link{pointOnLine}},
   \code{\link{regvec3d}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }

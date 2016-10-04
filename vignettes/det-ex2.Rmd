@@ -51,17 +51,17 @@ of the matrix $A$ are deleted.  NB: In R, negative subscripts delete rows or col
 
 In symbols: $\det(A) = a_{1,1} * A_{1,1} + a_{1,2} * A_{1,2} + a_{1,3} * A_{1,3}$
 
-`row_cofactors()` is a convenience function, that calculates these all together
+`rowCofactors()` is a convenience function, that calculates these all together
 
 ```{r }
-  row_cofactors(A, 1)
+  rowCofactors(A, 1)
 ```
 
 Voila: Multiply row 1 times the cofactors of its elements.  NB: In R, this multiplication gives a $1 \times 1$ matrix.
 
 ```{r }
-  A[1,] %*% row_cofactors(A, 1)
-  all.equal( det(A), c(A[1,] %*% row_cofactors(A, 1)) )
+  A[1,] %*% rowCofactors(A, 1)
+  all.equal( det(A), c(A[1,] %*% rowCofactors(A, 1)) )
 ```
 
 ##  2. Finding `det()` by Gaussian elimination (pivoting)

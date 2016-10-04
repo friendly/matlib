@@ -1,6 +1,6 @@
 #' Eigen Decomposition of a Square Symmetric Matrix
 #'
-#' \code{eig} calculates the eigenvalues and eigenvectors of a square, symmetric matrix using the iterated QR decomposition
+#' \code{Eigen} calculates the eigenvalues and eigenvectors of a square, symmetric matrix using the iterated QR decomposition
 #'
 #' @param X a square symmetric matrix
 #' @param tol tolerance passed to \code{\link{QR}}
@@ -13,10 +13,10 @@
 #' @examples
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' C
-#' EC <- eig(C) # eigenanalysis of C
+#' EC <- Eigen(C) # eigenanalysis of C
 #' EC$vectors %*% diag(EC$values) %*% t(EC$vectors) # check
 
-eig <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=TRUE){
+Eigen <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=TRUE){
   # returns the eigenvalues and eigenvectors of a square, symmetric matrix using the iterated QR decomposition
   # X: a square, symmetric matrix
   # tol: 0 tolerance
@@ -56,7 +56,7 @@ eig <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=TR
 #' @return a list of three elements: \code{d}-- singular values, \code{U}-- left singular vectors, \code{V}-- right singular vectors
 #' @author John Fox and Georges Monette
 #' @seealso \code{\link[base]{svd}}, the standard svd function
-#' @seealso \code{\link{eig}}
+#' @seealso \code{\link{Eigen}}
 #' @examples
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' C
@@ -78,7 +78,7 @@ SVD <- function(X, tol=sqrt(.Machine$double.eps)){
   # compute the singular-value decomposition of a matrix X from the eigenstructure of X'X
   # X: a matrix
   # tol: 0 tolerance
-  VV <- eig(t(X) %*% X, tol=tol, retain.zeroes=FALSE)
+  VV <- Eigen(t(X) %*% X, tol=tol, retain.zeroes=FALSE)
   V <- VV$vectors
   d <- sqrt(VV$values)
   U <- X %*% V %*% diag(1/d,nrow=length(d)) # magically orthogonal

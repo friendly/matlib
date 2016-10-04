@@ -1,3 +1,8 @@
+matlib 0.8.2
+
+- rename functions for consistency: `eig()` -> `Eigen()`, `point_on_line()` -> `pointOnLine()`, `power_method()` -> `powerMethod()`, `row_cofactors()` -> `rowCofactors()`, `row_minors()` -> `rowMinors()`.
+
+
 matlib 0.8.1
 
 - remove inst/doc to satisfy CRAN

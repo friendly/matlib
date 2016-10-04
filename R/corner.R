@@ -19,16 +19,16 @@
 #' @examples
 #' x1 <- c(0, 0)
 #' x2 <- c(1, 4)
-#' point_on_line(x1, x2, 0.5)
-#' point_on_line(x1, x2, 0.5, absolute=FALSE)
-#' point_on_line(x1, x2, 1.1)
+#' pointOnLine(x1, x2, 0.5)
+#' pointOnLine(x1, x2, 0.5, absolute=FALSE)
+#' pointOnLine(x1, x2, 1.1)
 #'
 #' y1 <- c(1, 2, 3)
 #' y2 <- c(3, 2, 1)
-#' point_on_line(y1, y2, 0.5)
-#' point_on_line(y1, y2, 0.5, absolute=FALSE)
+#' pointOnLine(y1, y2, 0.5)
+#' pointOnLine(y1, y2, 0.5, absolute=FALSE)
 
-point_on_line <- function(x1, x2, d, absolute=TRUE) {
+pointOnLine <- function(x1, x2, d, absolute=TRUE) {
 	v <- x2 - x1
 	if (absolute) v <- v / len(v)
 	x1 + d * v
@@ -49,7 +49,7 @@ point_on_line <- function(x1, x2, d, absolute=TRUE) {
 #' @param d  The distance from \code{p2} along each vector for drawing their corner
 #' @param absolute logical; if \code{TRUE}, \code{d} is taken as an absolute distance along the vectors; otherwise it
 #'            is calculated as a relative distance, i.e., a fraction of the length of the vectors.
-#'            See \code{\link{point_on_line}} for the precise definition.
+#'            See \code{\link{pointOnLine}} for the precise definition.
 #' @param ... Arguments passed to \code{link[graphics]{lines}} or to \code{link[rgl]{lines3d}}
 #'
 #' @return none
@@ -63,8 +63,8 @@ corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
   if (!all(diff(lens) ==0)) stop("Arguments p1, p2, p3 must be of the same length")
   if (any(lens < 2) | any(lens > 3)) stop("Only works for 2D or 3D")
 
-	p21 <- point_on_line(p2, p1, d=d, absolute=absolute)
-	p23 <- point_on_line(p2, p3, d=d, absolute=absolute)
+	p21 <- pointOnLine(p2, p1, d=d, absolute=absolute)
+	p23 <- pointOnLine(p2, p3, d=d, absolute=absolute)
   p123 <- p2 + (p23-p2) + (p21-p2)
 #	segments3d(rbind(p21, p123, p123, p23), ...)
   pts <- rbind(p21, p123, p23)
@@ -119,8 +119,8 @@ corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
 #' arc(p3, p1, p2, d=.2)
 
 arc <- function (p1, p2, p3, d=.10, absolute=TRUE, ... ) {
-  A <- point_on_line(p2, p1, d=d, absolute=absolute)
-  B <- point_on_line(p2, p3, d=d, absolute=absolute)
+  A <- pointOnLine(p2, p1, d=d, absolute=absolute)
+  B <- pointOnLine(p2, p3, d=d, absolute=absolute)
   O <- p2
   phi <- acos(crossprod( A-O, B-O ))
   t <- seq(0, 1, length.out=10)

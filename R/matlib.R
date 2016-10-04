@@ -16,7 +16,7 @@
 #'         \code{\link{tr}}, \code{\link{R}}, \code{\link{J}}, \code{\link{len}},
 #'         \code{\link{vec}}, \code{\link{Proj}}, \code{\link{mpower}}, \code{\link{vandermode}}
 #'   \item Determinants: functions for calculating determinants by cofactor expansion \cr
-#'         \code{\link{minor}}, \code{\link{cofactor}}, \code{\link{row_minors}}, \code{\link{row_cofactors}}
+#'         \code{\link{minor}}, \code{\link{cofactor}}, \code{\link{rowMinors}}, \code{\link{rowCofactors}}
 #'   \item Elementary row operations: functions for solving linear equations "manually" by the steps used in
 #'         row echelon form and Gaussian elimination \cr
 #'         \code{\link{rowadd}}, \code{\link{rowmult}}, \code{\link{rowswap}}
@@ -28,9 +28,9 @@
 #'         \code{\link{Ginv}}, \code{\link{LU}}, \code{\link{cholesky}}, \code{\link{swp}}
 #'   \item Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues
 #'         and eigenvectors \cr
-#'         \code{\link{eig}}, \code{\link{SVD}}, \code{\link{power_method}}, \code{\link{showEig}}
+#'         \code{\link{eigen}}, \code{\link{SVD}}, \code{\link{powerMethod}}, \code{\link{showEig}}
 #'   \item Vector diagrams: functions for drawing vector diagrams in 2D and 3D \cr
-#'         \code{\link{arrows3d}}, \code{\link{corner}}, \code{\link{arc}}, \code{\link{point_on_line}},
+#'         \code{\link{arrows3d}}, \code{\link{corner}}, \code{\link{arc}}, \code{\link{pointOnLine}},
 #'         \code{\link{vectors}}, \code{\link{vectors3d}}, \code{\link{regvec3d}}
 #' }
 #'

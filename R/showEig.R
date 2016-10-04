@@ -50,7 +50,7 @@ showEig <-
 	n <- dim(X)[1]
 	mu <- colMeans(X)
 	Sigma <- var(X)
-	ev <-eig(Sigma)
+	ev <-Eigen(Sigma)
 	vals <- ev$values
 	vecs <- ev$vectors
 	r <- cor(X[,1], X[,2])

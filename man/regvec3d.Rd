@@ -124,7 +124,7 @@ Least-Squares Regression with the matlib Package for R". \emph{useR Conference},
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},
   \code{\link{corner}}, \code{\link{plot.regvec3d}},
-  \code{\link{point_on_line}}, \code{\link{vectors3d}},
+  \code{\link{pointOnLine}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }
 

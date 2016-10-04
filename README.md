@@ -48,8 +48,8 @@ The functions in this package are grouped under the following topics
 
   - `minor()` - Minor of A[i,j]
   - `cofactor()` - Cofactor of A[i,j]
-  - `row_minors()` - Row minors of A[i,]
-  - `row_cofactors()` - Row cofactors of A[i,]
+  - `rowMinors()` - Row minors of A[i,]
+  - `rowCofactors()` - Row cofactors of A[i,]
 
 3. Elementary row operations: functions for solving linear equations "manually" by the steps used in row echelon form and Gaussian elimination
 
@@ -76,16 +76,16 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions`.
 
 6. Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
 
-  - `eig()` - eigenvalues and eigenvectors
+  - `Eigen()` - eigenvalues and eigenvectors
   - `SVD()` - singular value decomposition
-  - `power_method()` - find the dominant eigenvector using the power method 
+  - `powerMethod()` - find the dominant eigenvector using the power method 
   - `showEig()` - draw eigenvectors on a 2D scatterplot with a dataEllipse
 
 7. Vector diagrams: functions for drawing vector diagrams in 2D and 3D
 
   - `arrows3d()` - draw nice 3D arrows
   - `corner()`, `arc()` -  draw a corner or arc showing the angle between two vectors in 2D/3D
-  - `point_on_line()` - position of a point along a line
+  - `pointOnLine()` - position of a point along a line
   - `vectors()`, `vectors3d()` - plot geometric vector diagrams in 2D/3D 
   - `regvec3d()` - calculate and plot vectors representing a bivariate regression model, `lm(y ~ x1 + x2)` in mean-deviation form.
 

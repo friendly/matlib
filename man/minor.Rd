@@ -32,9 +32,9 @@ minor(M, 1, 3)
 Michael Friendly
 }
 \seealso{
-\code{\link{row_minors}} for all minors of a given row
+\code{\link{rowMinors}} for all minors of a given row
 
 Other determinants: \code{\link{cofactor}},
-  \code{\link{row_cofactors}}, \code{\link{row_minors}}
+  \code{\link{rowCofactors}}, \code{\link{rowMinors}}
 }
 

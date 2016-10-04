@@ -48,7 +48,7 @@ January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John
 
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{corner}},
-  \code{\link{plot.regvec3d}}, \code{\link{point_on_line}},
+  \code{\link{plot.regvec3d}}, \code{\link{pointOnLine}},
   \code{\link{regvec3d}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }
