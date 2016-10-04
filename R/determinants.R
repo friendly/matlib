@@ -5,8 +5,8 @@
 #' Determinant of a Square Matrix
 #'
 #' Returns the determinant of a square matrix \code{X},
-#' computed either by Gaussian elimination or as the product of the eigenvalues of the matrix.
-#' If the latter, \code{X} must be symmstric.
+#' computed either by Gaussian elimination, expansion by cofactors, or as the product of the eigenvalues of the matrix.
+#' If the latter, \code{X} must be symmetric.
 #'
 #' @param X a square matrix
 #' @param method one of `"elimination"` (the default), `"eigenvalues"`, or `"cofactors"` (for computation by minors and cofactors)

@@ -18,8 +18,8 @@ the determinant of \code{X}
 }
 \description{
 Returns the determinant of a square matrix \code{X},
-computed either by Gaussian elimination or as the product of the eigenvalues of the matrix.
-If the latter, \code{X} must be symmstric.
+computed either by Gaussian elimination, expansion by cofactors, or as the product of the eigenvalues of the matrix.
+If the latter, \code{X} must be symmetric.
 }
 \examples{
 A <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
