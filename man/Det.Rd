@@ -4,12 +4,17 @@
 \alias{Det}
 \title{Determinant of a Square Matrix}
 \usage{
-Det(X, method = c("elimination", "eigenvalues", "cofactors"), ...)
+Det(X, method = c("elimination", "eigenvalues", "cofactors"),
+  verbose = FALSE, fractions = FALSE, ...)
 }
 \arguments{
 \item{X}{a square matrix}
 
 \item{method}{one of `"elimination"` (the default), `"eigenvalues"`, or `"cofactors"` (for computation by minors and cofactors)}
+
+\item{verbose}{logical; if \code{TRUE}, print intermediate steps}
+
+\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
 
 \item{...}{arguments passed to \code{\link{gaussianElimination}} or \code{\link{Eigen}}}
 }
@@ -25,6 +30,7 @@ If the latter, \code{X} must be symmetric.
 A <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 A
 Det(A)
+Det(A, verbose=TRUE, fractions=TRUE)
 B <- matrix(1:9, 3, 3) # a singular matrix
 B
 Det(B)

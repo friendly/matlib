@@ -10,6 +10,8 @@
 #'
 #' @param X a square matrix
 #' @param method one of `"elimination"` (the default), `"eigenvalues"`, or `"cofactors"` (for computation by minors and cofactors)
+#' @param verbose logical; if \code{TRUE}, print intermediate steps
+#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @param ... arguments passed to \code{\link{gaussianElimination}} or \code{\link{Eigen}}
 #' @return the determinant of \code{X}
 #' @family determinants
@@ -20,6 +22,7 @@
 #' A <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' A
 #' Det(A)
+#' Det(A, verbose=TRUE, fractions=TRUE)
 #' B <- matrix(1:9, 3, 3) # a singular matrix
 #' B
 #' Det(B)
@@ -28,12 +31,45 @@
 #' Det(C, method="eigenvalues")
 #' Det(C, method="cofactors")
 
-Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), ...){
+Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=FALSE, fractions=FALSE, ...){
     if (length(X) == 1) return(X)
     if (!(is.matrix(X) && nrow(X) == ncol(X))) stop("X must be a square matrix")
+  if (fractions) {
+    mass <- requireNamespace("MASS", quietly=TRUE)
+    if (!mass) stop("fractions=TRUE needs MASS package")
+    fraction <- MASS::fractions
+  }
     method <- match.arg(method)
-    if (method == "elimination") attr(gaussianElimination(X, ...), "det")
-    else if (method == "eigenvalues") prod(Eigen(X, ...)$values)
+    if (method == "elimination"){
+      res <- gaussianElimination(X, verbose=verbose, fractions=fractions, ...)
+      pivots <- attr(res, "pivots")
+      interchanges <- attr(res, "interchanges")
+      det <- attr(res, "det")
+      if (verbose){
+        if (fractions){
+          pivots <- fraction(pivots)
+          det <- fraction(det)
+        }
+        cat(paste0("\n det = (-1)^", interchanges, " x ", paste(pivots, collapse=" x "), " = ", det))
+        return(invisible(attr(res, "det")))
+      }
+      else return(attr(res, "det"))
+    }
+    else if (method == "eigenvalues"){
+      values <- Eigen(X, ...)$values
+      det <- prod(values)
+      if (verbose){
+        values0 <- values
+        det0 <- det
+        if (fractions){
+          det0 <- fraction(det)
+          values0 <- fraction(values)
+        }
+        cat(paste0("\n det = ", paste(values0, collapse=" x "), " = ", det0))
+        return(invisible(det))
+      }
+      else return(det)
+    }
     else {
         as.vector(X[1,] %*% rowCofactors(X, 1))
     }

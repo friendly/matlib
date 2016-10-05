@@ -66,6 +66,8 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     n <- nrow(A)
     m <- ncol(A)
     det <- 1
+    pivots <- rep(0, n)
+    interchanges <- 0
     if (!missing(B)){
         B <- as.matrix(B)
         if (!(nrow(B) == nrow(A)) || !is.numeric(B))
@@ -86,6 +88,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             which <- which.max(abs(currentColumn))
             pivot <- currentColumn[which]
             det <- det*pivot
+            pivots[i] <- pivot
             if (abs(pivot) <= tol) { # check for 0 pivot
                 j <- j + 1
                 next
@@ -93,6 +96,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             if (which > i) {
                 A <- rowswap(A, i, which) # exchange rows (E3)
                 det <- -det
+                interchanges <- interchanges + 1
                 if (verbose) {
                     cat("\n exchange rows", i, "and", which, "\n")
                     printMatrix(A)
@@ -138,6 +142,8 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     ret <- if (fractions) fraction(A) else round(A, round(abs(log(tol, 10))))
     if (m == n) {
         attr(ret, "det") <- det
+        attr(ret, "pivots") <- pivots
+        attr(ret, "interchanges") <- interchanges
         class(ret) <- c("enhancedMatrix", "matrix")
     }
     if (verbose) invisible(ret) else ret
@@ -152,6 +158,8 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
 #'
 print.enhancedMatrix <- function(x, ...){
     attr(x, "det") <- NULL
+    attr(x, "pivots") <- NULL
+    attr(x, "interchanges") <- NULL
     attr(x, "T") <- NULL
     class(x) <- "matrix"
     print(x, ...)
