@@ -126,6 +126,8 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 #' @param alpha transparency applied to each plane
 #' @param labels logical, or a vector of character labels for the equations; not yet implemented.
 #' @param solution logical; should the solution point for all equations be marked (if possible)
+#' @param axes logical; whether to frame the plot with coordinate axes
+#' @param lit logical, specifying if lighting calculation should take place on geometry; see \code{\link[rgl]{rgl.material}}
 #'
 #' @return nothing; used for the side effect of making a plot
 #'
@@ -139,7 +141,8 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 #' plotEqn3d(A,b)
 
 plotEqn3d <- function( A, b, vars, xlim=c(-2,2), ylim=c(-2,2), zlim,
-                       col=2:(nrow(A)+1), alpha=1, labels=FALSE, solution=TRUE)
+                       col=2:(nrow(A)+1), alpha=1, labels=FALSE, solution=TRUE,
+                       axes=TRUE, lit=FALSE)
 {
 
   if (!requireNamespace("rgl", quietly = TRUE)) {
@@ -180,9 +183,10 @@ plotEqn3d <- function( A, b, vars, xlim=c(-2,2), ylim=c(-2,2), zlim,
   # Create some dummy data
   dat <- replicate(2, 1:3)
   rgl::plot3d(dat, type = 'n', xlim = xlim, ylim = ylim, zlim = c(-3, 3),
-              xlab = vars[1], ylab = vars[2], zlab = vars[3])
+              xlab = vars[1], ylab = vars[2], zlab = vars[3],
+              axes=axes)
   # Add planes
-  rgl::planes3d(A[,1], A[,2], A[,3], -b, col=col, alpha=alpha)
+  rgl::planes3d(A[,1], A[,2], A[,3], -b, col=col, alpha=alpha, lit=lit)
 
   # show the solution??
   if (solution) {

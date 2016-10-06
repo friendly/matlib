@@ -5,7 +5,8 @@
 \title{Plot Linear Equations in 3D}
 \usage{
 plotEqn3d(A, b, vars, xlim = c(-2, 2), ylim = c(-2, 2), zlim,
-  col = 2:(nrow(A) + 1), alpha = 1, labels = FALSE, solution = TRUE)
+  col = 2:(nrow(A) + 1), alpha = 1, labels = FALSE, solution = TRUE,
+  axes = TRUE, lit = FALSE)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}
@@ -32,6 +33,10 @@ range of the set of equations over the \code{xlim} and \code{ylim}}
 \item{labels}{logical, or a vector of character labels for the equations; not yet implemented.}
 
 \item{solution}{logical; should the solution point for all equations be marked (if possible)}
+
+\item{axes}{logical; whether to frame the plot with coordinate axes}
+
+\item{lit}{logical, specifying if lighting calculation should take place on geometry; see \code{\link[rgl]{rgl.material}}}
 }
 \value{
 nothing; used for the side effect of making a plot

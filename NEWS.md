@@ -3,6 +3,7 @@
 - rename functions for consistency: `eig()` -> `Eigen()`, `point_on_line()` -> `pointOnLine()`, `power_method()` -> `powerMethod()`, `row_cofactors()` -> `rowCofactors()`, `row_minors()` -> `rowMinors()`.
 
 - add `Det()` to compute determinants by elimination, from eigenvalues, or by minors and cofactors
+- `plotEqn3d()` gets an `axes` argument and `lit` to control lighting of the planes
 
 
 # matlib 0.8.1
