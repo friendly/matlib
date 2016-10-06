@@ -50,6 +50,10 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
           pivots <- fraction(pivots)
           det <- fraction(det)
         }
+        else {
+          pivots <- signif(pivots)
+          det <- signif(det)
+        }
         cat(paste0("\n det = (-1)^", interchanges, " x ", paste(pivots, collapse=" x "), " = ", det))
         return(invisible(attr(res, "det")))
       }
@@ -64,6 +68,10 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
         if (fractions){
           det0 <- fraction(det)
           values0 <- fraction(values)
+        }
+        else {
+          det0 <- signif(det)
+          values0 <- signif(values)
         }
         cat(paste0("\n det = ", paste(values0, collapse=" x "), " = ", det0))
         return(invisible(det))
