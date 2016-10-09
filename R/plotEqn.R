@@ -144,12 +144,6 @@ plotEqn3d <- function( A, b, vars, xlim=c(-2,2), ylim=c(-2,2), zlim,
                        col=2:(nrow(A)+1), alpha=1, labels=FALSE, solution=TRUE,
                        axes=TRUE, lit=FALSE)
 {
-
-  if (!requireNamespace("rgl", quietly = TRUE)) {
-    stop("rgl is needed for this function to work. Please install it.",
-         call. = FALSE)
-  }
-
   if (!is.numeric(A) || !is.matrix(A)) stop("A must be a numeric matrix")
   if (missing(b)) {
     b <- A[,ncol(A)]   # assume last column of Ab

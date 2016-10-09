@@ -53,10 +53,6 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE){
     }
     ret
   }
-  if (fractions) {
-    mass <- requireNamespace("MASS", quietly=TRUE)
-    if (!mass) stop("fractions=TRUE needs MASS package")
-  }
   if ((!is.matrix(A)) || (!is.numeric(A)))
     stop("argument must be a numeric matrix")
   n <- nrow(A)

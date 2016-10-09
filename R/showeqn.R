@@ -39,11 +39,8 @@ showEqn <- function(A, b, vars, simplify=FALSE, fractions=FALSE, latex = FALSE) 
     A <- A[,-ncol(A)]  # remove b from A
   }
   else b <- if (fractions){
-    mass <- requireNamespace("MASS", quietly=TRUE)
-    if (!mass) stop("fractions=TRUE needs MASS package")
     as.character(MASS::fractions(b))
-  }
-      else as.character(b)
+  } else as.character(b)
   if (missing(vars)) vars <- paste0("x", 1:ncol(A))
   V <- substr(vars[1], 1, 1)
   pat <- gsub("x", V, "0\\*x\\d\\s+[+-]|[+-]\\s+0\\*x\\d")

@@ -51,15 +51,9 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
         }
         else {
-            if (fractions) print(fraction(as.matrix(A)))
+            if (fractions) print(MASS::fractions(as.matrix(A)))
             else print(round(as.matrix(A), round(abs(log(tol,10)))))
         }
-    }
-    if (fractions) {
-        mass <- requireNamespace("MASS", quietly=TRUE)
-        if (!mass) stop("fractions=TRUE needs MASS package")
-        fraction <- MASS::fractions
-        frac <- function(x) as.character(fraction(x))
     }
     if ((!is.matrix(A)) || (!is.numeric(A)))
         stop("argument must be a numeric matrix")
@@ -105,7 +99,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             A <- rowmult(A, i, 1/pivot) # pivot (E1)
             if (verbose && abs(pivot - 1) > tol){
                 cat("\n multiply row", i, "by", 
-                    if (fractions) frac(1/pivot) else 1/pivot, "\n")
+                    if (fractions) MASS::fractions(1/pivot) else 1/pivot, "\n")
                 printMatrix(A)
             }
             for (k in 1:n){
@@ -116,7 +110,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                 if (verbose){
                   if (abs(factor - 1) > tol){
                     cat("\n multiply row", i, "by",
-                        if (fractions) frac(abs(factor)) else abs(factor),
+                        if (fractions) MASS::fractions(abs(factor)) else abs(factor),
                         if (factor > 0) "and subtract from row" else "and add to row", k, "\n")
                   }
                   else{
@@ -139,7 +133,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         A <- rbind(A, zeroRows)
     }
     rownames(A) <- NULL
-    ret <- if (fractions) fraction(A) else round(A, round(abs(log(tol, 10))))
+    ret <- if (fractions) MASS::fractions(A) else round(A, round(abs(log(tol, 10))))
     if (m == n) {
         attr(ret, "det") <- det
         attr(ret, "pivots") <- pivots
@@ -278,10 +272,6 @@ Ginv <- function(A, tol=sqrt(.Machine$double.eps), verbose=FALSE,
     # tol: tolerance for checking for 0 pivot
     # verbose: if TRUE, print intermediate steps
     # fractions: try to express nonintegers as rational numbers
-    if (fractions) {
-        mass <- requireNamespace("MASS", quietly=TRUE)
-        if (!mass) stop("fractions=TRUE needs MASS package")
-    }
     m <- nrow(A)
     n <- ncol(A)
     B <- gaussianElimination(A, diag(m), tol=tol, verbose=verbose,

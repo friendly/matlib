@@ -34,11 +34,6 @@
 Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=FALSE, fractions=FALSE, ...){
     if (length(X) == 1) return(X)
     if (!(is.matrix(X) && nrow(X) == ncol(X))) stop("X must be a square matrix")
-  if (fractions) {
-    mass <- requireNamespace("MASS", quietly=TRUE)
-    if (!mass) stop("fractions=TRUE needs MASS package")
-    fraction <- MASS::fractions
-  }
     method <- match.arg(method)
     if (method == "elimination"){
       res <- gaussianElimination(X, verbose=verbose, fractions=fractions, ...)
@@ -47,8 +42,8 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
       det <- attr(res, "det")
       if (verbose){
         if (fractions){
-          pivots <- fraction(pivots)
-          det <- fraction(det)
+          pivots <- MASS::fractions(pivots)
+          det <- MASS::fractions(det)
         }
         else {
           pivots <- signif(pivots)
@@ -66,8 +61,8 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
         values0 <- values
         det0 <- det
         if (fractions){
-          det0 <- fraction(det)
-          values0 <- fraction(values)
+          det0 <- MASS::fractions(det)
+          values0 <- MASS::fractions(values)
         }
         else {
           det0 <- signif(det)
