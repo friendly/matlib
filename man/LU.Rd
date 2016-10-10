@@ -4,8 +4,7 @@
 \alias{LU}
 \title{LU Decomposition}
 \usage{
-LU(A, b, tol = sqrt(.Machine$double.eps), fractions = FALSE,
-  verbose = FALSE, ...)
+LU(A, b, tol = sqrt(.Machine$double.eps), verbose = FALSE, ...)
 }
 \arguments{
 \item{A}{coefficient matrix}
@@ -14,8 +13,6 @@ LU(A, b, tol = sqrt(.Machine$double.eps), fractions = FALSE,
 \eqn{d} and \code{x} elements}
 
 \item{tol}{tolerance for checking for 0 pivot}
-
-\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
 
 \item{verbose}{logical; if \code{TRUE}, print intermediate steps}
 
@@ -48,6 +45,7 @@ otherwise, \eqn{P} will be an identity matrix and the LU equation will be simpli
   LU(A, b)
   
   LU(A, b, verbose=TRUE)
+  LU(A, b, verbose=TRUE, fractions=TRUE)
 
   # permutations required in this example
   A <- matrix(c(1,  1, -1,

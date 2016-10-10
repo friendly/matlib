@@ -11,7 +11,11 @@ printMatrix <- function(A, parent = TRUE, fractions = FALSE, latex = FALSE,
 	if (latex) {
 		matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
 	} else {
-		if (fractions) print(MASS::fractions(as.matrix(A)))
-		else print(round(as.matrix(A), round(abs(log(tol,10)))))
+		print(formatNumbers(as.matrix(A), fractions=fractions, tol=tol))
 	}
+}
+
+formatNumbers <- function(x, fractions=FALSE, tol=sqrt(.Machine$double.eps)){
+	ret <- if (fractions) MASS::fractions(x) else round(x, round(abs(log(tol, 10))))
+	ret
 }

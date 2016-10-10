@@ -14,7 +14,6 @@
 #' @param b right-hand side vector. When supplied the returned object will also contain the solved
 #'   \eqn{d} and \code{x} elements
 #' @param tol tolerance for checking for 0 pivot
-#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
 #' @param ... additional arguments passed to \code{\link{showEqn}}
 #' @return A list of matrix components of the solution, \code{P}, \code{L} and \code{U}. If \code{b}
@@ -32,6 +31,7 @@
 #'   LU(A, b)
 #'   
 #'   LU(A, b, verbose=TRUE)
+#'   LU(A, b, verbose=TRUE, fractions=TRUE)
 #'
 #'   # permutations required in this example
 #'   A <- matrix(c(1,  1, -1,
@@ -42,8 +42,8 @@
 #'   with(ret, P %*% A)
 #'   with(ret, L %*% U)
 #'
-LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, verbose=FALSE, ...){
-  fbsolve <- function(mat, y, verbose){
+LU <- function(A, b, tol=sqrt(.Machine$double.eps), verbose=FALSE, ...){
+  fbsolve <- function(mat, y, verbose, ...){
     backword <- which(rowSums(mat == 0) == max(rowSums(mat == 0))) > 1L
     len <- length(y)
     seq <- if(!backword) 1L:len else len:1L
@@ -55,29 +55,34 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, verbose=FAL
       if(i == seq[1L]){
       	if(verbose){
       		cat('\n  Equation: ')
-      		showEqn(mat[i, ,drop=FALSE], y[i], simplify=TRUE)
-      		cat(sprintf("  Solution: x%i = %s/%s = %s\n", i, y[i], mat[i,i], 
-      					y[i] / mat[i,i]))
+      		showEqn(mat[i, ,drop=FALSE], y[i], simplify=TRUE, ...)
+      		fns <- formatNumbers(c(y[i], mat[i,i], y[i]/mat[i,i]), ...)
+      		if(backword)
+      			cat(sprintf("  Solution: x%i = %s/%s = %s\n", i, fns[1], fns[2], fns[3]))
+      		else 
+      			cat(sprintf("  Solution: x%i = %s\n", i, fns[1], fns[2]))
       	}
         ret[i] <- y[i] / mat[i,i]
       } else {
       	if(verbose){
       		cat('\n  Equation: ')
-      		showEqn(mat[i, ,drop=FALSE], y[i], simplify=TRUE)
+      		showEqn(mat[i, ,drop=FALSE], y[i], simplify=TRUE, ...)
       		pick <- if(backword) (i+1L):ncol else 1L:min(i+1L, ncol)
       		cat('  Substitution: ')
       		vars <- if(backword){
-      			vars <- c(paste0('x', 1:i), ret[length(ret):(i+1L)])
-      			showEqn(mat[i, ,drop=FALSE], y[i], vars = vars, simplify=TRUE)
+      			vars <- c(paste0('x', 1:i), formatNumbers(ret[length(ret):(i+1L)], ...))
+      			showEqn(mat[i, ,drop=FALSE], y[i], vars = vars, simplify=TRUE, ...)
+      			fns <- formatNumbers(c(y[i], sum(mat[i, pick] * ret[pick]), mat[i,i]), ...)
+      			cat(sprintf("  Solution: x%i = (%s - %s)/%s = ", i, fns[1], fns[2], fns[3]))
       		} else {
-      			vars <- c(ret[1:(i-1L)], paste0('x', i:ncol))
-      			showEqn(mat[i, ,drop=FALSE], y[i, ,drop=FALSE], vars = vars, simplify=TRUE)
+      			vars <- c(formatNumbers(ret[1:(i-1L)], ...), paste0('x', i:ncol))
+      			showEqn(mat[i, ,drop=FALSE], y[i, ,drop=FALSE], vars = vars, simplify=TRUE, ...)
+      			fns <- formatNumbers(c(y[i], sum(mat[i, pick] * ret[pick])), ...)
+      			cat(sprintf("  Solution: x%i = (%s - %s) = ", i, fns[1], fns[2]))
       		}
-      		cat(sprintf("  Solution: x%i = (%s - %s) /%s = ", i, y[i], 
-      					paste0(sum(mat[i, pick] * ret[pick]), collapse=' - '), mat[i,i]))
       	} 
         ret[i] <- (y[i]- sum(mat[i, -i] * ret[-i]) ) / mat[i,i]
-        if(verbose) cat(sprintf("%s\n", ret[i]))
+        if(verbose) cat(sprintf("%s\n", formatNumbers(ret[i], ...)))
       }
     }
     ret
@@ -130,19 +135,20 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, verbose=FAL
   		cat("\nLower triangle equation:\n")
   		showEqn(L, b, simplify = TRUE, ...)
   	}
-    ret$d <- fbsolve(L, b, verbose=verbose)
+    ret$d <- fbsolve(L, b, verbose=verbose, ...)
     if (verbose){
-    	cat(sprintf("\nIntermediate solution: d = (%s)\n", paste0(ret$d, collapse=', ')))
+    	cat(sprintf("\nIntermediate solution: d = (%s)\n", 
+    				paste0(formatNumbers(ret$d, ...), collapse=', ')))
     	cat("\nUpper triangle equation:\n")
     	showEqn(ret$U, ret$d, simplify = TRUE, ...)
     }
-    ret$x <- fbsolve(A, ret$d, verbose=verbose)
+    ret$x <- fbsolve(A, ret$d, verbose=verbose, ...)
     if (verbose)
-    	cat(sprintf("\nFinal solution: x = (%s)\n", paste0(ret$x, collapse=', ')))
+    	cat(sprintf("\nFinal solution: x = (%s)\n", 
+    				paste0(formatNumbers(ret$x, ...), collapse=', ')))
   }
   ret <- lapply(ret, as.matrix)
-  ret <- if (fractions) lapply(ret, MASS::fractions)
-  else lapply(ret, function(x) round(x, round(abs(log(tol, 10)))))
+  ret <- lapply(ret, formatNumbers, ...)
   if(verbose) return(invisible(ret))
   ret
 }
