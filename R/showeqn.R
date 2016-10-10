@@ -32,6 +32,13 @@
 #'
 #'   showEqn(A, b, simplify=TRUE)
 #'   showEqn(A, b, latex=TRUE)
+#'   
+#'   # lower triangle of equation with zeros ommited
+#'   A <- matrix(c(2, 1, 2,
+#'                -3, -1, 2,
+#'                -2,  1, 2), 3, 3, byrow=TRUE)
+#'   U <- LU(A)$U
+#'   showEqn(U, b, simplify=TRUE, fractions=TRUE)
 
 showEqn <- function(A, b, vars, simplify=FALSE, fractions=FALSE, latex = FALSE) {
   if (missing(b)) {
