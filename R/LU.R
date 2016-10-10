@@ -148,7 +148,7 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), verbose=FALSE, ...){
     				paste0(formatNumbers(ret$x, ...), collapse=', ')))
   }
   ret <- lapply(ret, as.matrix)
-  ret <- lapply(ret, formatNumbers, ...)
+  ret <- lapply(ret, formatNumbers, tol=tol, ...)
   if(verbose) return(invisible(ret))
   ret
 }

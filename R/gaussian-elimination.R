@@ -124,7 +124,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         A <- rbind(A, zeroRows)
     }
     rownames(A) <- NULL
-    ret <- if (fractions) MASS::fractions(A) else round(A, round(abs(log(tol, 10))))
+    ret <- formatNumbers(A, fractions=fractions, tol=tol) 
     if (m == n) {
         attr(ret, "det") <- det
         attr(ret, "pivots") <- pivots
@@ -274,7 +274,7 @@ Ginv <- function(A, tol=sqrt(.Machine$double.eps), verbose=FALSE,
     R <- t(C[,-(1:m)])
     AC <- t(C[,1:m])
     ginv <- R %*% t(AC) %*% L
-    if (fractions) MASS::fractions (ginv) else round(ginv, round(abs(log(tol, 10))))
+    formatNumbers(ginv, fractions=fractions, tol=tol)
 }
 
 #' Cholesky Square Root of a Matrix
