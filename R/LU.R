@@ -55,7 +55,7 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, verbose=FAL
       if(i == seq[1L]){
       	if(verbose){
       		cat('\n  Equation: ')
-      		showEqn(mat[i, ,drop=FALSE], b[i, ,drop=FALSE], simplify=TRUE)
+      		showEqn(mat[i, ,drop=FALSE], y[i], simplify=TRUE)
       		cat(sprintf("  Solution: x%i = %s/%s = %s\n", i, y[i], mat[i,i], 
       					y[i] / mat[i,i]))
       	}
@@ -63,15 +63,15 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, verbose=FAL
       } else {
       	if(verbose){
       		cat('\n  Equation: ')
-      		showEqn(mat[i, ,drop=FALSE], b[i, ,drop=FALSE], simplify=TRUE)
+      		showEqn(mat[i, ,drop=FALSE], y[i], simplify=TRUE)
       		pick <- if(backword) (i+1L):ncol else 1L:min(i+1L, ncol)
       		cat('  Substitution: ')
       		vars <- if(backword){
       			vars <- c(paste0('x', 1:i), ret[length(ret):(i+1L)])
-      			showEqn(mat[i, ,drop=FALSE], b[i, ,drop=FALSE], vars = vars, simplify=TRUE)
+      			showEqn(mat[i, ,drop=FALSE], y[i], vars = vars, simplify=TRUE)
       		} else {
       			vars <- c(ret[1:(i-1L)], paste0('x', i:ncol))
-      			showEqn(mat[i, ,drop=FALSE], b[i, ,drop=FALSE], vars = vars, simplify=TRUE)
+      			showEqn(mat[i, ,drop=FALSE], y[i, ,drop=FALSE], vars = vars, simplify=TRUE)
       		}
       		cat(sprintf("  Solution: x%i = (%s - %s)/%s = ", i, y[i], 
       					paste0(mat[i, pick], collapse=' + '), mat[i,i]))
