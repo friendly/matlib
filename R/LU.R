@@ -73,8 +73,8 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, verbose=FAL
       			vars <- c(ret[1:(i-1L)], paste0('x', i:ncol))
       			showEqn(mat[i, ,drop=FALSE], y[i, ,drop=FALSE], vars = vars, simplify=TRUE)
       		}
-      		cat(sprintf("  Solution: x%i = (%s - (%s)) /%s = ", i, y[i], 
-      					paste0(mat[i, pick], collapse=' + '), mat[i,i]))
+      		cat(sprintf("  Solution: x%i = (%s - %s) /%s = ", i, y[i], 
+      					paste0(sum(mat[i, pick] * ret[pick]), collapse=' - '), mat[i,i]))
       	} 
         ret[i] <- (y[i]- sum(mat[i, -i] * ret[-i]) ) / mat[i,i]
         if(verbose) cat(sprintf("%s\n", ret[i]))
