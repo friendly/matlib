@@ -15,6 +15,8 @@
 #'   \eqn{d} and \code{x} elements
 #' @param tol tolerance for checking for 0 pivot
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
+#' @param logical; if \code{TRUE}, print intermediate steps
+#' @param ... additional arguments passed to \code{\link{showEqn}}
 #' @return A list of matrix components of the solution, \code{P}, \code{L} and \code{U}. If \code{b}
 #'        is supplied, the vectors \eqn{d} and \code{x} are also returned.
 #' @author Phil Chalmers
@@ -28,6 +30,8 @@
 #'   (ret <- LU(A)) # P is an identity; no row swapping
 #'   with(ret, L %*% U) # check that A = L * U
 #'   LU(A, b)
+#'   
+#'   LU(A, b, verbose=TRUE)
 #'
 #'   # permutations required in this example
 #'   A <- matrix(c(1,  1, -1,
@@ -38,17 +42,43 @@
 #'   with(ret, P %*% A)
 #'   with(ret, L %*% U)
 #'
-LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE){
-  fbsolve <- function(mat, y){
+LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, latex=FALSE, 
+			   verbose=FALSE, ...){
+  fbsolve <- function(mat, y, verbose){
     backword <- which(rowSums(mat == 0) == max(rowSums(mat == 0))) > 1L
     len <- length(y)
     seq <- if(!backword) 1L:len else len:1L
     ret <- numeric(len)
+    ncol <- ncol(mat)
+    if(verbose) cat(sprintf("\n%s operations:\n", 
+    						ifelse(backword, 'Back-solving', 'Forward-solving')))
     for(i in seq){
       if(i == seq[1L]){
+      	if(verbose){
+      		cat('\n  Equation: ')
+      		showEqn(mat[i, ,drop=FALSE], b[i, ,drop=FALSE], simplify=TRUE)
+      		cat(sprintf("  Solution: x%i = %s/%s = %s\n", i, y[i], mat[i,i], 
+      					y[i] / mat[i,i]))
+      	}
         ret[i] <- y[i] / mat[i,i]
       } else {
+      	if(verbose){
+      		cat('\n  Equation: ')
+      		showEqn(mat[i, ,drop=FALSE], b[i, ,drop=FALSE], simplify=TRUE)
+      		pick <- if(backword) (i+1L):ncol else 1L:min(i+1L, ncol)
+      		cat('  Substitution: ')
+      		vars <- if(backword){
+      			vars <- c(paste0('x', 1:i), ret[length(ret):(i+1L)])
+      			showEqn(mat[i, ,drop=FALSE], b[i, ,drop=FALSE], vars = vars, simplify=TRUE)
+      		} else {
+      			vars <- c(ret[1:(i-1L)], paste0('x', i:ncol))
+      			showEqn(mat[i, ,drop=FALSE], b[i, ,drop=FALSE], vars = vars, simplify=TRUE)
+      		}
+      		cat(sprintf("  Solution: x%i = (%s - %s)/%s = ", i, y[i], 
+      					paste0(mat[i, pick], collapse=' + '), mat[i,i]))
+      	} 
         ret[i] <- (y[i]- sum(mat[i, -i] * ret[-i]) ) / mat[i,i]
+        if(verbose) cat(sprintf("%s\n", ret[i]))
       }
     }
     ret
@@ -57,11 +87,15 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE){
     stop("argument must be a numeric matrix")
   n <- nrow(A)
   m <- ncol(A)
+  i <- j <- 1
+  L <- P <- diag(n)
+  if (verbose){
+  	cat("\nInitial equation:\n")
+  	showEqn(A, b, simplify = TRUE, ...)
+  }
   wasmissing <- missing(b)
   if(wasmissing) b <- matrix(0, n)
   else b <- as.matrix(b)
-  i <- j <- 1
-  L <- P <- diag(n)
   while (i <= n && j <= m){
     while (j <= m){
       for (k in 1:m){
@@ -86,12 +120,30 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE){
   }
   rownames(A) <- NULL
   ret <- list(P=P, L=L, U=A)
+  if (verbose && wasmissing){
+  	cat("\nLower triangle equation:\n")
+  	showEqn(L, simplify = TRUE, ...)
+  	cat("\nUpper triangle equation:\n")
+  	showEqn(ret$U, simplify = TRUE, ...)
+  }
   if(!wasmissing){
-    ret$d <- fbsolve(L, b)
-    ret$x <- fbsolve(A, ret$d)
+  	if (verbose){
+  		cat("\nLower triangle equation:\n")
+  		showEqn(L, b, simplify = TRUE, ...)
+  	}
+    ret$d <- fbsolve(L, b, verbose=verbose)
+    if (verbose){
+    	cat(sprintf("\nIntermediate solution: d = (%s)\n", paste0(ret$d, collapse=', ')))
+    	cat("\nUpper triangle equation:\n")
+    	showEqn(ret$U, ret$d, simplify = TRUE, ...)
+    }
+    ret$x <- fbsolve(A, ret$d, verbose=verbose)
+    if (verbose)
+    	cat(sprintf("\nFinal solution: x = (%s)\n", paste0(ret$x, collapse=', ')))
   }
   ret <- lapply(ret, as.matrix)
   ret <- if (fractions) lapply(ret, MASS::fractions)
   else lapply(ret, function(x) round(x, round(abs(log(tol, 10)))))
+  if(verbose) return(invisible(ret))
   ret
 }

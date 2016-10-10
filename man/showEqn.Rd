@@ -9,7 +9,8 @@ showEqn(A, b, vars, simplify = FALSE, fractions = FALSE, latex = FALSE)
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}}
 
-\item{b}{if supplied, the vector of constants on the right hand side of the equations}
+\item{b}{if supplied, the vector of constants on the right hand side of the equations. When ommited 
+the values \code{b1, b2, ..., bn} will be used as placeholders}
 
 \item{vars}{a numeric or character vector of names of the variables.
 If supplied, the length must be equal to the number of unknowns in the equations.
@@ -40,6 +41,14 @@ as a set of equations.
 
   showEqn(A, b, simplify=TRUE)
   showEqn(A, b, latex=TRUE)
+  
+  # lower triangle of equation with zeros ommited (for back solving)
+  A <- matrix(c(2, 1, 2,
+               -3, -1, 2,
+               -2,  1, 2), 3, 3, byrow=TRUE)
+  U <- LU(A)$U
+  showEqn(U, simplify=TRUE, fractions=TRUE)
+  showEqn(U, b, simplify=TRUE, fractions=TRUE)
 }
 \author{
 Michael Friendly and John Fox
