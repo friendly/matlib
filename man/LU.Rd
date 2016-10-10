@@ -5,7 +5,7 @@
 \title{LU Decomposition}
 \usage{
 LU(A, b, tol = sqrt(.Machine$double.eps), fractions = FALSE,
-  latex = FALSE, verbose = FALSE, ...)
+  verbose = FALSE, ...)
 }
 \arguments{
 \item{A}{coefficient matrix}
@@ -17,9 +17,9 @@ LU(A, b, tol = sqrt(.Machine$double.eps), fractions = FALSE,
 
 \item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
 
-\item{...}{additional arguments passed to \code{\link{showEqn}}}
+\item{verbose}{logical; if \code{TRUE}, print intermediate steps}
 
-\item{logical;}{if \code{TRUE}, print intermediate steps}
+\item{...}{additional arguments passed to \code{\link{showEqn}}}
 }
 \value{
 A list of matrix components of the solution, \code{P}, \code{L} and \code{U}. If \code{b}

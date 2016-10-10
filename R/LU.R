@@ -15,7 +15,7 @@
 #'   \eqn{d} and \code{x} elements
 #' @param tol tolerance for checking for 0 pivot
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
-#' @param logical; if \code{TRUE}, print intermediate steps
+#' @param verbose logical; if \code{TRUE}, print intermediate steps
 #' @param ... additional arguments passed to \code{\link{showEqn}}
 #' @return A list of matrix components of the solution, \code{P}, \code{L} and \code{U}. If \code{b}
 #'        is supplied, the vectors \eqn{d} and \code{x} are also returned.
@@ -42,8 +42,7 @@
 #'   with(ret, P %*% A)
 #'   with(ret, L %*% U)
 #'
-LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, latex=FALSE, 
-			   verbose=FALSE, ...){
+LU <- function(A, b, tol=sqrt(.Machine$double.eps), fractions=FALSE, verbose=FALSE, ...){
   fbsolve <- function(mat, y, verbose){
     backword <- which(rowSums(mat == 0) == max(rowSums(mat == 0))) > 1L
     len <- length(y)
