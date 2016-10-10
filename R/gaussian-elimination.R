@@ -46,15 +46,6 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     # fractions: try to express nonintegers as rational numbers
     # If B is absent returns the reduced row-echelon form of A.
     # If B is present, reduces A to RREF carrying B along.
-    printMatrix <- function(A){
-        if (latex) {
-            matrix2latex(A, fractions=fractions, digits = round(abs(log(tol,10))))
-        }
-        else {
-            if (fractions) print(MASS::fractions(as.matrix(A)))
-            else print(round(as.matrix(A), round(abs(log(tol,10)))))
-        }
-    }
     if ((!is.matrix(A)) || (!is.numeric(A)))
         stop("argument must be a numeric matrix")
     n <- nrow(A)
