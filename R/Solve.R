@@ -5,11 +5,14 @@
 #' Solve and Display Solutions for Systems of Linear Simultaneous Equations
 #'
 #' Solve the equation system \eqn{Ax = b}, given the coefficient matrix
-#' \eqn{A} and right-hand side vector \eqn{b}, using \code{link{gaussianElimination}}. 
+#' \eqn{A} and right-hand side vector \eqn{b}, using \code{link{gaussianElimination}}.
 #' Display the solutions using \code{\link{showEqn}}.
 #'
 #' @param A, the matrix of coefficients of a system of linear equations
 #' @param b, the vector of constants on the right hand side of the equations
+#' @param vars a numeric or character vector of names of the variables.
+#'        If supplied, the length must be equal to the number of unknowns in the equations.
+#'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param verbose, logical; show the steps of the Gaussian elimination algorithm?
 #' @param simplify logical; try to simplify the equations?
 #' @param fractions logical; express numbers as rational fractions?
@@ -24,16 +27,16 @@
 #'                -2,  1, 2), 3, 3, byrow=TRUE)
 #'   b1 <- c(8, -11, -3)
 #'   Solve(A1, b1) # unique solution
-#'   
+#'
 #'   A2 <- matrix(1:9, 3, 3)
 #'   b2 <- 1:3
 #'   Solve(A2,  b2, fractions=TRUE) # underdetermined
-#'   
+#'
 #'   b3 <- c(1, 2, 4)
 #'   Solve(A2, b3, fractions=TRUE) # overdetermined
 
-Solve <- function(A, b, verbose=FALSE, simplify=TRUE, fractions=FALSE, ...){
+Solve <- function(A, b, vars, verbose=FALSE, simplify=TRUE, fractions=FALSE, ...){
   solution <- gaussianElimination(A, b, verbose=verbose, fractions=fractions, ...)
-  showEqn(solution[, - ncol(solution)], solution[, ncol(solution)], simplify=simplify, 
+  showEqn(solution[, - ncol(solution)], solution[, ncol(solution)], vars, simplify=simplify,
           fractions=fractions, ...)
 }
