@@ -19,6 +19,9 @@ length of each column of a numeric matrix.
 \examples{
 len(1:3)
 len(matrix(1:9, 3, 3))
+
+# distance between two vectors
+len(1:3 - c(1,1,1))
 }
 \seealso{
 \code{\link[base]{norm}} for more general matrix norms

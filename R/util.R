@@ -19,3 +19,7 @@ formatNumbers <- function(x, fractions=FALSE, tol=sqrt(.Machine$double.eps)){
 	ret <- if (fractions) MASS::fractions(x) else round(x, round(abs(log(tol, 10))))
 	ret
 }
+
+r2d <-function(r) r/pi * 180
+
+d2r <-function(d) pi*d / 180
