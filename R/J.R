@@ -10,6 +10,7 @@
 #' @param ...      One or more arguments supplying the dimensions of the array, all non-negative integers
 #' @param constant The value of the constant used in the array
 #' @param dimnames Either \code{NULL} or the names for the dimensions.
+#' @export
 #' @examples
 #' J(3)
 #' J(2,3)

@@ -8,6 +8,7 @@
 #'
 #' @return a scalar or vector containing the length(s)
 #' @seealso \code{\link[base]{norm}} for more general matrix norms
+#' @export
 #' @examples
 #' len(1:3)
 #' len(matrix(1:9, 3, 3))

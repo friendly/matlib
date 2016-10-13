@@ -18,6 +18,7 @@
 #' @seealso \code{\link[base]{det}} for the base R function
 #' @seealso \code{\link{gaussianElimination}}, \code{\link{Eigen}}
 #' @author John Fox
+#' @export
 #' @examples
 #' A <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' A
@@ -91,6 +92,7 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
 #' @family determinants
 #' @seealso \code{\link{rowMinors}} for all minors of a given row
 #' @author Michael Friendly
+#' @export
 #' @examples
 #' M <- matrix(c(4, -12, -4,
 #'               2,   1,  3,
@@ -115,6 +117,7 @@ minor <- function(A, i, j) {
 #' @family determinants
 #' @seealso \code{\link{rowCofactors}} for all cofactors of a given row
 #' @author Michael Friendly
+#' @export
 #' @examples
 #' M <- matrix(c(4, -12, -4,
 #'               2,   1,  3,
@@ -138,6 +141,7 @@ cofactor <- function(A, i, j) {
 #' @return a vector of the minors of A[i,]
 #' @family determinants
 #' @author Michael Friendly
+#' @export
 #' @examples
 #' M <- matrix(c(4, -12, -4,
 #'               2,   1,  3,
@@ -166,6 +170,7 @@ rowMinors <- function(A, i) {
 #' @family determinants
 #' @seealso \code{\link{Det}} for the determinant
 #' @author Michael Friendly
+#' @export
 #' @examples
 #' M <- matrix(c(4, -12, -4,
 #'               2,   1,  3,

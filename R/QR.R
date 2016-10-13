@@ -14,6 +14,7 @@
 #'     of the matrix \code{X}
 #' @author John Fox and Georges Monette
 #' @seealso \code{\link[base]{qr}}
+#' @export
 #' @examples
 #' A <- matrix(c(1,2,3,4,5,6,7,8,10), 3, 3) # a square nonsingular matrix
 #' res <- QR(A)

@@ -4,6 +4,7 @@
 #'
 #' @param X a numeric matrix
 #' @return a numeric value, the sum of \code{diag(X)}
+#' @export
 #' @examples
 #' X <- matrix(1:9, 3, 3)
 #' tr(X)

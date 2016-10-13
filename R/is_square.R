@@ -5,6 +5,7 @@
 #' @return \code{TRUE} if \code{x} is a square matrix, else \code{FALSE}
 #' @keywords internal
 #' @rdname is_square
+#' @export
 #'
 
 is_square_matrix <- function (x)
@@ -18,6 +19,7 @@ is_square_matrix <- function (x)
 #'
 #' @return \code{TRUE} if \code{x} is a square, symmetric matrix, else \code{FALSE}
 #' @keywords internal
+#' @export
 #' @rdname is_square
 #'
 is_symmetric_matrix <- function (x)
@@ -32,6 +34,7 @@ is_symmetric_matrix <- function (x)
 #'
 #' @return \code{TRUE} if \code{x} is an orthogonal matrix, else \code{FALSE}
 #'
+#' @export
 #' @rdname is_square
 is_orthogonal_matrix <- function (x)
 {

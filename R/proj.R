@@ -13,6 +13,7 @@
 #' @return the projection of \code{y} on \code{X} (if \code{list=FALSE}) or a list with elements \code{y} and \code{P}
 #' @author Michael Friendly
 #' @family vector diagrams
+#' @export
 #' @examples
 #' X <- matrix( c(1, 1, 1, 1, 1, -1, 1, -1), 4,2, byrow=TRUE)
 #' y <- 1:4

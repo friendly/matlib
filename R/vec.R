@@ -6,6 +6,7 @@
 #'
 #' @return A one-column matrix containing the elements of \code{x} in column order
 #'
+#' @export
 #' @examples
 #' vec(1:3)
 #' vec(matrix(1:6, 2, 3))

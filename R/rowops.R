@@ -18,6 +18,7 @@
 #' @return the matrix \code{x}, as modified
 #' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
 #' @family elementary row operations
+#' @export
 #' @examples
 #' A <- matrix(c(2, 1, -1,
 #'              -3, -1, 2,
@@ -58,6 +59,7 @@ rowadd <- function(x, from, to, mult) {
 #' @param to destination row
 #' @return the matrix \code{x}, with rows \code{from} and \code{to} interchanged
 #' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
+#' @export
 #' @family elementary row operations
 #'
 rowswap <- function(x, from, to) {
@@ -84,6 +86,7 @@ rowswap <- function(x, from, to) {
 #' @return the matrix \code{x}, modified
 #' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
 #' @family elementary row operations
+#' @export
 #' @examples
 #' A <- matrix(c(2, 1, -1,
 #'              -3, -1, 2,
@@ -126,6 +129,8 @@ rowmult <- function(x, row, mult) {
 #' @return the tranformation matrix or a list of individual transformation matricies
 #' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
 #' @family matrix of elementary row operations
+#' @author Phil Chalmers
+#' @export
 #' @examples
 #' A <- matrix(c(2, 1, -1,
 #'              -3, -1, 2,

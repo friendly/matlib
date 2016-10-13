@@ -8,6 +8,7 @@
 #'
 #' @return a matrix of size \code{length(x)} x \code{n}
 #'
+#' @export
 #' @examples
 #' vandermode(1:5, 4)
 vandermode <- function (x, n) {

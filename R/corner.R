@@ -16,6 +16,7 @@
 #'            is calculated as a relative distance, i.e., a fraction of the length of the line.
 #' @return The interpolated point, a vector of the same length as \code{x1}
 #' @family vector diagrams
+#' @export
 #' @examples
 #' x1 <- c(0, 0)
 #' x2 <- c(1, 4)
@@ -51,7 +52,7 @@ pointOnLine <- function(x1, x2, d, absolute=TRUE) {
 #'            is calculated as a relative distance, i.e., a fraction of the length of the vectors.
 #'            See \code{\link{pointOnLine}} for the precise definition.
 #' @param ... Arguments passed to \code{link[graphics]{lines}} or to \code{link[rgl]{lines3d}}
-#'
+#' @export
 #' @return none
 #' @family vector diagrams
 #'
@@ -92,6 +93,7 @@ corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
 #' @return none
 #' @references \url{http://math.stackexchange.com/questions/1507248/find-arc-between-two-tips-of-vectors-in-3d}
 #' @family vector diagrams
+#' @export
 #' @examples
 #' library(rgl)
 #' vec <- rbind(diag(3), c(1,1,1))

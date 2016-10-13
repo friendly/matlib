@@ -43,7 +43,6 @@
 #' @aliases matlib-package
 #' @references Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 #' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
-#' @exportPattern "^[[:alpha:]]+"
 
 NULL
 

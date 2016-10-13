@@ -6,6 +6,7 @@
 #'
 #' @param X a matrix
 #' @return rank of \code{X}
+#' @export
 #' @seealso \code{\link[base]{qr}}
 #'
 #' @examples

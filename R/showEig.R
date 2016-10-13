@@ -14,7 +14,7 @@
 #' @param add         logical; should this call add to an existing plot?
 #' @param ...         other arguments passed to \code{link[car]{dataEllipse}}
 #' @author Michael Friendly
-#' @seealso \code{link[car]{dataEllipse}}
+#' @seealso \code{\link[car]{dataEllipse}}
 #' @importFrom car dataEllipse
 #' @export
 #' @examples

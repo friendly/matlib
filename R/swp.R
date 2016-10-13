@@ -22,6 +22,7 @@
 #'      Dempster, A. P. (1969) \emph{Elements of Continuous Multivariate Analysis}. Addison-Wesley Publ. Co., Reading, Mass.
 #'
 #' @seealso \code{\link{Proj}}, \code{\link{QR}}
+#' @export
 #' @examples
 #' data(therapy)
 #' mod3 <- lm(therapy ~ perstest + IE + sex, data=therapy)

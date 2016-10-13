@@ -58,6 +58,9 @@ T <- buildTmat(soln)
 inv(T) \%*\% soln
 
 }
+\author{
+Phil Chalmers
+}
 \seealso{
 \code{\link{echelon}}, \code{\link{gaussianElimination}}
 }

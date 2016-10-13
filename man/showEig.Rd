@@ -47,6 +47,6 @@ showEig(Duncan[,2:3], levels=0.68, robust=TRUE, add=TRUE, fill=TRUE)
 Michael Friendly
 }
 \seealso{
-\code{link[car]{dataEllipse}}
+\code{\link[car]{dataEllipse}}
 }
 

@@ -14,6 +14,7 @@
 #' @export
 #' @author Original idea from Duncan Murdoch
 #' @importFrom grDevices rainbow
+#' @export
 #' @examples
 #' A <- matrix(c(1,2,0.1, 0.1,1,0.1, 0.1,0.1,0.5), 3,3)
 #' svdDemo(A)

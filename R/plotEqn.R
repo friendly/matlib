@@ -26,6 +26,7 @@
 #' @references Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 #' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 #' @importFrom graphics abline lines plot text points
+#' @export
 #' @seealso \code{\link{showEqn}}
 
 #' @examples
@@ -134,6 +135,7 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 #' @author Michael Friendly, John Fox
 #' @references Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 #' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
+#' @export
 #' @examples
 #' # three consistent equations in three unknowns
 #' A <- matrix(c(13, -4, 2, -4, 11, -2, 2, -2, 8), 3,3)

@@ -9,6 +9,7 @@
 #' @param ... additional arguments passed to \code{xtable::xtableMatharray()}
 #' @importFrom xtable xtableMatharray
 #' @author Phil Chalmers
+#' @export
 #' @examples
 #' A <- matrix(c(2, 1, -1,
 #'              -3, -1, 2,

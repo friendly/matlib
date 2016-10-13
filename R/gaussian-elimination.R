@@ -21,6 +21,7 @@
 #'         If \code{B} is present, returns the reduced row-echelon form of \code{A}, with the
 #'         same operations applied to \code{B}.
 #' @author John Fox
+#' @export
 #' @examples
 #'   A <- matrix(c(2, 1, -1,
 #'                -3, -1, 2,
@@ -164,6 +165,7 @@ print.enhancedMatrix <- function(x, ...){
 #' @param ... other arguments passed on
 #' @return the inverse of \code{X}
 #' @author John Fox
+#' @export
 #' @examples
 #'   A <- matrix(c(2, 1, -1,
 #'                -3, -1, 2,
@@ -183,6 +185,7 @@ Inverse <- function(X, tol=sqrt(.Machine$double.eps), ...){
     X[,(n + 1):(2*n)]  # return inverse
 }
 # synonym
+#' @export
 inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
 
 #RREF <- function(X, ...) gaussianElimination(X, ...)
@@ -202,6 +205,7 @@ inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
 #' @param ... other arguments passed to \code{gaussianElimination}
 #' @return the reduced echelon form of \code{X}.
 #' @author John Fox
+#' @export
 #' @examples
 #' A <- matrix(c(2, 1, -1,
 #'              -3, -1, 2,
@@ -241,6 +245,7 @@ echelon <- function(X, ...) gaussianElimination(X, ...)
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
 #' @return the generalized inverse of \code{A}, expressed as fractions if \code{fractions=TRUE}, or rounded
 #' @seealso \code{\link[MASS]{ginv}} for a more generally usable function
+#' @export
 #' @author John Fox
 #'
 #' @examples
@@ -289,6 +294,7 @@ Ginv <- function(A, tol=sqrt(.Machine$double.eps), verbose=FALSE,
 #' @seealso \code{\link[base]{chol}} for the base R function
 #' @seealso \code{\link{gsorth}} for Gram-Schmidt orthogonalization of a data matrix
 #' @author John Fox
+#' @export
 #' @examples
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' C

@@ -20,6 +20,7 @@
 #' @return none
 #' @seealso \code{\link[graphics]{arrows}}, \code{\link[graphics]{text}}
 #' @family vector diagrams
+#' @export
 #' @importFrom graphics arrows
 #'
 #' @examples

@@ -10,6 +10,7 @@
 #' @author John Fox and Georges Monette
 #' @seealso \code{\link[base]{eigen}}
 #' @seealso \code{\link{SVD}}
+#' @export
 #' @examples
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' C
@@ -57,6 +58,7 @@ Eigen <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=
 #' @author John Fox and Georges Monette
 #' @seealso \code{\link[base]{svd}}, the standard svd function
 #' @seealso \code{\link{Eigen}}
+#' @export
 #' @examples
 #' C <- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
 #' C
