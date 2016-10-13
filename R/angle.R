@@ -23,7 +23,7 @@
 #' # proper geometry requires asp=1
 #' plot( xlim, ylim, type="n", xlab="X", ylab="Y", asp=1)
 #' abline(v=0, h=0, col="gray")
-#' vectors(rbind(u,v), col=c("red", "blue"), cex.lab=c(2, 2)) 
+#' vectors(rbind(x,y), col=c("red", "blue"), cex.lab=c(2, 2)) 
 #' 
 #' # angle between (theta)
 #' text(.4, .4, expression(theta), cex=2)
@@ -45,7 +45,6 @@
 #' 
 #' # angle between (theta)
 #' text(0, .4, expression(theta), cex=2)
-#' 
 
 angle <- function(x, y, degree = TRUE) {
   theta <- acos(x %*% y / (len(x) * len(y)))
