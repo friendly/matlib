@@ -4,13 +4,14 @@
 \alias{Solve}
 \title{Solve and Display Solutions for Systems of Linear Simultaneous Equations}
 \usage{
-Solve(A, b, vars, verbose = FALSE, simplify = TRUE, fractions = FALSE,
-  ...)
+Solve(A, b = rep(0, nrow(A)), vars, verbose = FALSE, simplify = TRUE,
+  fractions = FALSE, ...)
 }
 \arguments{
 \item{A, }{the matrix of coefficients of a system of linear equations}
 
-\item{b, }{the vector of constants on the right hand side of the equations}
+\item{b, }{the vector of constants on the right hand side of the equations. The default is a vector of zeros,
+giving the homogeneous equations \eqn{Ax = 0}.}
 
 \item{vars}{a numeric or character vector of names of the variables.
 If supplied, the length must be equal to the number of unknowns in the equations.
@@ -33,6 +34,12 @@ Solve the equation system \eqn{Ax = b}, given the coefficient matrix
 \eqn{A} and right-hand side vector \eqn{b}, using \code{link{gaussianElimination}}.
 Display the solutions using \code{\link{showEqn}}.
 }
+\details{
+This function mimics the base function \code{\link[base]{solve}} when supplied with two arguments,
+   \code{(A, b)}, but gives a prettier result, as a set of equations for the solution.  The call
+   \code{solve(A)} with a single argument overloads this, returning the inverse of the matrix \code{A}.
+   For that sense, use the function \code{\link{inv}} instead.
+}
 \examples{
   A1 <- matrix(c(2, 1, -1,
                -3, -1, 2,
@@ -51,6 +58,6 @@ Display the solutions using \code{\link{showEqn}}.
 John Fox
 }
 \seealso{
-\code{\link{gaussianElimination}}, \code{\link{showEqn}}
+\code{\link{gaussianElimination}}, \code{\link{showEqn}} \code{\link{inv}}, \code{\link[base]{solve}}
 }
 
