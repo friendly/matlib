@@ -5,13 +5,15 @@
 # matlib
 Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics
 
-Version 0.8.2
+Version 0.8.3
 
 These functions are mainly for tutorial purposes in learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts available
 elsewhere in R, but where the function call or name is not obvious.  In other
-cases, functions are provided to show or demonstrate an algorithm.  In addition, 
-a collection of functions are provided for drawing vector diagrams in 2D and 3D.
+cases, functions are provided to show or demonstrate an algorithm, sometimes
+providing a `verbose =` argument to print the details of computations.
+
+In addition, a collection of functions are provided for drawing vector diagrams in 2D and 3D.
 
 ## Installation
 
