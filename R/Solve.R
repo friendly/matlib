@@ -25,6 +25,7 @@
 #' @param ..., arguments to be passed to \code{link{gaussianElimination}} and \code{\link{showEqn}}
 #' @return the function is used primarily for its side effect of printing the solution in a
 #'  readable form, but it invisibly returns the solution as a character vector
+#' @export
 #' @author John Fox
 #' @seealso \code{\link{gaussianElimination}}, \code{\link{showEqn}} \code{\link{inv}}, \code{\link[base]{solve}}
 #' @examples
