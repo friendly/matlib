@@ -3,9 +3,10 @@
 - rename functions for consistency: `eig()` -> `Eigen()`, `point_on_line()` -> `pointOnLine()`, `power_method()` -> `powerMethod()`, `row_cofactors()` -> `rowCofactors()`, `row_minors()` -> `rowMinors()`.
 
 - add `Det()` to compute determinants by elimination, from eigenvalues, or by minors and cofactors
-- `plotEqn3d()` gets an `axes` argument and `lit` to control lighting of the planes; `lit` solves a problem with the planes becoming indistinuishable in some rotations.
+- `plotEqn3d()` gets an `axes` argument and `lit` to control lighting of the planes; `lit` solves a problem with the planes becoming indistinguishable in some rotations.
 - add `svdDemo()` function to illustrate the SVD of a 3 x 3 matrix [thx: Duncan Murdoch]
-- added `symMat()` to create a square symmetric matrix from a vector.
+- add `symMat()` to create a square symmetric matrix from a vector.
+- add `angle()` to calculate angle between vectors
 
 
 # matlib 0.8.1
