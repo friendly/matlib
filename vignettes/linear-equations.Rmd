@@ -122,7 +122,7 @@ x
 
 Plot the equations. You can see that each pair of equations has a solution,
 but all three do not have a common, consistent solution.
-```{r, echo=2:3}
+```{r}
 par(mar=c(4,4,0,0)+.1)
 plotEqn(A,b, xlim=c(-2, 4))
 points(x[1], x[2], pch=15)

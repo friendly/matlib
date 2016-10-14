@@ -4,35 +4,56 @@
 \alias{powerMethod}
 \title{Power Method for Eigenvectors}
 \usage{
-powerMethod(X, v = NULL, eps = 1e-06, maxiter = 100, verbose = FALSE)
+powerMethod(X, v = NULL, eps = 1e-06, maxiter = 100, verbose = FALSE,
+  keep = FALSE)
 }
 \arguments{
 \item{X}{a square numeric matrix}
 
-\item{v}{optional starting vector}
+\item{v}{optional starting vector; if not supplied, it uses a unit vector of length equal to the number of rows / columns of \code{x}.}
 
-\item{eps}{convergence threshold}
+\item{eps}{convergence threshold for terminating iterations}
 
 \item{maxiter}{maximum number of iterations}
 
 \item{verbose}{logical; if \code{TRUE}, show the approximation to the eigenvector at each iteration}
+
+\item{keep}{logical; if \code{TRUE}, also return the series of iterated eigenvectors as another component, named \code{vectors}.}
 }
 \value{
-a list containing the eigenvector, eigenvalue, and iterations
+a list containing the eigenvector (\code{vector}), eigenvalue (\code{value}), and iterations (\code{iter})
 }
 \description{
-Finds a dominant eigenvalue and its corresponding
-eigenvector of a square matrix by applying the Power Method with scaling
+Finds a dominant eigenvalue, \eqn{\lambda_1}, and its corresponding
+eigenvector, \eqn{v_1}, of a square matrix by applying Hotelling's (1933) Power Method with scaling.
+In pre-computer days, this method could be extended to find subsequent eigenvalue - eigenvector
+pairs by "deflation", i.e., by applying the method again to the new matrix.
+\eqn{A - \lambda_1 v_1 v_1^{T} }
 }
 \examples{
-A = cbind(c(2, 1), c(12, 5))
-powerMethod(A)
+A <- cbind(c(2, 1), c(12, 5))
+powerMethod(A, verbose=TRUE)
 eigen(A)$vectors[,1]  # check
 
-B = cbind(c(1, 2, 0), c(2, 1, 3), c(0, 3, 1))
-powerMethod(B)
+B <- cbind(c(1, 2, 0), c(2, 1, 3), c(0, 3, 1))
+(rv <- powerMethod(B))
+
+# deflate to find 2nd latent vector
+l <- rv$value
+v <- c(rv$vector)
+B1 <- B - l * outer(v, v)
+powerMethod(B1)
+eigen(B)$vectors     # check
+
+# a positive, semi-definite matrix, with eigenvalues 12, 6, 0
+C <- matrix(c(7, 4, 1,  4, 4, 4,  1, 4, 7), 3, 3)
+eigen(C)$vectors
+powerMethod(C)
 }
 \author{
 Gaston Sanchez (from matrixkit)
+}
+\references{
+Hotelling, H. (1933). Analysis of a complex of statistical variables into principal components. \emph{Journal of Educational Psychology}, 24, 417-441, and 498-520.
 }
 
