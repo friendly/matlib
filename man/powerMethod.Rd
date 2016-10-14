@@ -4,11 +4,11 @@
 \alias{powerMethod}
 \title{Power Method for Eigenvectors}
 \usage{
-powerMethod(X, v = NULL, eps = 1e-06, maxiter = 100, verbose = FALSE,
+powerMethod(A, v = NULL, eps = 1e-06, maxiter = 100, verbose = FALSE,
   keep = FALSE)
 }
 \arguments{
-\item{X}{a square numeric matrix}
+\item{A}{a square numeric matrix}
 
 \item{v}{optional starting vector; if not supplied, it uses a unit vector of length equal to the number of rows / columns of \code{x}.}
 

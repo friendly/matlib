@@ -7,7 +7,7 @@
 #' pairs by "deflation", i.e., by applying the method again to the new matrix.
 #' \eqn{A - \lambda_1 v_1 v_1^{T} }
 #'
-#' @param X a square numeric matrix
+#' @param A a square numeric matrix
 #' @param v optional starting vector; if not supplied, it uses a unit vector of length equal to the number of rows / columns of \code{x}.
 #' @param eps convergence threshold for terminating iterations
 #' @param maxiter maximum number of iterations
@@ -38,19 +38,19 @@
 #' powerMethod(C)
 
 
-powerMethod <- function(X, v = NULL, eps = 1e-6, maxiter = 100, verbose=FALSE, keep=FALSE)
+powerMethod <- function(A, v = NULL, eps = 1e-6, maxiter = 100, verbose=FALSE, keep=FALSE)
 {
-  if (!is_square_matrix(X))
+  if (!is_square_matrix(A))
     stop("'powerMethod()' requires a square numeric matrix")
 
   if (!is.null(v))
   {
     if (!is.vector(v) || !is.numeric(v))
       stop("'powerMethod()' requires 'v' to be a numeric vector")
-    if (nrow(X) != length(v))
-      stop("'X' is not conformable with 'v' in 'powerMethod()'")
+    if (nrow(A) != length(v))
+      stop("'A' is not conformable with 'v' in 'powerMethod()'")
   } else {
-    v = rep(1, nrow(X))
+    v = rep(1, nrow(A))
   }
 
   if (!eps > 0)
@@ -61,7 +61,7 @@ powerMethod <- function(X, v = NULL, eps = 1e-6, maxiter = 100, verbose=FALSE, k
   vectors <- list()
   repeat
   {
-    v_new = X %*% v_old
+    v_new = A %*% v_old
     v_new = v_new / len(v_new)
     if(keep) vectors[[steps]] <- c(v_new)
     if (verbose) cat("iter", steps, ": vector=", c(v_new), "\n"  )
@@ -71,7 +71,7 @@ powerMethod <- function(X, v = NULL, eps = 1e-6, maxiter = 100, verbose=FALSE, k
     if (steps == maxiter) break
   }
   # Rayleigh quotient gives the eigenvalue
-  lambda = sum((X %*% v_new) * v_new)
+  lambda = sum((A %*% v_new) * v_new)
   # output
   res <- list(vector = v_new, value = lambda, iter = steps)
   if(keep) {

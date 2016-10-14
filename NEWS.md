@@ -7,7 +7,7 @@
 - add `svdDemo()` function to illustrate the SVD of a 3 x 3 matrix [thx: Duncan Murdoch]
 - add `symMat()` to create a square symmetric matrix from a vector.
 - add `angle()` to calculate angle between vectors
-
+- `powerMethod()` gets a `keep` argument, for possible use in plotting the convergence of eigenvectors.
 
 # matlib 0.8.1
 
