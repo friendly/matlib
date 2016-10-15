@@ -35,7 +35,8 @@ Michael Friendly
 \seealso{
 \code{\link{rowCofactors}} for all cofactors of a given row
 
-Other determinants: \code{\link{Det}}, \code{\link{minor}},
+Other determinants: \code{\link{Det}},
+  \code{\link{adjoint}}, \code{\link{minor}},
   \code{\link{rowCofactors}}, \code{\link{rowMinors}}
 }
 

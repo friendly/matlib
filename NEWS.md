@@ -8,6 +8,7 @@
 - add `symMat()` to create a square symmetric matrix from a vector.
 - add `angle()` to calculate angle between vectors
 - `powerMethod()` gets a `keep` argument, for possible use in plotting the convergence of eigenvectors.
+- add `adjoint()`, to round out methods for determinants
 
 # matlib 0.8.1
 

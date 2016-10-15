@@ -192,3 +192,26 @@ rowCofactors <- function(A, i) {
   res
 }
 
+#' Calculate the Adjoint of a matrix
+#'
+#' This function calculates the adjoint of a square matrix, defined as the transposed
+#' matrix of cofactors of all elements.
+
+#' @param A a square matrix
+#' @return a matrix of the same size as \code{A}
+#' @family determinants
+#' @author Michael Friendly
+#' @export
+#' @examples
+#' A <- J(3, 3) + 2*diag(3)
+#' adjoint(A)
+
+adjoint <- function(A) {
+  B <- matrix(0, ncol(A), nrow(A))
+  for (i in 1:nrow(A)) {
+    for (j in 1:ncol(A)) {
+      B[j,i] <- cofactor(A, i, j)
+    }
+  }
+  B
+}

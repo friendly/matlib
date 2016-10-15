@@ -38,7 +38,7 @@ Michael Friendly
 \code{\link{Det}} for the determinant
 
 Other determinants: \code{\link{Det}},
-  \code{\link{cofactor}}, \code{\link{minor}},
-  \code{\link{rowMinors}}
+  \code{\link{adjoint}}, \code{\link{cofactor}},
+  \code{\link{minor}}, \code{\link{rowMinors}}
 }
 

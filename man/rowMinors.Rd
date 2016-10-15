@@ -31,7 +31,7 @@ Michael Friendly
 }
 \seealso{
 Other determinants: \code{\link{Det}},
-  \code{\link{cofactor}}, \code{\link{minor}},
-  \code{\link{rowCofactors}}
+  \code{\link{adjoint}}, \code{\link{cofactor}},
+  \code{\link{minor}}, \code{\link{rowCofactors}}
 }
 
