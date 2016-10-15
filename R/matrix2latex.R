@@ -5,7 +5,7 @@
 #'
 #' @param x a matrix
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
-#' @param brackets logical; include square brackets around the matricies?
+#' @param brackets logical; include square brackets around the matrices?
 #' @param ... additional arguments passed to \code{xtable::xtableMatharray()}
 #' @importFrom xtable xtableMatharray
 #' @author Phil Chalmers
