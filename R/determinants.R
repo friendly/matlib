@@ -50,7 +50,7 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
           pivots <- signif(pivots)
           det <- signif(det)
         }
-        cat(paste0("\n det = (-1)^", interchanges, " x ", paste(pivots, collapse=" x "), " = ", det))
+        cat(paste0("\n det = (-1)^", interchanges, " x ", paste(pivots, collapse=" x "), " = ", det, "\n"))
         return(invisible(attr(res, "det")))
       }
       else return(attr(res, "det"))
@@ -69,7 +69,7 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
           det0 <- signif(det)
           values0 <- signif(values)
         }
-        cat(paste0("\n det = ", paste(values0, collapse=" x "), " = ", det0))
+        cat(paste0("\n det = ", paste(values0, collapse=" x "), " = ", det0, "\n"))
         return(invisible(det))
       }
       else return(det)
