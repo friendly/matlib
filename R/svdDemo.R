@@ -22,6 +22,10 @@
 #' \dontrun{
 #' B <- matrix(c( 1, 0, 1, 0, 2, 0,  1, 0, 2), 3, 3)
 #' svdDemo(B)
+#'
+#' # a positive, semi-definite matrix with eigenvalues 12, 6, 0
+#' C <- matrix(c(7, 4, 1,  4, 4, 4,  1, 4, 7), 3, 3)
+#' svdDemo
 #' }
 #'
 svdDemo <- function(A, shape=c("cube", "sphere"), alpha=0.7,  col=rainbow(6)) {
