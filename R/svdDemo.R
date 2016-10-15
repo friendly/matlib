@@ -8,7 +8,7 @@
 #' @param A      A 3 x 3 numeric matrix
 #' @param shape  Basic shape used to represent the identity matrix: \code{"cube"} or \code{"sphere"}
 #' @param alpha  transparency value used to draw the shape
-#' @param col    Vector of 6 colors for the faces of the baswic cube
+#' @param col    Vector of 6 colors for the faces of the basic cube
 #'
 #' @return Nothing
 #' @export

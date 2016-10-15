@@ -6,7 +6,7 @@
 #'
 #' The LU decomposition is used to solve the equation \eqn{A x = b} by calculating
 #' \eqn{L(Ux - d) = 0}, where \eqn{Ld = b}. If row exchanges are necessary for
-#' \eqn{A} then the permutation matrix \eqn{P} will be requred to exchange the rows in \eqn{A};
+#' \eqn{A} then the permutation matrix \eqn{P} will be required to exchange the rows in \eqn{A};
 #' otherwise, \eqn{P} will be an identity matrix and the LU equation will be simplified to
 #' \eqn{A = L U}.
 #'

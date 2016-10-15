@@ -8,7 +8,7 @@
 #' as a set of equations.
 #'
 #' @param A either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}
-#' @param b if supplied, the vector of constants on the right hand side of the equations. When ommited 
+#' @param b if supplied, the vector of constants on the right hand side of the equations. When omitted 
 #'   the values \code{b1, b2, ..., bn} will be used as placeholders
 #' @param vars a numeric or character vector of names of the variables.
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
@@ -35,7 +35,7 @@
 #'   showEqn(A, b, simplify=TRUE)
 #'   showEqn(A, b, latex=TRUE)
 #'   
-#'   # lower triangle of equation with zeros ommited (for back solving)
+#'   # lower triangle of equation with zeros omitted (for back solving)
 #'   A <- matrix(c(2, 1, 2,
 #'                -3, -1, 2,
 #'                -2,  1, 2), 3, 3, byrow=TRUE)
