@@ -25,7 +25,7 @@
 #'
 #' # a positive, semi-definite matrix with eigenvalues 12, 6, 0
 #' C <- matrix(c(7, 4, 1,  4, 4, 4,  1, 4, 7), 3, 3)
-#' svdDemo
+#' svdDemo(C)
 #' }
 #'
 svdDemo <- function(A, shape=c("cube", "sphere"), alpha=0.7,  col=rainbow(6)) {
