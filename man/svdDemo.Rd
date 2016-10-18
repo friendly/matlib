@@ -13,7 +13,7 @@ svdDemo(A, shape = c("cube", "sphere"), alpha = 0.7, col = rainbow(6))
 
 \item{alpha}{transparency value used to draw the shape}
 
-\item{col}{Vector of 6 colors for the faces of the baswic cube}
+\item{col}{Vector of 6 colors for the faces of the basic cube}
 }
 \value{
 Nothing
@@ -34,7 +34,7 @@ svdDemo(B)
 
 # a positive, semi-definite matrix with eigenvalues 12, 6, 0
 C <- matrix(c(7, 4, 1,  4, 4, 4,  1, 4, 7), 3, 3)
-svdDemo
+svdDemo(C)
 }
 
 }

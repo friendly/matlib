@@ -11,7 +11,7 @@ matrix2latex(x, fractions = FALSE, brackets = TRUE, ...)
 
 \item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
 
-\item{brackets}{logical; include square brackets around the matricies?}
+\item{brackets}{logical; include square brackets around the matrices?}
 
 \item{...}{additional arguments passed to \code{xtable::xtableMatharray()}}
 }

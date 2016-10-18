@@ -26,14 +26,32 @@ a list containing the eigenvector (\code{vector}), eigenvalue (\code{value}), an
 \description{
 Finds a dominant eigenvalue, \eqn{\lambda_1}, and its corresponding
 eigenvector, \eqn{v_1}, of a square matrix by applying Hotelling's (1933) Power Method with scaling.
+}
+\details{
+The method is based upon the fact that repeated multiplication of a matrix \eqn{A} by a trial
+vector \eqn{v_1^{(k)}} converges to the value of the eigenvector,
+\deqn{v_1^{(k+1)} = A v_1^{(k)} / \vert\vert A v_1^{(k)} \vert\vert }
+The corresponding eigenvalue is then found as
+\deqn{\lambda_1 = \frac{\v_1^T A v_1}{\v_1^T  v_1}}
+
 In pre-computer days, this method could be extended to find subsequent eigenvalue - eigenvector
 pairs by "deflation", i.e., by applying the method again to the new matrix.
-\eqn{A - \lambda_1 v_1 v_1^{T} }
+\eqn{A - \lambda_1 v_1 v_1^{T} }.
+
+This method is still used in some computer-intensive applications with huge matrices where only the
+dominant eigenvector is required, e.g., the Google Page Rank algorithm.
 }
 \examples{
-A <- cbind(c(2, 1), c(12, 5))
+A <- cbind(c(7, 3), c(3, 6))
 powerMethod(A, verbose=TRUE)
 eigen(A)$vectors[,1]  # check
+
+# demonstrate how the power method converges to a solution
+res <- powerMethod(A, v = c(-.5, 1),  keep=TRUE)
+vecs <- t(res$vectors)
+plot(c(-.5, 1), c(-.1, 1), type="n", xlab="x1", ylab="x2")
+vectors(vecs, col=palette())
+abline(h=0, v=0, col="gray")
 
 B <- cbind(c(1, 2, 0), c(2, 1, 3), c(0, 3, 1))
 (rv <- powerMethod(B))
