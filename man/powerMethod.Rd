@@ -32,7 +32,7 @@ The method is based upon the fact that repeated multiplication of a matrix \eqn{
 vector \eqn{v_1^{(k)}} converges to the value of the eigenvector,
 \deqn{v_1^{(k+1)} = A v_1^{(k)} / \vert\vert A v_1^{(k)} \vert\vert }
 The corresponding eigenvalue is then found as
-\deqn{\lambda_1 = \frac{\v_1^T A v_1}{\v_1^T  v_1}}
+\deqn{\lambda_1 = \frac{v_1^T A v_1}{v_1^T  v_1}}
 
 In pre-computer days, this method could be extended to find subsequent eigenvalue - eigenvector
 pairs by "deflation", i.e., by applying the method again to the new matrix.
