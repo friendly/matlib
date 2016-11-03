@@ -72,8 +72,8 @@ regvec3d <- function(x1, ...){
 #' library(rgl)
 #' therapy.vec <- regvec3d(therapy ~ perstest + IE, data=therapy)
 #' therapy.vec
-#' plot(therapy.vec)
-#' plot(therapy.vec, dimension="2")
+#' plot(therapy.vec, col.plane="darkgreen")
+#' plot(therapy.vec, dimension=2)
 
 regvec3d.formula <- function(formula, data=NULL, which=1:2, name.x1, name.x2,
                              name.y, name.e, name.y.hat,
@@ -196,7 +196,9 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #' @param x           A \dQuote{regvec3d} object
 #' @param y           Ignored; only included for compatibility with the S3 generic
 #' @param dimension   Number of dimensions to plot: \code{3} (default) or \code{2}
-#' @param col         A vector of 5 colors
+#' @param col         A vector of 5 colors. \code{col[1]} is used for the y and residual (e) vectors, and for x1 and x2;
+#'                    \code{col[2]} is used for the vectors \code{y -> yhat} and \code{y -> e};
+#'                    \code{col[3]} is used for the vectors \code{yhat -> b1} and \code{yhat -> b2};
 #' @param col.plane   Color of the base plane in a 3D plot or axes in a 2D plot
 #' @param cex.lab     character expansion applied to vector labels. May be a number or numeric vector corresponding to the the
 #'        rows of \code{X}, recycled as necessary.
@@ -245,7 +247,8 @@ plot.regvec3d <- function(x, y, dimension=3,
                           col=c("black", "red", "blue", "brown", "lightgray"), col.plane="gray",
                           cex.lab=1.2,
                           show.base=2, show.marginal=FALSE, show.hplane=TRUE, show.angles=TRUE,
-                          error.sphere=c("none", "e", "y.hat"), scale.error.sphere=x$scale, level.error.sphere=0.95,
+                          error.sphere=c("none", "e", "y.hat"), scale.error.sphere=x$scale,
+                          level.error.sphere=0.95,
                           grid=FALSE, add=FALSE, ...){
 
   angle <- function(v1, v2) {
@@ -264,7 +267,8 @@ plot.regvec3d <- function(x, y, dimension=3,
     }
     ref.length <- vectors3d(vectors[1:7, ], draw=FALSE)
     vectors3d(vectors[3:4, ], color=col[1], lwd=2, cex.lab=cex.lab, ref.length=ref.length)
-    vectors3d(vectors[c(1:2, 5:7), ], color=col.plane, lwd=2, cex.lab=cex.lab, ref.length=ref.length)
+    vectors3d(vectors[1:2, ], color=col[1], lwd=2, cex.lab=cex.lab, ref.length=ref.length)
+    vectors3d(vectors[5:7, ], color=col.plane, lwd=2, cex.lab=cex.lab, ref.length=ref.length)
     if (show.base > 0) planes3d(0, 0, 1, 0, color=col.plane, alpha=0.2)
     if (show.base > 1) planes3d(0, 0, 1, -.01, color=col.plane, alpha=0.1)
     lines3d(vectors[c(3, 5), ], color=col[2], lwd=2)     # y -> yhat
