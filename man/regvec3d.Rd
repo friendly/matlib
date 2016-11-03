@@ -109,8 +109,8 @@ either \code{scale=TRUE} or \code{normalize=TRUE}.
 library(rgl)
 therapy.vec <- regvec3d(therapy ~ perstest + IE, data=therapy)
 therapy.vec
-plot(therapy.vec)
-plot(therapy.vec, dimension="2")
+plot(therapy.vec, col.plane="darkgreen")
+plot(therapy.vec, dimension=2)
 }
 \references{
 Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd ed., Sage, Chapter 10.

@@ -23,7 +23,9 @@
 
 \item{dimension}{Number of dimensions to plot: \code{3} (default) or \code{2}}
 
-\item{col}{A vector of 5 colors}
+\item{col}{A vector of 5 colors. \code{col[1]} is used for the y and residual (e) vectors, and for x1 and x2;
+\code{col[2]} is used for the vectors \code{y -> yhat} and \code{y -> e};
+\code{col[3]} is used for the vectors \code{yhat -> b1} and \code{yhat -> b2};}
 
 \item{col.plane}{Color of the base plane in a 3D plot or axes in a 2D plot}
 
