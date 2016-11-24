@@ -2,13 +2,14 @@
 
 - rename functions for consistency: `eig()` -> `Eigen()`, `point_on_line()` -> `pointOnLine()`, `power_method()` -> `powerMethod()`, `row_cofactors()` -> `rowCofactors()`, `row_minors()` -> `rowMinors()`.
 
-- add `Det()` to compute determinants by elimination, from eigenvalues, or by minors and cofactors
+- add `Det()` to compute determinants by elimination, from eigenvalues, or by minors and cofactors, with possibility of `verbose` output.
 - `plotEqn3d()` gets an `axes` argument and `lit` to control lighting of the planes; `lit` solves a problem with the planes becoming indistinguishable in some rotations.
 - add `svdDemo()` function to illustrate the SVD of a 3 x 3 matrix [thx: Duncan Murdoch]
 - add `symMat()` to create a square symmetric matrix from a vector.
 - add `angle()` to calculate angle between vectors
 - `powerMethod()` gets a `keep` argument, for possible use in plotting the convergence of eigenvectors.
 - add `adjoint()`, to round out methods for determinants
+- add `GramSchmidt()` for the Gram-Schmidt algorithm on columns of a matrix. The existing function `gsorth()` will be deprecated and then removed.
 
 # matlib 0.8.1
 
