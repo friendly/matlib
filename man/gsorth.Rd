@@ -23,11 +23,17 @@ a matrix/data frame with uncorrelated columns
 \description{
 Calculates a matrix with uncorrelated columns using the Gram-Schmidt process
 }
+\details{
+This function, originally from the \pkg{heplots} package has now been deprecated in \pkg{matlib}. Use
+\code{\link{GramSchmidt}} instead.
+}
 \examples{
+\donttest{
  set.seed(1234)
  A <- matrix(c(1:60 + rnorm(60)), 20, 3)
  cor(A)
  G <- gsorth(A)
  zapsmall(cor(G))
+ }
 }
 

@@ -3,6 +3,9 @@
 #'
 #' Calculates a matrix with uncorrelated columns using the Gram-Schmidt process
 #'
+#' This function, originally from the \pkg{heplots} package has now been deprecated in \pkg{matlib}. Use
+#' \code{\link{GramSchmidt}} instead.
+#'
 #' @param y a numeric matrix or data frame
 #' @param order if specified, a permutation of the column indices of \code{y}
 #' @param recenter logical; if \code{TRUE}, the result has same means as the original \code{y}, else means = 0 for cols 2:p
@@ -11,11 +14,13 @@
 #' @return a matrix/data frame with uncorrelated columns
 #' @export
 #' @examples
+#' \donttest{
 #'  set.seed(1234)
 #'  A <- matrix(c(1:60 + rnorm(60)), 20, 3)
 #'  cor(A)
 #'  G <- gsorth(A)
 #'  zapsmall(cor(G))
+#'  }
 
 # Return a matrix/data frame with uncorrelated columns
 #   recenter=TRUE -> result has same means as original, else means = 0 for cols 2:p
@@ -38,6 +43,7 @@ gsorth <- function(y, order, recenter=TRUE, rescale=TRUE, adjnames=TRUE) {
     else sqrt(var(as.vector(x), na.rm = na.rm))
   }
 
+  .Deprecated("GramSchmidt")
   n <- nrow(y)
   if (missing(order)) order <- 1:ncol(y)
   y <- y[,order]
