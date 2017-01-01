@@ -11,6 +11,7 @@
 - add `adjoint()`, to round out methods for determinants
 - add `GramSchmidt()` for the Gram-Schmidt algorithm on columns of a matrix. The existing function `gsorth()` will be deprecated and then removed.
 - `gsorth()` has been deprecated.
+- fixed use of MASS::fractions in gaussianElimination
 
 # matlib 0.8.1
 

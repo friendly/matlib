@@ -90,8 +90,8 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             }
             A <- rowmult(A, i, 1/pivot) # pivot (E1)
             if (verbose && abs(pivot - 1) > tol){
-                cat("\n multiply row", i, "by", 
-                    if (fractions) MASS::fractions(1/pivot) else 1/pivot, "\n")
+                cat("\n multiply row", i, "by",
+                    if (fractions) as.character(MASS::fractions(1/pivot)) else 1/pivot, "\n")
                 printMatrix(A)
             }
             for (k in 1:n){
@@ -102,7 +102,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                 if (verbose){
                   if (abs(factor - 1) > tol){
                     cat("\n multiply row", i, "by",
-                        if (fractions) MASS::fractions(abs(factor)) else abs(factor),
+                        if (fractions) as.character(MASS::fractions(abs(factor))) else abs(factor),
                         if (factor > 0) "and subtract from row" else "and add to row", k, "\n")
                   }
                   else{
@@ -125,7 +125,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         A <- rbind(A, zeroRows)
     }
     rownames(A) <- NULL
-    ret <- formatNumbers(A, fractions=fractions, tol=tol) 
+    ret <- formatNumbers(A, fractions=fractions, tol=tol)
     if (m == n) {
         attr(ret, "det") <- det
         attr(ret, "pivots") <- pivots
