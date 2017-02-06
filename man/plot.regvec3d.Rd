@@ -2,8 +2,8 @@
 % Please edit documentation in R/regvec3d.R
 \name{plot.regvec3d}
 \alias{plot.regvec3d}
-\alias{print.regvec3d}
 \alias{summary.regvec3d}
+\alias{print.regvec3d}
 \title{Plot method for regvec3d objects}
 \usage{
 \method{plot}{regvec3d}(x, y, dimension = 3, col = c("black", "red", "blue",
@@ -114,4 +114,3 @@ Other vector diagrams: \code{\link{Proj}},
   \code{\link{regvec3d}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }
-

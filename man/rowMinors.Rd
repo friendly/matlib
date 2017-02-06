@@ -26,12 +26,11 @@ minor(M, 1, 2)
 minor(M, 1, 3)
 rowMinors(M, 1)
 }
-\author{
-Michael Friendly
-}
 \seealso{
 Other determinants: \code{\link{Det}},
   \code{\link{adjoint}}, \code{\link{cofactor}},
   \code{\link{minor}}, \code{\link{rowCofactors}}
 }
-
+\author{
+Michael Friendly
+}

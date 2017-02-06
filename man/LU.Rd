@@ -60,4 +60,3 @@ otherwise, \eqn{P} will be an identity matrix and the LU equation will be simpli
 \author{
 Phil Chalmers
 }
-

@@ -25,9 +25,6 @@ cholesky(C)
 cholesky(C) \%*\% t(cholesky(C))  # check
 
 }
-\author{
-John Fox
-}
 \references{
 Kennedy W.J. Jr, Gentle J.E. (1980). \emph{Statistical Computing}. Marcel Dekker.
 }
@@ -36,4 +33,6 @@ Kennedy W.J. Jr, Gentle J.E. (1980). \emph{Statistical Computing}. Marcel Dekker
 
 \code{\link{gsorth}} for Gram-Schmidt orthogonalization of a data matrix
 }
-
+\author{
+John Fox
+}

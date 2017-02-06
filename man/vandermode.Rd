@@ -21,4 +21,3 @@ raised to the powers \code{0:n}.
 \examples{
 vandermode(1:5, 4)
 }
-

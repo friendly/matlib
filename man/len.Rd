@@ -26,4 +26,3 @@ len(1:3 - c(1,1,1))
 \seealso{
 \code{\link[base]{norm}} for more general matrix norms
 }
-

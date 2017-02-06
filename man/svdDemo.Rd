@@ -41,4 +41,3 @@ svdDemo(C)
 \author{
 Original idea from Duncan Murdoch
 }
-

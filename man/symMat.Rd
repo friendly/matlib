@@ -33,4 +33,3 @@ symMat(5:0, diag=FALSE)
 \author{
 Originally from \code{metaSEM::vec2symMat}, Mike W.-L. Cheung <mikewlcheung@nus.edu.sg>; modified by Michael Friendly
 }
-

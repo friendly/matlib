@@ -50,9 +50,6 @@ as a set of equations.
   showEqn(U, simplify=TRUE, fractions=TRUE)
   showEqn(U, b, simplify=TRUE, fractions=TRUE)
 }
-\author{
-Michael Friendly and John Fox
-}
 \references{
 Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
@@ -60,4 +57,6 @@ Least-Squares Regression with the matlib Package for R". \emph{useR Conference},
 \seealso{
 \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
 }
-
+\author{
+Michael Friendly and John Fox
+}

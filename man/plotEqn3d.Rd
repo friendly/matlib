@@ -51,11 +51,10 @@ A <- matrix(c(13, -4, 2, -4, 11, -2, 2, -2, 8), 3,3)
 b <- c(1,2,4)
 plotEqn3d(A,b)
 }
-\author{
-Michael Friendly, John Fox
-}
 \references{
 Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 }
-
+\author{
+Michael Friendly, John Fox
+}

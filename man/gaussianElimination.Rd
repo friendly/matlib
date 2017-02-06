@@ -61,4 +61,3 @@ Print method for enhancedMatrix objects
 \author{
 John Fox
 }
-

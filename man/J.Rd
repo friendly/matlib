@@ -33,4 +33,3 @@ dimnames(X) <- list(sex=c("M", "F"), day=c("Mon", "Wed", "Fri"))
 J(2) \%*\% X      # column sums
 X \%*\% J(3)      # row sums
 }
-

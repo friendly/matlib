@@ -28,9 +28,6 @@ minor(M, 1, 1)
 minor(M, 1, 2)
 minor(M, 1, 3)
 }
-\author{
-Michael Friendly
-}
 \seealso{
 \code{\link{rowMinors}} for all minors of a given row
 
@@ -38,4 +35,6 @@ Other determinants: \code{\link{Det}},
   \code{\link{adjoint}}, \code{\link{cofactor}},
   \code{\link{rowCofactors}}, \code{\link{rowMinors}}
 }
-
+\author{
+Michael Friendly
+}

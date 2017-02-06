@@ -40,9 +40,6 @@ This function is meant to be analogous to \code{\link[graphics]{arrows}}, but fo
 \examples{
  #none yet
 }
-\author{
-January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox
-}
 \seealso{
 \code{\link{vectors3d}}
 
@@ -52,4 +49,6 @@ Other vector diagrams: \code{\link{Proj}},
   \code{\link{regvec3d}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }
-
+\author{
+January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox
+}

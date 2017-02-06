@@ -42,4 +42,3 @@ Other vector diagrams: \code{\link{Proj}},
   \code{\link{regvec3d}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }
-

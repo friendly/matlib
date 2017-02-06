@@ -28,12 +28,11 @@ C
 EC <- Eigen(C) # eigenanalysis of C
 EC$vectors \%*\% diag(EC$values) \%*\% t(EC$vectors) # check
 }
-\author{
-John Fox and Georges Monette
-}
 \seealso{
 \code{\link[base]{eigen}}
 
 \code{\link{SVD}}
 }
-
+\author{
+John Fox and Georges Monette
+}

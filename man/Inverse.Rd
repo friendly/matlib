@@ -35,4 +35,3 @@ to \eqn{X^{-1}} is returned.
 \author{
 John Fox
 }
-

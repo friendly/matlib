@@ -68,10 +68,9 @@ C <- matrix(c(7, 4, 1,  4, 4, 4,  1, 4, 7), 3, 3)
 eigen(C)$vectors
 powerMethod(C)
 }
-\author{
-Gaston Sanchez (from matrixkit)
-}
 \references{
 Hotelling, H. (1933). Analysis of a complex of statistical variables into principal components. \emph{Journal of Educational Psychology}, 24, 417-441, and 498-520.
 }
-
+\author{
+Gaston Sanchez (from matrixkit)
+}

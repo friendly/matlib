@@ -36,12 +36,11 @@ VdU <- svd$V \%*\% diag(1/svd$d) \%*\%t(svd$U)
 (b <- VdU \%*\% y)
 coef(lm(Income ~ Experience + Skill, data=workers))
 }
-\author{
-John Fox and Georges Monette
-}
 \seealso{
 \code{\link[base]{svd}}, the standard svd function
 
 \code{\link{Eigen}}
 }
-
+\author{
+John Fox and Georges Monette
+}

@@ -54,10 +54,9 @@ This function mimics the base function \code{\link[base]{solve}} when supplied w
   b3 <- c(1, 2, 4)
   Solve(A2, b3, fractions=TRUE) # overdetermined
 }
-\author{
-John Fox
-}
 \seealso{
 \code{\link{gaussianElimination}}, \code{\link{showEqn}} \code{\link{inv}}, \code{\link[base]{solve}}
 }
-
+\author{
+John Fox
+}

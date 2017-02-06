@@ -29,10 +29,9 @@ This is used to draw nice arrow heads in \code{\link{arrows3d}}.
 \examples{
 # none yet
 }
-\author{
-January Weiner, borrowed from from the \pkg{pca3d} package
-}
 \seealso{
 \code{\link{arrows3d}}
 }
-
+\author{
+January Weiner, borrowed from from the \pkg{pca3d} package
+}

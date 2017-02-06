@@ -48,4 +48,3 @@ echelon(B, diag(3))
 \author{
 John Fox
 }
-

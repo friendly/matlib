@@ -43,10 +43,9 @@ data(Duncan, package="car")
 showEig(Duncan[, 2:3], levels=0.68)
 showEig(Duncan[,2:3], levels=0.68, robust=TRUE, add=TRUE, fill=TRUE)
 }
-\author{
-Michael Friendly
-}
 \seealso{
 \code{\link[car]{dataEllipse}}
 }
-
+\author{
+Michael Friendly
+}

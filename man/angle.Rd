@@ -56,4 +56,3 @@ text(0, .4, expression(theta), cex=1.5)
 \seealso{
 \code{\link{len}}
 }
-

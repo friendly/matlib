@@ -41,10 +41,9 @@ prod(diag(r))
 B <- matrix(1:9, 3, 3) # a singular matrix
 QR(B)
 }
-\author{
-John Fox and Georges Monette
-}
 \seealso{
 \code{\link[base]{qr}}
 }
-
+\author{
+John Fox and Georges Monette
+}

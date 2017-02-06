@@ -20,4 +20,3 @@ circle3d(center, radius, segments = 100, fill = FALSE, ...)
 \description{
 A utility function for drawing a horizontal circle in a 3D graph
 }
-

@@ -36,4 +36,3 @@ This function, originally from the \pkg{heplots} package has now been deprecated
  zapsmall(cor(G))
  }
 }
-

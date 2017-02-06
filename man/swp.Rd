@@ -45,4 +45,3 @@ Beaton, A. E. (1964), \emph{The Use of Special Matrix Operations in Statistical 
 \seealso{
 \code{\link{Proj}}, \code{\link{QR}}
 }
-

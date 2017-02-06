@@ -33,4 +33,3 @@ matrix2latex(cbind(A/2,b), fractions = TRUE)
 \author{
 Phil Chalmers
 }
-

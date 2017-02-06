@@ -20,12 +20,11 @@ matrix of cofactors of all elements.
 A <- J(3, 3) + 2*diag(3)
 adjoint(A)
 }
-\author{
-Michael Friendly
-}
 \seealso{
 Other determinants: \code{\link{Det}},
   \code{\link{cofactor}}, \code{\link{minor}},
   \code{\link{rowCofactors}}, \code{\link{rowMinors}}
 }
-
+\author{
+Michael Friendly
+}

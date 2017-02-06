@@ -40,10 +40,9 @@ Ginv(B, fractions=TRUE)  # a generalized inverse of B
 B \%*\% Ginv(B) \%*\% B   # check
 
 }
-\author{
-John Fox
-}
 \seealso{
 \code{\link[MASS]{ginv}} for a more generally usable function
 }
-
+\author{
+John Fox
+}

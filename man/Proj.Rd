@@ -44,9 +44,6 @@ crossprod(yp$y, yc)
 P \%*\% P
 all.equal(P, P \%*\% P)
 }
-\author{
-Michael Friendly
-}
 \seealso{
 Other vector diagrams: \code{\link{arc}},
   \code{\link{arrows3d}}, \code{\link{corner}},
@@ -54,4 +51,6 @@ Other vector diagrams: \code{\link{arc}},
   \code{\link{regvec3d}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }
-
+\author{
+Michael Friendly
+}

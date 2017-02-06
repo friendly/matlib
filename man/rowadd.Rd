@@ -52,4 +52,3 @@ echelon(A, b, verbose=TRUE, fractions=TRUE)
 Other elementary row operations: \code{\link{rowmult}},
   \code{\link{rowswap}}
 }
-

@@ -39,9 +39,6 @@ Det(C)
 Det(C, method="eigenvalues")
 Det(C, method="cofactors")
 }
-\author{
-John Fox
-}
 \seealso{
 \code{\link[base]{det}} for the base R function
 
@@ -51,4 +48,6 @@ Other determinants: \code{\link{adjoint}},
   \code{\link{cofactor}}, \code{\link{minor}},
   \code{\link{rowCofactors}}, \code{\link{rowMinors}}
 }
-
+\author{
+John Fox
+}

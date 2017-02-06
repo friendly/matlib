@@ -46,6 +46,7 @@ specified as rows of a matrix, and can draw labels on the vectors.
 
 At present, the color (\code{color=}) argument is not handled as expected when more than one vector is to be drawn.
 }
+
 \examples{
 vec <- rbind(diag(3), c(1,1,1))
 rownames(vec) <- c("X", "Y", "Z", "J")
@@ -71,9 +72,6 @@ corner(p1, p4, p3, col="blue")
 
 rgl.bringtotop()
 }
-\author{
-Michael Friendly
-}
 \seealso{
 \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}, code{\link[rgl]{rgl.material}}
 
@@ -83,4 +81,6 @@ Other vector diagrams: \code{\link{Proj}},
   \code{\link{pointOnLine}}, \code{\link{regvec3d}},
   \code{\link{vectors}}
 }
-
+\author{
+Michael Friendly
+}

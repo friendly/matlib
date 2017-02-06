@@ -36,4 +36,3 @@ R(M)
 \seealso{
 \code{\link[base]{qr}}
 }
-

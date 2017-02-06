@@ -2,8 +2,8 @@
 % Please edit documentation in R/regvec3d.R
 \name{regvec3d}
 \alias{regvec3d}
-\alias{regvec3d.default}
 \alias{regvec3d.formula}
+\alias{regvec3d.default}
 \title{Vector space representation of a two-variable regression model}
 \usage{
 regvec3d(x1, ...)
@@ -105,6 +105,7 @@ either \code{scale=TRUE} or \code{normalize=TRUE}.
 
 \item \code{default}: Default method for regvec3d
 }}
+
 \examples{
 library(rgl)
 therapy.vec <- regvec3d(therapy ~ perstest + IE, data=therapy)
@@ -127,4 +128,3 @@ Other vector diagrams: \code{\link{Proj}},
   \code{\link{pointOnLine}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }
-

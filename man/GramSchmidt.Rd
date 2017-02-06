@@ -30,4 +30,3 @@ zapsmall(crossprod(yy))
 \author{
 Phil Chalmers
 }
-

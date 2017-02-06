@@ -36,4 +36,3 @@ solve(C)    # check
 \seealso{
 The \code{{\%^\%}} operator in the \pkg{expm} package is far more efficient
 }
-

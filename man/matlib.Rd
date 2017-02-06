@@ -4,6 +4,7 @@
 \name{matlib}
 \alias{matlib}
 \alias{matlib-package}
+\alias{matlib-package}
 \title{matlib: Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics.}
 \description{
 These functions are mainly for tutorial purposes in learning matrix algebra
@@ -44,8 +45,8 @@ The functions in this package are grouped under the following topics
         \code{\link{vectors}}, \code{\link{vectors3d}}, \code{\link{regvec3d}}
 }
 }
+
 \references{
 Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 }
-
