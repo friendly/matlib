@@ -1,5 +1,5 @@
 ## Test environments
-* local Windows 7 install, R 3.2.5
+* local Windows 7 install, 3.3.2 (2016-10-31)
 * win-builder (R version 3.3.2 (2016-10-31), R Under development (unstable) (2017-02-04 r72100)
 
 ## R CMD check results
@@ -12,6 +12,7 @@ and making other functions more usable or flexible.
 # matlib 0.9.0
 - added `print_mat()` to print matrix expressions side-by-side
 - prepare to release as a cumulative major version
+- Phil Chalmers is now recognized officially as a package author [aut]
 
 # matlib 0.8.3
 
