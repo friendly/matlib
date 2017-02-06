@@ -1,27 +1,31 @@
 ## Test environments
 * local Windows 7 install, R 3.2.5
-* win-builder (R version 3.3.1 (2016-06-21), R-devel (unstable) (2016-09-15 r71254)
+* win-builder (R version 3.3.2 (2016-10-31), R Under development (unstable) (2017-02-04 r72100)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs or NOTEs
 
 ## Comments
-This is a mid-size release, adding a collection of new vignettes and some functions
+This is a major release, renaming functions for consistency and adding a number of new functions
+and making other functions more usable or flexible.
 
-## matlib 0.8.1
+# matlib 0.9.0
+- added `print_mat()` to print matrix expressions side-by-side
+- prepare to release as a cumulative major version
 
-- remove inst/doc to satisfy CRAN
+# matlib 0.8.3
 
-## matlib 0.8.0
+- rename functions for consistency: `eig()` -> `Eigen()`, `point_on_line()` -> `pointOnLine()`, `power_method()` -> `powerMethod()`, `row_cofactors()` -> `rowCofactors()`, `row_minors()` -> `rowMinors()`.
 
-- add a vignette on properties of determinants (`det-ex1`)
-- add a vignette on evaluation of determinants (`det-ex2`)
-- add vignette on matrix inverse (`inv-ex1`)
-- now use travis-ci to check builds
-- add vignette on matrix inverse using EROs (`inv-ex2`)
-- extended use of geometric diagrams in vignettes
-- add vignette on generalized inverse (`ginv`)
-- added `J()` for unit vectors, matrices
-- added `LU()` for LU decomposition
-
+- add `Det()` to compute determinants by elimination, from eigenvalues, or by minors and cofactors, with possibility of `verbose` output.
+- `plotEqn3d()` gets an `axes` argument and `lit` to control lighting of the planes; `lit` solves a problem with the planes becoming indistinguishable in some rotations.
+- add `svdDemo()` function to illustrate the SVD of a 3 x 3 matrix [thx: Duncan Murdoch]
+- add `symMat()` to create a square symmetric matrix from a vector.
+- add `angle()` to calculate angle between vectors
+- `powerMethod()` gets a `keep` argument, for possible use in plotting the convergence of eigenvectors.
+- add `adjoint()`, to round out methods for determinants
+- add `GramSchmidt()` for the Gram-Schmidt algorithm on columns of a matrix. The existing function `gsorth()` will be deprecated and then removed.
+- `gsorth()` has been deprecated.
+- fixed use of MASS::fractions in gaussianElimination
+- added `print_mat()` to print matrix expressions side-by-side
 

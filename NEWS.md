@@ -1,3 +1,7 @@
+# matlib 0.9.0
+- added `print_mat()` to print matrix expressions side-by-side
+- prepare to release as a cumulative major version
+
 # matlib 0.8.3
 
 - rename functions for consistency: `eig()` -> `Eigen()`, `point_on_line()` -> `pointOnLine()`, `power_method()` -> `powerMethod()`, `row_cofactors()` -> `rowCofactors()`, `row_minors()` -> `rowMinors()`.
