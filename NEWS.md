@@ -1,6 +1,7 @@
 # matlib 0.9.0
 - added `print_mat()` to print matrix expressions side-by-side
 - prepare to release as a cumulative major version
+- Phil Chalmers is now recognized officially as a package author [aut]
 
 # matlib 0.8.3
 
