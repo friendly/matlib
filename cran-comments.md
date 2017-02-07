@@ -10,7 +10,7 @@ This is a major release, renaming functions for consistency and adding a number 
 and making other functions more usable or flexible.
 
 # matlib 0.9.0
-- added `print_mat()` to print matrix expressions side-by-side
+- added `printMat()` to print matrix expressions side-by-side
 - prepare to release as a cumulative major version
 - Phil Chalmers is now recognized officially as a package author [aut]
 
@@ -28,5 +28,5 @@ and making other functions more usable or flexible.
 - add `GramSchmidt()` for the Gram-Schmidt algorithm on columns of a matrix. The existing function `gsorth()` will be deprecated and then removed.
 - `gsorth()` has been deprecated.
 - fixed use of MASS::fractions in gaussianElimination
-- added `print_mat()` to print matrix expressions side-by-side
+- added `printMat()` to print matrix expressions side-by-side
 

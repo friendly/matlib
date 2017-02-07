@@ -21,9 +21,9 @@
 #' x <- c(2, 3, -1)
 #'
 #' # provide implicit or explicit labels
-#' print_mat(AA = A, "*", xx = x, '=', b = A %*% x)
-#' print_mat(A, "*", x, '=', b = A %*% x)
-#' print_mat(A, "*", x, '=', A %*% x)
+#' printMat(AA = A, "*", xx = x, '=', b = A %*% x)
+#' printMat(A, "*", x, '=', b = A %*% x)
+#' printMat(A, "*", x, '=', A %*% x)
 #'
 #' # decimal example
 #' A <- matrix(c(0.5, 1, 3, 0.75, 2.8, 4), nrow = 2)
@@ -31,10 +31,10 @@
 #' y <- c(0.7, -1.2)
 #' b <- A %*% x - y
 #'
-#' print_mat(A, "*", x, "-", y, "=", b)
-#' print_mat(A, "*", x, "-", y, "=", b, fractions=TRUE)
+#' printMat(A, "*", x, "-", y, "=", b)
+#' printMat(A, "*", x, "-", y, "=", b, fractions=TRUE)
 #'
-print_mat <- function(..., space = 1, tol=sqrt(.Machine$double.eps),
+printMat <- function(..., space = 1, tol=sqrt(.Machine$double.eps),
 					  fractions=FALSE) {
 
 	# get arguments
