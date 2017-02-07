@@ -1,7 +1,7 @@
 #' Print Matrices or Matrix Operations Side by Side
 #'
 #' This function is designed to print a collection of matrices, vectors, character strings
-#' and matrix expressions side by side in order to illustrate matrix equations in a compact and
+#' and matrix expressions side by side. A typical use is to illustrate matrix equations in a compact and
 #' comprehensible way.
 #'
 #' @param ... matrices and character operations to be passed and printed to the console. These
