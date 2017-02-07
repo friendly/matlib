@@ -1,5 +1,5 @@
 # matlib 0.9.0
-- added `printMat()` to print matrix expressions side-by-side
+- added `printMatEqn()` to print matrix expressions side-by-side
 - prepare to release as a cumulative major version
 - Phil Chalmers is now recognized officially as a package author [aut]
 
@@ -17,7 +17,7 @@
 - add `GramSchmidt()` for the Gram-Schmidt algorithm on columns of a matrix. The existing function `gsorth()` will be deprecated and then removed.
 - `gsorth()` has been deprecated.
 - fixed use of MASS::fractions in gaussianElimination
-- added `printMat()` to print matrix expressions side-by-side
+- added `printMatEqn()` to print matrix expressions side-by-side
 
 # matlib 0.8.1
 
