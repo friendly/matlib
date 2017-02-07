@@ -14,7 +14,7 @@
 #' @return a matrix/data frame with uncorrelated columns
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #'  set.seed(1234)
 #'  A <- matrix(c(1:60 + rnorm(60)), 20, 3)
 #'  cor(A)

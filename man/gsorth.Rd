@@ -28,7 +28,7 @@ This function, originally from the \pkg{heplots} package has now been deprecated
 \code{\link{GramSchmidt}} instead.
 }
 \examples{
-\donttest{
+\dontrun{
  set.seed(1234)
  A <- matrix(c(1:60 + rnorm(60)), 20, 3)
  cor(A)

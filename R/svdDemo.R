@@ -1,6 +1,6 @@
 #' Demonstrate the SVD for a 3 x 3 matrix
 #'
-#' This function draws an rgl scene consisting of a representation of the identity matrix and a
+#' This function draws an \code{rgl} scene consisting of a representation of the identity matrix and a
 #' 3 x 3 matrix \code{A}, together with the corresponding representation of the
 #' matrices U, D, and V in the SVD decomposition,
 #' A = U D V'.
