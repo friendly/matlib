@@ -13,6 +13,7 @@
 #' @return NULL; A formatted sequence of matrices and matrix operations is printed to the console
 #' @author Phil Chalmers
 #' @export
+#' @seealso \code{\link{showEqn}}
 #' @examples
 #'
 #' A <- matrix(c(2, 1, -1,
@@ -24,6 +25,11 @@
 #' printMatEqn(AA = A, "*", xx = x, '=', b = A %*% x)
 #' printMatEqn(A, "*", x, '=', b = A %*% x)
 #' printMatEqn(A, "*", x, '=', A %*% x)
+#'
+#' # compare with showEqn
+#' b <- c(4, 2, 1)
+#' printMatEqn(A, x=paste0("x", 1:3),"=", b)
+#' showEqn(A, b)
 #'
 #' # decimal example
 #' A <- matrix(c(0.5, 1, 3, 0.75, 2.8, 4), nrow = 2)

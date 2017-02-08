@@ -23,7 +23,7 @@ NULL; A formatted sequence of matrices and matrix operations is printed to the c
 }
 \description{
 This function is designed to print a collection of matrices, vectors, character strings
-and matrix expressions side by side in order to illustrate matrix equations in a compact and
+and matrix expressions side by side. A typical use is to illustrate matrix equations in a compact and
 comprehensible way.
 }
 \examples{
@@ -38,6 +38,11 @@ printMatEqn(AA = A, "*", xx = x, '=', b = A \%*\% x)
 printMatEqn(A, "*", x, '=', b = A \%*\% x)
 printMatEqn(A, "*", x, '=', A \%*\% x)
 
+# compare with showEqn
+b <- c(4, 2, 1)
+printMatEqn(A, x=paste0("x", 1:3),"=", b)
+showEqn(A, b)
+
 # decimal example
 A <- matrix(c(0.5, 1, 3, 0.75, 2.8, 4), nrow = 2)
 x <- c(0.5, 3.7, 2.3)
@@ -47,6 +52,9 @@ b <- A \%*\% x - y
 printMatEqn(A, "*", x, "-", y, "=", b)
 printMatEqn(A, "*", x, "-", y, "=", b, fractions=TRUE)
 
+}
+\seealso{
+\code{\link{showEqn}}
 }
 \author{
 Phil Chalmers
