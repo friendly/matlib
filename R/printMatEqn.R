@@ -46,7 +46,9 @@ printMatEqn <- function(..., space = 1, tol=sqrt(.Machine$double.eps),
 	# get arguments
 	args <- list(...)
 	chars <- sapply(args, is.character)
-	args[chars] <- lapply(args[chars], function(x)
+	charvec <- if(length(names(chars))) names(chars) != "" 
+	  else logical(length(chars))
+	args[chars & !charvec] <- lapply(args[chars & !charvec], function(x)
 		paste0(rep(' ', space), x, rep(' ', space)))
 
 	# vectors to matrix
@@ -61,12 +63,13 @@ printMatEqn <- function(..., space = 1, tol=sqrt(.Machine$double.eps),
 	Call <- as.character(match.call())[-1L]
 	if(is.null(tmp)){
 		tmp <- Call[1L:length(ncols)]
+		tmp[chars] <- ' '
 	} else if(length(tmp[tmp != ""]) != sum(!chars)){
 		tmp2 <- tmp
 		tmp <- Call[1L:length(ncols)]
 		tmp[tmp2 != ""] <- tmp2[tmp2 != ""]
+		tmp[chars & !charvec] <- ' '
 	}
-	tmp[chars] <- ' '
 	nms <- rep(' ', sum(ncols))
 	nms[cumsum(ncols)] <- tmp
 
