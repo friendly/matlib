@@ -4,12 +4,14 @@
 \alias{GramSchmidt}
 \title{Gram-Schmidt Orthogonalization of a Matrix}
 \usage{
-GramSchmidt(X, normalize = TRUE)
+GramSchmidt(X, normalize = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{X}{a matrix}
 
 \item{normalize}{logical; should the resulting columns be normalized to unit length?}
+
+\item{verbose}{logical; if \code{TRUE}, print intermediate steps}
 }
 \value{
 A matrix of the same size as \code{X}, with orthogonal columns
@@ -22,10 +24,24 @@ previous columns by subtracting their projections on the current
 column.
 }
 \examples{
+(xx <- matrix(c( 1:3, 3:1, 1, 0, -2), 3, 3))
+crossprod(xx)
+(zz <- GramSchmidt(xx, normalize=FALSE))
+zapsmall(crossprod(zz))
+
+# normalized
+(zz <- GramSchmidt(xx))
+zapsmall(crossprod(zz))
+
+# print steps
+GramSchmidt(xx, verbose=TRUE)
+
+# system with no unique solution
 (xx <- matrix(c( 1:3, 3:1, 1, 0, -1), 3, 3))
 crossprod(xx)
-(yy <- GramSchmidt(xx))
-zapsmall(crossprod(yy))
+(zz <- GramSchmidt(xx))
+zapsmall(crossprod(zz))
+
 }
 \author{
 Phil Chalmers

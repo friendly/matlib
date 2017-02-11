@@ -1,4 +1,5 @@
 # matlib 0.9.0
+- added `verbose` option to `GramSchmidt()` and another example
 - added `printMatEqn()` to print matrix expressions side-by-side
 - prepare to release as a cumulative major version
 - Phil Chalmers is now recognized officially as a package author [aut]
