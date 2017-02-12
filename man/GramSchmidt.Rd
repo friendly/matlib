@@ -36,7 +36,7 @@ zapsmall(crossprod(zz))
 # print steps
 GramSchmidt(xx, verbose=TRUE)
 
-# system with no unique solution
+# non-invertible matrix; hence, its basis is not orthonormal
 (xx <- matrix(c( 1:3, 3:1, 1, 0, -1), 3, 3))
 crossprod(xx)
 (zz <- GramSchmidt(xx))
