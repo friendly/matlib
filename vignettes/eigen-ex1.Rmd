@@ -20,7 +20,7 @@ options(digits=4)
 
 This vignette uses an example of a $3 \times 3$ matrix to illustrate some properties of
 eigenvalues and eigenvectors.  We could consider this to be the variance-covariance matrix of three variables,
-but the main thing is that the matrix is **square** and **symmetric**, which guarrantees that the eigenvalues, $\lambda_i$ are
+but the main thing is that the matrix is **square** and **symmetric**, which guarantees that the eigenvalues, $\lambda_i$ are
 real numbers. Covariance matrices are also **positive semi-definite**, meaning
 that their eigenvalues are non-negative, $\lambda_i \ge 0$.
 

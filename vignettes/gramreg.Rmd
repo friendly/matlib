@@ -90,7 +90,7 @@ colnames(Z) <- colnames(X)
 
 ### Relationship to QR factorization
 The QR method uses essentially the same process, factoring the matrix $\mathbf{X}$ as $\mathbf{X = Q R}$,
-where $\mathbf{Q}$ is the orthonormal matrix corresponding to `Z` and $\mathbf{R}$ is upper triangualar.
+where $\mathbf{Q}$ is the orthonormal matrix corresponding to `Z` and $\mathbf{R}$ is an upper triangular matrix.
 However, the signs of the columns of $\mathbf{Q}$ are arbitrary, and `QR()` returns `QR(X)$Q` with
 signs reversed, compared to `Z`.
 

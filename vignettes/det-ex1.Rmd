@@ -56,7 +56,7 @@ det( diag(c(3, 1))  %*% A)
 
 ### 4. multiply matrix * k -> k^2 * det(A)
 
-This is because multipling a matrix by a constant multiplies **each** row.
+This is because multiplying a matrix by a constant multiplies **each** row.
 
 ```{r }
 det(3 * A)
@@ -104,7 +104,7 @@ det(A)
 Many aspects of matrices and vectors have geometric interpretations.
 For $2 \times 2$ matrices, the determinant is the **area** of the parallelogram
 defined by the rows (or columns), plotted in a 2D space.
-(For $3 \times 3$ matrices, the determinant is the **volume** of a parallelpiped in 3D space.)
+(For $3 \times 3$ matrices, the determinant is the **volume** of a parallelepiped in 3D space.)
 ```{r}
 A <- matrix(c(3, 1, 
               2, 4), nrow=2, byrow=TRUE)
@@ -132,7 +132,7 @@ text(mean(A[,1]), mean(A[,2]), "det(A)", cex=1.25)
 
 There is a simple [visual proof of this fact about determinants](http://math.stackexchange.com/questions/29128/why-determinant-of-a-2-by-2-matrix-is-the-area-of-a-parallelogram)
 but it is easiest to
-see in the case of a diagnonal matrix, where the row vectors are orthogonal, so area
+see in the case of a diagonal matrix, where the row vectors are orthogonal, so area
 is just height x width.
 
 ```{r}

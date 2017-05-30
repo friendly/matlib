@@ -82,7 +82,7 @@ Ginv(A, fractions=TRUE)
 The generalized inverse is defined as the matrix $A^-$ such that
 
 * $A * A^- * A = A$ and
-* $A^- * A * A^- = A$
+* $A^- * A * A^- = A^-$
 
 ```{r }
 A %*% AI %*% A
