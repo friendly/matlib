@@ -43,7 +43,7 @@ The functions in this package are grouped under the following topics
   - `J()` - constant vector, matrix or array
   - `len()` - Euclidean length of a vector or columns of a matrix
   - `vec()` - vectorize a matrix
-  - `Proj(y, X)` - projection of vector y on colunms of X
+  - `Proj(y, X)` - projection of vector y on columns of X
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
 
 2. Determinants: functions for calculating determinants by cofactor expansion
