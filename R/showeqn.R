@@ -7,7 +7,9 @@
 #' Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b}, but written out
 #' as a set of equations.
 #'
-#' @param A either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}
+#' @param A either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}.
+#'   Alternatively, can be of class \code{'lm'} to print the equations for the design matrix in a linear
+#'   regression model
 #' @param b if supplied, the vector of constants on the right hand side of the equations. When omitted 
 #'   the values \code{b1, b2, ..., bn} will be used as placeholders
 #' @param vars a numeric or character vector of names of the variables.
@@ -17,7 +19,7 @@
 #' @param fractions logical; express numbers as rational fractions?
 #' @param latex logical; print equations in a form suitable for LaTeX output?
 #' @return a one-column character matrix, one row for each equation
-#' @author Michael Friendly and John Fox
+#' @author Michael Friendly, John Fox, and Phil Chalmers
 #' @references Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 #' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 #' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
@@ -42,8 +44,41 @@
 #'   U <- LU(A)$U
 #'   showEqn(U, simplify=TRUE, fractions=TRUE)
 #'   showEqn(U, b, simplify=TRUE, fractions=TRUE)
+#'   
+#'   ####################
+#'   # Linear models Design Matricies
+#'   data(mtcars)
+#'   ancova <- lm(mpg ~ wt + vs, mtcars)
+#'   summary(ancova)
+#'   showEqn(ancova)
+#'   showEqn(ancova, vars=round(coef(ancova),2))
+#'   
+#'   twoway_int <- lm(mpg ~ vs * am, mtcars)
+#'   summary(twoway_int)
+#'   car::Anova(twoway_int)
+#'   showEqn(twoway_int)
+#'   
+#'   # Piece-wise linear regression
+#'   x <- c(1:10, 13:22)
+#'   y <- numeric(20)
+#'   y[1:10] <- 20:11 + rnorm(10, 0, 1.5)
+#'   y[11:20] <- seq(11, 15, len=10) + rnorm(10, 0, 1.5)
+#'   plot(x, y, pch = 16)
+#'   
+#'   x2 <- as.numeric(x > 10)
+#'   mod <- lm(y ~ x + I((x - 10) * x2))
+#'   summary(mod)
+#'   lines(x, fitted(mod))
+#'   showEqn(mod)
+#'   showEqn(mod, vars=round(coef(mod),2))
+#'   
 
 showEqn <- function(A, b, vars, simplify=FALSE, fractions=FALSE, latex = FALSE) {
+  if(class(A) == 'lm'){
+  	X <- model.matrix(A)
+  	return(showEqn(A=X, b=b, vars=vars, simplify=simplify, fractions=fractions,
+  				   latex=latex))
+  }
   if (missing(b)) {
     b <- paste0('b', 1:nrow(A))
   }
