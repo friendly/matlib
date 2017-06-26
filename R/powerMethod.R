@@ -23,23 +23,20 @@
 #' @param v optional starting vector; if not supplied, it uses a unit vector of length equal to the number of rows / columns of \code{x}.
 #' @param eps convergence threshold for terminating iterations
 #' @param maxiter maximum number of iterations
-#' @param verbose logical; if \code{TRUE}, show the approximation to the eigenvector at each iteration
-#' @param keep   logical; if \code{TRUE}, also return the series of iterated eigenvectors as another component, named \code{vectors}.
-#' @return a list containing the eigenvector (\code{vector}), eigenvalue (\code{value}), and iterations (\code{iter})
+#' @param plot logical; if \code{TRUE}, plot the series of iterated eigenvectors?
+#' @return a list containing the eigenvector (\code{vector}), eigenvalue (\code{value}), iterations (\code{iter}),
+#'   and iteration history (\code{vector_iterations})
 #' @export
 #' @references Hotelling, H. (1933). Analysis of a complex of statistical variables into principal components. \emph{Journal of Educational Psychology}, 24, 417-441, and 498-520.
 #' @author Gaston Sanchez (from matrixkit)
 #' @examples
 #' A <- cbind(c(7, 3), c(3, 6))
-#' powerMethod(A, verbose=TRUE)
-#' eigen(A)$vectors[,1]  # check
+#' powerMethod(A)
+#' eigen(A)$values[1] # check
+#' eigen(A)$vectors[,1]
 #'
 #' # demonstrate how the power method converges to a solution
-#' res <- powerMethod(A, v = c(-.5, 1),  keep=TRUE)
-#' vecs <- t(res$vectors)
-#' plot(c(-.5, 1), c(-.1, 1), type="n", xlab="x1", ylab="x2")
-#' vectors(vecs, col=palette())
-#' abline(h=0, v=0, col="gray")
+#' powerMethod(A, v = c(-.5, 1), plot = TRUE)
 #'
 #' B <- cbind(c(1, 2, 0), c(2, 1, 3), c(0, 3, 1))
 #' (rv <- powerMethod(B))
@@ -56,8 +53,7 @@
 #' eigen(C)$vectors
 #' powerMethod(C)
 
-
-powerMethod <- function(A, v = NULL, eps = 1e-6, maxiter = 100, verbose=FALSE, keep=FALSE)
+powerMethod <- function(A, v = NULL, eps = 1e-6, maxiter = 100, plot=FALSE)
 {
   if (!is_square_matrix(A))
     stop("'powerMethod()' requires a square numeric matrix")
@@ -82,21 +78,27 @@ powerMethod <- function(A, v = NULL, eps = 1e-6, maxiter = 100, verbose=FALSE, k
   {
     v_new = A %*% v_old
     v_new = v_new / len(v_new)
-    if (verbose) cat("iter", steps, ": vector=", c(v_new), "\n"  )
     if (len(abs(v_new) - abs(v_old)) <= eps) break
     v_old = v_new
     steps = steps + 1
-    if(keep) vectors[[steps]] <- c(v_new)
+    vectors[[steps]] <- c(v_new)
     if (steps == maxiter) break
   }
   # Rayleigh quotient gives the eigenvalue
   lambda = sum((A %*% v_new) * v_new)
   # output
-  res <- list(vector = v_new, value = lambda, iter = steps)
-  if(keep) {
-    vectors <- do.call(cbind, vectors)
-    colnames(vectors) <- paste0("v", 1:ncol(vectors))
-    res <- c(res, vectors=list(vectors))
+  res <- list(iter = steps, vector = v_new, value = lambda)
+  vectors <- do.call(cbind, vectors)
+  colnames(vectors) <- paste0("v", 1:ncol(vectors))
+  res <- c(vector_iterations=list(vectors), res)
+  if(plot){
+      vecs <- t(vectors)
+      pos <- c(min(c(vecs, 0))-.1, max(vecs) + .1)
+      plot(pos, pos, type="n", xlab="x1", ylab="x2")
+      col <- sapply(1:nrow(vecs) / nrow(vecs), function(x) adjustcolor('red', x))
+      vectors(vecs, col=col)
+      abline(h=0, v=0, col="gray")
+      return(invisible(res))
   }
   res
 }

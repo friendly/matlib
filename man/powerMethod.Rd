@@ -4,8 +4,7 @@
 \alias{powerMethod}
 \title{Power Method for Eigenvectors}
 \usage{
-powerMethod(A, v = NULL, eps = 1e-06, maxiter = 100, verbose = FALSE,
-  keep = FALSE)
+powerMethod(A, v = NULL, eps = 1e-06, maxiter = 100, plot = FALSE)
 }
 \arguments{
 \item{A}{a square numeric matrix}
@@ -16,12 +15,11 @@ powerMethod(A, v = NULL, eps = 1e-06, maxiter = 100, verbose = FALSE,
 
 \item{maxiter}{maximum number of iterations}
 
-\item{verbose}{logical; if \code{TRUE}, show the approximation to the eigenvector at each iteration}
-
-\item{keep}{logical; if \code{TRUE}, also return the series of iterated eigenvectors as another component, named \code{vectors}.}
+\item{plot}{logical; if \code{TRUE}, plot the series of iterated eigenvectors?}
 }
 \value{
-a list containing the eigenvector (\code{vector}), eigenvalue (\code{value}), and iterations (\code{iter})
+a list containing the eigenvector (\code{vector}), eigenvalue (\code{value}), iterations (\code{iter}),
+  and iteration history (\code{vector_iterations})
 }
 \description{
 Finds a dominant eigenvalue, \eqn{\lambda_1}, and its corresponding
@@ -43,15 +41,12 @@ dominant eigenvector is required, e.g., the Google Page Rank algorithm.
 }
 \examples{
 A <- cbind(c(7, 3), c(3, 6))
-powerMethod(A, verbose=TRUE)
-eigen(A)$vectors[,1]  # check
+powerMethod(A)
+eigen(A)$values[1] # check
+eigen(A)$vectors[,1]
 
 # demonstrate how the power method converges to a solution
-res <- powerMethod(A, v = c(-.5, 1),  keep=TRUE)
-vecs <- t(res$vectors)
-plot(c(-.5, 1), c(-.1, 1), type="n", xlab="x1", ylab="x2")
-vectors(vecs, col=palette())
-abline(h=0, v=0, col="gray")
+powerMethod(A, v = c(-.5, 1), plot = TRUE)
 
 B <- cbind(c(1, 2, 0), c(2, 1, 3), c(0, 3, 1))
 (rv <- powerMethod(B))
