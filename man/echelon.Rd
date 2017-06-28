@@ -4,10 +4,16 @@
 \alias{echelon}
 \title{Echelon Form of a Matrix}
 \usage{
-echelon(X, ...)
+echelon(A, B, reduced = TRUE, ...)
 }
 \arguments{
-\item{X}{a matrix}
+\item{A}{coefficient matrix}
+
+\item{B}{right-hand side vector or matrix. If \code{B} is a matrix, the result gives solutions for each column as the right-hand
+side of the equations with coefficients in \code{A}.}
+
+\item{reduced}{logical; should reduced row echelon form be returned? If \code{FALSE} a non-reduced 
+row echelon form will be returned}
 
 \item{...}{other arguments passed to \code{gaussianElimination}}
 }
@@ -15,23 +21,25 @@ echelon(X, ...)
 the reduced echelon form of \code{X}.
 }
 \description{
-Returns the reduced row-echelon form of the matrix \code{X}, using \code{\link{gaussianElimination}}.
-It is nothing more than a synonym for Gaussian elimination, but offers the possibility to show the
-steps using \code{verbose=TRUE}.
+Returns the (reduced) row-echelon form of the matrix \code{A}, using \code{\link{gaussianElimination}}.
 }
 \details{
-When the matrix \code{x} is square and non-singular, the result will be the identity matrix. Otherwise,
-the result will have some all-zero rows, and the rank of the matrix is the number of not all-zero rows.
+When the matrix \code{A} is square and non-singular, the reduced row-echelon result will be the 
+identity matrix, while the row-echelon from will be an upper triagle matrix. 
+Otherwise, the result will have some all-zero rows, and the rank of the matrix 
+is the number of not all-zero rows.
 }
 \examples{
 A <- matrix(c(2, 1, -1,
              -3, -1, 2,
              -2,  1, 2), 3, 3, byrow=TRUE)
 b <- c(8, -11, -3)
-echelon(A, b, verbose=TRUE, fractions=TRUE)
+echelon(A, b, verbose=TRUE, fractions=TRUE) # reduced row-echelon form
+echelon(A, b, reduced=FALSE, verbose=TRUE, fractions=TRUE) # row-echelon form
 
 A <- matrix(c(1,2,3,4,5,6,7,8,10), 3, 3) # a nonsingular matrix
 A
+echelon(A, reduced=FALSE) # the row-echelon form of A
 echelon(A) # the reduced row-echelon form of A
 
 b <- 1:3
@@ -41,6 +49,7 @@ echelon(A, diag(3)) # inverting A
 B <- matrix(1:9, 3, 3) # a singular matrix
 B
 echelon(B)
+echelon(B, reduced=FALSE)
 echelon(B, b)
 echelon(B, diag(3))
 

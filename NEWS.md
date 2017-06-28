@@ -1,4 +1,6 @@
 # matlib 0.9.0
+
+- `echelon()` gains a `reduced` logical to indicate whether the reduced or non-reduced form is computed
 - `powerMethod()` gains a `plot = TRUE` logical to draw the iteration history
 - added support for `'lm'` objects to `showEqn()` to show the design matrix equations
 - added `verbose` option to `GramSchmidt()` and another example

@@ -54,6 +54,11 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     det <- 1
     pivots <- rep(0, n)
     interchanges <- 0
+    reduced <- TRUE
+    if(!is.null(attr(A, 'reduced'))){ # only used from echelon()
+    	reduced <- attr(A, 'reduced')
+    	attr(A, 'reduced') <- NULL
+    }
     if (!missing(B)){
         B <- as.matrix(B)
         if (!(nrow(B) == nrow(A)) || !is.numeric(B))
@@ -96,6 +101,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             }
             for (k in 1:n){
                 if (k == i) next
+            	if (!reduced && k < j) next
                 factor <- A[k, j]
                 if (abs(factor) < tol) next
                 A <- rowadd(A, i, k, -factor) # sweep column j (E2)
@@ -194,14 +200,18 @@ inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
 
 #' Echelon Form of a Matrix
 #'
-#' Returns the reduced row-echelon form of the matrix \code{X}, using \code{\link{gaussianElimination}}.
-#' It is nothing more than a synonym for Gaussian elimination, but offers the possibility to show the
-#' steps using \code{verbose=TRUE}.
+#' Returns the (reduced) row-echelon form of the matrix \code{A}, using \code{\link{gaussianElimination}}.
 #'
-#' When the matrix \code{x} is square and non-singular, the result will be the identity matrix. Otherwise,
-#' the result will have some all-zero rows, and the rank of the matrix is the number of not all-zero rows.
+#' When the matrix \code{A} is square and non-singular, the reduced row-echelon result will be the 
+#' identity matrix, while the row-echelon from will be an upper triagle matrix. 
+#' Otherwise, the result will have some all-zero rows, and the rank of the matrix 
+#' is the number of not all-zero rows.
 #'
-#' @param X a matrix
+#' @param A coefficient matrix
+#' @param B right-hand side vector or matrix. If \code{B} is a matrix, the result gives solutions for each column as the right-hand
+#'        side of the equations with coefficients in \code{A}.
+#' @param reduced logical; should reduced row echelon form be returned? If \code{FALSE} a non-reduced 
+#'   row echelon form will be returned
 #' @param ... other arguments passed to \code{gaussianElimination}
 #' @return the reduced echelon form of \code{X}.
 #' @author John Fox
@@ -211,10 +221,12 @@ inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
 #'              -3, -1, 2,
 #'              -2,  1, 2), 3, 3, byrow=TRUE)
 #' b <- c(8, -11, -3)
-#' echelon(A, b, verbose=TRUE, fractions=TRUE)
+#' echelon(A, b, verbose=TRUE, fractions=TRUE) # reduced row-echelon form
+#' echelon(A, b, reduced=FALSE, verbose=TRUE, fractions=TRUE) # row-echelon form
 #'
 #' A <- matrix(c(1,2,3,4,5,6,7,8,10), 3, 3) # a nonsingular matrix
 #' A
+#' echelon(A, reduced=FALSE) # the row-echelon form of A
 #' echelon(A) # the reduced row-echelon form of A
 #'
 #' b <- 1:3
@@ -224,11 +236,15 @@ inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
 #' B <- matrix(1:9, 3, 3) # a singular matrix
 #' B
 #' echelon(B)
+#' echelon(B, reduced=FALSE)
 #' echelon(B, b)
 #' echelon(B, diag(3))
 #'
 
-echelon <- function(X, ...) gaussianElimination(X, ...)
+echelon <- function(A, B, reduced = TRUE, ...) {
+	attr(A, "reduced") <- reduced
+	gaussianElimination(A, B, ...)
+}
 
 #' Generalized Inverse of a Matrix
 #'
