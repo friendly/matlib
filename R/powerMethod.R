@@ -26,6 +26,7 @@
 #' @param plot logical; if \code{TRUE}, plot the series of iterated eigenvectors?
 #' @return a list containing the eigenvector (\code{vector}), eigenvalue (\code{value}), iterations (\code{iter}),
 #'   and iteration history (\code{vector_iterations})
+#' @importFrom grDevices adjustcolor
 #' @export
 #' @references Hotelling, H. (1933). Analysis of a complex of statistical variables into principal components. \emph{Journal of Educational Psychology}, 24, 417-441, and 498-520.
 #' @author Gaston Sanchez (from matrixkit)
@@ -95,7 +96,8 @@ powerMethod <- function(A, v = NULL, eps = 1e-6, maxiter = 100, plot=FALSE)
       vecs <- t(vectors)
       pos <- c(min(c(vecs, 0))-.1, max(vecs) + .1)
       plot(pos, pos, type="n", xlab="x1", ylab="x2")
-      col <- sapply(1:nrow(vecs) / nrow(vecs), function(x) adjustcolor('red', x))
+      col <- sapply(1:nrow(vecs) / nrow(vecs), 
+      			  function(x) grDevices::adjustcolor('red', x))
       vectors(vecs, col=col)
       abline(h=0, v=0, col="gray")
       return(invisible(res))
