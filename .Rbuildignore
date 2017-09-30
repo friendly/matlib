@@ -1,4 +1,5 @@
 .gitignore
+.gitattributes
 .Rprofile
 ^.*\.Rproj$
 ^\.Rproj\.user$
