@@ -1,0 +1,190 @@
+---
+title: "Solving Linear Equations"
+author: "Michael Friendly and John Fox"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Solving Linear Equations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+options(digits=4)
+par(mar=c(5,4,1,1)+.1)
+```
+```{r setuprgl, echo=FALSE}
+library(rgl)
+library(knitr)
+knit_hooks$set(webgl = hook_webgl)
+```
+
+
+This vignette illustrates the ideas behind solving systems of linear equations of the form $\mathbf{A x = b}$
+where 
+
+- $\mathbf{A}$ is an $m \times n$ matrix of coefficients for $m$ equations in $n$ unknowns
+- $\mathbf{x}$ is an $n \times 1$ vector unknowns, $x_1, x_2, \dots x_n$
+- $\mathbf{b}$ is an $m \times 1$ vector of constants, the "right-hand sides" of the equations
+
+The general conditions for solutions are:
+
+- the equations are *consistent* (solutions exist) if $r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A})$
+    - the solution is *unique* if $r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A}) = n$
+    - the solution is *underdetermined* if $r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A}) < n$
+- the equations are *inconsistent* (no solutions) if $r( \mathbf{A} | \mathbf{b}) > r( \mathbf{A})$
+
+We use `c( R(A), R(cbind(A,b)) )` to show the ranks, and `all.equal( R(A), R(cbind(A,b)) )` to test
+for consistency.
+
+```{r}
+library(matlib)   # use the package
+```
+## Equations in two unknowns
+
+Each equation in two unknowns corresponds to a line in 2D space. The equations
+have a unique solution if all lines intersect in a point.
+
+### Two consistent equations
+```{r}
+A <- matrix(c(1, 2, -1, 2), 2, 2)
+b <- c(2,1)
+showEqn(A, b)
+c( R(A), R(cbind(A,b)) )          # show ranks
+all.equal( R(A), R(cbind(A,b)) )  # consistent?
+
+```
+Plot the equations:
+```{r, echo=2}
+par(mar=c(4,4,0,0)+.1)
+plotEqn(A,b)
+```
+
+`Solve()` is a convenience function that shows the solution in a more comprehensible form:
+```{r}
+Solve(A, b, fractions = TRUE)
+```
+
+
+### Three consistent equations
+
+For three (or more) equations in two unknowns, $r(\mathbf{A}) \le 2$, because  $r(\mathbf{A}) \le \min(m,n)$.
+The equations will be consistent
+*if* $r(\mathbf{A}) = r(\mathbf{A | b})$. This means that whatever linear relations
+exist among the rows of $\mathbf{A}$ are the *same* as those among the elements of $\mathbf{b}$.
+
+Geometrically, this means that all three lines intersect in a point.
+```{r}
+A <- matrix(c(1,2,3, -1, 2, 1), 3, 2)
+b <- c(2,1,3)
+showEqn(A, b)
+c( R(A), R(cbind(A,b)) )          # show ranks
+all.equal( R(A), R(cbind(A,b)) )  # consistent?
+
+Solve(A, b, fractions=TRUE)       # show solution 
+```
+Plot the equations:
+```{r, echo=2}
+par(mar=c(4,4,0,0)+.1)
+plotEqn(A,b)
+```
+
+### Three inconsistent equations
+Three equations in two unknowns are *inconsistent* when $r(\mathbf{A}) < r(\mathbf{A | b})$.
+```{r}
+A <- matrix(c(1,2,3, -1, 2, 1), 3, 2)
+b <- c(2,1,6)
+showEqn(A, b)
+c( R(A), R(cbind(A,b)) )          # show ranks
+all.equal( R(A), R(cbind(A,b)) )  # consistent?
+```
+You can see this in the result of reducing $\mathbf{A} | \mathbf{b}$ to echelon form, where the
+last row indicates the inconsistency.
+```{r}
+echelon(A, b)
+```
+`Solve()` shows this more explicitly:
+```{r}
+Solve(A, b, fractions=TRUE)
+```
+
+
+An approximate solution is sometimes available using a generalized inverse.
+```{r}
+x <- MASS::ginv(A) %*% b
+x
+```
+
+
+Plot the equations. You can see that each pair of equations has a solution,
+but all three do not have a common, consistent solution.
+```{r}
+par(mar=c(4,4,0,0)+.1)
+plotEqn(A,b, xlim=c(-2, 4))
+points(x[1], x[2], pch=15)
+```
+
+
+
+## Equations in three unknowns
+
+Each equation in three unknowns corresponds to a plane in 3D space. The equations
+have a unique solution if all planes intersect in a point.
+
+### Three consistent equations
+
+```{r}
+A <- matrix(c(2, 1, -1,
+             -3, -1, 2,
+             -2,  1, 2), 3, 3, byrow=TRUE)
+colnames(A) <- paste0('x', 1:3)
+b <- c(8, -11, -3)
+showEqn(A, b)
+```
+
+Are the equations consistent?
+```{r}
+c( R(A), R(cbind(A,b)) )          # show ranks
+all.equal( R(A), R(cbind(A,b)) )  # consistent?
+```
+Solve for $\mathbf{x}$.  
+
+```{r}
+solve(A, b)
+solve(A) %*% b
+inv(A) %*% b
+```
+
+Another way to see the solution is to reduce $\mathbf{A | b}$ to echelon form. The result is $\mathbf{I | A^{-1}b}$,
+with the solution in the last column. 
+
+```{r}
+echelon(A, b)
+echelon(A, b, verbose=TRUE, fractions=TRUE)
+```
+
+Plot them.  `plotEqn3d` uses `rgl` for 3D graphics.  If you rotate the figure, you'll see an orientation
+where all three planes intersect at the solution point, $\mathbf{x} = (2, 3, -1)$ 
+```{r plotEqn1, webgl=TRUE}
+plotEqn3d(A,b, xlim=c(0,4), ylim=c(0,4))
+```
+
+### Three inconsistent equations
+
+```{r}
+A <- matrix(c(1,  3, 1,
+              1, -2, -2,
+              2,  1, -1), 3, 3, byrow=TRUE)
+colnames(A) <- paste0('x', 1:3)
+b <- c(2, 3, 6)
+showEqn(A, b)
+```
+Are the equations consistent? No.
+```{r}
+c( R(A), R(cbind(A,b)) )          # show ranks
+all.equal( R(A), R(cbind(A,b)) )  # consistent?
+```

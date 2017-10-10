@@ -1,0 +1,14 @@
+urls:
+  reference: http://friendly.github.io/matlib/reference
+  article: http://friendly.github.io/matlib/articles
+articles:
+  det-ex1: det-ex1.html
+  det-ex2: det-ex2.html
+  eigen-ex1: eigen-ex1.html
+  eigen-ex2: eigen-ex2.html
+  ginv: ginv.html
+  gramreg: gramreg.html
+  inv-ex1: inv-ex1.html
+  inv-ex2: inv-ex2.html
+  linear-equations: linear-equations.html
+

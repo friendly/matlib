@@ -1,0 +1,254 @@
+---
+title: "Inverse of a matrix"
+author: "Michael Friendly"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  rmarkdown::html_vignette:
+    toc: no
+vignette: >
+  %\VignetteIndexEntry{Inverse of a matrix}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 5,
+  fig.width = 5
+)
+options(digits=4)
+par(mar=c(5,4,1,1)+.1)
+```
+
+The inverse of a matrix plays the same roles in matrix algebra as the reciprocal of a number
+and division does in
+ordinary arithmetic:  Just as we can solve a simple equation like $4 x = 8$ for $x$
+by multiplying both sides by the reciprocal 
+$$ 4 x = 8 \Rightarrow 4^{-1} 4 x = 4^{-1} 8 \Rightarrow x = 8 / 4 = 2$$
+we can solve a matrix equation like $\mathbf{A x} = \mathbf{b}$ for the vector $\mathbf{x}$
+by multiplying both sides by the inverse of the matrix $\mathbf{A}$,
+$$\mathbf{A x} = \mathbf{b} \Rightarrow \mathbf{A}^{-1} \mathbf{A x} = \mathbf{A}^{-1} \mathbf{b} \Rightarrow \mathbf{x} = \mathbf{A}^{-1} \mathbf{b}$$
+
+The following examples illustrate the basic properties of the inverse of a matrix.
+
+### Load the `matlib` package
+
+This defines: `inv()`, `Inverse()`;  the standard R function for matrix inverse is `solve()`
+
+```{r }
+library(matlib)
+```
+
+### Create a 3 x 3 matrix
+The ordinary inverse is defined only for square matrices.
+```{r }
+    A <- matrix( c(5, 1, 0,
+                   3,-1, 2,
+                   4, 0,-1), nrow=3, byrow=TRUE)
+   det(A)
+```
+## Basic properties
+
+### 1.  `det(A) != 0`, so inverse exists
+Only non-singular matrices have an inverse.
+```{r }
+   (AI  <- inv(A))
+```
+
+### 2. Definition of the inverse: $A^{-1} A = A A^{-1} = I$ or `AI * A = diag(nrow(A))`
+
+The inverse of a matrix $A$ is defined as the matrix $A^{-1}$ which multiplies $A$ to give
+the identity matrix, just as, for a scalar $a$, $a a^{-1} = a / a = 1$.
+
+NB:  Sometimes you will get very tiny off-diagonal values (like `1.341e-13`). The
+function `zapsmall()` will round those to 0.
+
+```{r }
+   AI %*% A
+```
+
+### 3. Inverse is **reflexive**: `inv(inv(A)) = A`
+
+Taking the inverse twice gets you back to where you started.
+```{r }
+   inv(AI)
+```
+
+### 4. `inv(A)` is **symmetric** if and only if A is symmetric
+
+```{r }
+   inv( t(A) )
+   is_symmetric_matrix(A)
+   is_symmetric_matrix( inv( t(A) ) )
+```
+
+Here is a symmetric case:
+
+```{r }
+   B <- matrix( c(4, 2, 2,
+                  2, 3, 1,
+                  2, 1, 3), nrow=3, byrow=TRUE)
+   inv(B)
+   inv( t(B) )
+   is_symmetric_matrix(B)
+   is_symmetric_matrix( inv( t(B) ) )
+   all.equal( inv(B), inv( t(B) ) )
+```
+
+## More properties of matrix inverse
+### 1. inverse of diagonal matrix = diag( 1/ diagonal)
+
+In these simple examples, it is often useful to show the results of matrix calculations
+as fractions, using `MASS::fractions()`.
+```{r }
+   D <- diag(c(1, 2, 4))
+   inv(D)
+   MASS::fractions( diag(1 / c(1, 2, 4)) )
+```
+
+### 2. Inverse of an inverse: `inv(inv(A)) = A`
+
+```{r }
+   A <- matrix(c(1, 2, 3,  2, 3, 0,  0, 1, 2), nrow=3, byrow=TRUE)
+   AI <- inv(A)
+   inv(AI)
+```
+
+### 3. inverse of a **transpose**: `inv(t(A)) = t(inv(A))`
+
+```{r }
+   inv( t(A) )
+   t( inv(A) )
+```
+
+### 4. inverse of a scalar * matrix:  `inv( k*A ) = (1/k) * inv(A)`
+
+```{r }
+   inv(5 * A)
+   (1/5) * inv(A)
+```
+
+### 5. inverse of a matrix product: `inv(A * B) = inv(B) %*% inv(A)`
+
+```{r }
+   B <- matrix(c(1, 2, 3, 1, 3, 2, 2, 4, 1), nrow=3, byrow=TRUE)
+   C <- B[, 3:1]
+   A %*%  B
+   inv(A %*%  B)
+
+   inv(B) %*%  inv(A)
+```
+
+This extends to any number of terms: the inverse of a product is the product
+of the inverses in reverse order.
+
+```{r }
+   (ABC <- A %*% B %*% C)
+   inv(A %*% B %*% C)
+   inv(C) %*% inv(B) %*% inv(A)
+   inv(ABC)
+```
+
+### 6. $\det (A^{-1}) = 1 / \det(A) = [\det(A)]^{-1}$
+
+The determinant of an inverse is the inverse (reciprocal) of the determinant
+
+```{r }
+  det(AI)
+  1 / det(A)
+```
+
+## Geometric interpretations
+
+Some of these properties of the matrix inverse can be more easily understood from geometric diagrams.
+Here, we take a $2 \times 2$ non-singular matrix $A$,
+```{r}
+A <- matrix(c(2, 1, 
+              1, 2), nrow=2, byrow=TRUE)
+A
+det(A)
+```
+The larger the determinant of $A$, the smaller is the determinant of $A^{-1}$.
+```{r}
+AI <- inv(A)
+MASS::fractions(AI)
+det(AI)
+```
+
+Now, plot the rows of $A$ as vectors $a_1, a_2$ from the origin in a 2D space.
+As illustrated in `vignette("det-ex1")`, the area of the parallelogram
+defined by these vectors is the determinant.
+```{r plot-inv1}
+par(mar=c(3,3,1,1)+.1)
+xlim <- c(-1,3)
+ylim <- c(-1,3)
+plot(xlim, ylim, type="n", xlab="X1", ylab="X2", asp=1)
+sum <- A[1,] + A[2,]
+# draw the parallelogram determined by the rows of A
+polygon( rbind(c(0,0), A[1,], sum, A[2,]), col=rgb(1,0,0,.2))
+vectors(A, labels=c(expression(a[1]), expression(a[2])), pos.lab=c(4,2))
+vectors(sum, origin=A[1,], col="gray")
+vectors(sum, origin=A[2,], col="gray")
+text(mean(A[,1]), mean(A[,2]), "A", cex=1.5)
+```
+
+The rows of the inverse $A^{-1}$ can be shown as vectors $a^1, a^2$ from the origin in the same
+space.
+
+```{r plot-inv2, echo=-(1:12)}
+par(mar=c(3,3,1,1)+.1)
+xlim <- c(-1,3)
+ylim <- c(-1,3)
+plot(xlim, ylim, type="n", xlab="X1", ylab="X2", asp=1)
+sum <- A[1,] + A[2,]
+# draw the parallelogram determined by the rows of A
+polygon( rbind(c(0,0), A[1,], sum, A[2,]), col=rgb(1,0,0,.2))
+vectors(A, labels=c(expression(a[1]), expression(a[2])), pos.lab=c(4,2))
+vectors(sum, origin=A[1,], col="gray")
+vectors(sum, origin=A[2,], col="gray")
+text(mean(A[,1]), mean(A[,2]), "A", cex=1.5)
+
+vectors(AI, labels=c(expression(a^1), expression(a^2)), pos.lab=c(4,2))
+sum <- AI[1,] + AI[2,]
+polygon( rbind(c(0,0), AI[1,], sum, AI[2,]), col=rgb(0,0,1,.2))
+text(mean(AI[,1])-.3, mean(AI[,2])-.2, expression(A^{-1}), cex=1.5)
+```
+
+Thus, we can see:
+
+* The shape of $A^{-1}$ is a $90^o$ rotation of the shape of $A$.
+
+* $A^{-1}$ is small in the directions where $A$ is large.
+
+* The vector $a^2$ is at right angles to $a_1$ and $a^1$ is at right angles to $a_2$
+
+* If we multiplied $A$ by a constant $k$ to make its determinant larger (by a factor of $k^2$), the inverse would have to be divided by the same factor to preserve $A A^{-1} = I$.
+
+One might wonder whether these properties depend on symmetry of $A$, so here is another example, for the matrix `A <- matrix(c(2, 1, 1, 1), nrow=2)`, where $\det(A)=1$.
+
+```{r}
+(A <- matrix(c(2, 1, 1, 1), nrow=2))
+(AI <- inv(A))
+```
+The areas of the two parallelograms are the same because $\det(A) = \det(A^{-1}) = 1$.
+```{r plot-inv3, echo=FALSE}
+par(mar=c(3,3,1,1)+.1)
+xlim <- c(-1,3)
+ylim <- c(-1,3)
+plot(xlim, ylim, type="n", xlab="X1", ylab="X2", asp=1)
+sum <- A[1,] + A[2,]
+# draw the parallelogram determined by the rows of A
+polygon( rbind(c(0,0), A[1,], sum, A[2,]), col=rgb(1,0,0,.2))
+vectors(A, labels=c(expression(a[1]), expression(a[2])), pos.lab=c(4,2))
+vectors(sum, origin=A[1,], col="gray")
+vectors(sum, origin=A[2,], col="gray")
+text(mean(A[,1]), mean(A[,2]), "A", cex=1.5)
+
+vectors(AI, labels=c(expression(a^1), expression(a^2)), pos.lab=c(4,2))
+sum <- AI[1,] + AI[2,]
+polygon( rbind(c(0,0), AI[1,], sum, AI[2,]), col=rgb(0,0,1,.2))
+text(-.1, -.1, expression(A^{-1}), cex=1.5)
+```
+
