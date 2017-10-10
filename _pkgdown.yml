@@ -1,0 +1,70 @@
+url: http://friendly.github.io/matlib
+
+template:
+  params:
+    bootswatch: cerulean
+
+reference:
+  - title: Convenience functions
+    desc:  Simple functions for matrix algebra oparations
+    contents:
+	  - tr
+	  - R
+	  - J
+	  - len
+	  - vec
+	  - Proj
+	  - mpower
+  - title: Determinants
+    desc:  Functions for calculating determinants by cofactor expansion
+    contents:
+	  - minor
+	  - cofactor
+	  - rowMinors
+	  - rowCofactors
+	  - Det
+
+  - title: Elementary row operations
+    desc:  Functions for solving linear equations "manually" by the steps used in row echelon form and Gaussian elimination
+    contents:
+	  - rowadd
+	  - rowmult
+	  - rowswap
+
+  - Linear equations: 
+    desc:  Functions to illustrate linear equations of the form $\mathbf{A x = b}$
+    contents:
+	  - showEqn
+	  - plotEqn
+	  - plotEqn3d  
+
+  - title: Gaussian elimination 
+    desc:  Functions for illustrating Gaussian elimination 
+    contents:
+	  - gaussianElimination(A, B)
+	  - Inverse
+	  - inv
+	  - echelon
+	  - Ginv
+	  - LU
+	  - cholesky
+	  - swp
+
+  - title: Eigenvalues
+    desc:  Functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
+    contents:
+	  - Eigen
+	  - SVD
+	  - powerMethod
+	  - showEig
+
+  - title: Vector diagrams
+    desc: Functions for drawing vector diagrams in 2D and 3D
+    contents:
+	  - arrows3d
+	  - corner
+	  - arc
+	  - pointOnLine
+	  - vectors
+	  - vectors3d
+	  - regvec3d
