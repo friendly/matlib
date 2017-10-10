@@ -8,21 +8,22 @@ reference:
   - title: Convenience functions
     desc:  Simple functions for matrix algebra oparations
     contents:
-      - tr
-      - R
       - J
       - len
-      - vec
-      - Proj
       - mpower
+      - Proj
+      - R
+      - tr
+      - vec
+
   - title: Determinants
     desc:  Functions for calculating determinants by cofactor expansion
     contents:
-      - minor
       - cofactor
-      - rowMinors
-      - rowCofactors
       - Det
+      - minor
+      - rowCofactors
+      - rowMinors
 
   - title: Elementary row operations
     desc:  Functions for solving linear equations "manually" by the steps used in row echelon form and Gaussian elimination
@@ -36,35 +37,58 @@ reference:
     contents:
       - showEqn
       - plotEqn
-      - plotEqn3d  
+      - plotEqn3d 
+      - Solve
+      - printMatEqn
+      - matrix2latex
 
   - title: Gaussian elimination 
     desc:  Functions for illustrating Gaussian elimination 
     contents:
-      - gaussianElimination
-      - Inverse
-      - inv
-      - echelon
-      - Ginv
-      - LU
       - cholesky
+      - echelon
+      - gaussianElimination
+      - Ginv
+      - inv
+      - Inverse
+      - LU
+      - QR
       - swp
 
   - title: Eigenvalues
     desc:  Functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
     contents:
       - Eigen
-      - SVD
       - powerMethod
       - showEig
+      - SVD
 
   - title: Vector diagrams
     desc: Functions for drawing vector diagrams in 2D and 3D
     contents:
-      - arrows3d
-      - corner
+      - angle
       - arc
+      - arrows3d
+      - circle3d
+      - corner
       - pointOnLine
+      - regvec3d
       - vectors
       - vectors3d
-      - regvec3d
+
+  - title: Other
+    desc: Other functions in the package, unclassified
+    contents:
+      - matrix2latex
+      - symMat
+      - vandermode
+      - GramSchmidt
+      - svdDemo
+
+  - title: Data
+    desc: Some small data sets used in examples
+    contents:
+      - therapy
+      - workers
+
+

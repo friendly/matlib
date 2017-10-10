@@ -4,7 +4,7 @@
 [![Rdoc](http://www.rdocumentation.org/badges/version/matlib)](http://www.rdocumentation.org/packages/matlib)
 
 # matlib
-Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics
+**Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics**
 
 Version 0.9.0
 
