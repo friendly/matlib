@@ -13,12 +13,14 @@ reference:
       - mpower
       - Proj
       - R
+      - symMat
       - tr
       - vec
 
   - title: Determinants
     desc:  Functions for calculating determinants by cofactor expansion
     contents:
+      - adjoint
       - cofactor
       - Det
       - minor
@@ -32,18 +34,18 @@ reference:
       - rowmult
       - rowswap
 
-  - Linear equations: 
+  - Linear equations:
     desc:  Functions to illustrate linear equations of the form $\mathbf{A x = b}$
     contents:
       - showEqn
       - plotEqn
-      - plotEqn3d 
+      - plotEqn3d
       - Solve
       - printMatEqn
       - matrix2latex
 
-  - title: Gaussian elimination 
-    desc:  Functions for illustrating Gaussian elimination 
+  - title: Gaussian elimination
+    desc:  Functions for illustrating Gaussian elimination
     contents:
       - cholesky
       - echelon
@@ -70,6 +72,7 @@ reference:
       - arc
       - arrows3d
       - circle3d
+      - cone3d
       - corner
       - pointOnLine
       - regvec3d
@@ -80,14 +83,15 @@ reference:
     desc: Other functions in the package, unclassified
     contents:
       - matrix2latex
-      - symMat
-      - vandermode
       - GramSchmidt
+      - gsorth
       - svdDemo
+      - vandermode
 
   - title: Data
     desc: Some small data sets used in examples
     contents:
+      - class
       - therapy
       - workers
 
