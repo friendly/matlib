@@ -78,6 +78,10 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
         if (verbose) {
           cat(paste("Row 1:    ", paste(X[1,], collapse=", "), "\n"))
           cat(paste("Cofactors:", paste(rowCofactors(X, 1), collapse=", "), "\n"))
+          det <- as.vector(X[1,] %*% rowCofactors(X, 1))
+          cat(paste0("det = ", paste0(X[1,], ' * ', rowCofactors(X, 1), collapse = ' + '),
+                     " = ", det, "\n"))
+          return(invisible(det))
         }
         as.vector(X[1,] %*% rowCofactors(X, 1))
     }
