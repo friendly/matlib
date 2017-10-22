@@ -69,7 +69,8 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
           det0 <- signif(det)
           values0 <- signif(values)
         }
-        cat(paste0("\n det = ", paste(values0, collapse=" x "), " = ", det0, "\n"))
+        cat(paste("Eigenvalues: ", paste(values0, collapse=", "), "\n"))
+        cat(paste0("det = ", paste(values0, collapse=" * "), " = ", det0, "\n"))
         return(invisible(det))
       }
       else return(det)
