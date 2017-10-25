@@ -161,10 +161,8 @@ The function is included here simply to show the algorithm of Gram-Schmidt ortho
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>6</span>,<span class='fl'>7</span>,<span class='fl'>8</span>,<span class='fl'>10</span>), <span class='fl'>3</span>, <span class='fl'>3</span>) <span class='co'># a square nonsingular matrix</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>QR</span>(<span class='no'>A</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='input'><span class='no'>res</span></div><div class='output co'>#&gt; $Q
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>QR</span>(<span class='no'>A</span>)
+<span class='no'>res</span></div><div class='output co'>#&gt; $Q
 #&gt;            [,1]       [,2]       [,3]
 #&gt; [1,] -0.2672612 -0.8728716 -0.4082483
 #&gt; [2,] -0.5345225 -0.2182179  0.8164966
@@ -190,10 +188,7 @@ The function is included here simply to show the algorithm of Gram-Schmidt ortho
 <span class='co'># relation to determinant: det(A) = prod(diag(R))</span>
 <span class='fu'>det</span>(<span class='no'>A</span>)</div><div class='output co'>#&gt; [1] -3</div><div class='input'><span class='fu'>prod</span>(<span class='fu'>diag</span>(<span class='no'>r</span>))</div><div class='output co'>#&gt; [1] -3</div><div class='input'>
 <span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fl'>1</span>:<span class='fl'>9</span>, <span class='fl'>3</span>, <span class='fl'>3</span>) <span class='co'># a singular matrix</span>
-<span class='fu'>QR</span>(<span class='no'>B</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; $Q
+<span class='fu'>QR</span>(<span class='no'>B</span>)</div><div class='output co'>#&gt; $Q
 #&gt;            [,1]       [,2] [,3]
 #&gt; [1,] -0.2672612 -0.8728716    0
 #&gt; [2,] -0.5345225 -0.2182179    0

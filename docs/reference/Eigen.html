@@ -165,31 +165,8 @@
 <span class='no'>C</span></div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]    1    2    3
 #&gt; [2,]    2    5    6
-#&gt; [3,]    3    6   10</div><div class='input'><span class='no'>EC</span> <span class='kw'>&lt;-</span> <span class='fu'>Eigen</span>(<span class='no'>C</span>) <span class='co'># eigenanalysis of C</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Recycling array of length 1 in array-vector arithmetic is deprecated.</span>
-#&gt; <span class='warning'>  Use c() or as.vector() instead.</span></div><div class='input'><span class='no'>EC</span>$<span class='no'>vectors</span> <span class='kw'>%*%</span> <span class='fu'>diag</span>(<span class='no'>EC</span>$<span class='no'>values</span>) <span class='kw'>%*%</span> <span class='fu'>t</span>(<span class='no'>EC</span>$<span class='no'>vectors</span>) <span class='co'># check</span></div><div class='output co'>#&gt;      [,1] [,2] [,3]
+#&gt; [3,]    3    6   10</div><div class='input'><span class='no'>EC</span> <span class='kw'>&lt;-</span> <span class='fu'>Eigen</span>(<span class='no'>C</span>) <span class='co'># eigenanalysis of C</span>
+<span class='no'>EC</span>$<span class='no'>vectors</span> <span class='kw'>%*%</span> <span class='fu'>diag</span>(<span class='no'>EC</span>$<span class='no'>values</span>) <span class='kw'>%*%</span> <span class='fu'>t</span>(<span class='no'>EC</span>$<span class='no'>vectors</span>) <span class='co'># check</span></div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]    1    2    3
 #&gt; [2,]    2    5    6
 #&gt; [3,]    3    6   10</div></pre>
