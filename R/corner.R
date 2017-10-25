@@ -129,8 +129,8 @@ arc <- function (p1, p2, p3, d=.10, absolute=TRUE, ... ) {
   pts <- matrix(0, nrow=length(t), ncol=length(p2))
   for (i in seq_along(t)) {
     pts[i,] <- O +
-      (sin( (1-t[i])*phi ) / sin(phi)) * (A-O) +
-      (sin( t[i]*phi ) / sin(phi)) * (B-O)
+      as.vector(sin( (1-t[i])*phi ) / sin(phi)) * (A-O) +
+      as.vector(sin( t[i]*phi ) / sin(phi)) * (B-O)
   }
   if (length(p1)==2)
     lines(pts, ...)
