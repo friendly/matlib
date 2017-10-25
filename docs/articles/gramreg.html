@@ -119,12 +119,12 @@ class$male &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(clas
                    <span class="dt">IQ =</span> <span class="kw">round</span>(<span class="dv">20</span> +<span class="st"> </span>height +<span class="st"> </span><span class="dv">3</span>*age -.<span class="dv">1</span>*weight -<span class="dv">3</span>*male +<span class="st"> </span><span class="dv">10</span>*<span class="kw">rnorm</span>(<span class="kw">nrow</span>(class))))
 <span class="kw">head</span>(class)</code></pre></div>
 <pre><code>##         sex age height weight male  IQ
-## Alfred    M  14   69.0  112.5    1 136
-## Alice     F  13   56.5   84.0    0  84
-## Barbara   F  13   65.3   98.0    0 107
-## Carol     F  14   62.8  102.5    0 123
-## Henry     M  14   63.5  102.5    1 113
-## James     M  12   57.3   83.0    1  92</code></pre>
+## Alfred    M  14   69.0  112.5    1 112
+## Alice     F  13   56.5   84.0    0 104
+## Barbara   F  13   65.3   98.0    0 109
+## Carol     F  14   62.8  102.5    0 115
+## Henry     M  14   63.5  102.5    1 118
+## James     M  12   57.3   83.0    1  91</code></pre>
 <p>Reorder the predictors we want, forming a numeric matrix, <code>X</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(class[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">5</span>)])
 <span class="kw">head</span>(X)</code></pre></div>
@@ -209,11 +209,11 @@ z4 &lt;-<span class="st"> </span><span class="kw">residuals</span>(<span class="
 ## 
 ## Response: IQ
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)  
-## height     1   1002    1002    7.61  0.020 *
-## weight     1    496     496    3.77  0.081 .
-## age        1    362     362    2.75  0.128  
-## male       1     11      11    0.08  0.778  
-## Residuals 10   1317     132                 
+## height     1    390     390    9.51  0.012 *
+## weight     1     54      54    1.32  0.278  
+## age        1    323     323    7.86  0.019 *
+## male       1     30      30    0.74  0.410  
+## Residuals 10    411      41                 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Regression of IQ on the orthogonalized variables in <code>Z</code></p>
@@ -223,11 +223,11 @@ z4 &lt;-<span class="st"> </span><span class="kw">residuals</span>(<span class="
 ## 
 ## Response: IQ
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)  
-## height     1   1002    1002    7.61  0.020 *
-## weight     1    496     496    3.77  0.081 .
-## age        1    362     362    2.75  0.128  
-## male       1     11      11    0.08  0.778  
-## Residuals 10   1317     132                 
+## height     1    390     390    9.51  0.012 *
+## weight     1     54      54    1.32  0.278  
+## age        1    323     323    7.86  0.019 *
+## male       1     30      30    0.74  0.410  
+## Residuals 10    411      41                 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>This illustrates that <code>anova()</code> tests for linear models are <em>sequential</em> tests. They test hypotheses about the extra contribution of each variable over and above all previous ones, in a given order. These usually do not make substantive sense, except in testing ordered (“hierarchical”) models.</p>
