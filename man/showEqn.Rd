@@ -21,8 +21,7 @@ The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{simplify}{logical; try to simplify the equations?}
 
-\item{reduce}{logical; show only the unique equations object of class \code{'lm'} is passed
-to \code{A}}
+\item{reduce}{logical; only show the unique linear equations}
 
 \item{fractions}{logical; express numbers as rational fractions?}
 

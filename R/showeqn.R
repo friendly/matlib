@@ -16,8 +16,7 @@
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param simplify logical; try to simplify the equations?
-#' @param reduce logical; show only the unique equations object of class \code{'lm'} is passed
-#'   to \code{A}
+#' @param reduce logical; only show the unique linear equations
 #' @param fractions logical; express numbers as rational fractions?
 #' @param latex logical; print equations in a form suitable for LaTeX output?
 #' @return a one-column character matrix, one row for each equation
