@@ -16,6 +16,8 @@
 #'        If supplied, the length must be equal to the number of unknowns in the equations.
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param simplify logical; try to simplify the equations?
+#' @param reduce logical; show only the unique equations object of class \code{'lm'} is passed
+#'   to \code{A}
 #' @param fractions logical; express numbers as rational fractions?
 #' @param latex logical; print equations in a form suitable for LaTeX output?
 #' @return a one-column character matrix, one row for each equation
@@ -57,6 +59,8 @@
 #'   summary(twoway_int)
 #'   car::Anova(twoway_int)
 #'   showEqn(twoway_int)
+#'   showEqn(twoway_int, reduce=TRUE)
+#'   showEqn(twoway_int, reduce=TRUE, simplify=TRUE)
 #'
 #'   # Piece-wise linear regression
 #'   x <- c(1:10, 13:22)
@@ -71,13 +75,15 @@
 #'   lines(x, fitted(mod))
 #'   showEqn(mod)
 #'   showEqn(mod, vars=round(coef(mod),2))
+#'   showEqn(mod, simplify=TRUE)
 #'
 
-showEqn <- function(A, b, vars, simplify=FALSE, fractions=FALSE, latex = FALSE) {
+showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
+                    fractions=FALSE, latex = FALSE) {
   if(is(A, 'lm')){
   	X <- model.matrix(A)
   	return(showEqn(A=X, b=b, vars=vars, simplify=simplify, fractions=fractions,
-  				   latex=latex))
+  				   reduce=reduce, latex=latex))
   }
   if (missing(b)) {
     b <- paste0('b', 1:nrow(A))
@@ -98,9 +104,13 @@ showEqn <- function(A, b, vars, simplify=FALSE, fractions=FALSE, latex = FALSE) 
       if (j > 1) res.matrix[i, j] <- paste0(" + ", res.matrix[i, j])
       res.matrix[i, j] <- gsub("+ -", "- ", res.matrix[i, j], fixed=TRUE)  # map "+ -3" -> "-3"
       if (simplify) {
-        res.matrix[i, j] <- gsub("1*", "", res.matrix[i, j], fixed=TRUE)    # "1*x" -> "x"
-        res.matrix[i, j] <- gsub(pat, "", res.matrix[i, j])   # "+ 0*x" -> ""
-        res.matrix[i, j] <- gsub(pat2, "", res.matrix[i, j])  # "0*x -> ""
+          if(j == 1L){
+              res.matrix[i, j] <- gsub("1*", "", res.matrix[i, j], fixed=TRUE) # "1*x" -> "x"
+              res.matrix[i, j] <- gsub(pat2, "", res.matrix[i, j])  # "0*x -> ""
+          } else {
+              res.matrix[i, j] <- gsub("+ 1*", "+ ", res.matrix[i, j], fixed=TRUE)
+              res.matrix[i, j] <- gsub(pat, "", res.matrix[i, j])   # "+ 0*x" -> ""
+          }
         res.matrix[i, j] <- gsub("  ", " ", res.matrix[i, j], fixed=TRUE)
       }
     }
@@ -126,8 +136,15 @@ showEqn <- function(A, b, vars, simplify=FALSE, fractions=FALSE, latex = FALSE) 
                                  res.matrix[i, j])
     }
     res[i] <- paste0(res.matrix[i, ], collapse="")
-    b[i] <- paste0(paste(rep(" ", max.chars.b - nchar(b[i])), collapse=""), b[i])
-    res[i] <- paste(res[i], " = ", b[i])
+    if(!reduce){
+        b[i] <- paste0(paste(rep(" ", max.chars.b - nchar(b[i])), collapse=""), b[i])
+        res[i] <- paste(res[i], " = ", b[i])
+    }
+  }
+  if(reduce){
+      res <- unique(res)
+      b <- paste0('b', 1L:length(res))
+      res <- paste(res, " = ", b)
   }
   if(latex){
     res <- gsub('x', 'x_', res)

@@ -4,7 +4,8 @@
 \alias{showEqn}
 \title{Show Matrices (A, b) as Linear Equations}
 \usage{
-showEqn(A, b, vars, simplify = FALSE, fractions = FALSE, latex = FALSE)
+showEqn(A, b, vars, simplify = FALSE, reduce = FALSE, fractions = FALSE,
+  latex = FALSE)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}.
@@ -19,6 +20,9 @@ If supplied, the length must be equal to the number of unknowns in the equations
 The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{simplify}{logical; try to simplify the equations?}
+
+\item{reduce}{logical; show only the unique equations object of class \code{'lm'} is passed
+to \code{A}}
 
 \item{fractions}{logical; express numbers as rational fractions?}
 
@@ -64,6 +68,8 @@ as a set of equations.
   summary(twoway_int)
   car::Anova(twoway_int)
   showEqn(twoway_int)
+  showEqn(twoway_int, reduce=TRUE)
+  showEqn(twoway_int, reduce=TRUE, simplify=TRUE)
 
   # Piece-wise linear regression
   x <- c(1:10, 13:22)
@@ -78,6 +84,7 @@ as a set of equations.
   lines(x, fitted(mod))
   showEqn(mod)
   showEqn(mod, vars=round(coef(mod),2))
+  showEqn(mod, simplify=TRUE)
 
 }
 \references{
