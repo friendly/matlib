@@ -52,7 +52,9 @@
 #'   ancova <- lm(mpg ~ wt + vs, mtcars)
 #'   summary(ancova)
 #'   showEqn(ancova)
+#'   showEqn(ancova, simplify=TRUE)
 #'   showEqn(ancova, vars=round(coef(ancova),2))
+#'   showEqn(ancova, vars=round(coef(ancova),2), simplify=TRUE)
 #'
 #'   twoway_int <- lm(mpg ~ vs * am, mtcars)
 #'   summary(twoway_int)
@@ -92,7 +94,6 @@ showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
   } else as.character(b)
   if (missing(vars)) vars <- paste0("x", 1:ncol(A))
   V <- substr(vars[1], 1, 1)
-  pat <- gsub("x", V, "0\\*x\\d\\s+[+-]|[+-]\\s+0\\*x\\d")
   pat2 <- gsub("x", V, "0\\*x\\d")
   res <- character(nrow(A))
   res.matrix <- matrix("", nrow(A), ncol(A))
@@ -108,7 +109,7 @@ showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
               res.matrix[i, j] <- gsub(pat2, "", res.matrix[i, j])  # "0*x -> ""
           } else {
               res.matrix[i, j] <- gsub("+ 1*", "+ ", res.matrix[i, j], fixed=TRUE)
-              res.matrix[i, j] <- gsub(pat, "", res.matrix[i, j])   # "+ 0*x" -> ""
+              res.matrix[i, j] <- if(grepl(" \\+ 0\\*", res.matrix[i, j])) "" else res.matrix[i, j]  # "+ 0*x" -> ""
           }
         res.matrix[i, j] <- gsub("  ", " ", res.matrix[i, j], fixed=TRUE)
       }

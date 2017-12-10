@@ -61,7 +61,9 @@ as a set of equations.
   ancova <- lm(mpg ~ wt + vs, mtcars)
   summary(ancova)
   showEqn(ancova)
+  showEqn(ancova, simplify=TRUE)
   showEqn(ancova, vars=round(coef(ancova),2))
+  showEqn(ancova, vars=round(coef(ancova),2), simplify=TRUE)
 
   twoway_int <- lm(mpg ~ vs * am, mtcars)
   summary(twoway_int)
