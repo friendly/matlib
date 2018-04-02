@@ -88,7 +88,7 @@ either \code{scale=TRUE} or \code{normalize=TRUE}.
 }
 \examples{
 if (require(car)) {
-   data("Duncan", package="car")
+   data("Duncan", package="carData")
    dunc.reg <- regvec3d(prestige ~ income + education, data=Duncan)
    plot(dunc.reg)
    plot(dunc.reg, dimension=2)
@@ -96,7 +96,7 @@ if (require(car)) {
    summary(dunc.reg)
 
    # Example showing Simpson's paradox
-   states.vec <- regvec3d(SATM ~ pay + percent, data=car::States, scale=TRUE)
+   states.vec <- regvec3d(SATM ~ pay + percent, data=carData::States, scale=TRUE)
    plot(states.vec, show.marginal=TRUE)
    plot(states.vec, show.marginal=TRUE, dimension=2)
    summary(states.vec)

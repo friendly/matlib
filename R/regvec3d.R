@@ -228,7 +228,7 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #' @importFrom graphics symbols
 #'
 #' @examples
-#' if (require(car)) {
+#' if (require(carData)) {
 #'    data("Duncan", package="carData")
 #'    dunc.reg <- regvec3d(prestige ~ income + education, data=Duncan)
 #'    plot(dunc.reg)
@@ -237,7 +237,8 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #'    summary(dunc.reg)
 #'
 #'    # Example showing Simpson's paradox
-#'    states.vec <- regvec3d(SATM ~ pay + percent, data=carData::States, scale=TRUE)
+#'    data("States", package="carData")
+#'    states.vec <- regvec3d(SATM ~ pay + percent, data=States, scale=TRUE)
 #'    plot(states.vec, show.marginal=TRUE)
 #'    plot(states.vec, show.marginal=TRUE, dimension=2)
 #'    summary(states.vec)

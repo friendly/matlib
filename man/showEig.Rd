@@ -39,7 +39,7 @@ X <- cbind(x,y)
 showEig(X)
 
 # Duncan data
-data(Duncan, package="car")
+data(Duncan, package="carData")
 showEig(Duncan[, 2:3], levels=0.68)
 showEig(Duncan[,2:3], levels=0.68, robust=TRUE, add=TRUE, fill=TRUE)
 }
