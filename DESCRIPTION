@@ -31,6 +31,7 @@ Imports:
     xtable,
     MASS,
     rgl,
-    car
+    car,
+    methods
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

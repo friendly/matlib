@@ -25,6 +25,7 @@
 #' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 #' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
 #' @export
+#' @importFrom("methods", "is")
 #' @examples
 #'   A <- matrix(c(2, 1, -1,
 #'                -3, -1, 2,
