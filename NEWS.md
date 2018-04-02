@@ -1,3 +1,7 @@
+# matlib 0.9.1
+
+- fix references to car datatsets -> carData
+
 # matlib 0.9.0
 
 - `showEqn()` gains a `reduced` logical to print only the unique regression equations
