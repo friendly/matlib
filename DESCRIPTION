@@ -26,7 +26,8 @@ LazyData: TRUE
 Suggests:
     knitr,
     rglwidget,
-    rmarkdown
+    rmarkdown,
+    carData
 Imports:
     xtable,
     MASS,

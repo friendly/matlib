@@ -87,7 +87,7 @@ reasonably well if the variables are shown on commensurate scales, i.e., with
 either \code{scale=TRUE} or \code{normalize=TRUE}.
 }
 \examples{
-if (require(car)) {
+if (require(carData)) {
    data("Duncan", package="carData")
    dunc.reg <- regvec3d(prestige ~ income + education, data=Duncan)
    plot(dunc.reg)
@@ -96,7 +96,8 @@ if (require(car)) {
    summary(dunc.reg)
 
    # Example showing Simpson's paradox
-   states.vec <- regvec3d(SATM ~ pay + percent, data=carData::States, scale=TRUE)
+   data("States", package="carData")
+   states.vec <- regvec3d(SATM ~ pay + percent, data=States, scale=TRUE)
    plot(states.vec, show.marginal=TRUE)
    plot(states.vec, show.marginal=TRUE, dimension=2)
    summary(states.vec)
