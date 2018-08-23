@@ -93,7 +93,10 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions`.
   - `vectors()`, `vectors3d()` - plot geometric vector diagrams in 2D/3D 
   - `regvec3d()` - calculate and plot vectors representing a bivariate regression model, `lm(y ~ x1 + x2)` in mean-deviation form.
 
-### Vignettes
+### Vignettes and presentations
 
 A small collection of vignettes is now available.  Use `browseVignettes("matlib")` to see them.
+
+See also: Fox & Friendly, [_Visualizing Simultaneous Linear Equations, Geometric Vectors, and Least-Squares Regression with the matlib Package for R_](https://socialsciences.mcmaster.ca/jfox/Papers/matlib-useR2016.pdf),
+June 2016, useR! Conference, Stanford.
 
