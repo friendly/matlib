@@ -6,6 +6,7 @@
 ^cran-comments\.md$
 ^announce\.md$
 ^Makefile$
+^matlib-logo.png$
 .travis.yml
 README.md
 ^\.travis\.yml$
