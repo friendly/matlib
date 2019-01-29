@@ -3,7 +3,8 @@
 [![Travis-CI Build Status](https://travis-ci.org/friendly/matlib.svg?branch=master)](https://travis-ci.org/friendly/matlib)
 [![Rdoc](http://www.rdocumentation.org/badges/version/matlib)](http://www.rdocumentation.org/packages/matlib)
 
-# matlib
+# matlib <img src="inst/doc/matlib-logo.png" align="right" height="200px" />
+
 **Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics**, http://friendly.github.io/matlib/
 
 Version 0.9.1
