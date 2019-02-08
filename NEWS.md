@@ -1,3 +1,9 @@
+# matlib 0.9.2
+
+- Bug fix in arrows3d.r [Thx: Douglas Whitaker]
+- Bump package version
+- matlib gets a hex sticker
+
 # matlib 0.9.1
 
 - fix references to car datatsets -> carData
