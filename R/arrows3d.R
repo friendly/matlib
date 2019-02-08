@@ -127,7 +127,7 @@ arrows3d <- function( coords, headlength= 0.035, head= "end", scale= NULL, radiu
   ends   <- coords[ seq( 2, n, by= 2 ), , drop=FALSE]
   if( missing( radius ) ) radius <- ( max( coords ) - min( coords ) ) / 50
 
-  lengths <- sqrt(rowSums(ends - starts)^2)
+  lengths <- sqrt(rowSums((ends - starts)^2))
 
   if (is.null(ref.length)){
     ref.length <- max(lengths)
