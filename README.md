@@ -9,13 +9,14 @@
 
 Version 0.9.2
 
-These functions are mainly for tutorial purposes in learning matrix algebra
-ideas using R. In some cases, functions are provided for concepts available
-elsewhere in R, but where the function call or name is not obvious.  In other
-cases, functions are provided to show or demonstrate an algorithm, sometimes
+These functions are mainly for tutorial purposes in teaching & learning matrix algebra
+ideas using R. In some cases, functions are provided for concepts or computations available
+elsewhere in R, but where the name is not obvious.  In other
+cases, we provide cover functions to show or demonstrate an algorithm in more detailsometimes
 providing a `verbose =` argument to print the details of computations.
 
-In addition, a collection of functions are provided for drawing vector diagrams in 2D and 3D.
+In addition, a collection of functions are provided for drawing vector diagrams in 2D and 3D, illustrating
+various concepts of linear algebra more concretely than has been available before.
 
 ## Installation
 
@@ -79,12 +80,13 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions`.
   - `cholesky()` - calculates a Cholesky square root of a matrix
   - `swp()` - matrix sweep operator
 
-6. Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues and eigenvectors
+6. Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues and eigenvectors and related matrix decompositions and generalizations.
 
   - `Eigen()` - eigenvalues and eigenvectors
   - `SVD()` - singular value decomposition
   - `powerMethod()` - find the dominant eigenvector using the power method 
   - `showEig()` - draw eigenvectors on a 2D scatterplot with a dataEllipse
+  - `MoorePenrose()` - illustrates how the Moore-Penrose inverse can be calculated using `SVD()`
 
 7. Vector diagrams: functions for drawing vector diagrams in 2D and 3D
 
