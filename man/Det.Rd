@@ -51,3 +51,4 @@ Other determinants: \code{\link{adjoint}},
 \author{
 John Fox
 }
+\concept{determinants}

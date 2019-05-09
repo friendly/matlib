@@ -42,3 +42,4 @@ Ab <- cbind(A, b)
 Other elementary row operations: \code{\link{rowadd}},
   \code{\link{rowswap}}
 }
+\concept{elementary row operations}

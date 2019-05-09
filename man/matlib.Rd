@@ -4,7 +4,6 @@
 \name{matlib}
 \alias{matlib}
 \alias{matlib-package}
-\alias{matlib-package}
 \title{matlib: Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics.}
 \description{
 These functions are mainly for tutorial purposes in learning matrix algebra

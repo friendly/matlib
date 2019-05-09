@@ -69,3 +69,4 @@ Other vector diagrams: \code{\link{Proj}},
   \code{\link{pointOnLine}}, \code{\link{regvec3d}},
   \code{\link{vectors3d}}
 }
+\concept{vector diagrams}

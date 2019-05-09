@@ -34,3 +34,4 @@ Other determinants: \code{\link{Det}},
 \author{
 Michael Friendly
 }
+\concept{determinants}

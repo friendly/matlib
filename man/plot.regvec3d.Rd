@@ -6,11 +6,12 @@
 \alias{print.regvec3d}
 \title{Plot method for regvec3d objects}
 \usage{
-\method{plot}{regvec3d}(x, y, dimension = 3, col = c("black", "red", "blue",
-  "brown", "lightgray"), col.plane = "gray", cex.lab = 1.2, show.base = 2,
-  show.marginal = FALSE, show.hplane = TRUE, show.angles = TRUE,
-  error.sphere = c("none", "e", "y.hat"), scale.error.sphere = x$scale,
-  level.error.sphere = 0.95, grid = FALSE, add = FALSE, ...)
+\method{plot}{regvec3d}(x, y, dimension = 3, col = c("black", "red",
+  "blue", "brown", "lightgray"), col.plane = "gray", cex.lab = 1.2,
+  show.base = 2, show.marginal = FALSE, show.hplane = TRUE,
+  show.angles = TRUE, error.sphere = c("none", "e", "y.hat"),
+  scale.error.sphere = x$scale, level.error.sphere = 0.95,
+  grid = FALSE, add = FALSE, ...)
 
 \method{summary}{regvec3d}(object, ...)
 
@@ -71,8 +72,6 @@ relations of \code{y} to \code{x1} and \code{x2} in a bivariate multiple linear 
 
 The \code{summary} method prints the vectors and their vector lengths, followed by the \code{summary}
 for the model.
-
-Print method for regvec3d objects
 }
 \details{
 A 3D diagram shows the vector \code{y} and the plane formed by the predictors,
@@ -115,3 +114,4 @@ Other vector diagrams: \code{\link{Proj}},
   \code{\link{regvec3d}}, \code{\link{vectors3d}},
   \code{\link{vectors}}
 }
+\concept{vector diagrams}

@@ -52,3 +52,4 @@ Other vector diagrams: \code{\link{Proj}},
 \author{
 January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox
 }
+\concept{vector diagrams}

@@ -4,8 +4,8 @@
 \alias{showEqn}
 \title{Show Matrices (A, b) as Linear Equations}
 \usage{
-showEqn(A, b, vars, simplify = FALSE, reduce = FALSE, fractions = FALSE,
-  latex = FALSE)
+showEqn(A, b, vars, simplify = FALSE, reduce = FALSE,
+  fractions = FALSE, latex = FALSE)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}.

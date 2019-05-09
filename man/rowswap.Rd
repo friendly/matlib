@@ -25,3 +25,4 @@ This elementary row operation corresponds to interchanging two equations.
 Other elementary row operations: \code{\link{rowadd}},
   \code{\link{rowmult}}
 }
+\concept{elementary row operations}

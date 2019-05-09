@@ -54,3 +54,4 @@ Other vector diagrams: \code{\link{arc}},
 \author{
 Michael Friendly
 }
+\concept{vector diagrams}

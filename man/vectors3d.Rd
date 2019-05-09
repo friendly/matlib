@@ -4,9 +4,9 @@
 \alias{vectors3d}
 \title{Draw 3D vectors}
 \usage{
-vectors3d(X, origin = c(0, 0, 0), headlength = 0.035, ref.length = NULL,
-  radius = 1/60, labels = TRUE, cex.lab = 1.2, adj.lab = 0.5,
-  frac.lab = 1.1, draw = TRUE, ...)
+vectors3d(X, origin = c(0, 0, 0), headlength = 0.035,
+  ref.length = NULL, radius = 1/60, labels = TRUE, cex.lab = 1.2,
+  adj.lab = 0.5, frac.lab = 1.1, draw = TRUE, ...)
 }
 \arguments{
 \item{X}{a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row}
@@ -84,3 +84,4 @@ Other vector diagrams: \code{\link{Proj}},
 \author{
 Michael Friendly
 }
+\concept{vector diagrams}

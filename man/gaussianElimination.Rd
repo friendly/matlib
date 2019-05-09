@@ -5,8 +5,8 @@
 \alias{print.enhancedMatrix}
 \title{Gaussian Elimination}
 \usage{
-gaussianElimination(A, B, tol = sqrt(.Machine$double.eps), verbose = FALSE,
-  latex = FALSE, fractions = FALSE)
+gaussianElimination(A, B, tol = sqrt(.Machine$double.eps),
+  verbose = FALSE, latex = FALSE, fractions = FALSE)
 
 \method{print}{enhancedMatrix}(x, ...)
 }
@@ -38,8 +38,6 @@ If \code{B} is absent, returns the reduced row-echelon form of \code{A}.
 \code{gaussianElimination} demonstrates the algorithm of row reduction used for solving
 systems of linear equations of the form \eqn{A x = B}. Optional arguments \code{verbose}
 and \code{fractions} may be used to see how the algorithm works.
-
-Print method for enhancedMatrix objects
 }
 \examples{
   A <- matrix(c(2, 1, -1,

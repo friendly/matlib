@@ -4,8 +4,8 @@
 \alias{showEig}
 \title{Show the eigenvectors associated with a covariance matrix}
 \usage{
-showEig(X, col.vec = "blue", lwd.vec = 3, mult = sqrt(qchisq(levels, 2)),
-  asp = 1, levels = c(0.5, 0.95), plot.points = TRUE,
+showEig(X, col.vec = "blue", lwd.vec = 3, mult = sqrt(qchisq(levels,
+  2)), asp = 1, levels = c(0.5, 0.95), plot.points = TRUE,
   add = !plot.points, ...)
 }
 \arguments{

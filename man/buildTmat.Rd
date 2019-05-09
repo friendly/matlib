@@ -64,3 +64,4 @@ inv(T) \%*\% soln
 \author{
 Phil Chalmers
 }
+\concept{matrix of elementary row operations}

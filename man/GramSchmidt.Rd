@@ -4,7 +4,8 @@
 \alias{GramSchmidt}
 \title{Gram-Schmidt Orthogonalization of a Matrix}
 \usage{
-GramSchmidt(X, normalize = TRUE, verbose = FALSE)
+GramSchmidt(X, normalize = TRUE, verbose = FALSE,
+  tol = sqrt(.Machine$double.eps))
 }
 \arguments{
 \item{X}{a matrix}
@@ -12,6 +13,8 @@ GramSchmidt(X, normalize = TRUE, verbose = FALSE)
 \item{normalize}{logical; should the resulting columns be normalized to unit length?}
 
 \item{verbose}{logical; if \code{TRUE}, print intermediate steps}
+
+\item{tol}{the tolerance for detecting linear dependencies in the columns of a. The default is \code{.Machine$double.eps}}
 }
 \value{
 A matrix of the same size as \code{X}, with orthogonal columns
@@ -44,5 +47,5 @@ zapsmall(crossprod(zz))
 
 }
 \author{
-Phil Chalmers
+Phil Chalmers, John Fox
 }

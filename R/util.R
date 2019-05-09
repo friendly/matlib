@@ -1,6 +1,25 @@
 # The parent flag is used to search in the parent envir for suitable definitions.
 # Set to TRUE if you want to only use the inputs provided
-printMatrix <- function(A, parent = TRUE, fractions = FALSE, latex = FALSE, 
+
+#' Print a matrix, allowing fractions or LaTeX output
+#'
+#' @param A       A numeric matrix
+#' @param parent  flag used to search in the parent envir for suitable definitions of other arguments.
+#'                Set to \code{TRUE} (the default) if you want to only use the inputs provided.
+#' @param fractions If \code{TRUE}, print numbers as rational fractions
+#' @param latex   If \code{TRUE}, print the matrix in LaTeX format
+#' @param tol     Tolerance for rounding small numbers to 0
+#'
+#' @return        The formatted matrix
+#' @seealso \code{\link[MASS]{fractions}}
+#' @export
+#'
+#' @examples
+#' A <- matrix(1:12, 3, 4) / 6
+#' printMatrix(A, fractions=TRUE)
+#' printMatrix(A, latex=TRUE)
+
+printMatrix <- function(A, parent = TRUE, fractions = FALSE, latex = FALSE,
 						tol = sqrt(.Machine$double.eps)){
 	if(parent){
 		envir <- as.environment(-1L)
