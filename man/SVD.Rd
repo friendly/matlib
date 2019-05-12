@@ -4,20 +4,31 @@
 \alias{SVD}
 \title{Singular Value Decomposition of a Matrix}
 \usage{
-SVD(X, tol = sqrt(.Machine$double.eps))
+SVD(X, method = c("Jacobi", "eigen"), tol = sqrt(.Machine$double.eps),
+  max.iter = 100)
 }
 \arguments{
 \item{X}{a square symmetric matrix}
 
-\item{tol}{tolerance passed to \code{\link{QR}}}
+\item{method}{either \code{"Jacobi"} (the default) or \code{"eigen"}}
+
+\item{tol}{zero and convergence tolerance}
+
+\item{max.iter}{maximum number of iterations}
 }
 \value{
 a list of three elements: \code{d}-- singular values, \code{U}-- left singular vectors, \code{V}-- right singular vectors
 }
 \description{
-Compute the singular-value decomposition of a matrix \eqn{X} from the eigenstructure of \eqn{X'X}.
+Compute the singular-value decomposition of a matrix \eqn{X} either by Jacobi
+rotations (the default) or from the eigenstructure of \eqn{X'X} using
+\code{\link{Eigen}}. Both methods are iterative.
 The result consists of two orthonormal matrices, \eqn{U}, and \eqn{V} and the vector \eqn{d}
 of singular values, such that \eqn{X = U diag(d) V'}.
+}
+\details{
+The default method is more numerically stable, but the eigenstructure method
+is much simpler.
 Singular values of zero are not retained in the solution.
 }
 \examples{

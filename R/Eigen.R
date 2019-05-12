@@ -46,14 +46,21 @@ Eigen <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=
 
 #' Singular Value Decomposition of a Matrix
 #'
-#' Compute the singular-value decomposition of a matrix \eqn{X} from the eigenstructure of \eqn{X'X}.
+#' Compute the singular-value decomposition of a matrix \eqn{X} either by Jacobi
+#' rotations (the default) or from the eigenstructure of \eqn{X'X} using
+#' \code{\link{Eigen}}. Both methods are iterative.
 #' The result consists of two orthonormal matrices, \eqn{U}, and \eqn{V} and the vector \eqn{d}
 #' of singular values, such that \eqn{X = U diag(d) V'}.
+#' 
+#' The default method is more numerically stable, but the eigenstructure method
+#' is much simpler.
 
 #' Singular values of zero are not retained in the solution.
 #'
 #' @param X a square symmetric matrix
-#' @param tol tolerance passed to \code{\link{QR}}
+#' @param tol zero and convergence tolerance
+#' @param max.iter maximum number of iterations
+#' @param method either \code{"Jacobi"} (the default) or \code{"eigen"}
 #' @return a list of three elements: \code{d}-- singular values, \code{U}-- left singular vectors, \code{V}-- right singular vectors
 #' @author John Fox and Georges Monette
 #' @seealso \code{\link[base]{svd}}, the standard svd function
@@ -75,14 +82,89 @@ Eigen <- function(X, tol=sqrt(.Machine$double.eps), max.iter=100, retain.zeroes=
 #' (b <- VdU %*% y)
 #' coef(lm(Income ~ Experience + Skill, data=workers))
 
-
-SVD <- function(X, tol=sqrt(.Machine$double.eps)){
-  # compute the singular-value decomposition of a matrix X from the eigenstructure of X'X
+SVD <- function(X, method=c("Jacobi", "eigen"), 
+                tol=sqrt(.Machine$double.eps), max.iter=100){
+  # compute the singular-value decomposition of a matrix X
   # X: a matrix
-  # tol: 0 tolerance
-  VV <- Eigen(t(X) %*% X, tol=tol, retain.zeroes=FALSE)
-  V <- VV$vectors
-  d <- sqrt(VV$values)
-  U <- X %*% V %*% diag(1/d,nrow=length(d)) # magically orthogonal
-  list(d=d, U=U, V=V)
+  # method: "Jacobi" (by Jacobi rotations) 
+  #         or "eigen" (by eigenstructure of X'X)
+  # tol: 0 (and convergence) tolerance
+  # max.iter: iteration limit for Jacobi method
+  
+  SVDJ <- function(X){
+    # SVD by Jacobi rotations
+    #   implementation of Algorithm 4.1 from Demmel & Veselic,
+    #   "Jacobi's method is more accurate than QR"
+    #   <http://www.netlib.org/lapack/lawnspdf/lawn15.pdf>
+    n <- nrow(X)
+    U <- X
+    V <- diag(n)
+    for (iter in 1:max.iter){
+      converged <- 0
+      for (i in 1:(n - 1)){
+        for (j in (i + 1):n){
+          a <- sum(U[ , i]^2)
+          b <- sum(U[ , j]^2)
+          g <- sum(U[ , i]*U[ , j])
+          converged <- max(converged, abs(g)/sqrt(a*b))
+          if (abs(g) > tol){
+            z <- (b - a)/(2*g)
+            t <- sign(z)/(abs(z) + sqrt(1 + z^2))
+          }
+          else {
+            t <- 0
+          }
+          c <- 1/(sqrt(1 + t^2))
+          s <- c*t
+          T <- U[ , i]
+          U[ , i] <- c*T - s*U[ , j]
+          U[ , j] <- s*T + c*U[ , j]
+          T <- V[ , i]
+          V[ , i] <- c*T - s*V[ , j]
+          V[ , j] <- s*T + c*V[ , j]
+        }
+      }
+      if (converged < tol) break
+    }
+    if (iter > max.iter) stop("singular values did not converge")
+    d <- rep(0, n)
+    for (j in 1:n){
+      d[j]=len(U[ , j])
+      U[ , j] <- U[ , j]/d[j]
+    }
+    ord <- order(d, decreasing=TRUE)
+    d <- d[ord]
+    U <- U[, ord]
+    V <- V[, ord]
+    zeroes <- abs(d) < tol
+    if (any(zeroes)){
+      d <- d[!zeroes]
+      U <- U[, !zeroes]
+      V <- V[, !zeroes]
+    }
+    list(d=d, U=U, V=V)
+  }
+  
+  SVDE <- function(X){
+    # compute the singular-value decomposition of a matrix X from the eigenstructure of X'X
+    VV <- Eigen(t(X) %*% X, tol=tol, retain.zeroes=FALSE)
+    V <- VV$vectors
+    d <- sqrt(VV$values)
+    U <- X %*% V %*% diag(1/d,nrow=length(d)) # magically orthogonal
+    list(d=d, U=U, V=V)
+  }
+  
+  method <- match.arg(method)
+  if (method == "Jacobi") SVDJ(X) else SVDE(X)
 }
+
+# SVD <- function(X, tol=sqrt(.Machine$double.eps)){
+#   # compute the singular-value decomposition of a matrix X from the eigenstructure of X'X
+#   # X: a matrix
+#   # tol: 0 tolerance
+#   VV <- Eigen(t(X) %*% X, tol=tol, retain.zeroes=FALSE)
+#   V <- VV$vectors
+#   d <- sqrt(VV$values)
+#   U <- X %*% V %*% diag(1/d,nrow=length(d)) # magically orthogonal
+#   list(d=d, U=U, V=V)
+# }

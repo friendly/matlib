@@ -4,6 +4,7 @@
 - Bump package version
 - matlib gets a hex sticker
 - Incorporated a numerical tolerance in `GramSchmidt()` [John Fox]
+- Improved computation of SVD [John Fox]
 - now export `printMatrix()`
 
 # matlib 0.9.1
