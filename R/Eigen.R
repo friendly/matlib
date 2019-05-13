@@ -147,7 +147,7 @@ SVD <- function(X, method=c("Jacobi", "eigen"),
   
   SVDE <- function(X){
     # compute the singular-value decomposition of a matrix X from the eigenstructure of X'X
-    VV <- Eigen(t(X) %*% X, tol=tol, retain.zeroes=FALSE)
+    VV <- Eigen(t(X) %*% X, tol=tol, max.iter=max.iter, retain.zeroes=FALSE)
     V <- VV$vectors
     d <- sqrt(VV$values)
     U <- X %*% V %*% diag(1/d,nrow=length(d)) # magically orthogonal
