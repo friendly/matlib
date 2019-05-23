@@ -96,7 +96,7 @@ SVD <- function(X, method=c("Jacobi", "eigen"),
     #   implementation of Algorithm 4.1 from Demmel & Veselic,
     #   "Jacobi's method is more accurate than QR"
     #   <http://www.netlib.org/lapack/lawnspdf/lawn15.pdf>
-    n <- nrow(X)
+    n <- ncol(X)
     U <- X
     V <- diag(n)
     for (iter in 1:max.iter){
