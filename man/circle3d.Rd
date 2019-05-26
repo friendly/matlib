@@ -18,5 +18,19 @@ circle3d(center, radius, segments = 100, fill = FALSE, ...)
 \item{...}{\pkg{rgl} material properties for the circle.}
 }
 \description{
-A utility function for drawing a horizontal circle in a 3D graph
+A utility function for drawing a horizontal circle in the (x,y) plane in a 3D graph
 }
+\examples{
+ctr=c(0,0,0)
+circle3d(ctr, 3, fill = TRUE)
+circle3d(ctr - c(-1,-1,0), 3, col="blue")
+circle3d(ctr + c(1,1,0),   3, col="red")
+}
+\seealso{
+Other vector diagrams: \code{\link{Proj}},
+  \code{\link{arc}}, \code{\link{arrows3d}},
+  \code{\link{corner}}, \code{\link{plot.regvec3d}},
+  \code{\link{pointOnLine}}, \code{\link{regvec3d}},
+  \code{\link{vectors3d}}, \code{\link{vectors}}
+}
+\concept{vector diagrams}
