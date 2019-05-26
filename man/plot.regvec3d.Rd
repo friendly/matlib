@@ -110,8 +110,8 @@ Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}
 
 Other vector diagrams: \code{\link{Proj}},
   \code{\link{arc}}, \code{\link{arrows3d}},
-  \code{\link{corner}}, \code{\link{pointOnLine}},
-  \code{\link{regvec3d}}, \code{\link{vectors3d}},
-  \code{\link{vectors}}
+  \code{\link{circle3d}}, \code{\link{corner}},
+  \code{\link{pointOnLine}}, \code{\link{regvec3d}},
+  \code{\link{vectors3d}}, \code{\link{vectors}}
 }
 \concept{vector diagrams}

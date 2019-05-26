@@ -382,13 +382,21 @@ print.regvec3d <- function(x, ...) {
 circle3d <- function(center, radius, segments=100, fill=FALSE, ...){
   #' Draw a horizontal circle
   #'
-  #' A utility function for drawing a horizontal circle in a 3D graph
+  #' A utility function for drawing a horizontal circle in the (x,y) plane in a 3D graph
   #'
   #' @param center  A vector of length 3.
   #' @param radius  A positive number.
   #' @param segments  An integer specifying the number of line segments to use to draw the circle (default, 100).
   #' @param fill logical; if \code{TRUE}, the circle is filled (the default is \code{FALSE}).
   #' @param ... \pkg{rgl} material properties for the circle.
+  #' @family vector diagrams
+  #' @export
+  #' @examples
+  #' ctr=c(0,0,0)
+  #' circle3d(ctr, 3, fill = TRUE)
+  #' circle3d(ctr - c(-1,-1,0), 3, col="blue")
+  #' circle3d(ctr + c(1,1,0),   3, col="red")
+
   angles <- seq(0, 2*pi, length=100)
   x <- center[1] + radius*sin(angles)
   y <- center[2] + radius*cos(angles)
