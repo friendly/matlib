@@ -6,6 +6,7 @@
 - Incorporated a numerical tolerance in `GramSchmidt()` [John Fox]
 - Improved computation of SVD [John Fox]
 - now export `printMatrix()`
+- now export `circle3d()` [req: Marco Scazzocchio]
 
 # matlib 0.9.1
 
