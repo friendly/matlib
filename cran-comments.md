@@ -1,15 +1,22 @@
 ## Test environments
-* local Windows 7 install, R version 3.4.1 (2017-06-30)
-* win-builder R version 3.5.0 alpha (2018-03-30 r74499)
+* local Windows 7 install, 3.5.2 (2018-12-20)
+* win-builder R Under development (unstable) (2019-05-25 r76601)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs or NOTEs
 
 ## Comments
-This is a minor release, fixing a problem arising from car 3.0-0
+This is a minor release, fixing several small problems
+and improved computation for GramSchmidt & SVD
 
-# matlib 0.9.1
+# matlib 0.9.2
 
-- fix references to car datatsets -> carData
+- Bug fix in arrows3d.r [Thx: Douglas Whitaker]
+- Bump package version
+- matlib gets a hex sticker
+- Incorporated a numerical tolerance in `GramSchmidt()` [John Fox]
+- Improved computation of SVD [John Fox]
+- now export `printMatrix()`
+- now export `circle3d()` [req: Marco Scazzocchio]
 
 
