@@ -7,6 +7,7 @@
 - Improved computation of SVD [John Fox]
 - now export `printMatrix()`
 - now export `circle3d()` [req: Marco Scazzocchio]
+- now use_revdep()
 
 # matlib 0.9.1
 

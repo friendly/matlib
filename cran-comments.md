@@ -18,5 +18,8 @@ and improved computation for GramSchmidt & SVD
 - Improved computation of SVD [John Fox]
 - now export `printMatrix()`
 - now export `circle3d()` [req: Marco Scazzocchio]
+- now use_revdep()
 
+## Reverse dependencies
 
+- no problems found
