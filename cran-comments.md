@@ -1,5 +1,6 @@
 ## Test environments
 * local Windows 7 install, 3.5.2 (2018-12-20)
+* travis.ci on github
 * win-builder R Under development (unstable) (2019-05-25 r76601)
 
 ## R CMD check results
@@ -22,4 +23,4 @@ and improved computation for GramSchmidt & SVD
 
 ## Reverse dependencies
 
-- no problems found
+- *Wow, no problems at all. :)*
