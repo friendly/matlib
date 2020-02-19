@@ -4,8 +4,13 @@
 \alias{Det}
 \title{Determinant of a Square Matrix}
 \usage{
-Det(X, method = c("elimination", "eigenvalues", "cofactors"),
-  verbose = FALSE, fractions = FALSE, ...)
+Det(
+  X,
+  method = c("elimination", "eigenvalues", "cofactors"),
+  verbose = FALSE,
+  fractions = FALSE,
+  ...
+)
 }
 \arguments{
 \item{X}{a square matrix}
@@ -44,9 +49,12 @@ Det(C, method="cofactors")
 
 \code{\link{gaussianElimination}}, \code{\link{Eigen}}
 
-Other determinants: \code{\link{adjoint}},
-  \code{\link{cofactor}}, \code{\link{minor}},
-  \code{\link{rowCofactors}}, \code{\link{rowMinors}}
+Other determinants: 
+\code{\link{adjoint}()},
+\code{\link{cofactor}()},
+\code{\link{minor}()},
+\code{\link{rowCofactors}()},
+\code{\link{rowMinors}()}
 }
 \author{
 John Fox

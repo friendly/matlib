@@ -4,8 +4,7 @@
 \alias{Ginv}
 \title{Generalized Inverse of a Matrix}
 \usage{
-Ginv(A, tol = sqrt(.Machine$double.eps), verbose = FALSE,
-  fractions = FALSE)
+Ginv(A, tol = sqrt(.Machine$double.eps), verbose = FALSE, fractions = FALSE)
 }
 \arguments{
 \item{A}{numerical matrix}

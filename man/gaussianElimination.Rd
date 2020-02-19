@@ -5,8 +5,14 @@
 \alias{print.enhancedMatrix}
 \title{Gaussian Elimination}
 \usage{
-gaussianElimination(A, B, tol = sqrt(.Machine$double.eps),
-  verbose = FALSE, latex = FALSE, fractions = FALSE)
+gaussianElimination(
+  A,
+  B,
+  tol = sqrt(.Machine$double.eps),
+  verbose = FALSE,
+  latex = FALSE,
+  fractions = FALSE
+)
 
 \method{print}{enhancedMatrix}(x, ...)
 }

@@ -4,8 +4,16 @@
 \alias{arrows3d}
 \title{Draw 3D arrows}
 \usage{
-arrows3d(coords, headlength = 0.035, head = "end", scale = NULL,
-  radius = NULL, ref.length = NULL, draw = TRUE, ...)
+arrows3d(
+  coords,
+  headlength = 0.035,
+  head = "end",
+  scale = NULL,
+  radius = NULL,
+  ref.length = NULL,
+  draw = TRUE,
+  ...
+)
 }
 \arguments{
 \item{coords}{A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs.  The first vector
@@ -43,11 +51,16 @@ This function is meant to be analogous to \code{\link[graphics]{arrows}}, but fo
 \seealso{
 \code{\link{vectors3d}}
 
-Other vector diagrams: \code{\link{Proj}},
-  \code{\link{arc}}, \code{\link{circle3d}},
-  \code{\link{corner}}, \code{\link{plot.regvec3d}},
-  \code{\link{pointOnLine}}, \code{\link{regvec3d}},
-  \code{\link{vectors3d}}, \code{\link{vectors}}
+Other vector diagrams: 
+\code{\link{Proj}()},
+\code{\link{arc}()},
+\code{\link{circle3d}()},
+\code{\link{corner}()},
+\code{\link{plot.regvec3d}()},
+\code{\link{pointOnLine}()},
+\code{\link{regvec3d}()},
+\code{\link{vectors3d}()},
+\code{\link{vectors}()}
 }
 \author{
 January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox
