@@ -26,9 +26,11 @@
 #' # print steps
 #' GramSchmidt(xx, verbose=TRUE)
 #'
-#' # non-invertible matrix; hence, its basis is not orthonormal
+#' # A non-invertible matrix;  hence, it is of deficient rank
 #' (xx <- matrix(c( 1:3, 3:1, 1, 0, -1), 3, 3))
+#' R(xx)
 #' crossprod(xx)
+#' # GramSchmidt finds an orthonormal basis
 #' (zz <- GramSchmidt(xx))
 #' zapsmall(crossprod(zz))
 #'
