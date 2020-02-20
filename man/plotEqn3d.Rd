@@ -4,9 +4,20 @@
 \alias{plotEqn3d}
 \title{Plot Linear Equations in 3D}
 \usage{
-plotEqn3d(A, b, vars, xlim = c(-2, 2), ylim = c(-2, 2), zlim,
-  col = 2:(nrow(A) + 1), alpha = 1, labels = FALSE,
-  solution = TRUE, axes = TRUE, lit = FALSE)
+plotEqn3d(
+  A,
+  b,
+  vars,
+  xlim = c(-2, 2),
+  ylim = c(-2, 2),
+  zlim,
+  col = 2:(nrow(A) + 1),
+  alpha = 1,
+  labels = FALSE,
+  solution = TRUE,
+  axes = TRUE,
+  lit = FALSE
+)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}

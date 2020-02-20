@@ -4,8 +4,19 @@
 \alias{plotEqn}
 \title{Plot Linear Equations}
 \usage{
-plotEqn(A, b, vars, xlim = c(-4, 4), ylim, col = 1:nrow(A), lwd = 2,
-  lty = 1, axes = TRUE, labels = TRUE, solution = TRUE)
+plotEqn(
+  A,
+  b,
+  vars,
+  xlim = c(-4, 4),
+  ylim,
+  col = 1:nrow(A),
+  lwd = 2,
+  lty = 1,
+  axes = TRUE,
+  labels = TRUE,
+  solution = TRUE
+)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}.

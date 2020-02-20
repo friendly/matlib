@@ -6,12 +6,24 @@
 \alias{print.regvec3d}
 \title{Plot method for regvec3d objects}
 \usage{
-\method{plot}{regvec3d}(x, y, dimension = 3, col = c("black", "red",
-  "blue", "brown", "lightgray"), col.plane = "gray", cex.lab = 1.2,
-  show.base = 2, show.marginal = FALSE, show.hplane = TRUE,
-  show.angles = TRUE, error.sphere = c("none", "e", "y.hat"),
-  scale.error.sphere = x$scale, level.error.sphere = 0.95,
-  grid = FALSE, add = FALSE, ...)
+\method{plot}{regvec3d}(
+  x,
+  y,
+  dimension = 3,
+  col = c("black", "red", "blue", "brown", "lightgray"),
+  col.plane = "gray",
+  cex.lab = 1.2,
+  show.base = 2,
+  show.marginal = FALSE,
+  show.hplane = TRUE,
+  show.angles = TRUE,
+  error.sphere = c("none", "e", "y.hat"),
+  scale.error.sphere = x$scale,
+  level.error.sphere = 0.95,
+  grid = FALSE,
+  add = FALSE,
+  ...
+)
 
 \method{summary}{regvec3d}(object, ...)
 
@@ -108,10 +120,15 @@ Fox, J. (2016). \emph{Applied Regression Analysis and Generalized Linear Models}
 \seealso{
 \code{\link{regvec3d}}, \code{\link{vectors3d}}, \code{\link{vectors}}
 
-Other vector diagrams: \code{\link{Proj}},
-  \code{\link{arc}}, \code{\link{arrows3d}},
-  \code{\link{circle3d}}, \code{\link{corner}},
-  \code{\link{pointOnLine}}, \code{\link{regvec3d}},
-  \code{\link{vectors3d}}, \code{\link{vectors}}
+Other vector diagrams: 
+\code{\link{Proj}()},
+\code{\link{arc}()},
+\code{\link{arrows3d}()},
+\code{\link{circle3d}()},
+\code{\link{corner}()},
+\code{\link{pointOnLine}()},
+\code{\link{regvec3d}()},
+\code{\link{vectors3d}()},
+\code{\link{vectors}()}
 }
 \concept{vector diagrams}
