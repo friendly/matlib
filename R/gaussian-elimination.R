@@ -124,8 +124,8 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
         i <- i + 1
     }
     # 0 rows to bottom
-    zeros <- which(apply(A[,1:m], 1, function(x) max(abs(x)) <= tol))
-    if (length(zeros) > 0){
+    zeros <- which(apply(A[, 1:m, drop=FALSE], 1, function(x) max(abs(x)) <= tol))
+    if (length(zeros) > 0 && m > 1){
         zeroRows <- A[zeros,]
         A <- A[-zeros,]
         A <- rbind(A, zeroRows)
