@@ -4,8 +4,15 @@
 \alias{Solve}
 \title{Solve and Display Solutions for Systems of Linear Simultaneous Equations}
 \usage{
-Solve(A, b = rep(0, nrow(A)), vars, verbose = FALSE, simplify = TRUE,
-  fractions = FALSE, ...)
+Solve(
+  A,
+  b = rep(0, nrow(A)),
+  vars,
+  verbose = FALSE,
+  simplify = TRUE,
+  fractions = FALSE,
+  ...
+)
 }
 \arguments{
 \item{A, }{the matrix of coefficients of a system of linear equations}

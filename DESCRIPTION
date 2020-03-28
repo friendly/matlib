@@ -3,7 +3,7 @@ Type: Package
 Title: Matrix Functions for Teaching and Learning Linear Algebra and
     Multivariate Statistics
 Version: 0.9.3
-Date: 2020-03-26
+Date: 2020-03-28
 Authors@R: c(person(given = "Michael", family = "Friendly", role=c("aut", "cre"), email="friendly@yorku.ca",
              comment=c(ORCID="0000-0002-3237-0941")),
             person(given = "John", family = "Fox", role="aut"),
@@ -35,5 +35,5 @@ Imports:
     car,
     methods
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Encoding: UTF-8

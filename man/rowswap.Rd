@@ -22,7 +22,8 @@ This elementary row operation corresponds to interchanging two equations.
 \seealso{
 \code{\link{echelon}}, \code{\link{gaussianElimination}}
 
-Other elementary row operations: \code{\link{rowadd}},
-  \code{\link{rowmult}}
+Other elementary row operations: 
+\code{\link{rowadd}()},
+\code{\link{rowmult}()}
 }
 \concept{elementary row operations}

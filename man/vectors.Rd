@@ -4,8 +4,18 @@
 \alias{vectors}
 \title{Draw geometric vectors in 2D}
 \usage{
-vectors(X, origin = c(0, 0), lwd = 2, angle = 13, length = 0.15,
-  labels = TRUE, cex.lab = 1.5, pos.lab = 4, frac.lab = 1, ...)
+vectors(
+  X,
+  origin = c(0, 0),
+  lwd = 2,
+  angle = 13,
+  length = 0.15,
+  labels = TRUE,
+  cex.lab = 1.5,
+  pos.lab = 4,
+  frac.lab = 1,
+  ...
+)
 }
 \arguments{
 \item{X}{a vector or two-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row}
@@ -63,10 +73,15 @@ corner(c(0,0), Proj(v,u), v, col="grey")
 \seealso{
 \code{\link[graphics]{arrows}}, \code{\link[graphics]{text}}
 
-Other vector diagrams: \code{\link{Proj}},
-  \code{\link{arc}}, \code{\link{arrows3d}},
-  \code{\link{circle3d}}, \code{\link{corner}},
-  \code{\link{plot.regvec3d}}, \code{\link{pointOnLine}},
-  \code{\link{regvec3d}}, \code{\link{vectors3d}}
+Other vector diagrams: 
+\code{\link{Proj}()},
+\code{\link{arc}()},
+\code{\link{arrows3d}()},
+\code{\link{circle3d}()},
+\code{\link{corner}()},
+\code{\link{plot.regvec3d}()},
+\code{\link{pointOnLine}()},
+\code{\link{regvec3d}()},
+\code{\link{vectors3d}()}
 }
 \concept{vector diagrams}

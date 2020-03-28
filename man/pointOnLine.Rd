@@ -43,10 +43,15 @@ pointOnLine(y1, y2, 0.5)
 pointOnLine(y1, y2, 0.5, absolute=FALSE)
 }
 \seealso{
-Other vector diagrams: \code{\link{Proj}},
-  \code{\link{arc}}, \code{\link{arrows3d}},
-  \code{\link{circle3d}}, \code{\link{corner}},
-  \code{\link{plot.regvec3d}}, \code{\link{regvec3d}},
-  \code{\link{vectors3d}}, \code{\link{vectors}}
+Other vector diagrams: 
+\code{\link{Proj}()},
+\code{\link{arc}()},
+\code{\link{arrows3d}()},
+\code{\link{circle3d}()},
+\code{\link{corner}()},
+\code{\link{plot.regvec3d}()},
+\code{\link{regvec3d}()},
+\code{\link{vectors3d}()},
+\code{\link{vectors}()}
 }
 \concept{vector diagrams}

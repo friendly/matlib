@@ -49,7 +49,8 @@ echelon(A, b, verbose=TRUE, fractions=TRUE)
 \seealso{
 \code{\link{echelon}}, \code{\link{gaussianElimination}}
 
-Other elementary row operations: \code{\link{rowmult}},
-  \code{\link{rowswap}}
+Other elementary row operations: 
+\code{\link{rowmult}()},
+\code{\link{rowswap}()}
 }
 \concept{elementary row operations}
