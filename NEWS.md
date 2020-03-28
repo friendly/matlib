@@ -1,3 +1,7 @@
+# matlib 0.9.3
+
+`gaussianElimination()` and friends now handle one-row or one-column matrices [suggestion of Jana Jarecki]
+
 # matlib 0.9.2
 
 - Bug fix in arrows3d.r [Thx: Douglas Whitaker]
