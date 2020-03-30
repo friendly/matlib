@@ -92,7 +92,7 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	  }
 
 	  if (!is.null(labels)) {
-	    xl <- x[1]
+	    xl <- if(A[i,2] == 0) b[i] else x[1]
 	    yl <- y[1]
 	    text(xl, yl, labels[i], col=col[i], pos=4)
 	  }
