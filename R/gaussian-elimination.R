@@ -38,6 +38,15 @@
 #'   gaussianElimination(A, diag(3))
 #'   inv(A)
 #'
+#'   # works for 1-row systems (issue # 30)
+#'   A2 <- matrix(c(1, 1), nrow=1)
+#'   b2 = 2
+#'   gaussianElimination(A2, b2)
+#'   showEqn(A2, b2)
+#'   # plotEqn works for this case
+#'   plotEqn(A2, b2)
+#'
+
 gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                                 verbose=FALSE, latex = FALSE, fractions=FALSE){
     # A: coefficient matrix
@@ -202,15 +211,15 @@ inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
 #'
 #' Returns the (reduced) row-echelon form of the matrix \code{A}, using \code{\link{gaussianElimination}}.
 #'
-#' When the matrix \code{A} is square and non-singular, the reduced row-echelon result will be the 
-#' identity matrix, while the row-echelon from will be an upper triagle matrix. 
-#' Otherwise, the result will have some all-zero rows, and the rank of the matrix 
+#' When the matrix \code{A} is square and non-singular, the reduced row-echelon result will be the
+#' identity matrix, while the row-echelon from will be an upper triagle matrix.
+#' Otherwise, the result will have some all-zero rows, and the rank of the matrix
 #' is the number of not all-zero rows.
 #'
 #' @param A coefficient matrix
 #' @param B right-hand side vector or matrix. If \code{B} is a matrix, the result gives solutions for each column as the right-hand
 #'        side of the equations with coefficients in \code{A}.
-#' @param reduced logical; should reduced row echelon form be returned? If \code{FALSE} a non-reduced 
+#' @param reduced logical; should reduced row echelon form be returned? If \code{FALSE} a non-reduced
 #'   row echelon form will be returned
 #' @param ... other arguments passed to \code{gaussianElimination}
 #' @return the reduced echelon form of \code{X}.
