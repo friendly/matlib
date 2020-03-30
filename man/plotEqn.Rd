@@ -4,8 +4,19 @@
 \alias{plotEqn}
 \title{Plot Linear Equations}
 \usage{
-plotEqn(A, b, vars, xlim = c(-4, 4), ylim, col = 1:nrow(A), lwd = 2,
-  lty = 1, axes = TRUE, labels = TRUE, solution = TRUE)
+plotEqn(
+  A,
+  b,
+  vars,
+  xlim = c(-4, 4),
+  ylim,
+  col = 1:nrow(A),
+  lwd = 2,
+  lty = 1,
+  axes = TRUE,
+  labels = TRUE,
+  solution = TRUE
+)
 }
 \arguments{
 \item{A}{either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}.
@@ -15,8 +26,8 @@ The \code{A} matrix must have two columns.}
 the number of rows of \code{A}.}
 
 \item{vars}{a numeric or character vector of names of the variables.
-If supplied, the length must be equal to the number of unknowns in the equations.
-The default is \code{paste0("x", 1:ncol(A)}.}
+If supplied, the length must be equal to the number of unknowns in the equations, i.e., 2.
+The default is \code{c(expression(x[1]), expression(x[2]))}.}
 
 \item{xlim}{horizontal axis limits for the first variable}
 
@@ -32,7 +43,8 @@ range of the set of equations over the \code{xlim}.}
 \item{axes}{logical; draw horizontal and vertical axes through (0,0)?}
 
 \item{labels}{logical, or a vector of character labels for the equations; if \code{TRUE}, each equation is labeled
-using the character string resulting from \code{\link{showEqn}}}
+using the character string resulting from \code{\link{showEqn}}, modified so that the 
+\code{x}s are properly subscripted.}
 
 \item{solution}{logical; should the solution points for pairs of equations be marked?}
 }

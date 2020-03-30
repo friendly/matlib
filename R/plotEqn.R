@@ -8,8 +8,8 @@
 #' @param b if supplied, the vector of constants on the right hand side of the equations, of length matching
 #'        the number of rows of \code{A}.
 #' @param vars a numeric or character vector of names of the variables.
-#'        If supplied, the length must be equal to the number of unknowns in the equations.
-#'        The default is \code{paste0("x", 1:ncol(A)}.
+#'        If supplied, the length must be equal to the number of unknowns in the equations, i.e., 2.
+#'        The default is \code{c(expression(x[1]), expression(x[2]))}.
 #' @param xlim horizontal axis limits for the first variable
 #' @param ylim vertical axis limits for the second variable; if missing, \code{ylim} is calculated from the
 #'        range of the set of equations over the \code{xlim}.
@@ -18,7 +18,8 @@
 #' @param lty scalar or vector of line types for the lines, recycled as necessary
 #' @param axes logical; draw horizontal and vertical axes through (0,0)?
 #' @param labels logical, or a vector of character labels for the equations; if \code{TRUE}, each equation is labeled
-#'      using the character string resulting from \code{\link{showEqn}}
+#'      using the character string resulting from \code{\link{showEqn}}, modified so that the 
+#'      \code{x}s are properly subscripted.
 #' @param solution logical; should the solution points for pairs of equations be marked?
 #' @return nothing; used for the side effect of making a plot
 #'
@@ -53,7 +54,7 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
     A <- A[,-ncol(A)]  # remove b from A
   }
 	if (ncol(A) != 2) stop("plotEqn only handles two-variable equations. Use plotEqn3d for three-variable equations.")
-  if (missing(vars)) vars <- paste0("x", 1:ncol(A))
+  if (missing(vars)) vars <- c(expression(x[1]), expression(x[2])) # paste0("x", 1:ncol(A))
 
 	# set values for horizontal variable
 	x <- seq(xlim[1], xlim[2], length=10)
@@ -94,7 +95,9 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	  if (!is.null(labels)) {
 	    xl <- if(A[i,2] == 0) b[i] else x[1]
 	    yl <- y[1]
-	    text(xl, yl, labels[i], col=col[i], pos=4)
+	    label <- labels[i]
+	    label <- parse(text=sub("=", "==", label))
+	    text(xl, yl, label, col=col[i], pos=4)
 	  }
 	}
 	if (axes) abline(h=0, v=0, col="gray")
