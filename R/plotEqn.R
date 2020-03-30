@@ -64,7 +64,7 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	if (length(lty) < neq) lty <- rep_len(lty, length.out=neq)
 
   if (missing(ylim)) {
-    ylim <- c(0, 0)
+    ylim <- xlim
     for (i in 1:neq) {
       if (A[i,2] != 0) {
         y <- (b[i] - A[i,1] * x) / A[i,2]
@@ -81,7 +81,10 @@ plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
 	for (i in 1:neq) {
 	  if (i==1) plot(xlim, ylim, type="n", xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim)
 
-	  if (A[i,2] == 0) abline( v = b[i] / A[i,1], col = col[i], lwd = lwd[i], lty = lty[i] )
+	  if (A[i,2] == 0) {
+	    abline( v = b[i] / A[i,1], col = col[i], lwd = lwd[i], lty = lty[i] )
+	    y <- ylim
+	  }
 	  else {
 	    # calculate y values for current equation
 	    y <- (b[i] - A[i,1] * x) / A[i,2]
