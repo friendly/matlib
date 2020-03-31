@@ -4,8 +4,7 @@
 \alias{svdDemo}
 \title{Demonstrate the SVD for a 3 x 3 matrix}
 \usage{
-svdDemo(A, shape = c("cube", "sphere"), alpha = 0.7,
-  col = rainbow(6))
+svdDemo(A, shape = c("cube", "sphere"), alpha = 0.7, col = rainbow(6))
 }
 \arguments{
 \item{A}{A 3 x 3 numeric matrix}

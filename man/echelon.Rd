@@ -12,7 +12,7 @@ echelon(A, B, reduced = TRUE, ...)
 \item{B}{right-hand side vector or matrix. If \code{B} is a matrix, the result gives solutions for each column as the right-hand
 side of the equations with coefficients in \code{A}.}
 
-\item{reduced}{logical; should reduced row echelon form be returned? If \code{FALSE} a non-reduced 
+\item{reduced}{logical; should reduced row echelon form be returned? If \code{FALSE} a non-reduced
 row echelon form will be returned}
 
 \item{...}{other arguments passed to \code{gaussianElimination}}
@@ -24,9 +24,9 @@ the reduced echelon form of \code{X}.
 Returns the (reduced) row-echelon form of the matrix \code{A}, using \code{\link{gaussianElimination}}.
 }
 \details{
-When the matrix \code{A} is square and non-singular, the reduced row-echelon result will be the 
-identity matrix, while the row-echelon from will be an upper triagle matrix. 
-Otherwise, the result will have some all-zero rows, and the rank of the matrix 
+When the matrix \code{A} is square and non-singular, the reduced row-echelon result will be the
+identity matrix, while the row-echelon from will be an upper triagle matrix.
+Otherwise, the result will have some all-zero rows, and the rank of the matrix
 is the number of not all-zero rows.
 }
 \examples{

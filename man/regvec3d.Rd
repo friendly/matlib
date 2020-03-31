@@ -8,17 +8,38 @@
 \usage{
 regvec3d(x1, ...)
 
-\method{regvec3d}{formula}(formula, data = NULL, which = 1:2, name.x1,
-  name.x2, name.y, name.e, name.y.hat, name.b1.x1, name.b2.x2,
-  abbreviate = 0, ...)
+\method{regvec3d}{formula}(
+  formula,
+  data = NULL,
+  which = 1:2,
+  name.x1,
+  name.x2,
+  name.y,
+  name.e,
+  name.y.hat,
+  name.b1.x1,
+  name.b2.x2,
+  abbreviate = 0,
+  ...
+)
 
-\method{regvec3d}{default}(x1, x2, y, scale = FALSE, normalize = TRUE,
-  name.x1 = deparse(substitute(x1)), name.x2 = deparse(substitute(x2)),
-  name.y = deparse(substitute(y)), name.e = "residuals",
-  name.y.hat = paste0(name.y, "hat"), name.b1.x1 = paste0("b1",
-  name.x1), name.b2.x2 = paste0("b2", name.x2),
-  name.y1.hat = paste0(name.y, "hat 1"), name.y2.hat = paste0(name.y,
-  "hat 2"), ...)
+\method{regvec3d}{default}(
+  x1,
+  x2,
+  y,
+  scale = FALSE,
+  normalize = TRUE,
+  name.x1 = deparse(substitute(x1)),
+  name.x2 = deparse(substitute(x2)),
+  name.y = deparse(substitute(y)),
+  name.e = "residuals",
+  name.y.hat = paste0(name.y, "hat"),
+  name.b1.x1 = paste0("b1", name.x1),
+  name.b2.x2 = paste0("b2", name.x2),
+  name.y1.hat = paste0(name.y, "hat 1"),
+  name.y2.hat = paste0(name.y, "hat 2"),
+  ...
+)
 }
 \arguments{
 \item{x1}{The generic argument or the first predictor passed to the default method}
@@ -123,10 +144,15 @@ Least-Squares Regression with the matlib Package for R". \emph{useR Conference},
 \seealso{
 \code{\link{plot.regvec3d}}
 
-Other vector diagrams: \code{\link{Proj}},
-  \code{\link{arc}}, \code{\link{arrows3d}},
-  \code{\link{circle3d}}, \code{\link{corner}},
-  \code{\link{plot.regvec3d}}, \code{\link{pointOnLine}},
-  \code{\link{vectors3d}}, \code{\link{vectors}}
+Other vector diagrams: 
+\code{\link{Proj}()},
+\code{\link{arc}()},
+\code{\link{arrows3d}()},
+\code{\link{circle3d}()},
+\code{\link{corner}()},
+\code{\link{plot.regvec3d}()},
+\code{\link{pointOnLine}()},
+\code{\link{vectors3d}()},
+\code{\link{vectors}()}
 }
 \concept{vector diagrams}

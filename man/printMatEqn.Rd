@@ -4,8 +4,7 @@
 \alias{printMatEqn}
 \title{Print Matrices or Matrix Operations Side by Side}
 \usage{
-printMatEqn(..., space = 1, tol = sqrt(.Machine$double.eps),
-  fractions = FALSE)
+printMatEqn(..., space = 1, tol = sqrt(.Machine$double.eps), fractions = FALSE)
 }
 \arguments{
 \item{...}{matrices and character operations to be passed and printed to the console. These

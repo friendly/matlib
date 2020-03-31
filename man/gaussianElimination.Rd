@@ -5,8 +5,14 @@
 \alias{print.enhancedMatrix}
 \title{Gaussian Elimination}
 \usage{
-gaussianElimination(A, B, tol = sqrt(.Machine$double.eps),
-  verbose = FALSE, latex = FALSE, fractions = FALSE)
+gaussianElimination(
+  A,
+  B,
+  tol = sqrt(.Machine$double.eps),
+  verbose = FALSE,
+  latex = FALSE,
+  fractions = FALSE
+)
 
 \method{print}{enhancedMatrix}(x, ...)
 }
@@ -54,6 +60,14 @@ and \code{fractions} may be used to see how the algorithm works.
   # find inverse matrix by elimination: A = I -> A^-1 A = A^-1 I -> I = A^-1
   gaussianElimination(A, diag(3))
   inv(A)
+
+  # works for 1-row systems (issue # 30)
+  A2 <- matrix(c(1, 1), nrow=1)
+  b2 = 2
+  gaussianElimination(A2, b2)
+  showEqn(A2, b2)
+  # plotEqn works for this case
+  plotEqn(A2, b2)
 
 }
 \author{

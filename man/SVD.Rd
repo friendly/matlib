@@ -4,8 +4,12 @@
 \alias{SVD}
 \title{Singular Value Decomposition of a Matrix}
 \usage{
-SVD(X, method = c("Jacobi", "eigen"), tol = sqrt(.Machine$double.eps),
-  max.iter = 100)
+SVD(
+  X,
+  method = c("Jacobi", "eigen"),
+  tol = sqrt(.Machine$double.eps),
+  max.iter = 100
+)
 }
 \arguments{
 \item{X}{a square symmetric matrix}

@@ -4,8 +4,13 @@
 \alias{printMatrix}
 \title{Print a matrix, allowing fractions or LaTeX output}
 \usage{
-printMatrix(A, parent = TRUE, fractions = FALSE, latex = FALSE,
-  tol = sqrt(.Machine$double.eps))
+printMatrix(
+  A,
+  parent = TRUE,
+  fractions = FALSE,
+  latex = FALSE,
+  tol = sqrt(.Machine$double.eps)
+)
 }
 \arguments{
 \item{A}{A numeric matrix}

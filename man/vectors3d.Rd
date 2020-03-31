@@ -4,9 +4,19 @@
 \alias{vectors3d}
 \title{Draw 3D vectors}
 \usage{
-vectors3d(X, origin = c(0, 0, 0), headlength = 0.035,
-  ref.length = NULL, radius = 1/60, labels = TRUE, cex.lab = 1.2,
-  adj.lab = 0.5, frac.lab = 1.1, draw = TRUE, ...)
+vectors3d(
+  X,
+  origin = c(0, 0, 0),
+  headlength = 0.035,
+  ref.length = NULL,
+  radius = 1/60,
+  labels = TRUE,
+  cex.lab = 1.2,
+  adj.lab = 0.5,
+  frac.lab = 1.1,
+  draw = TRUE,
+  ...
+)
 }
 \arguments{
 \item{X}{a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row}
@@ -75,11 +85,16 @@ rgl.bringtotop()
 \seealso{
 \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}, code{\link[rgl]{rgl.material}}
 
-Other vector diagrams: \code{\link{Proj}},
-  \code{\link{arc}}, \code{\link{arrows3d}},
-  \code{\link{circle3d}}, \code{\link{corner}},
-  \code{\link{plot.regvec3d}}, \code{\link{pointOnLine}},
-  \code{\link{regvec3d}}, \code{\link{vectors}}
+Other vector diagrams: 
+\code{\link{Proj}()},
+\code{\link{arc}()},
+\code{\link{arrows3d}()},
+\code{\link{circle3d}()},
+\code{\link{corner}()},
+\code{\link{plot.regvec3d}()},
+\code{\link{pointOnLine}()},
+\code{\link{regvec3d}()},
+\code{\link{vectors}()}
 }
 \author{
 Michael Friendly

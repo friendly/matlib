@@ -14,10 +14,6 @@ is_orthogonal_matrix(x)
 }
 \arguments{
 \item{x}{A numeric matrix}
-
-\item{x}{A numeric matrix}
-
-\item{x}{A numeric matrix}
 }
 \value{
 \code{TRUE} if \code{x} is a square matrix, else \code{FALSE}

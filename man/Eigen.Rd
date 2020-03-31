@@ -4,8 +4,7 @@
 \alias{Eigen}
 \title{Eigen Decomposition of a Square Symmetric Matrix}
 \usage{
-Eigen(X, tol = sqrt(.Machine$double.eps), max.iter = 100,
-  retain.zeroes = TRUE)
+Eigen(X, tol = sqrt(.Machine$double.eps), max.iter = 100, retain.zeroes = TRUE)
 }
 \arguments{
 \item{X}{a square symmetric matrix}
