@@ -7,7 +7,7 @@
 
 **Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics**, http://friendly.github.io/matlib/
 
-Version 0.9.2
+Version 0.9.3
 
 These functions are mainly for tutorial purposes in teaching & learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts or computations available
@@ -99,6 +99,19 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions`.
 ### Vignettes and presentations
 
 A small collection of vignettes is now available.  Use `browseVignettes("matlib")` to see them.
+
+| Vignette                                                                            | Title                                         |
+|-------------------------------------------------------------------------------------|-----------------------------------------------|
+| [det-ex1](http://friendly.github.io/matlib/articles/det-ex1.html)                   | Properties of determinants                    |
+| [det-ex2](http://friendly.github.io/matlib/articles/det-ex2.html)                   | Evaluation of determinants                    |
+| [inv-ex1](http://friendly.github.io/matlib/articles/inv-ex1.html)                   | Inverse of a matrix                           |
+| [inv-ex2](http://friendly.github.io/matlib/articles/inv-ex2.html)                   | Matrix inversion by elementary row operations |
+| [ginv](http://friendly.github.io/matlib/articles/ginv.html)                         | Generalized inverse                           |
+| [eigen-ex1](http://friendly.github.io/matlib/articles/eigen-ex1.html)              | Eigenvalues and Eigenvectors: Properties      |
+| [eigen-ex2](http://friendly.github.io/matlib/articles/eigen-ex2.html)               | Eigenvalues: Spectral Decomposition           |
+| [linear-equations](http://friendly.github.io/matlib/articles/linear-equations.html) | Solving Linear Equations                      |
+| [gramreg](http://friendly.github.io/matlib/articles/gramreg.html)                   | Gram-Schmidt Orthogonalization and Regression |
+
 
 See also: Fox & Friendly, [_Visualizing Simultaneous Linear Equations, Geometric Vectors, and Least-Squares Regression with the matlib Package for R_](https://socialsciences.mcmaster.ca/jfox/Papers/matlib-useR2016.pdf),
 June 2016, useR! Conference, Stanford.
