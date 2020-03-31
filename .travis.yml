@@ -5,6 +5,10 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install libcgal-dev libglu1-mesa-dev libx11-dev
+
 # avoid warnings from rgl
 env:
   RGL_USE_NULL=TRUE
