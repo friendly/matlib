@@ -1,7 +1,8 @@
 ## Test environments
-* local Windows 7 install, 3.5.2 (2018-12-20)
+* local Windows 7 install, 3.6.2 (2020-02-29)
 * travis.ci on github
-* win-builder R Under development (unstable) (2019-05-25 r76601)
+* win-builder R version 4.0.0 alpha (2020-03-26 r78078)
+* win-builder R release
 
 ## R CMD check results
 There were no ERRORs or WARNINGs or NOTEs
@@ -9,6 +10,9 @@ There were no ERRORs or WARNINGs or NOTEs
 ## Comments
 This is a minor release, fixing several small problems
 and improved computation for GramSchmidt & SVD
+
+# matlib 0.9.3
+- fix bug in gaussianElimination
 
 # matlib 0.9.2
 
