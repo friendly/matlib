@@ -1,8 +1,10 @@
 #' matlib: Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics.
 #'
 #'
-#' These functions are mainly for tutorial purposes in learning matrix algebra
-#' ideas using R. In some cases, functions are provided for concepts available
+#' These functions are designed mainly for tutorial purposes in teaching & learning matrix algebra
+#' ideas and applications to statistical methods using R.
+#'
+#' In some cases, functions are provided for concepts available
 #' elsewhere in R, but where the function call or name is not obvious.  In other
 #' cases, functions are provided to show or demonstrate an algorithm, sometimes
 #' providing a \code{verbose} argument to print the details of computations.
@@ -37,11 +39,18 @@
 #'         \code{\link{vectors}}, \code{\link{vectors3d}}, \code{\link{regvec3d}}
 #' }
 #'
+#' Most of these ideas and implementations arose in courses and books by the authors.
+#' [Psychology 6140](http://friendly.apps01.yorku.ca/psy6140/) was a starting point.
+#' Fox (1984) introduced illustrations of vector geometry.
+#'
 #' @docType package
 #' @name matlib
 #' @importFrom MASS fractions
 #' @aliases matlib-package
-#' @references Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
+#' @references
+#' Fox, J. Linear Statistical Models and Related Methods. John Wiley and Sons, 1984
+#'
+#' Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 #' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 
 NULL
