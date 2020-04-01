@@ -12,7 +12,7 @@ Version 0.9.3
 These functions are mainly for tutorial purposes in teaching & learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts or computations available
 elsewhere in R, but where the name is not obvious.  In other
-cases, we provide cover functions to show or demonstrate an algorithm in more detailsometimes
+cases, we provide cover functions to show or demonstrate an algorithm in more detail, sometimes
 providing a `verbose =` argument to print the details of computations.
 
 In addition, a collection of functions are provided for drawing vector diagrams in 2D and 3D, illustrating

@@ -104,7 +104,7 @@ det(A)
 Many aspects of matrices and vectors have geometric interpretations.
 For $2 \times 2$ matrices, the determinant is the **area** of the parallelogram
 defined by the rows (or columns), plotted in a 2D space.
-(For $3 \times 3$ matrices, the determinant is the **volume** of a parallelepiped in 3D space.)
+(For $3 \times 3$ matrices, the determinant is the **volume** of a parallelpiped in 3D space.)
 ```{r}
 A <- matrix(c(3, 1, 
               2, 4), nrow=2, byrow=TRUE)

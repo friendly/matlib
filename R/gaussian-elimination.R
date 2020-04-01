@@ -212,7 +212,7 @@ inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
 #' Returns the (reduced) row-echelon form of the matrix \code{A}, using \code{\link{gaussianElimination}}.
 #'
 #' When the matrix \code{A} is square and non-singular, the reduced row-echelon result will be the
-#' identity matrix, while the row-echelon from will be an upper triagle matrix.
+#' identity matrix, while the row-echelon from will be an upper triangle matrix.
 #' Otherwise, the result will have some all-zero rows, and the rank of the matrix
 #' is the number of not all-zero rows.
 #'

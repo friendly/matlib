@@ -115,7 +115,7 @@ rowmult <- function(x, row, mult) {
   y
 }
 
-#' Build/Get tranformation matricies
+#' Build/Get transformation matricies
 #'
 #' Recover the history of the row operations that have been performed.
 #' This function combines the transformation matricies into a single transformation matrix
@@ -124,9 +124,9 @@ rowmult <- function(x, row, mult) {
 #'
 #' @param x a matrix A, joined with a vector of constants, b, that has been passed to
 #'   \code{\link{gaussianElimination}} or the row operator functions
-#' @param all logical; print individual tranformation matricies?
+#' @param all logical; print individual transformation matricies?
 #' @param ... additional arguments
-#' @return the tranformation matrix or a list of individual transformation matricies
+#' @return the transformation matrix or a list of individual transformation matricies
 #' @seealso \code{\link{echelon}}, \code{\link{gaussianElimination}}
 #' @family matrix of elementary row operations
 #' @author Phil Chalmers
