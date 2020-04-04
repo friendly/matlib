@@ -1,0 +1,110 @@
+---
+title: "Least Squares and Linear Equations"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Least Squares and Linear Equations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 5,
+  fig.width = 5
+)
+options(digits=4)
+par(mar=c(4,4,1,1)+.1)
+```
+```{r setuprgl, echo=FALSE}
+library(rgl)
+library(knitr)
+knit_hooks$set(webgl = hook_webgl)
+```
+
+```{r}
+library(matlib)   # use the package
+```
+
+This vignette illustrates the relationship between simple linear regression
+via least squares, in the familiar **data space** of $(x, y)$
+and an equivalent representation by means of linear equations for the observations
+in the less familiar $\beta$ space of the model parameters in the model
+$y_i = \beta_0 + \beta_1 x_i + e_i$.
+
+There is a pleasing duality here:  
+
+* A line in data space corresponds to a point in beta space
+* A point in data space corresponds to a line in beta space
+
+Some of these geometric relations are explored in a wider context in
+Friendly et al. (2013).
+
+## Data space
+We start with a simple linear regression problem, shown in **data space**
+
+```{r}
+x <- c(1, 1, -1, -1)
+y <- 1:4
+```
+
+Fit the linear model, `y ~ x`. The intercept is `b0 = 2.5` and the slope is `b1 = -1`.
+```{r plotmod1}
+(mod <- lm(y ~ x))
+```
+Plot the data and the least squares line.
+```{r plotmod2}
+par(mar=c(4,4,1,1)+.1)
+plot(y ~ x, pch=16, cex=1.5)
+abline(mod, lwd=2)
+abline(h = coef(mod)[1], col="grey")
+```
+
+## Linear equation ($\beta$) space
+
+This problem can be represented by the matrix equation,  $\mathbf{y} = [\mathbf{1}, \mathbf{x}] \mathbf{b} + \mathbf{e} = \mathbf{X} \mathbf{b} + \mathbf{e}$. 
+
+```{r printmat}
+X <- cbind(1, x)
+printMatEqn(y, "=", X, "*", vec(c("b0", "b1")), "+", vec(paste0("e", 1:4)))
+
+```
+Each equation is of the form $y_i = b_0 + b_1 x_i + e_i$. The least squares solution minimizes $\sum e_i^2$.
+
+We can also describe this a representing four equations in two unknowns, `c("b0", "b1")`. 
+
+```{r}
+showEqn(X, y, vars=c("b0", "b1"), simplify=TRUE)
+```
+
+Each equation corresponds to a line in $(b_0, b_1)$ space. Let's plot them. `plotEqn` draws a point at the
+intersection of each pair of lines --- a solution for that pair of observations.
+
+```{r ploteqn1, echo=2}
+par(mar=c(4,4,1,1)+.1)
+plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))
+```
+
+In this space, not all observation equations can be satisfied simultaneously, but a best approximate solution
+can be represented in this space by the coefficients of the linear model $y = X \beta$, where the intercept is 
+already included as the first column in $X$.
+
+```{r ploteqn2, echo=-1}
+par(mar=c(4,4,1,1)+.1)
+plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))
+solution <- lm( y ~ 0 + X)
+loc <- coef(solution)
+points(x=loc[1], y=loc[2], pch=16, cex=1.5)
+```
+
+The LS solution is shown by the black point, corresponding to $(b_0, b_1) = (2.5, -1)$.
+
+## References
+
+Friendly, M.; Monette, G. & Fox, J. (2013).
+_Elliptical Insights: Understanding Statistical Methods Through Elliptical Geometry_
+Statistical Science, **28**, 1-39.
+
