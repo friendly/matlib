@@ -44,7 +44,7 @@ Some of these geometric relations are explored in a wider context in
 Friendly et al. (2013).
 
 ## Data space
-We start with a simple problem, shown in **data space**
+We start with a simple linear regression problem, shown in **data space**
 
 ```{r}
 x <- c(1, 1, -1, -1)
