@@ -15,8 +15,8 @@
 #' @export
 #' @author Matthew Lundberg, in a [Stack Overflow post][https://stackoverflow.com/questions/36798301/r-compute-cross-product-of-vectors-physics]
 #' @details See: [https://en.wikipedia.org/wiki/Cross_product] for geometric and algebraic properties.
-#'  \if{html}{\figure{Cross_product.png}{Cross-product of 3D vectors}}
-#'  \if{latex}{\figure{Cross_product.png}{options: width=0.5in}}
+#'  \if{html}{\figure{CrossProduct.png}{Cross-product of 3D vectors}}
+#'  \if{latex}{\figure{CrossProduct.png}{options: width=0.5in}}
 #' @examples
 #' xprod(1:3, 4:6)
 #'
