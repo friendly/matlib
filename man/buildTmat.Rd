@@ -4,7 +4,7 @@
 \alias{buildTmat}
 \alias{as.matrix.trace}
 \alias{print.trace}
-\title{Build/Get tranformation matricies}
+\title{Build/Get transformation matrices}
 \usage{
 buildTmat(x, all = FALSE)
 
@@ -14,18 +14,18 @@ buildTmat(x, all = FALSE)
 }
 \arguments{
 \item{x}{a matrix A, joined with a vector of constants, b, that has been passed to
-\code{\link{gaussianElimination}} or the row operator functions}
+\code{\link{gaussianElimination}} or the row operator matrix functions}
 
-\item{all}{logical; print individual tranformation matricies?}
+\item{all}{logical; print individual transformation ies?}
 
 \item{...}{additional arguments}
 }
 \value{
-the tranformation matrix or a list of individual transformation matricies
+the transformation matrix or a list of individual transformation matrices
 }
 \description{
 Recover the history of the row operations that have been performed.
-This function combines the transformation matricies into a single transformation matrix
+This function combines the transformation matrices into a single transformation matrix
 representing all row operations or may optionally print all the individual operations which have
 been performed.
 }
@@ -46,7 +46,7 @@ Abt
 (T <- buildTmat(Abt))
 T \%*\% Ab    # same as Abt
 
-# print all transformation matricies
+# print all transformation matrices
 buildTmat(Abt, TRUE)
 
 # invert transformation matrix to reverse operations
