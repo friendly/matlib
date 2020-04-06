@@ -21,8 +21,8 @@ thus normal to the plane containing them.
 A generalization of this idea applies to two or more dimensional vectors.
 
 See: [https://en.wikipedia.org/wiki/Cross_product] for geometric and algebraic properties.
- \if{html}{\figure{Cross_product.png}{Cross-product of 3D vectors}}
- \if{latex}{\figure{Cross_product.png}{options: width=0.5in}}
+ \if{html}{\figure{CrossProduct.png}{Cross-product of 3D vectors}}
+ \if{latex}{\figure{CrossProduct.png}{options: width=0.5in}}
 }
 \examples{
 xprod(1:3, 4:6)
