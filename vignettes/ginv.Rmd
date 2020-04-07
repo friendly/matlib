@@ -43,7 +43,7 @@ A <-matrix(c(4, 4, -2,
 det(A)
 ```
 
-The rank is 2, so `inv(A)` wont work
+The rank is 2, so `inv(A)` won't work
 
 ```{r }
 R(A)
