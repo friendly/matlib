@@ -203,6 +203,8 @@ abline(h=loc[2], lty=2)
 
 ## References
 
+Fox, J. (1984). _Linear Statistical Models and Related Methods_. NY: John Wiley and Sons.
+
 Friendly, M.; Monette, G. & Fox, J. (2013).
 _Elliptical Insights: Understanding Statistical Methods Through Elliptical Geometry_
 Statistical Science, **28**, 1-39.
