@@ -1,6 +1,6 @@
 ---
 title: "Vector Spaces of Least Squares and Linear Equations"
-author: "Michael Friendly"
+author: "Michael Friendly, Georges Monette, John Fox, Phil Chalmers"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -47,7 +47,9 @@ There is such a pleasing duality here:
 
 But wait, there's one more space: **observation space**, the *n*-dimensional space
 for *n* observations.
-Some of these geometric relations are explored in a wider context in
+These ideas have a modern history that goes back to Dempster (1969). It was developed
+in the context of linear models by Fox (1984) and Monette (1990).
+Some of these geometric relations are explored  in a wider context in
 Friendly et al. (2013).
 
 ## Data space
@@ -203,9 +205,17 @@ abline(h=loc[2], lty=2)
 
 ## References
 
+Dempster, A. P. (1969). _Elements of Continuous Multivariate Analysis_, 
+Addison-Wesley,
+
 Fox, J. (1984). _Linear Statistical Models and Related Methods_. NY: John Wiley and Sons.
 
 Friendly, M.; Monette, G. & Fox, J. (2013).
 _Elliptical Insights: Understanding Statistical Methods Through Elliptical Geometry_
 Statistical Science, **28**, 1-39.
+
+Monette, G. (1990).
+"Geometry of Multiple Regression and Interactive 3-D Graphics"
+In: Fox, J. & Long, S. (Eds.)
+_Modern Methods of Data Analysis_, SAGE Publications, 209-256
 
