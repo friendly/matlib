@@ -1,7 +1,8 @@
-urls:
-  reference: http://friendly.github.io/matlib/reference
-  article: http://friendly.github.io/matlib/articles
+pandoc: 1.19.2.1
+pkgdown: 1.5.0
+pkgdown_sha: ~
 articles:
+  data-beta: data-beta.html
   det-ex1: det-ex1.html
   det-ex2: det-ex2.html
   eigen-ex1: eigen-ex1.html
@@ -11,4 +12,8 @@ articles:
   inv-ex1: inv-ex1.html
   inv-ex2: inv-ex2.html
   linear-equations: linear-equations.html
+last_built: 2020-04-08T14:03Z
+urls:
+  reference: http://friendly.github.io/matlib/reference
+  article: http://friendly.github.io/matlib/articles
 

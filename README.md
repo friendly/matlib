@@ -48,6 +48,7 @@ The functions in this package are grouped under the following topics
   - `vec()` - vectorize a matrix
   - `Proj(y, X)` - projection of vector y on columns of X
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
+  - `xprod(...)` - vector cross-product
 
 2. Determinants: functions for calculating determinants by cofactor expansion
 

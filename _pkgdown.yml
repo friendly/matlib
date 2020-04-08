@@ -16,6 +16,7 @@ reference:
       - symMat
       - tr
       - vec
+      - xprod
 
   - title: Determinants
     desc:  Functions for calculating determinants by cofactor expansion
