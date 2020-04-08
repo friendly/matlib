@@ -112,6 +112,7 @@ A small collection of vignettes is now available.  Use `browseVignettes("matlib"
 | [eigen-ex2](http://friendly.github.io/matlib/articles/eigen-ex2.html)               | Eigenvalues: Spectral Decomposition           |
 | [linear-equations](http://friendly.github.io/matlib/articles/linear-equations.html) | Solving Linear Equations                      |
 | [gramreg](http://friendly.github.io/matlib/articles/gramreg.html)                   | Gram-Schmidt Orthogonalization and Regression |
+| [data-beta](http://friendly.github.io/matlib/articles/data-beta.html)               | Vector Spaces of Least Squares and Linear Equations |
 
 
 See also: Fox & Friendly, [_Visualizing Simultaneous Linear Equations, Geometric Vectors, and Least-Squares Regression with the matlib Package for R_](https://socialsciences.mcmaster.ca/jfox/Papers/matlib-useR2016.pdf),
