@@ -99,7 +99,7 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions`.
 
 ### Vignettes and presentations
 
-A small collection of vignettes is now available.  Use `browseVignettes("matlib")` to see them.
+A small collection of vignettes is now available.  Use `browseVignettes("matlib")` to explore them.
 
 | Vignette                                                                            | Title                                         |
 |-------------------------------------------------------------------------------------|-----------------------------------------------|
