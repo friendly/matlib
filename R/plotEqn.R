@@ -18,7 +18,7 @@
 #' @param lty scalar or vector of line types for the lines, recycled as necessary
 #' @param axes logical; draw horizontal and vertical axes through (0,0)?
 #' @param labels logical, or a vector of character labels for the equations; if \code{TRUE}, each equation is labeled
-#'      using the character string resulting from \code{\link{showEqn}}, modified so that the 
+#'      using the character string resulting from \code{\link{showEqn}}, modified so that the
 #'      \code{x}s are properly subscripted.
 #' @param solution logical; should the solution points for pairs of equations be marked?
 #' @return nothing; used for the side effect of making a plot
@@ -42,75 +42,180 @@
 #' showEqn(A, b)
 #' plotEqn(A,b)
 
+plotEqn <- function(A, b, vars, xlim, ylim,
+                    col=1:nrow(A), lwd=2, lty=1,
+                    axes=TRUE, labels=TRUE,
+                    solution=TRUE
+) {
 
-plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
-				col=1:nrow(A), lwd=2, lty=1,
-				axes=TRUE, labels=TRUE,
-				solution=TRUE
-				) {
   if (!is.numeric(A) || !is.matrix(A)) stop("A must be a numeric matrix")
   if (missing(b)) {
-    b <- A[,ncol(A)]   # assume last column of Ab
-    A <- A[,-ncol(A)]  # remove b from A
+    b <- A[ , ncol(A)]   # assume last column of Ab
+    A <- A[ , -ncol(A), drop=FALSE]  # remove b from A
   }
-	if (ncol(A) != 2) stop("plotEqn only handles two-variable equations. Use plotEqn3d for three-variable equations.")
+  if (ncol(A) != 2) stop("plotEqn only handles two-variable equations. Use plotEqn3d for three-variable equations.")
+
   if (missing(vars)) vars <- c(expression(x[1]), expression(x[2])) # paste0("x", 1:ncol(A))
 
-	# set values for horizontal variable
-	x <- seq(xlim[1], xlim[2], length=10)
+  neq <- nrow(A)
 
-	neq <- nrow(A)
-	if (length(col) < neq) col <- rep_len(col, length.out=neq)
-	if (length(lwd) < neq) lwd <- rep_len(lwd, length.out=neq)
-	if (length(lty) < neq) lty <- rep_len(lty, length.out=neq)
+  # establish x-axis limits and preliminary y-axis limits based on equation intersections
+
+  if (missing(xlim) || missing(ylim)) {
+    if (neq == 1){
+      if (missing(xlim)) xlim <- c(-4, 4)
+      ylim.0 <- NULL
+      intersections <- NULL
+    } else {
+      intersections <- matrix(NA, nrow=neq*(neq - 1)/2, ncol=2)
+      colnames(intersections) <- c("x", "y")
+      k <- 0
+      for (i in 1:(neq - 1)) {
+        for (j in (i + 1):neq) {
+          k <- k + 1
+          x <- try(solve(A[c(i, j), ], b[c(i, j)]), silent=TRUE)
+          if (!inherits(x, "try-error")) intersections[k, ] <- x
+        }
+      }
+      if (missing(xlim)) {
+        xlim.0 <- if (length(unique(signif(intersections[, 1]))) != 1){
+          c(-1, 1) + range(intersections[ , 1], na.rm=TRUE)
+        } else c(-5, 5) + intersections[1, 1]
+        xlim <- if (!any(is.na(xlim.0))) xlim.0 else c(-4, 4)
+      }
+      if (missing(ylim)) {
+        ylim.0 <- if (length(unique(signif(intersections[, 2]))) != 1){
+          c(-1, 1) + range(intersections[ , 2], na.rm=TRUE)
+        } else c(-5, 5) + intersections[1, 2]
+        if (any(is.na(ylim.0))) ylim.0 <- NULL
+      }
+    }
+  }
+
+  # set values for horizontal variable
+  x <- seq(xlim[1], xlim[2], length=10)
+
+  if (length(col) < neq) col <- rep_len(col, length.out=neq)
+  if (length(lwd) < neq) lwd <- rep_len(lwd, length.out=neq)
+  if (length(lty) < neq) lty <- rep_len(lty, length.out=neq)
 
   if (missing(ylim)) {
-    ylim <- xlim
+    ylim <- ylim.0
     for (i in 1:neq) {
-      if (A[i,2] != 0) {
-        y <- (b[i] - A[i,1] * x) / A[i,2]
+      if (A[i, 2] != 0) {
+        y <- (b[i] - A[i, 1] * x) / A[i, 2]
         ylim <- range(c(ylim, y))
       }
     }
   }
 
-	if (is.logical(labels) && labels) {
-    labels <- showEqn(A,b, vars, simplify=TRUE)
-	}
-	else labels=NULL
+  labels <- if (isTRUE(labels)) {
+    showEqn(A, b, vars, simplify=TRUE)
+  }
 
-	for (i in 1:neq) {
-	  if (i==1) plot(xlim, ylim, type="n", xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim)
+  for (i in 1:neq) {
+    if (i == 1) plot(xlim, ylim, type="n", xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim)
 
-	  if (A[i,2] == 0) {
-	    abline( v = b[i] / A[i,1], col = col[i], lwd = lwd[i], lty = lty[i] )
-	    y <- ylim
-	  }
-	  else {
-	    # calculate y values for current equation
-	    y <- (b[i] - A[i,1] * x) / A[i,2]
-	    lines( x, y, col = col[i], type = 'l', lwd = lwd[i], lty = lty[i] )
-	  }
+    if (A[i, 2] == 0) {
+      abline(v = b[i] / A[i, 1], col = col[i], lwd = lwd[i], lty = lty[i])
+      y <- ylim
+    }
+    else {
+      # calculate y values for current equation
+      y <- (b[i] - A[i, 1] * x) / A[i, 2]
+      lines(x, y, col = col[i], type = 'l', lwd = lwd[i], lty = lty[i])
+    }
 
-	  if (!is.null(labels)) {
-	    xl <- if(A[i,2] == 0) b[i] else x[1]
-	    yl <- y[1]
-	    label <- labels[i]
-	    label <- parse(text=sub("=", "==", label))
-	    text(xl, yl, label, col=col[i], pos=4)
-	  }
-	}
-	if (axes) abline(h=0, v=0, col="gray")
+    if (!is.null(labels)) {
+      xl <- if(A[i, 2] == 0) b[i] else x[1]
+      label <- parse(text=sub("=", "==", labels[i]))
+      text(xl, y[1], label, col=col[i], pos=4)
+    }
+  }
 
-	if (solution) {
-	  for (i in 1:neq-1) {
-	    for (j in i:neq) {
-	      x <- try(solve(A[c(i,j),],b[c(i,j)]), silent=TRUE)
-	      if (!inherits(x, "try-error")) points(x[1], x[2], cex=1.5)
-	    }
-	  }
-	}
+  if (axes) abline(h=0, v=0, col="gray")
+
+  if (solution) {
+    # for (i in 1:neq-1) {
+    #   for (j in i:neq) {
+    #     x <- try(solve(A[c(i,j),],b[c(i,j)]), silent=TRUE)
+    #     if (!inherits(x, "try-error")) points(x[1], x[2], cex=1.5)
+    #   }
+    # }
+    points(intersections, cex=1.5)
+  }
+
 }
+
+
+# plotEqn <- function(A, b, vars, xlim=c(-4, 4), ylim,
+# 				col=1:nrow(A), lwd=2, lty=1,
+# 				axes=TRUE, labels=TRUE,
+# 				solution=TRUE
+# 				) {
+#   if (!is.numeric(A) || !is.matrix(A)) stop("A must be a numeric matrix")
+#   if (missing(b)) {
+#     b <- A[,ncol(A)]   # assume last column of Ab
+#     A <- A[,-ncol(A)]  # remove b from A
+#   }
+# 	if (ncol(A) != 2) stop("plotEqn only handles two-variable equations. Use plotEqn3d for three-variable equations.")
+#   if (missing(vars)) vars <- c(expression(x[1]), expression(x[2])) # paste0("x", 1:ncol(A))
+#
+# 	# set values for horizontal variable
+# 	x <- seq(xlim[1], xlim[2], length=10)
+#
+# 	neq <- nrow(A)
+# 	if (length(col) < neq) col <- rep_len(col, length.out=neq)
+# 	if (length(lwd) < neq) lwd <- rep_len(lwd, length.out=neq)
+# 	if (length(lty) < neq) lty <- rep_len(lty, length.out=neq)
+#
+#   if (missing(ylim)) {
+#     ylim <- xlim
+#     for (i in 1:neq) {
+#       if (A[i,2] != 0) {
+#         y <- (b[i] - A[i,1] * x) / A[i,2]
+#         ylim <- range(c(ylim, y))
+#       }
+#     }
+#   }
+#
+# 	if (is.logical(labels) && labels) {
+#     labels <- showEqn(A,b, vars, simplify=TRUE)
+# 	}
+# 	else labels=NULL
+#
+# 	for (i in 1:neq) {
+# 	  if (i==1) plot(xlim, ylim, type="n", xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim)
+#
+# 	  if (A[i,2] == 0) {
+# 	    abline( v = b[i] / A[i,1], col = col[i], lwd = lwd[i], lty = lty[i] )
+# 	    y <- ylim
+# 	  }
+# 	  else {
+# 	    # calculate y values for current equation
+# 	    y <- (b[i] - A[i,1] * x) / A[i,2]
+# 	    lines( x, y, col = col[i], type = 'l', lwd = lwd[i], lty = lty[i] )
+# 	  }
+#
+# 	  if (!is.null(labels)) {
+# 	    xl <- if(A[i,2] == 0) b[i] else x[1]
+# 	    yl <- y[1]
+# 	    label <- labels[i]
+# 	    label <- parse(text=sub("=", "==", label))
+# 	    text(xl, yl, label, col=col[i], pos=4)
+# 	  }
+# 	}
+# 	if (axes) abline(h=0, v=0, col="gray")
+#
+# 	if (solution) {
+# 	  for (i in 1:neq-1) {
+# 	    for (j in i:neq) {
+# 	      x <- try(solve(A[c(i,j),],b[c(i,j)]), silent=TRUE)
+# 	      if (!inherits(x, "try-error")) points(x[1], x[2], cex=1.5)
+# 	    }
+# 	  }
+# 	}
+# }
 
 
 #' Plot Linear Equations in 3D
