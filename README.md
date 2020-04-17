@@ -1,7 +1,11 @@
+<!-- badges: start -->
+
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/matlib)](https://cran.r-project.org/package=matlib)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/matlib)](https://cran.r-project.org/package=matlib)
 [![Travis-CI Build Status](https://travis-ci.org/friendly/matlib.svg?branch=master)](https://travis-ci.org/friendly/matlib)
 [![Rdoc](http://www.rdocumentation.org/badges/version/matlib)](http://www.rdocumentation.org/packages/matlib)
+
+<!-- badges: end -->
 
 # matlib <img src="matlib-logo.png" align="right" height="200px" />
 
