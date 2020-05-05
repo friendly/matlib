@@ -40,12 +40,14 @@ QR <- function(X, tol=sqrt(.Machine$double.eps)){
   U <- X
   E <- matrix(0, nrow(X), ncol(X))
   E[, 1] <- U[, 1]/length(U[, 1])
-  for (j in 2:ncol(U)){
-    for (k in 1:(j - 1)){
-      U[, j] <- U[, j] - as.vector(X[, j] %*% E[, k]) * E[, k]
+  if (ncol(U)>1) {                 # trap potential error
+    for (j in 2:ncol(U)){
+      for (k in 1:(j - 1)){
+        U[, j] <- U[, j] - as.vector(X[, j] %*% E[, k]) * E[, k]
+      }
+      len.U.j <- length(U[, j])
+      if (len.U.j > tol) E[, j] <- U[, j]/len.U.j
     }
-    len.U.j <- length(U[, j])
-    if (len.U.j > tol) E[, j] <- U[, j]/len.U.j
   }
   R <- t(E) %*% X
   R[abs(R) < tol] <- 0
