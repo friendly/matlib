@@ -8,7 +8,7 @@ plotEqn(
   A,
   b,
   vars,
-  xlim = c(-4, 4),
+  xlim,
   ylim,
   col = 1:nrow(A),
   lwd = 2,
@@ -43,7 +43,7 @@ range of the set of equations over the \code{xlim}.}
 \item{axes}{logical; draw horizontal and vertical axes through (0,0)?}
 
 \item{labels}{logical, or a vector of character labels for the equations; if \code{TRUE}, each equation is labeled
-using the character string resulting from \code{\link{showEqn}}, modified so that the 
+using the character string resulting from \code{\link{showEqn}}, modified so that the
 \code{x}s are properly subscripted.}
 
 \item{solution}{logical; should the solution points for pairs of equations be marked?}
