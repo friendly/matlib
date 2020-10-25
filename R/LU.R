@@ -59,8 +59,9 @@ LU <- function(A, b, tol=sqrt(.Machine$double.eps), verbose=FALSE, ...){
       		fns <- formatNumbers(c(y[i], mat[i,i], y[i]/mat[i,i]), ...)
       		if(backword)
       			cat(sprintf("  Solution: x%i = %s/%s = %s\n", i, fns[1], fns[2], fns[3]))
-      		else 
-      			cat(sprintf("  Solution: x%i = %s\n", i, fns[1], fns[2]))
+      		else {
+      			cat(sprintf("  Solution: x%i = %s\n", i, fns[3]))
+      		}
       	}
         ret[i] <- y[i] / mat[i,i]
       } else {
