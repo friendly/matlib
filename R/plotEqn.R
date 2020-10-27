@@ -254,7 +254,8 @@ plotEqn <- function(A, b, vars, xlim, ylim,
 #' plotEqn3d(A,b)
 
 plotEqn3d <- function( A, b, vars, xlim=c(-2,2), ylim=c(-2,2), zlim,
-                       col=2:(nrow(A)+1), alpha=1, labels=FALSE, solution=TRUE,
+                       col=2:(nrow(A)+1), alpha=1,
+                       labels=FALSE, solution=TRUE,
                        axes=TRUE, lit=FALSE)
 {
   if (!is.numeric(A) || !is.matrix(A)) stop("A must be a numeric matrix")
@@ -286,6 +287,9 @@ plotEqn3d <- function( A, b, vars, xlim=c(-2,2), ylim=c(-2,2), zlim,
   }
   else labels=NULL
 
+  # rgl properties
+
+  depth_mask <- if (alpha < 1) TRUE else FALSE
   # Initialize the scene, no data plotted
   # Create some dummy data
   dat <- replicate(2, 1:3)
@@ -293,7 +297,8 @@ plotEqn3d <- function( A, b, vars, xlim=c(-2,2), ylim=c(-2,2), zlim,
               xlab = vars[1], ylab = vars[2], zlab = vars[3],
               axes=axes)
   # Add planes
-  rgl::planes3d(A[,1], A[,2], A[,3], -b, col=col, alpha=alpha, lit=lit)
+  rgl::planes3d(A[,1], A[,2], A[,3], -b,
+                col=col, alpha=alpha, lit=lit, depth_mask=depth_mask)
 
   # show the solution??
   if (solution) {
