@@ -91,7 +91,7 @@ corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
 #'            is calculated as a relative distance, i.e., a fraction of the length of the vectors.
 #' @param ... Arguments passed to \code{link[graphics]{lines}} or to \code{link[rgl]{lines3d}}
 #' @return none
-#' @references \url{http://math.stackexchange.com/questions/1507248/find-arc-between-two-tips-of-vectors-in-3d}
+#' @references \url{https://math.stackexchange.com/questions/1507248/find-arc-between-two-tips-of-vectors-in-3d}
 #' @family vector diagrams
 #' @export
 #' @examples

@@ -57,7 +57,7 @@ arc(p4, p1, p2, d=.2)
 arc(p3, p1, p2, d=.2)
 }
 \references{
-\url{http://math.stackexchange.com/questions/1507248/find-arc-between-two-tips-of-vectors-in-3d}
+\url{https://math.stackexchange.com/questions/1507248/find-arc-between-two-tips-of-vectors-in-3d}
 }
 \seealso{
 Other vector diagrams: 
