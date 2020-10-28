@@ -1,6 +1,7 @@
 adjoint
 Adjoint
 Beaton
+buglet
 carData
 Cheung
 cofactor
@@ -18,6 +19,7 @@ diag
 diagonalizes
 eigen
 Eigen
+eigenstructure
 eivenvalues
 ERO
 EROs
@@ -28,6 +30,8 @@ Hotelling
 Hotelling's
 inv
 Jarecki
+Lundberg
+mathbfS
 matrixkit
 mikewlcheung
 orthogonalization
@@ -44,7 +48,9 @@ repo
 req
 revdep
 rgl
+Rightarrow
 Scazzocchio
+stackoverflow
 subscripted
 svd
 thx
@@ -57,3 +63,4 @@ Vandermode
 vectorize
 Vectorize
 Weiner
+wikipedia

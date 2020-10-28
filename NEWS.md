@@ -2,7 +2,7 @@
 
 - added `xprod()` for vector cross-product
 - added data-beta vignette
-- fix `sprintf` buglet in LU [phil Chalmers]
+- fix `sprintf` buglet in LU [Phil Chalmers]
 
 # matlib 0.9.3
 

@@ -1,14 +1,14 @@
 #' Vectorize a Matrix
 #'
-#' Returns a 1-column matrix, stacking the columns of \code{x}, a matrix or vector. 
-#' Also supports comma-separted inputs similiar to the concatenation 
+#' Returns a 1-column matrix, stacking the columns of \code{x}, a matrix or vector.
+#' Also supports comma-separated inputs similar to the concatenation
 #' function \code{\link{c}}.
 #'
 #' @param x A matrix or vector
-#' 
+#'
 #' @param ... (optional) additional objects to be stacked
 #'
-#' @return A one-column matrix containing the elements of \code{x} and \code{...} 
+#' @return A one-column matrix containing the elements of \code{x} and \code{...}
 #'   in column order
 #'
 #' @export
@@ -16,8 +16,8 @@
 #' vec(1:3)
 #' vec(matrix(1:6, 2, 3))
 #' vec(c("hello", "world"))
-#' vec("hello", "world") 
-#' vec(1:3, "hello", "world") 
+#' vec("hello", "world")
+#' vec(1:3, "hello", "world")
 vec <- function (x, ...)
 {
   if (!(is.matrix(x) || is.vector(x))) {

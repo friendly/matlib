@@ -20,6 +20,7 @@ Description: A collection of matrix functions for teaching and learning matrix
     to show or demonstrate an algorithm. In addition, a collection of functions are
     provided for drawing vector diagrams in 2D and 3D.
 License: GPL (>= 2)
+Language: en-US
 URL: https://github.com/friendly/matlib
 BugReports: https://github.com/friendly/matlib/issues
 LazyData: TRUE
