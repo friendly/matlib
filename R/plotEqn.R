@@ -254,7 +254,7 @@ plotEqn <- function(A, b, vars, xlim, ylim,
 #' plotEqn3d(A,b)
 
 plotEqn3d <- function( A, b, vars, xlim=c(-2,2), ylim=c(-2,2), zlim,
-                       col=2:(nrow(A)+1), alpha=1,
+                       col=2:(nrow(A)+1), alpha=0.9,
                        labels=FALSE, solution=TRUE,
                        axes=TRUE, lit=FALSE)
 {
