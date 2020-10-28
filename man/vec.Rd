@@ -12,18 +12,18 @@ vec(x, ...)
 \item{...}{(optional) additional objects to be stacked}
 }
 \value{
-A one-column matrix containing the elements of \code{x} and \code{...} 
+A one-column matrix containing the elements of \code{x} and \code{...}
   in column order
 }
 \description{
-Returns a 1-column matrix, stacking the columns of \code{x}, a matrix or vector. 
-Also supports comma-separted inputs similiar to the concatenation 
+Returns a 1-column matrix, stacking the columns of \code{x}, a matrix or vector.
+Also supports comma-separated inputs similar to the concatenation
 function \code{\link{c}}.
 }
 \examples{
 vec(1:3)
 vec(matrix(1:6, 2, 3))
 vec(c("hello", "world"))
-vec("hello", "world") 
-vec(1:3, "hello", "world") 
+vec("hello", "world")
+vec(1:3, "hello", "world")
 }

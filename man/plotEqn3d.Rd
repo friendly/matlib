@@ -12,7 +12,7 @@ plotEqn3d(
   ylim = c(-2, 2),
   zlim,
   col = 2:(nrow(A) + 1),
-  alpha = 1,
+  alpha = 0.9,
   labels = FALSE,
   solution = TRUE,
   axes = TRUE,

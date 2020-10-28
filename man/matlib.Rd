@@ -52,7 +52,7 @@ Fox (1984) introduced illustrations of vector geometry.
 }
 
 \references{
-Fox, J. (1984). Linear Statistical Models and Related Methods. NY: John Wiley and Sons.
+Fox, J. Linear Statistical Models and Related Methods. John Wiley and Sons, 1984
 
 Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
