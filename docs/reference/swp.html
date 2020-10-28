@@ -165,7 +165,7 @@ multivariate methods by Beaton (1964) and expanded by Dempster (1969). It is clo
 but applied to a cross-products or covariance matrix, rather than to data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>swp</span>(<span class='no'>M</span>, <span class='no'>index</span>)</pre>
+    <pre class="usage"><span class='fu'>swp</span><span class='op'>(</span><span class='va'>M</span>, <span class='va'>index</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,11 +199,12 @@ $$\left[ \begin{array}{cc} \mathbf {R}^{-1} &amp;  \mathbf {R}^{-1}\mathbf {S} \
     <div class='dont-index'><p><code><a href='Proj.html'>Proj</a></code>, <code><a href='QR.html'>QR</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>therapy</span>)
-<span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>therapy</span> ~ <span class='no'>perstest</span> + <span class='no'>IE</span> + <span class='no'>sex</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>therapy</span>)
-<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='no'>mod3</span>)
-<span class='no'>XY</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>X</span>, <span class='kw'>therapy</span><span class='kw'>=</span><span class='no'>therapy</span>$<span class='no'>therapy</span>)
-<span class='no'>XY</span></div><div class='output co'>#&gt;        (Intercept) perstest IE sexM therapy
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>therapy</span><span class='op'>)</span>
+<span class='va'>mod3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>therapy</span> <span class='op'>~</span> <span class='va'>perstest</span> <span class='op'>+</span> <span class='va'>IE</span> <span class='op'>+</span> <span class='va'>sex</span>, data<span class='op'>=</span><span class='va'>therapy</span><span class='op'>)</span>
+<span class='va'>X</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>mod3</span><span class='op'>)</span>
+<span class='va'>XY</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>X</span>, therapy<span class='op'>=</span><span class='va'>therapy</span><span class='op'>$</span><span class='va'>therapy</span><span class='op'>)</span>
+<span class='va'>XY</span>
+</div><div class='output co'>#&gt;        (Intercept) perstest IE sexM therapy
 #&gt; John             1       26  3    1      32
 #&gt; Susan            1       24  4    0      40
 #&gt; Mary             1       22  8    0      44
@@ -213,13 +214,15 @@ $$\left[ \begin{array}{cc} \mathbf {R}^{-1} &amp;  \mathbf {R}^{-1}\mathbf {S} \
 #&gt; Cathy            1       30 10    0      56
 #&gt; Robert           1       38  4    1      56
 #&gt; Lisa             1       30 12    0      60
-#&gt; Tina             1       34 15    0      68</div><div class='input'><span class='no'>M</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/crossprod.html'>crossprod</a></span>(<span class='no'>XY</span>)
-<span class='fu'>swp</span>(<span class='no'>M</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt;             (Intercept) perstest  IE  sexM therapy
+#&gt; Tina             1       34 15    0      68</div><div class='input'><span class='va'>M</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/crossprod.html'>crossprod</a></span><span class='op'>(</span><span class='va'>XY</span><span class='op'>)</span>
+<span class='fu'>swp</span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             (Intercept) perstest  IE  sexM therapy
 #&gt; (Intercept)        -0.1       30   7   0.4      50
 #&gt; perstest           30.0      250  10  13.0     300
 #&gt; IE                  7.0       10 152 -13.0     304
 #&gt; sexM                0.4       13 -13   2.4     -16
-#&gt; therapy            50.0      300 304 -16.0    1000</div><div class='input'><span class='fu'>swp</span>(<span class='no'>M</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)</div><div class='output co'>#&gt;             (Intercept) perstest     IE    sexM therapy
+#&gt; therapy            50.0      300 304 -16.0    1000</div><div class='input'><span class='fu'>swp</span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             (Intercept) perstest     IE    sexM therapy
 #&gt; (Intercept)       -3.70    0.120   5.80  -1.160    14.0
 #&gt; perstest           0.12   -0.004   0.04   0.052     1.2
 #&gt; IE                 5.80    0.040 151.60 -13.520   292.0
@@ -240,7 +243,7 @@ $$\left[ \begin{array}{cc} \mathbf {R}^{-1} &amp;  \mathbf {R}^{-1}\mathbf {S} \
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

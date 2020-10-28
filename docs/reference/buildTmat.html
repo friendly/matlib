@@ -165,13 +165,13 @@ representing all row operations or may optionally print all the individual opera
 been performed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>buildTmat</span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>buildTmat</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for trace</span>
-<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for trace</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,32 +197,39 @@ been performed.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='echelon.html'>echelon</a></code>, <code><a href='gaussianElimination.html'>gaussianElimination</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Phil Chalmers</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>, -<span class='fl'>1</span>,
-             -<span class='fl'>3</span>, -<span class='fl'>1</span>, <span class='fl'>2</span>,
-             -<span class='fl'>2</span>,  <span class='fl'>1</span>, <span class='fl'>2</span>), <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='kw'>byrow</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8</span>, -<span class='fl'>11</span>, -<span class='fl'>3</span>)
+    <pre class="examples"><div class='input'><span class='va'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>1</span>,
+             <span class='op'>-</span><span class='fl'>3</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>2</span>,
+             <span class='op'>-</span><span class='fl'>2</span>,  <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, byrow<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='op'>-</span><span class='fl'>11</span>, <span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>
 
 <span class='co'># using row operations to reduce below diagonal to 0</span>
-<span class='no'>Abt</span> <span class='kw'>&lt;-</span> <span class='no'>Ab</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>A</span>, <span class='no'>b</span>)
-<span class='no'>Abt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rowadd.html'>rowadd</a></span>(<span class='no'>Abt</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>/<span class='fl'>2</span>)
-<span class='no'>Abt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rowadd.html'>rowadd</a></span>(<span class='no'>Abt</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>1</span>)
-<span class='no'>Abt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rowadd.html'>rowadd</a></span>(<span class='no'>Abt</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, -<span class='fl'>4</span>)
-<span class='no'>Abt</span></div><div class='output co'>#&gt;                 b
+<span class='va'>Abt</span> <span class='op'>&lt;-</span> <span class='va'>Ab</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>b</span><span class='op'>)</span>
+<span class='va'>Abt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rowadd.html'>rowadd</a></span><span class='op'>(</span><span class='va'>Abt</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>Abt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rowadd.html'>rowadd</a></span><span class='op'>(</span><span class='va'>Abt</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>Abt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rowadd.html'>rowadd</a></span><span class='op'>(</span><span class='va'>Abt</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='op'>-</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>Abt</span>
+</div><div class='output co'>#&gt;                 b
 #&gt; [1,] 2 1.0 -1.0 8
 #&gt; [2,] 0 0.5  0.5 1
 #&gt; [3,] 0 0.0 -1.0 1</div><div class='input'>
 <span class='co'># build T matrix and multiply by original form</span>
-(<span class='no'>T</span> <span class='kw'>&lt;-</span> <span class='fu'>buildTmat</span>(<span class='no'>Abt</span>))</div><div class='output co'>#&gt;      [,1] [,2] [,3]
+<span class='op'>(</span><span class='cn'>T</span> <span class='op'>&lt;-</span> <span class='fu'>buildTmat</span><span class='op'>(</span><span class='va'>Abt</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]  1.0    0    0
 #&gt; [2,]  1.5    1    0
-#&gt; [3,] -5.0   -4    1</div><div class='input'><span class='no'>T</span> <span class='kw'>%*%</span> <span class='no'>Ab</span>    <span class='co'># same as Abt</span></div><div class='output co'>#&gt;                 b
+#&gt; [3,] -5.0   -4    1</div><div class='input'><span class='cn'>T</span> <span class='op'>%*%</span> <span class='va'>Ab</span>    <span class='co'># same as Abt</span>
+</div><div class='output co'>#&gt;                 b
 #&gt; [1,] 2 1.0 -1.0 8
 #&gt; [2,] 0 0.5  0.5 1
 #&gt; [3,] 0 0.0 -1.0 1</div><div class='input'>
 <span class='co'># print all transformation matrices</span>
-<span class='fu'>buildTmat</span>(<span class='no'>Abt</span>, <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $T1
+<span class='fu'>buildTmat</span><span class='op'>(</span><span class='va'>Abt</span>, <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $T1
 #&gt;      [,1] [,2] [,3]
 #&gt; [1,]  1.0    0    0
 #&gt; [2,]  1.5    1    0
@@ -241,16 +248,19 @@ been performed.</p>
 #&gt; [3,]    0   -4    1
 #&gt; </div><div class='input'>
 <span class='co'># invert transformation matrix to reverse operations</span>
-<span class='fu'><a href='Inverse.html'>inv</a></span>(<span class='no'>T</span>) <span class='kw'>%*%</span> <span class='no'>Abt</span></div><div class='output co'>#&gt;                 b
+<span class='fu'><a href='Inverse.html'>inv</a></span><span class='op'>(</span><span class='cn'>T</span><span class='op'>)</span> <span class='op'>%*%</span> <span class='va'>Abt</span>
+</div><div class='output co'>#&gt;                 b
 #&gt; [1,]  2  1 -1   8
 #&gt; [2,] -3 -1  2 -11
 #&gt; [3,] -2  1  2  -3</div><div class='input'>
 <span class='co'># gaussian elimination</span>
-(<span class='no'>soln</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='gaussianElimination.html'>gaussianElimination</a></span>(<span class='no'>A</span>, <span class='no'>b</span>))</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
+<span class='op'>(</span><span class='va'>soln</span> <span class='op'>&lt;-</span> <span class='fu'><a href='gaussianElimination.html'>gaussianElimination</a></span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
 #&gt; [1,]    1    0    0    2
 #&gt; [2,]    0    1    0    3
-#&gt; [3,]    0    0    1   -1</div><div class='input'><span class='no'>T</span> <span class='kw'>&lt;-</span> <span class='fu'>buildTmat</span>(<span class='no'>soln</span>)
-<span class='fu'><a href='Inverse.html'>inv</a></span>(<span class='no'>T</span>) <span class='kw'>%*%</span> <span class='no'>soln</span></div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
+#&gt; [3,]    0    0    1   -1</div><div class='input'><span class='cn'>T</span> <span class='op'>&lt;-</span> <span class='fu'>buildTmat</span><span class='op'>(</span><span class='va'>soln</span><span class='op'>)</span>
+<span class='fu'><a href='Inverse.html'>inv</a></span><span class='op'>(</span><span class='cn'>T</span><span class='op'>)</span> <span class='op'>%*%</span> <span class='va'>soln</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
 #&gt; [1,]    2    1   -1    8
 #&gt; [2,]   -3   -1    2  -11
 #&gt; [3,]   -2    1    2   -3</div><div class='input'>
@@ -270,7 +280,7 @@ been performed.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

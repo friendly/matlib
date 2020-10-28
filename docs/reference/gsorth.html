@@ -159,7 +159,7 @@
     <p>Calculates a matrix with uncorrelated columns using the Gram-Schmidt process</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gsorth</span>(<span class='no'>y</span>, <span class='no'>order</span>, <span class='kw'>recenter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rescale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>adjnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>gsorth</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>order</span>, recenter <span class='op'>=</span> <span class='cn'>TRUE</span>, rescale <span class='op'>=</span> <span class='cn'>TRUE</span>, adjnames <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,13 +195,14 @@
 <code><a href='GramSchmidt.html'>GramSchmidt</a></code> instead.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
- <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1234</span>)
- <span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>60</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>60</span>)), <span class='fl'>20</span>, <span class='fl'>3</span>)
- <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>A</span>)
- <span class='no'>G</span> <span class='kw'>&lt;-</span> <span class='fu'>gsorth</span>(<span class='no'>A</span>)
- <span class='fu'><a href='https://rdrr.io/r/base/zapsmall.html'>zapsmall</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>G</span>))
- }</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+ <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+ <span class='va'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>60</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>60</span><span class='op'>)</span><span class='op'>)</span>, <span class='fl'>20</span>, <span class='fl'>3</span><span class='op'>)</span>
+ <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
+ <span class='va'>G</span> <span class='op'>&lt;-</span> <span class='fu'>gsorth</span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
+ <span class='fu'><a href='https://rdrr.io/r/base/zapsmall.html'>zapsmall</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>G</span><span class='op'>)</span><span class='op'>)</span>
+ <span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -217,7 +218,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

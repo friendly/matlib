@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Vectorize a Matrix — vec" />
-<meta property="og:description" content="Returns a 1-column matrix, stacking the columns of x, a matrix or vector. 
-Also supports comma-separted inputs similiar to the concatenation 
+<meta property="og:description" content="Returns a 1-column matrix, stacking the columns of x, a matrix or vector.
+Also supports comma-separated inputs similar to the concatenation
 function c." />
 
 
@@ -158,12 +158,12 @@ function c." />
     </div>
 
     <div class="ref-description">
-    <p>Returns a 1-column matrix, stacking the columns of <code>x</code>, a matrix or vector. 
-Also supports comma-separted inputs similiar to the concatenation 
+    <p>Returns a 1-column matrix, stacking the columns of <code>x</code>, a matrix or vector.
+Also supports comma-separated inputs similar to the concatenation
 function <code><a href='https://rdrr.io/r/base/c.html'>c</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vec</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>vec</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,24 +180,29 @@ function <code><a href='https://rdrr.io/r/base/c.html'>c</a></code>.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A one-column matrix containing the elements of <code>x</code> and <code>...</code> 
+    <p>A one-column matrix containing the elements of <code>x</code> and <code>...</code>
   in column order</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>vec</span>(<span class='fl'>1</span>:<span class='fl'>3</span>)</div><div class='output co'>#&gt;      [,1]
+    <pre class="examples"><div class='input'><span class='fu'>vec</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]
 #&gt; [1,]    1
 #&gt; [2,]    2
-#&gt; [3,]    3</div><div class='input'><span class='fu'>vec</span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>6</span>, <span class='fl'>2</span>, <span class='fl'>3</span>))</div><div class='output co'>#&gt;      [,1]
+#&gt; [3,]    3</div><div class='input'><span class='fu'>vec</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]
 #&gt; [1,]    1
 #&gt; [2,]    2
 #&gt; [3,]    3
 #&gt; [4,]    4
 #&gt; [5,]    5
-#&gt; [6,]    6</div><div class='input'><span class='fu'>vec</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"hello"</span>, <span class='st'>"world"</span>))</div><div class='output co'>#&gt;      [,1]   
+#&gt; [6,]    6</div><div class='input'><span class='fu'>vec</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"hello"</span>, <span class='st'>"world"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]   
 #&gt; [1,] "hello"
-#&gt; [2,] "world"</div><div class='input'><span class='fu'>vec</span>(<span class='st'>"hello"</span>, <span class='st'>"world"</span>)</div><div class='output co'>#&gt;      [,1]   
+#&gt; [2,] "world"</div><div class='input'><span class='fu'>vec</span><span class='op'>(</span><span class='st'>"hello"</span>, <span class='st'>"world"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]   
 #&gt; [1,] "hello"
-#&gt; [2,] "world"</div><div class='input'><span class='fu'>vec</span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='st'>"hello"</span>, <span class='st'>"world"</span>)</div><div class='output co'>#&gt;      [,1]   
+#&gt; [2,] "world"</div><div class='input'><span class='fu'>vec</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='st'>"hello"</span>, <span class='st'>"world"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]   
 #&gt; [1,] "1"    
 #&gt; [2,] "2"    
 #&gt; [3,] "3"    
@@ -218,7 +223,7 @@ function <code><a href='https://rdrr.io/r/base/c.html'>c</a></code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

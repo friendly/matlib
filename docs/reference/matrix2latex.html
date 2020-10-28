@@ -161,7 +161,7 @@ fractions output and square brackets." />
 <code>fraction</code>s output and square <code>bracket</code>s.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>matrix2latex</span>(<span class='no'>x</span>, <span class='kw'>fractions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>brackets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>matrix2latex</span><span class='op'>(</span><span class='va'>x</span>, fractions <span class='op'>=</span> <span class='cn'>FALSE</span>, brackets <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,26 +184,32 @@ fractions output and square brackets." />
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Phil Chalmers</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>, -<span class='fl'>1</span>,
-             -<span class='fl'>3</span>, -<span class='fl'>1</span>, <span class='fl'>2</span>,
-             -<span class='fl'>2</span>,  <span class='fl'>1</span>, <span class='fl'>2</span>), <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='kw'>byrow</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8</span>, -<span class='fl'>11</span>, -<span class='fl'>3</span>)
+    <pre class="examples"><div class='input'><span class='va'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>1</span>,
+             <span class='op'>-</span><span class='fl'>3</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>2</span>,
+             <span class='op'>-</span><span class='fl'>2</span>,  <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, byrow<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='op'>-</span><span class='fl'>11</span>, <span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>
 
-<span class='fu'>matrix2latex</span>(<span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>A</span>,<span class='no'>b</span>))</div><div class='output co'>#&gt; \left[
+<span class='fu'>matrix2latex</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>A</span>,<span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; \left[
 #&gt;  \begin{array}{rrrr}
 #&gt;   2.00 &amp; 1.00 &amp; -1.00 &amp; 8.00 \\ 
 #&gt;   -3.00 &amp; -1.00 &amp; 2.00 &amp; -11.00 \\ 
 #&gt;   -2.00 &amp; 1.00 &amp; 2.00 &amp; -3.00 \\ 
 #&gt;   \end{array}
-#&gt; \right]</div><div class='input'><span class='fu'>matrix2latex</span>(<span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>A</span>,<span class='no'>b</span>), <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; \left[
+#&gt; \right]</div><div class='input'><span class='fu'>matrix2latex</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>A</span>,<span class='va'>b</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; \left[
 #&gt;  \begin{array}{rrrr}
 #&gt;   2 &amp; 1 &amp; -1 &amp; 8 \\ 
 #&gt;   -3 &amp; -1 &amp; 2 &amp; -11 \\ 
 #&gt;   -2 &amp; 1 &amp; 2 &amp; -3 \\ 
 #&gt;   \end{array}
-#&gt; \right]</div><div class='input'><span class='fu'>matrix2latex</span>(<span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>A</span>/<span class='fl'>2</span>,<span class='no'>b</span>), <span class='kw'>fractions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; \left[
+#&gt; \right]</div><div class='input'><span class='fu'>matrix2latex</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>/</span><span class='fl'>2</span>,<span class='va'>b</span><span class='op'>)</span>, fractions <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; \left[
 #&gt;  \begin{array}{llll}
 #&gt;   1 &amp; 1/2 &amp; -1/2 &amp; 8 \\ 
 #&gt;   -3/2 &amp; -1/2 &amp; 1 &amp; -11 \\ 
@@ -226,7 +232,7 @@ fractions output and square brackets." />
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

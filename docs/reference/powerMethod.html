@@ -161,7 +161,7 @@ eigenvector, \(v_1\), of a square matrix by applying Hotelling's (1933) Power Me
 eigenvector, \(v_1\), of a square matrix by applying Hotelling's (1933) Power Method with scaling.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>powerMethod</span>(<span class='no'>A</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>eps</span> <span class='kw'>=</span> <span class='fl'>1e-06</span>, <span class='kw'>maxiter</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>powerMethod</span><span class='op'>(</span><span class='va'>A</span>, v <span class='op'>=</span> <span class='cn'>NULL</span>, eps <span class='op'>=</span> <span class='fl'>1e-06</span>, maxiter <span class='op'>=</span> <span class='fl'>100</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,10 +207,14 @@ dominant eigenvector is required, e.g., the Google Page Rank algorithm.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hotelling, H. (1933). Analysis of a complex of statistical variables into principal components. <em>Journal of Educational Psychology</em>, 24, 417-441, and 498-520.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gaston Sanchez (from matrixkit)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>6</span>))
-<span class='fu'>powerMethod</span>(<span class='no'>A</span>)</div><div class='output co'>#&gt; $vector_iterations
+    <pre class="examples"><div class='input'><span class='va'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>powerMethod</span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $vector_iterations
 #&gt;      v1        v2        v3        v4        v5        v6        v7        v8
 #&gt; [1,]  1 0.7432941 0.7559462 0.7604661 0.7620956 0.7626851 0.7628986 0.7629760
 #&gt; [2,]  1 0.6689647 0.6546338 0.6493776 0.6474645 0.6467700 0.6465181 0.6464268
@@ -228,11 +232,15 @@ dominant eigenvector is required, e.g., the Google Page Rank algorithm.</p>
 #&gt; 
 #&gt; $value
 #&gt; [1] 9.541381
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span>(<span class='no'>A</span>)$<span class='no'>values</span>[<span class='fl'>1</span>] <span class='co'># check</span></div><div class='output co'>#&gt; [1] 9.541381</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span>(<span class='no'>A</span>)$<span class='no'>vectors</span>[,<span class='fl'>1</span>]</div><div class='output co'>#&gt; [1] -0.7630200 -0.6463749</div><div class='input'>
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span><span class='op'>$</span><span class='va'>values</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='co'># check</span>
+</div><div class='output co'>#&gt; [1] 9.541381</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [1] -0.7630200 -0.6463749</div><div class='input'>
 <span class='co'># demonstrate how the power method converges to a solution</span>
-<span class='fu'>powerMethod</span>(<span class='no'>A</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>.5</span>, <span class='fl'>1</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='powerMethod-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>3</span>, <span class='fl'>1</span>))
-(<span class='no'>rv</span> <span class='kw'>&lt;-</span> <span class='fu'>powerMethod</span>(<span class='no'>B</span>))</div><div class='output co'>#&gt; $vector_iterations
+<span class='fu'>powerMethod</span><span class='op'>(</span><span class='va'>A</span>, v <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>.5</span>, <span class='fl'>1</span><span class='op'>)</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='powerMethod-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>B</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>rv</span> <span class='op'>&lt;-</span> <span class='fu'>powerMethod</span><span class='op'>(</span><span class='va'>B</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $vector_iterations
 #&gt;      v1        v2        v3        v4        v5        v6        v7        v8
 #&gt; [1,]  1 0.3841106 0.4184463 0.3819585 0.3989921 0.3885977 0.3943249 0.3910547
 #&gt; [2,]  1 0.7682213 0.6695140 0.7275400 0.6952733 0.7137158 0.7033401 0.7092289
@@ -263,10 +271,11 @@ dominant eigenvector is required, e.g., the Google Page Rank algorithm.</p>
 #&gt; [1] 4.605551
 #&gt; </div><div class='input'>
 <span class='co'># deflate to find 2nd latent vector</span>
-<span class='no'>l</span> <span class='kw'>&lt;-</span> <span class='no'>rv</span>$<span class='no'>value</span>
-<span class='no'>v</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>rv</span>$<span class='no'>vector</span>)
-<span class='no'>B1</span> <span class='kw'>&lt;-</span> <span class='no'>B</span> - <span class='no'>l</span> * <span class='fu'><a href='https://rdrr.io/r/base/outer.html'>outer</a></span>(<span class='no'>v</span>, <span class='no'>v</span>)
-<span class='fu'>powerMethod</span>(<span class='no'>B1</span>)</div><div class='output co'>#&gt; $vector_iterations
+<span class='va'>l</span> <span class='op'>&lt;-</span> <span class='va'>rv</span><span class='op'>$</span><span class='va'>value</span>
+<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>rv</span><span class='op'>$</span><span class='va'>vector</span><span class='op'>)</span>
+<span class='va'>B1</span> <span class='op'>&lt;-</span> <span class='va'>B</span> <span class='op'>-</span> <span class='va'>l</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/outer.html'>outer</a></span><span class='op'>(</span><span class='va'>v</span>, <span class='va'>v</span><span class='op'>)</span>
+<span class='fu'>powerMethod</span><span class='op'>(</span><span class='va'>B1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $vector_iterations
 #&gt;      v1          v2         v3         v4         v5         v6         v7
 #&gt; [1,]  1 -0.06371093  0.5108612 -0.3439621  0.4104417 -0.3851914  0.3949269
 #&gt; [2,]  1  0.65894964 -0.6993467  0.7059478 -0.7069361  0.7070820 -0.7071035
@@ -291,16 +300,19 @@ dominant eigenvector is required, e.g., the Google Page Rank algorithm.</p>
 #&gt; 
 #&gt; $value
 #&gt; [1] -2.605551
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span>(<span class='no'>B</span>)$<span class='no'>vectors</span>     <span class='co'># check</span></div><div class='output co'>#&gt;           [,1]          [,2]       [,3]
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span><span class='op'>(</span><span class='va'>B</span><span class='op'>)</span><span class='op'>$</span><span class='va'>vectors</span>     <span class='co'># check</span>
+</div><div class='output co'>#&gt;           [,1]          [,2]       [,3]
 #&gt; [1,] 0.3922323  8.320503e-01 -0.3922323
 #&gt; [2,] 0.7071068  6.568970e-16  0.7071068
 #&gt; [3,] 0.5883484 -5.547002e-01 -0.5883484</div><div class='input'>
 <span class='co'># a positive, semi-definite matrix, with eigenvalues 12, 6, 0</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>4</span>, <span class='fl'>1</span>,  <span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>4</span>,  <span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>7</span>), <span class='fl'>3</span>, <span class='fl'>3</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span>(<span class='no'>C</span>)$<span class='no'>vectors</span></div><div class='output co'>#&gt;            [,1]          [,2]       [,3]
+<span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>4</span>, <span class='fl'>1</span>,  <span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>4</span>,  <span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>7</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/eigen.html'>eigen</a></span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span><span class='op'>$</span><span class='va'>vectors</span>
+</div><div class='output co'>#&gt;            [,1]          [,2]       [,3]
 #&gt; [1,] -0.5773503  7.071068e-01  0.4082483
 #&gt; [2,] -0.5773503  6.938894e-16 -0.8164966
-#&gt; [3,] -0.5773503 -7.071068e-01  0.4082483</div><div class='input'><span class='fu'>powerMethod</span>(<span class='no'>C</span>)</div><div class='output co'>#&gt; $vector_iterations
+#&gt; [3,] -0.5773503 -7.071068e-01  0.4082483</div><div class='input'><span class='fu'>powerMethod</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $vector_iterations
 #&gt;      v1        v2
 #&gt; [1,]  1 0.5773503
 #&gt; [2,]  1 0.5773503
@@ -333,7 +345,7 @@ dominant eigenvector is required, e.g., the Google Page Rank algorithm.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

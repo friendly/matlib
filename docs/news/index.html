@@ -153,18 +153,20 @@
       <small>Source: <a href='https://github.com/friendly/matlib/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="matlib-0-9-4" class="section level1">
+    <div id="matlib-094" class="section level1">
 <h1 class="page-header" data-toc-text="0.9.4">
-<a href="#matlib-0-9-4" class="anchor"></a>matlib 0.9.4<small> Unreleased </small>
+<a href="#matlib-094" class="anchor"></a>matlib 0.9.4<small> Unreleased </small>
 </h1>
 <ul>
 <li>added <code><a href="../reference/xprod.html">xprod()</a></code> for vector cross-product</li>
 <li>added data-beta vignette</li>
+<li>fix <code>sprintf</code> warning from LU [Phil Chalmers]</li>
+<li>better plotting of planes in plotEqn3d, alpha=0.9</li>
 </ul>
 </div>
-    <div id="matlib-0-9-3" class="section level1">
+    <div id="matlib-093" class="section level1">
 <h1 class="page-header" data-toc-text="0.9.3">
-<a href="#matlib-0-9-3" class="anchor"></a>matlib 0.9.3<small> 2020-04-02 </small>
+<a href="#matlib-093" class="anchor"></a>matlib 0.9.3<small> 2020-04-02 </small>
 </h1>
 <ul>
 <li>
@@ -173,9 +175,9 @@
 </li>
 </ul>
 </div>
-    <div id="matlib-0-9-2" class="section level1">
+    <div id="matlib-092" class="section level1">
 <h1 class="page-header" data-toc-text="0.9.2">
-<a href="#matlib-0-9-2" class="anchor"></a>matlib 0.9.2<small> 2019-05-29 </small>
+<a href="#matlib-092" class="anchor"></a>matlib 0.9.2<small> 2019-05-29 </small>
 </h1>
 <ul>
 <li>Bug fix in arrows3d.r [Thx: Douglas Whitaker]</li>
@@ -189,17 +191,17 @@
 <li>now use_revdep()</li>
 </ul>
 </div>
-    <div id="matlib-0-9-1" class="section level1">
+    <div id="matlib-091" class="section level1">
 <h1 class="page-header" data-toc-text="0.9.1">
-<a href="#matlib-0-9-1" class="anchor"></a>matlib 0.9.1<small> 2018-04-04 </small>
+<a href="#matlib-091" class="anchor"></a>matlib 0.9.1<small> 2018-04-04 </small>
 </h1>
 <ul>
 <li>fix references to car datatsets -&gt; carData</li>
 </ul>
 </div>
-    <div id="matlib-0-9-0" class="section level1">
+    <div id="matlib-090" class="section level1">
 <h1 class="page-header" data-toc-text="0.9.0">
-<a href="#matlib-0-9-0" class="anchor"></a>matlib 0.9.0<small> Unreleased </small>
+<a href="#matlib-090" class="anchor"></a>matlib 0.9.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>
@@ -215,39 +217,36 @@
 <li>Phil Chalmers is now recognized officially as a package author [aut]</li>
 </ul>
 </div>
-    <div id="matlib-0-8-3" class="section level1">
+    <div id="matlib-083" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.3">
-<a href="#matlib-0-8-3" class="anchor"></a>matlib 0.8.3<small> Unreleased </small>
+<a href="#matlib-083" class="anchor"></a>matlib 0.8.3<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>rename functions for consistency: <code>eig()</code> -&gt; <code><a href="../reference/Eigen.html">Eigen()</a></code>, <code>point_on_line()</code> -&gt; <code><a href="../reference/pointOnLine.html">pointOnLine()</a></code>, <code>power_method()</code> -&gt; <code><a href="../reference/powerMethod.html">powerMethod()</a></code>, <code>row_cofactors()</code> -&gt; <code><a href="../reference/rowCofactors.html">rowCofactors()</a></code>, <code>row_minors()</code> -&gt; <code><a href="../reference/rowMinors.html">rowMinors()</a></code>.</p></li>
-<li>add <code><a href="../reference/Det.html">Det()</a></code> to compute determinants by elimination, from eigenvalues, or by minors and cofactors, with possibility of <code>verbose</code> output.</li>
-<li>
-<code><a href="../reference/plotEqn3d.html">plotEqn3d()</a></code> gets an <code>axes</code> argument and <code>lit</code> to control lighting of the planes; <code>lit</code> solves a problem with the planes becoming indistinguishable in some rotations.</li>
-<li>add <code><a href="../reference/svdDemo.html">svdDemo()</a></code> function to illustrate the SVD of a 3 x 3 matrix [thx: Duncan Murdoch]</li>
-<li>add <code><a href="../reference/symMat.html">symMat()</a></code> to create a square symmetric matrix from a vector.</li>
-<li>add <code><a href="../reference/angle.html">angle()</a></code> to calculate angle between vectors</li>
-<li>
-<code><a href="../reference/powerMethod.html">powerMethod()</a></code> gets a <code>keep</code> argument, for possible use in plotting the convergence of eigenvectors.</li>
-<li>add <code><a href="../reference/adjoint.html">adjoint()</a></code>, to round out methods for determinants</li>
-<li>add <code><a href="../reference/GramSchmidt.html">GramSchmidt()</a></code> for the Gram-Schmidt algorithm on columns of a matrix. The existing function <code><a href="../reference/gsorth.html">gsorth()</a></code> will be deprecated and then removed.</li>
-<li>
-<code><a href="../reference/gsorth.html">gsorth()</a></code> has been deprecated.</li>
-<li>fixed use of MASS::fractions in gaussianElimination</li>
+<li><p>add <code><a href="../reference/Det.html">Det()</a></code> to compute determinants by elimination, from eigenvalues, or by minors and cofactors, with possibility of <code>verbose</code> output.</p></li>
+<li><p><code><a href="../reference/plotEqn3d.html">plotEqn3d()</a></code> gets an <code>axes</code> argument and <code>lit</code> to control lighting of the planes; <code>lit</code> solves a problem with the planes becoming indistinguishable in some rotations.</p></li>
+<li><p>add <code><a href="../reference/svdDemo.html">svdDemo()</a></code> function to illustrate the SVD of a 3 x 3 matrix [thx: Duncan Murdoch]</p></li>
+<li><p>add <code><a href="../reference/symMat.html">symMat()</a></code> to create a square symmetric matrix from a vector.</p></li>
+<li><p>add <code><a href="../reference/angle.html">angle()</a></code> to calculate angle between vectors</p></li>
+<li><p><code><a href="../reference/powerMethod.html">powerMethod()</a></code> gets a <code>keep</code> argument, for possible use in plotting the convergence of eigenvectors.</p></li>
+<li><p>add <code><a href="../reference/adjoint.html">adjoint()</a></code>, to round out methods for determinants</p></li>
+<li><p>add <code><a href="../reference/GramSchmidt.html">GramSchmidt()</a></code> for the Gram-Schmidt algorithm on columns of a matrix. The existing function <code><a href="../reference/gsorth.html">gsorth()</a></code> will be deprecated and then removed.</p></li>
+<li><p><code><a href="../reference/gsorth.html">gsorth()</a></code> has been deprecated.</p></li>
+<li><p>fixed use of MASS::fractions in gaussianElimination</p></li>
 <li><p>added <code><a href="../reference/printMatEqn.html">printMatEqn()</a></code> to print matrix expressions side-by-side</p></li>
 </ul>
 </div>
-    <div id="matlib-0-8-1" class="section level1">
+    <div id="matlib-081" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.1">
-<a href="#matlib-0-8-1" class="anchor"></a>matlib 0.8.1<small> 2016-09-17 </small>
+<a href="#matlib-081" class="anchor"></a>matlib 0.8.1<small> 2016-09-17 </small>
 </h1>
 <ul>
 <li>remove inst/doc to satisfy CRAN</li>
 </ul>
 </div>
-    <div id="matlib-0-8-0" class="section level1">
+    <div id="matlib-080" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.0">
-<a href="#matlib-0-8-0" class="anchor"></a>matlib 0.8.0<small> Unreleased </small>
+<a href="#matlib-080" class="anchor"></a>matlib 0.8.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>add a vignette on properties of determinants (<code>det-ex1</code>)</li>
@@ -261,31 +260,31 @@
 <li>added <code><a href="../reference/LU.html">LU()</a></code> for LU decomposition</li>
 </ul>
 </div>
-    <div id="matlib-0-7-3" class="section level1">
+    <div id="matlib-073" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.3">
-<a href="#matlib-0-7-3" class="anchor"></a>matlib 0.7.3<small> 2016-06-06 </small>
+<a href="#matlib-073" class="anchor"></a>matlib 0.7.3<small> 2016-06-06 </small>
 </h1>
 <ul>
 <li>Changed gaussianElimination() by defining local ERO functions to make the algorithm clearer; in verbose mode, show each ERO.</li>
-<li>Added a draw argument to <code><a href="../reference/vectors3d.html">vectors3d()</a></code> and <code><a href="../reference/arrows3d.html">arrows3d()</a></code>, which defaults to TRUE. If FALSE, just returns returns the âreg.lengthâ to help in scaling.</li>
+<li>Added a draw argument to <code><a href="../reference/vectors3d.html">vectors3d()</a></code> and <code><a href="../reference/arrows3d.html">arrows3d()</a></code>, which defaults to TRUE. If FALSE, just returns returns the “reg.length” to help in scaling.</li>
 <li>Optionally scale error spheres (and circles) produced by regvec3d() so that they project confidence intervals on the x1 and x2 axes.</li>
 <li>Small cosmetic changes to regvec3d().</li>
 <li>
 <code><a href="../reference/showEqn.html">showEqn()</a></code> and <code><a href="../reference/gaussianElimination.html">gaussianElimination()</a></code> get <code>latex</code> arguments, to print results in LaTeX format [thx: Phil Chalmers]</li>
 </ul>
 </div>
-    <div id="matlib-0-7-2" class="section level1">
+    <div id="matlib-072" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.2">
-<a href="#matlib-0-7-2" class="anchor"></a>matlib 0.7.2<small> 2016-02-08 </small>
+<a href="#matlib-072" class="anchor"></a>matlib 0.7.2<small> 2016-02-08 </small>
 </h1>
 <ul>
 <li>added argument <code>error.sphere</code> to <code><a href="../reference/plot.regvec3d.html">plot.regvec3d()</a></code> [JF]</li>
 <li>remove use of <code><a href="https://rdrr.io/r/base/lengths.html">lengths()</a></code> in <code><a href="../reference/corner.html">corner()</a></code> to avoid R version dependency</li>
 </ul>
 </div>
-    <div id="matlib-0-7-0" class="section level1">
+    <div id="matlib-070" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.0">
-<a href="#matlib-0-7-0" class="anchor"></a>matlib 0.7.0<small> 2016-01-06 </small>
+<a href="#matlib-070" class="anchor"></a>matlib 0.7.0<small> 2016-01-06 </small>
 </h1>
 <ul>
 <li>use <code><a href="../reference/corner.html">corner()</a></code> in vectors3d.Rd</li>
@@ -299,14 +298,14 @@
 <li>reversed sense of <code>absolute</code> in <code>points_on_line()</code> and clarified documentation</li>
 </ul>
 </div>
-    <div id="matlib-0-6-0" class="section level1">
+    <div id="matlib-060" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.0">
-<a href="#matlib-0-6-0" class="anchor"></a>matlib 0.6.0<small> 2015-12-15 </small>
+<a href="#matlib-060" class="anchor"></a>matlib 0.6.0<small> 2015-12-15 </small>
 </h1>
 <ul>
 <li>added <code><a href="../reference/vandermode.html">vandermode()</a></code> function</li>
 <li>added <code><a href="../reference/vec.html">vec()</a></code> convenience function to vectorize a matrix</li>
-<li>added <code><a href="../reference/is_square.html">is_square_matrix()</a></code> tests</li>
+<li>added <code><a href="../reference/is_square_matrix.html">is_square_matrix()</a></code> tests</li>
 <li>added <code>power_method()</code>, power method for dominant eigenvector [thx: Gaston Sanchez]</li>
 <li>added <code><a href="../reference/arrows3d.html">arrows3d()</a></code> for 3D geometric diagrams</li>
 <li>added <code><a href="../reference/vectors3d.html">vectors3d()</a></code> for 3D geometric diagrams</li>
@@ -315,9 +314,9 @@
 </li>
 </ul>
 </div>
-    <div id="matlib-0-5-2" class="section level1">
+    <div id="matlib-052" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.2">
-<a href="#matlib-0-5-2" class="anchor"></a>matlib 0.5.2<small> 2015-11-19 </small>
+<a href="#matlib-052" class="anchor"></a>matlib 0.5.2<small> 2015-11-19 </small>
 </h1>
 <ul>
 <li>added <code><a href="../reference/swp.html">swp()</a></code> function</li>
@@ -325,9 +324,9 @@
 </li>
 </ul>
 </div>
-    <div id="matlib-0-5-1" class="section level1">
+    <div id="matlib-051" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.1">
-<a href="#matlib-0-5-1" class="anchor"></a>matlib 0.5.1<small> 2015-11-10 </small>
+<a href="#matlib-051" class="anchor"></a>matlib 0.5.1<small> 2015-11-10 </small>
 </h1>
 <ul>
 <li>added <code><a href="../reference/len.html">len()</a></code> convenience function for Euclidean lengths</li>
@@ -336,13 +335,13 @@
 <li>renamed <code><a href="https://rdrr.io/r/stats/proj.html">proj()</a></code> -&gt; <code><a href="../reference/Proj.html">Proj()</a></code> to avoid conflict with <code><a href="https://rdrr.io/r/stats/proj.html">stats::proj()</a></code>
 </li>
 <li>added <code><a href="../reference/vectors.html">vectors()</a></code> for plotting geometric diagrams</li>
-<li>added vignette(âlinear-equationsâ) - <em>Solving Linear Equations</em>
+<li>added vignette(“linear-equations”) - <em>Solving Linear Equations</em>
 </li>
 </ul>
 </div>
-    <div id="matlib-0-4-1" class="section level1">
+    <div id="matlib-041" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.1">
-<a href="#matlib-0-4-1" class="anchor"></a>matlib 0.4.1<small> 2015-11-05 </small>
+<a href="#matlib-041" class="anchor"></a>matlib 0.4.1<small> 2015-11-05 </small>
 </h1>
 <p>Initial CRAN release</p>
 </div>
@@ -363,7 +362,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

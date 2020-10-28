@@ -161,20 +161,20 @@ x1, x2, and x3, by plotting a plane for each equation." />
 x1, x2, and x3, by plotting a plane for each equation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotEqn3d</span>(
-  <span class='no'>A</span>,
-  <span class='no'>b</span>,
-  <span class='no'>vars</span>,
-  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>2</span>, <span class='fl'>2</span>),
-  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>2</span>, <span class='fl'>2</span>),
-  <span class='no'>zlim</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>2</span>:(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>A</span>) + <span class='fl'>1</span>),
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>solution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plotEqn3d</span><span class='op'>(</span>
+  <span class='va'>A</span>,
+  <span class='va'>b</span>,
+  <span class='va'>vars</span>,
+  xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>,
+  ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>,
+  <span class='va'>zlim</span>,
+  col <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.9</span>,
+  labels <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  solution <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  lit <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -241,12 +241,16 @@ range of the set of equations over the <code>xlim</code> and <code>ylim</code></
 
     <p>Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 Least-Squares Regression with the matlib Package for R". <em>useR Conference</em>, Stanford, CA, June 27 - June 30, 2016.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Michael Friendly, John Fox</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># three consistent equations in three unknowns</span>
-<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>13</span>, -<span class='fl'>4</span>, <span class='fl'>2</span>, -<span class='fl'>4</span>, <span class='fl'>11</span>, -<span class='fl'>2</span>, <span class='fl'>2</span>, -<span class='fl'>2</span>, <span class='fl'>8</span>), <span class='fl'>3</span>,<span class='fl'>3</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>)
-<span class='fu'>plotEqn3d</span>(<span class='no'>A</span>,<span class='no'>b</span>)</div></pre>
+<span class='va'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>13</span>, <span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>2</span>, <span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>11</span>, <span class='op'>-</span><span class='fl'>2</span>, <span class='fl'>2</span>, <span class='op'>-</span><span class='fl'>2</span>, <span class='fl'>8</span><span class='op'>)</span>, <span class='fl'>3</span>,<span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>)</span>
+<span class='fu'>plotEqn3d</span><span class='op'>(</span><span class='va'>A</span>,<span class='va'>b</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -262,7 +266,7 @@ Least-Squares Regression with the matlib Package for R". <em>useR Conference</em
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

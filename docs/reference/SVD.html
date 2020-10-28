@@ -167,12 +167,12 @@ The result consists of two orthonormal matrices, \(U\), and \(V\) and the vector
 of singular values, such that \(X = U diag(d) V'\).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>SVD</span>(
-  <span class='no'>X</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Jacobi"</span>, <span class='st'>"eigen"</span>),
-  <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='no'>.Machine</span>$<span class='no'>double.eps</span>),
-  <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>
-)</pre>
+    <pre class="usage"><span class='fu'>SVD</span><span class='op'>(</span>
+  <span class='va'>X</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Jacobi"</span>, <span class='st'>"eigen"</span><span class='op'>)</span>,
+  tol <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>.Machine</span><span class='op'>$</span><span class='va'>double.eps</span><span class='op'>)</span>,
+  max.iter <span class='op'>=</span> <span class='fl'>100</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,13 +207,18 @@ Singular values of zero are not retained in the solution.</p>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/svd.html'>svd</a></code>, the standard svd function</p>
 <p><code><a href='Eigen.html'>Eigen</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>John Fox and Georges Monette</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>6</span>,<span class='fl'>3</span>,<span class='fl'>6</span>,<span class='fl'>10</span>), <span class='fl'>3</span>, <span class='fl'>3</span>) <span class='co'># nonsingular, symmetric</span>
-<span class='no'>C</span></div><div class='output co'>#&gt;      [,1] [,2] [,3]
+    <pre class="examples"><div class='input'><span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>6</span>,<span class='fl'>3</span>,<span class='fl'>6</span>,<span class='fl'>10</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span><span class='op'>)</span> <span class='co'># nonsingular, symmetric</span>
+<span class='va'>C</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]    1    2    3
 #&gt; [2,]    2    5    6
-#&gt; [3,]    3    6   10</div><div class='input'><span class='fu'>SVD</span>(<span class='no'>C</span>)</div><div class='output co'>#&gt; $d
+#&gt; [3,]    3    6   10</div><div class='input'><span class='fu'>SVD</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $d
 #&gt; [1] 14.93303437  1.00000000  0.06696563
 #&gt; 
 #&gt; $U
@@ -229,16 +234,19 @@ Singular values of zero are not retained in the solution.</p>
 #&gt; [3,] 0.8055164 -5.547002e-01 -0.2084492
 #&gt; </div><div class='input'>
 <span class='co'># least squares by the SVD</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"workers"</span>)
-<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>workers</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Experience"</span>, <span class='st'>"Skill"</span>)]))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>X</span>)</div><div class='output co'>#&gt;           Experience Skill
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"workers"</span><span class='op'>)</span>
+<span class='va'>X</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>workers</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Experience"</span>, <span class='st'>"Skill"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           Experience Skill
 #&gt; Abby    1          0     2
 #&gt; Betty   1          5     5
 #&gt; Charles 1          5     8
 #&gt; Doreen  1         10     6
 #&gt; Ethan   1         10    10
-#&gt; Francie 1         15     7</div><div class='input'><span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>workers</span>$<span class='no'>Income</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; [1] 20 35 40 30 50 50</div><div class='input'>(<span class='no'>svd</span> <span class='kw'>&lt;-</span> <span class='fu'>SVD</span>(<span class='no'>X</span>))</div><div class='output co'>#&gt; $d
+#&gt; Francie 1         15     7</div><div class='input'><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>workers</span><span class='op'>$</span><span class='va'>Income</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 20 35 40 30 50 50</div><div class='input'><span class='op'>(</span><span class='va'>svd</span> <span class='op'>&lt;-</span> <span class='fu'>SVD</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $d
 #&gt; [1] 66.864276  8.885751  1.100924
 #&gt; 
 #&gt; $U
@@ -259,11 +267,13 @@ Singular values of zero are not retained in the solution.</p>
 #&gt; [1,] 0.03984368  0.1475406  0.98825314
 #&gt; [2,] 0.89856830 -0.4378649  0.02914291
 #&gt; [3,] 0.43702116  0.8868518 -0.15002142
-#&gt; </div><div class='input'><span class='no'>VdU</span> <span class='kw'>&lt;-</span> <span class='no'>svd</span>$<span class='no'>V</span> <span class='kw'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>1</span>/<span class='no'>svd</span>$<span class='no'>d</span>) <span class='kw'>%*%</span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>svd</span>$<span class='no'>U</span>)
-(<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>VdU</span> <span class='kw'>%*%</span> <span class='no'>y</span>)</div><div class='output co'>#&gt;            [,1]
+#&gt; </div><div class='input'><span class='va'>VdU</span> <span class='op'>&lt;-</span> <span class='va'>svd</span><span class='op'>$</span><span class='va'>V</span> <span class='op'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>svd</span><span class='op'>$</span><span class='va'>d</span><span class='op'>)</span> <span class='op'>%*%</span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>svd</span><span class='op'>$</span><span class='va'>U</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>b</span> <span class='op'>&lt;-</span> <span class='va'>VdU</span> <span class='op'>%*%</span> <span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            [,1]
 #&gt; [1,] 14.7808811
 #&gt; [2,]  0.1130069
-#&gt; [3,]  3.4053991</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Income</span> ~ <span class='no'>Experience</span> + <span class='no'>Skill</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>workers</span>))</div><div class='output co'>#&gt; (Intercept)  Experience       Skill 
+#&gt; [3,]  3.4053991</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Income</span> <span class='op'>~</span> <span class='va'>Experience</span> <span class='op'>+</span> <span class='va'>Skill</span>, data<span class='op'>=</span><span class='va'>workers</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; (Intercept)  Experience       Skill 
 #&gt;  14.7808811   0.1130069   3.4053991 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -280,7 +290,7 @@ Singular values of zero are not retained in the solution.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

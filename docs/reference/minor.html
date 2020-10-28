@@ -161,7 +161,7 @@ sub-matrix that results when row i and column j are deleted." />
 sub-matrix that results when row i and column j are deleted.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>minor</span>(<span class='no'>A</span>, <span class='no'>i</span>, <span class='no'>j</span>)</pre>
+    <pre class="usage"><span class='fu'>minor</span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>i</span>, <span class='va'>j</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,12 +192,18 @@ sub-matrix that results when row i and column j are deleted.</p>
 <code><a href='cofactor.html'>cofactor</a>()</code>,
 <code><a href='rowCofactors.html'>rowCofactors</a>()</code>,
 <code><a href='rowMinors.html'>rowMinors</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Michael Friendly</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>M</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, -<span class='fl'>12</span>, -<span class='fl'>4</span>,
+    <pre class="examples"><div class='input'><span class='va'>M</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='op'>-</span><span class='fl'>12</span>, <span class='op'>-</span><span class='fl'>4</span>,
               <span class='fl'>2</span>,   <span class='fl'>1</span>,  <span class='fl'>3</span>,
-             -<span class='fl'>1</span>,  -<span class='fl'>3</span>,  <span class='fl'>2</span>), <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='kw'>byrow</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>minor</span>(<span class='no'>M</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 11</div><div class='input'><span class='fu'>minor</span>(<span class='no'>M</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 7</div><div class='input'><span class='fu'>minor</span>(<span class='no'>M</span>, <span class='fl'>1</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] -5</div></pre>
+             <span class='op'>-</span><span class='fl'>1</span>,  <span class='op'>-</span><span class='fl'>3</span>,  <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, byrow<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>minor</span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 11</div><div class='input'><span class='fu'>minor</span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 7</div><div class='input'><span class='fu'>minor</span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -5</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -213,7 +219,7 @@ sub-matrix that results when row i and column j are deleted.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

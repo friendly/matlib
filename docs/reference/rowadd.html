@@ -163,7 +163,7 @@ This is usually used as a means to solve systems of linear equations, of the for
 corresponds to adding equals to equals.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rowadd</span>(<span class='no'>x</span>, <span class='no'>from</span>, <span class='no'>to</span>, <span class='no'>mult</span>)</pre>
+    <pre class="usage"><span class='fu'>rowadd</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>from</span>, <span class='va'>to</span>, <span class='va'>mult</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,30 +201,35 @@ to row echelon form and Gaussian elimination. These functions are used for demon
 <code><a href='rowswap.html'>rowswap</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>, -<span class='fl'>1</span>,
-             -<span class='fl'>3</span>, -<span class='fl'>1</span>, <span class='fl'>2</span>,
-             -<span class='fl'>2</span>,  <span class='fl'>1</span>, <span class='fl'>2</span>), <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='kw'>byrow</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8</span>, -<span class='fl'>11</span>, -<span class='fl'>3</span>)
+    <pre class="examples"><div class='input'><span class='va'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>1</span>,
+             <span class='op'>-</span><span class='fl'>3</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>2</span>,
+             <span class='op'>-</span><span class='fl'>2</span>,  <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, byrow<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='op'>-</span><span class='fl'>11</span>, <span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>
 
 <span class='co'># using row operations to reduce below diagonal to 0</span>
-<span class='no'>Ab</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>A</span>, <span class='no'>b</span>)
-(<span class='no'>Ab</span> <span class='kw'>&lt;-</span> <span class='fu'>rowadd</span>(<span class='no'>Ab</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>/<span class='fl'>2</span>))  <span class='co'># row 2 &lt;- row 2 + 3/2 row 1</span></div><div class='output co'>#&gt;                   b
+<span class='va'>Ab</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>b</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>Ab</span> <span class='op'>&lt;-</span> <span class='fu'>rowadd</span><span class='op'>(</span><span class='va'>Ab</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>  <span class='co'># row 2 &lt;- row 2 + 3/2 row 1</span>
+</div><div class='output co'>#&gt;                   b
 #&gt; [1,]  2 1.0 -1.0  8
 #&gt; [2,]  0 0.5  0.5  1
-#&gt; [3,] -2 1.0  2.0 -3</div><div class='input'>(<span class='no'>Ab</span> <span class='kw'>&lt;-</span> <span class='fu'>rowadd</span>(<span class='no'>Ab</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>1</span>))    <span class='co'># row 3 &lt;- row 3 + 1 row 1</span></div><div class='output co'>#&gt;                 b
+#&gt; [3,] -2 1.0  2.0 -3</div><div class='input'><span class='op'>(</span><span class='va'>Ab</span> <span class='op'>&lt;-</span> <span class='fu'>rowadd</span><span class='op'>(</span><span class='va'>Ab</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>    <span class='co'># row 3 &lt;- row 3 + 1 row 1</span>
+</div><div class='output co'>#&gt;                 b
 #&gt; [1,] 2 1.0 -1.0 8
 #&gt; [2,] 0 0.5  0.5 1
-#&gt; [3,] 0 2.0  1.0 5</div><div class='input'>(<span class='no'>Ab</span> <span class='kw'>&lt;-</span> <span class='fu'>rowadd</span>(<span class='no'>Ab</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, -<span class='fl'>4</span>))   <span class='co'># row 3 &lt;- row 3 - 4 row 2</span></div><div class='output co'>#&gt;                 b
+#&gt; [3,] 0 2.0  1.0 5</div><div class='input'><span class='op'>(</span><span class='va'>Ab</span> <span class='op'>&lt;-</span> <span class='fu'>rowadd</span><span class='op'>(</span><span class='va'>Ab</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='op'>-</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>   <span class='co'># row 3 &lt;- row 3 - 4 row 2</span>
+</div><div class='output co'>#&gt;                 b
 #&gt; [1,] 2 1.0 -1.0 8
 #&gt; [2,] 0 0.5  0.5 1
 #&gt; [3,] 0 0.0 -1.0 1</div><div class='input'><span class='co'># multiply to make diagonals = 1</span>
-(<span class='no'>Ab</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rowmult.html'>rowmult</a></span>(<span class='no'>Ab</span>, <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>/<span class='fl'>2</span>, <span class='fl'>2</span>, -<span class='fl'>1</span>)))</div><div class='output co'>#&gt;                  b
+<span class='op'>(</span><span class='va'>Ab</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rowmult.html'>rowmult</a></span><span class='op'>(</span><span class='va'>Ab</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>, <span class='fl'>2</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                  b
 #&gt; [1,] 1 0.5 -0.5  4
 #&gt; [2,] 0 1.0  1.0  2
 #&gt; [3,] 0 0.0  1.0 -1</div><div class='input'><span class='co'># The matrix is now in triangular form</span>
 
 <span class='co'># Could continue to reduce above diagonal to zero</span>
-<span class='fu'><a href='echelon.html'>echelon</a></span>(<span class='no'>A</span>, <span class='no'>b</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>fractions</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='echelon.html'>echelon</a></span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>b</span>, verbose<span class='op'>=</span><span class='cn'>TRUE</span>, fractions<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Initial matrix:
 #&gt;      [,1] [,2] [,3] [,4]
 #&gt; [1,]   2    1   -1    8 
@@ -318,7 +323,7 @@ to row echelon form and Gaussian elimination. These functions are used for demon
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

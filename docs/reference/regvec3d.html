@@ -167,42 +167,42 @@ The result can be used to draw 2D and 3D vector diagrams accurately reflecting t
 relations of <code>y</code> to <code>x1</code> and <code>x2</code> as vectors in this representation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>regvec3d</span>(<span class='no'>x1</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>regvec3d</span><span class='op'>(</span><span class='va'>x1</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for formula</span>
-<span class='fu'>regvec3d</span>(
-  <span class='no'>formula</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>which</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>,
-  <span class='no'>name.x1</span>,
-  <span class='no'>name.x2</span>,
-  <span class='no'>name.y</span>,
-  <span class='no'>name.e</span>,
-  <span class='no'>name.y.hat</span>,
-  <span class='no'>name.b1.x1</span>,
-  <span class='no'>name.b2.x2</span>,
-  <span class='kw'>abbreviate</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>regvec3d</span><span class='op'>(</span>
+  <span class='va'>formula</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  which <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,
+  <span class='va'>name.x1</span>,
+  <span class='va'>name.x2</span>,
+  <span class='va'>name.y</span>,
+  <span class='va'>name.e</span>,
+  <span class='va'>name.y.hat</span>,
+  <span class='va'>name.b1.x1</span>,
+  <span class='va'>name.b2.x2</span>,
+  abbreviate <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>regvec3d</span>(
-  <span class='no'>x1</span>,
-  <span class='no'>x2</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>normalize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>name.x1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x1</span>)),
-  <span class='kw'>name.x2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x2</span>)),
-  <span class='kw'>name.y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>y</span>)),
-  <span class='kw'>name.e</span> <span class='kw'>=</span> <span class='st'>"residuals"</span>,
-  <span class='kw'>name.y.hat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.y</span>, <span class='st'>"hat"</span>),
-  <span class='kw'>name.b1.x1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"b1"</span>, <span class='no'>name.x1</span>),
-  <span class='kw'>name.b2.x2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"b2"</span>, <span class='no'>name.x2</span>),
-  <span class='kw'>name.y1.hat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.y</span>, <span class='st'>"hat 1"</span>),
-  <span class='kw'>name.y2.hat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.y</span>, <span class='st'>"hat 2"</span>),
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>regvec3d</span><span class='op'>(</span>
+  <span class='va'>x1</span>,
+  <span class='va'>x2</span>,
+  <span class='va'>y</span>,
+  scale <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  normalize <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  name.x1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>x1</span><span class='op'>)</span><span class='op'>)</span>,
+  name.x2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>x2</span><span class='op'>)</span><span class='op'>)</span>,
+  name.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>,
+  name.e <span class='op'>=</span> <span class='st'>"residuals"</span>,
+  name.y.hat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>name.y</span>, <span class='st'>"hat"</span><span class='op'>)</span>,
+  name.b1.x1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"b1"</span>, <span class='va'>name.x1</span><span class='op'>)</span>,
+  name.b2.x2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"b2"</span>, <span class='va'>name.x2</span><span class='op'>)</span>,
+  name.y1.hat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>name.y</span>, <span class='st'>"hat 1"</span><span class='op'>)</span>,
+  name.y2.hat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>name.y</span>, <span class='st'>"hat 2"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -343,9 +343,10 @@ Least-Squares Regression with the matlib Package for R". <em>useR Conference</em
 <code><a href='vectors.html'>vectors</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rgl</span>)
-<span class='no'>therapy.vec</span> <span class='kw'>&lt;-</span> <span class='fu'>regvec3d</span>(<span class='no'>therapy</span> ~ <span class='no'>perstest</span> + <span class='no'>IE</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>therapy</span>)
-<span class='no'>therapy.vec</span></div><div class='output co'>#&gt;                        x         y         z
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-forge.r-project.org/projects/rgl/'>rgl</a></span><span class='op'>)</span>
+<span class='va'>therapy.vec</span> <span class='op'>&lt;-</span> <span class='fu'>regvec3d</span><span class='op'>(</span><span class='va'>therapy</span> <span class='op'>~</span> <span class='va'>perstest</span> <span class='op'>+</span> <span class='va'>IE</span>, data<span class='op'>=</span><span class='va'>therapy</span><span class='op'>)</span>
+<span class='va'>therapy.vec</span>
+</div><div class='output co'>#&gt;                        x         y         z
 #&gt; perstest      0.50000000 0.0000000 0.0000000
 #&gt; IE            0.02000000 0.3893584 0.0000000
 #&gt; therapy       0.60000000 0.7499516 0.2785185
@@ -354,8 +355,9 @@ Least-Squares Regression with the matlib Package for R". <em>useR Conference</em
 #&gt; b1 perstest   0.56147757 0.0000000 0.0000000
 #&gt; b2 IE         0.03852243 0.7499516 0.0000000
 #&gt; therapy hat 1 0.60000000 0.0000000 0.0000000
-#&gt; therapy hat 2 0.04000000 0.7787169 0.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>therapy.vec</span>, <span class='kw'>col.plane</span><span class='kw'>=</span><span class='st'>"darkgreen"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>therapy.vec</span>, <span class='kw'>dimension</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='regvec3d-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; therapy hat 2 0.04000000 0.7787169 0.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>therapy.vec</span>, col.plane<span class='op'>=</span><span class='st'>"darkgreen"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>therapy.vec</span>, dimension<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='img'><img src='regvec3d-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -371,7 +373,7 @@ Least-Squares Regression with the matlib Package for R". <em>useR Conference</em
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -161,7 +161,7 @@ can then be found as M[i,] %*% rowCofactors(M,i) for any row, i." />
 can then be found as <code>M[i,] %*% rowCofactors(M,i)</code> for any row, i.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rowCofactors</span>(<span class='no'>A</span>, <span class='no'>i</span>)</pre>
+    <pre class="usage"><span class='fu'>rowCofactors</span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>i</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,13 +188,22 @@ can then be found as <code>M[i,] %*% rowCofactors(M,i)</code> for any row, i.</p
 <code><a href='cofactor.html'>cofactor</a>()</code>,
 <code><a href='minor.html'>minor</a>()</code>,
 <code><a href='rowMinors.html'>rowMinors</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Michael Friendly</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>M</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, -<span class='fl'>12</span>, -<span class='fl'>4</span>,
+    <pre class="examples"><div class='input'><span class='va'>M</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='op'>-</span><span class='fl'>12</span>, <span class='op'>-</span><span class='fl'>4</span>,
               <span class='fl'>2</span>,   <span class='fl'>1</span>,  <span class='fl'>3</span>,
-             -<span class='fl'>1</span>,  -<span class='fl'>3</span>,  <span class='fl'>2</span>), <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='kw'>byrow</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'><a href='minor.html'>minor</a></span>(<span class='no'>M</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 11</div><div class='input'><span class='fu'><a href='minor.html'>minor</a></span>(<span class='no'>M</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 7</div><div class='input'><span class='fu'><a href='minor.html'>minor</a></span>(<span class='no'>M</span>, <span class='fl'>1</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] -5</div><div class='input'><span class='fu'>rowCofactors</span>(<span class='no'>M</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 11 -7 -5</div><div class='input'><span class='fu'><a href='Det.html'>Det</a></span>(<span class='no'>M</span>)</div><div class='output co'>#&gt; [1] 148</div><div class='input'><span class='co'># expansion by cofactors of row 1</span>
-<span class='no'>M</span>[<span class='fl'>1</span>,] <span class='kw'>%*%</span> <span class='fu'>rowCofactors</span>(<span class='no'>M</span>,<span class='fl'>1</span>)</div><div class='output co'>#&gt;      [,1]
+             <span class='op'>-</span><span class='fl'>1</span>,  <span class='op'>-</span><span class='fl'>3</span>,  <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, byrow<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='minor.html'>minor</a></span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 11</div><div class='input'><span class='fu'><a href='minor.html'>minor</a></span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 7</div><div class='input'><span class='fu'><a href='minor.html'>minor</a></span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -5</div><div class='input'><span class='fu'>rowCofactors</span><span class='op'>(</span><span class='va'>M</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 11 -7 -5</div><div class='input'><span class='fu'><a href='Det.html'>Det</a></span><span class='op'>(</span><span class='va'>M</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 148</div><div class='input'><span class='co'># expansion by cofactors of row 1</span>
+<span class='va'>M</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span> <span class='op'>%*%</span> <span class='fu'>rowCofactors</span><span class='op'>(</span><span class='va'>M</span>,<span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1]
 #&gt; [1,]  148</div><div class='input'>
 </div></pre>
   </div>
@@ -212,7 +221,7 @@ can then be found as <code>M[i,] %*% rowCofactors(M,i)</code> for any row, i.</p
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

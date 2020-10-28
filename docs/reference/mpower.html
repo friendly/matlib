@@ -159,7 +159,7 @@
     <p>A simple function to demonstrate calculating the power of a square symmetric matrix in terms of its eigenvalues and eigenvectors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mpower</span>(<span class='no'>A</span>, <span class='no'>p</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='no'>.Machine</span>$<span class='no'>double.eps</span>))</pre>
+    <pre class="usage"><span class='fu'>mpower</span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>p</span>, tol <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>.Machine</span><span class='op'>$</span><span class='va'>double.eps</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,17 +192,21 @@
     <div class='dont-index'><p>The <code>{%^%}</code> operator in the <span class="pkg">expm</span> package is far more efficient</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>6</span>,<span class='fl'>3</span>,<span class='fl'>6</span>,<span class='fl'>10</span>), <span class='fl'>3</span>, <span class='fl'>3</span>) <span class='co'># nonsingular, symmetric</span>
-<span class='no'>C</span></div><div class='output co'>#&gt;      [,1] [,2] [,3]
+    <pre class="examples"><div class='input'><span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>5</span>,<span class='fl'>6</span>,<span class='fl'>3</span>,<span class='fl'>6</span>,<span class='fl'>10</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span><span class='op'>)</span> <span class='co'># nonsingular, symmetric</span>
+<span class='va'>C</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]    1    2    3
 #&gt; [2,]    2    5    6
-#&gt; [3,]    3    6   10</div><div class='input'><span class='fu'>mpower</span>(<span class='no'>C</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3]
+#&gt; [3,]    3    6   10</div><div class='input'><span class='fu'>mpower</span><span class='op'>(</span><span class='va'>C</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]   14   30   45
 #&gt; [2,]   30   65   96
-#&gt; [3,]   45   96  145</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/zapsmall.html'>zapsmall</a></span>(<span class='fu'>mpower</span>(<span class='no'>C</span>, -<span class='fl'>1</span>))</div><div class='output co'>#&gt;      [,1] [,2] [,3]
+#&gt; [3,]   45   96  145</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/zapsmall.html'>zapsmall</a></span><span class='op'>(</span><span class='fu'>mpower</span><span class='op'>(</span><span class='va'>C</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]   14   -2   -3
 #&gt; [2,]   -2    1    0
-#&gt; [3,]   -3    0    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/solve.html'>solve</a></span>(<span class='no'>C</span>)    <span class='co'># check</span></div><div class='output co'>#&gt;      [,1] [,2] [,3]
+#&gt; [3,]   -3    0    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/solve.html'>solve</a></span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span>    <span class='co'># check</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]   14   -2   -3
 #&gt; [2,]   -2    1    0
 #&gt; [3,]   -3    0    1</div></pre>
@@ -221,7 +225,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

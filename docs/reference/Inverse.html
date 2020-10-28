@@ -159,7 +159,7 @@
     <p>Uses <code><a href='gaussianElimination.html'>gaussianElimination</a></code> to find the inverse of a square, non-singular matrix, \(X\).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Inverse</span>(<span class='no'>X</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='no'>.Machine</span>$<span class='no'>double.eps</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>Inverse</span><span class='op'>(</span><span class='va'>X</span>, tol <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>.Machine</span><span class='op'>$</span><span class='va'>double.eps</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,15 +186,20 @@
     <p>The method is purely didactic: The identity matrix, \(I\), is appended to \(X\), giving
 \(X | I\).  Applying Gaussian elimination gives \(I | X^{-1}\), and the portion corresponding
 to \(X^{-1}\) is returned.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>John Fox</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>, -<span class='fl'>1</span>,
-               -<span class='fl'>3</span>, -<span class='fl'>1</span>, <span class='fl'>2</span>,
-               -<span class='fl'>2</span>,  <span class='fl'>1</span>, <span class='fl'>2</span>), <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='kw'>byrow</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-  <span class='fu'>Inverse</span>(<span class='no'>A</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3]
+    <pre class="examples"><div class='input'>  <span class='va'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>1</span>,
+               <span class='op'>-</span><span class='fl'>3</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>2</span>,
+               <span class='op'>-</span><span class='fl'>2</span>,  <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, byrow<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='fu'>Inverse</span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]    4    3   -1
 #&gt; [2,]   -2   -2    1
-#&gt; [3,]    5    4   -1</div><div class='input'>  <span class='fu'>Inverse</span>(<span class='no'>A</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>fractions</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt; [3,]    5    4   -1</div><div class='input'>  <span class='fu'>Inverse</span><span class='op'>(</span><span class='va'>A</span>, verbose<span class='op'>=</span><span class='cn'>TRUE</span>, fractions<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Initial matrix:
 #&gt;      [,1] [,2] [,3] [,4] [,5] [,6]
 #&gt; [1,]  2    1   -1    1    0    0  
@@ -290,7 +295,7 @@ to \(X^{-1}\) is returned.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

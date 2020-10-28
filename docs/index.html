@@ -118,9 +118,10 @@
   <div class="contents col-md-9">
 
 
-<div id="matlib" class="section level1">
+<!-- badges: end -->
+<div id="matlib-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#matlib" class="anchor"></a>matlib <img src="matlib-logo.png" align="right" height="200px">
+<a href="#matlib-" class="anchor"></a>matlib <img src="matlib-logo.png" align="right" height="200px">
 </h1></div>
 <p><strong>Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics</strong>, <a href="http://friendly.github.io/matlib/" class="uri">http://friendly.github.io/matlib/</a></p>
 <p>Version 0.9.4</p>
@@ -130,11 +131,11 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Get the released version from CRAN:</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"> <span class="kw">install.packages</span>(<span class="st">"matlib"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"> <span class="kw">install.packages</span>(<span class="st">"matlib"</span>)</a></code></pre></div>
 <p>The development version can be installed to your R library directly from this repo via:</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"> <span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(devtools)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
- <span class="kw">library</span>(devtools)
- <span class="kw">install_github</span>(<span class="st">"friendly/matlib"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"> <span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(devtools)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"> <span class="kw">library</span>(devtools)</a>
+<a class="sourceLine" id="cb2-3" title="3"> <span class="kw">install_github</span>(<span class="st">"friendly/matlib"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>This installs the package from the source and creates the package vignettes, so you will need to have R Tools installed on your system. <a href="https://cran.r-project.org/bin/windows/Rtools/">R Tools for Windows</a> takes you to the download page for Windows. <a href="https://cran.r-project.org/bin/macosx/tools/">R Tools for Mac OS X</a> has the required programs for Mac OS X.</p>
 </div>
 <div id="topics" class="section level2">
@@ -178,7 +179,7 @@
 <code><a href="reference/Det.html">Det()</a></code> - Determinants by elimination or eigenvalues</li>
 </ul>
 <ol>
-<li>Elementary row operations: functions for solving linear equations âmanuallyâ by the steps used in row echelon form and Gaussian elimination</li>
+<li>Elementary row operations: functions for solving linear equations “manually” by the steps used in row echelon form and Gaussian elimination</li>
 </ol>
 <ul>
 <li>
@@ -189,7 +190,7 @@
 <code><a href="reference/rowswap.html">rowswap()</a></code> - Interchange two rows of a matrix</li>
 </ul>
 <ol>
-<li>Linear equations: functions to illustrate linear equations of the form <span class="math inline"><strong>A</strong><strong>x</strong>â<strong>=</strong>â<strong>b</strong></span>
+<li>Linear equations: functions to illustrate linear equations of the form <span class="math inline"><strong>A</strong><strong>x</strong> <strong>=</strong> <strong>b</strong></span>
 </li>
 </ol>
 <ul>
@@ -199,7 +200,7 @@
 <code><a href="reference/plotEqn.html">plotEqn(A, b)</a></code>, <code><a href="reference/plotEqn3d.html">plotEqn3d(A, b)</a></code> - plot matrices (A, b) as linear equations</li>
 </ul>
 <ol>
-<li>Gaussian elimination: functions for illustrating Gaussian elimination for solving systems of linear equations of the form <span class="math inline"><strong>A</strong><strong>x</strong>â<strong>=</strong>â<strong>b</strong></span>. These functions provide a <code>verbose=TRUE</code> argument to show the intermediate steps and a <code>fractions=TRUE</code> argument to show results using <code><a href="https://rdrr.io/pkg/MASS/man/fractions.html">MASS::fractions</a></code>.</li>
+<li>Gaussian elimination: functions for illustrating Gaussian elimination for solving systems of linear equations of the form <span class="math inline"><strong>A</strong><strong>x</strong> <strong>=</strong> <strong>b</strong></span>. These functions provide a <code>verbose=TRUE</code> argument to show the intermediate steps and a <code>fractions=TRUE</code> argument to show results using <code><a href="https://rdrr.io/pkg/MASS/man/fractions.html">MASS::fractions</a></code>.</li>
 </ol>
 <ul>
 <li>
@@ -251,7 +252,7 @@
 <div id="vignettes-and-presentations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vignettes-and-presentations" class="anchor"></a>Vignettes and presentations</h3>
-<p>A small collection of vignettes is now available. Use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("matlib")</a></code> to see them.</p>
+<p>A small collection of vignettes is now available. Use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("matlib")</a></code> to explore them.</p>
 <table class="table">
 <thead><tr class="header">
 <th>Vignette</th>
@@ -353,7 +354,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
