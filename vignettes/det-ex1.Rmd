@@ -130,7 +130,7 @@ text(mean(A[,1]), mean(A[,2]), "det(A)", cex=1.25)
 
 ```
 
-There is a simple [visual proof of this fact about determinants](http://math.stackexchange.com/questions/29128/why-determinant-of-a-2-by-2-matrix-is-the-area-of-a-parallelogram)
+There is a simple [visual proof of this fact about determinants](https://math.stackexchange.com/questions/29128/why-determinant-of-a-2-by-2-matrix-is-the-area-of-a-parallelogram)
 but it is easiest to
 see in the case of a diagonal matrix, where the row vectors are orthogonal, so area
 is just height x width.
