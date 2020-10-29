@@ -1,7 +1,7 @@
 ## Test environments
 * local Windows 7 install, 3.6.3 (2020-02-29)
 * travis.ci on github
-* win-builder Under development (unstable) (2020-10-27 r79379)
+* win-builder Under development (unstable) (2020-10-28 r79382)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs or NOTEs
