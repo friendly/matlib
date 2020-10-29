@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Michael Friendly" />
+
+<meta name="date" content="2020-10-29" />
+
+<title>Properties of determinants</title>
+
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Properties of determinants</h1>
+<h4 class="author">Michael Friendly</h4>
+<h4 class="date">2020-10-29</h4>
+
+
+
+<p>The following examples illustrate the basic properties of the determinant of a matrix. We do this first with simple numerical examples and then using geometric diagrams.</p>
+<div id="create-a-2-x-2-matrix" class="section level3">
+<h3>Create a 2 x 2 matrix</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb1-2" title="2">              <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3">A</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    3    1
+## [2,]    2    4</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+</div>
+<div id="interchange-two-rows-or-cols-changes-the-sign----1-deta" class="section level3">
+<h3>1. Interchange two rows or cols changes the sign: -&gt; -1 * det(A)</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">det</span>(A[ <span class="dv">2</span><span class="op">:</span><span class="dv">1</span>, ])</a></code></pre></div>
+<pre><code>## [1] -10</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">det</span>(A[, <span class="dv">2</span><span class="op">:</span><span class="dv">1</span> ])</a></code></pre></div>
+<pre><code>## [1] -10</code></pre>
+</div>
+<div id="transpose---det-a-unchanged" class="section level3">
+<h3>2. transpose -&gt; det (A) unchanged</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">det</span>( <span class="kw">t</span>(A) )</a></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+</div>
+<div id="multiply-row-k---k-deta" class="section level3">
+<h3>3. multiply row * k -&gt; k * det(A)</h3>
+<p>Note that to multiply rows by <em>different</em> constants requires a diagonal matrix on the left.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">diag</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)) <span class="op">%*%</span><span class="st"> </span>A</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    9    3
+## [2,]    2    4</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">det</span>( <span class="kw">diag</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))  <span class="op">%*%</span><span class="st"> </span>A)</a></code></pre></div>
+<pre><code>## [1] 30</code></pre>
+</div>
+<div id="multiply-matrix-k---k2-deta" class="section level3">
+<h3>4. multiply matrix * k -&gt; k^2 * det(A)</h3>
+<p>This is because multiplying a matrix by a constant multiplies <strong>each</strong> row.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">det</span>(<span class="dv">3</span> <span class="op">*</span><span class="st"> </span>A)</a></code></pre></div>
+<pre><code>## [1] 90</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="dv">3</span><span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 90</code></pre>
+</div>
+<div id="det-a-b---deta-detb" class="section level3">
+<h3>5. det (A B) -&gt; det(A) * det(B)</h3>
+<p>The determinant of a product is the product of the determinants. The same holds for any number of terms in a matrix product.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb19-2" title="2">             <span class="dv">3</span>, <span class="dv">5</span>), <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb19-3" title="3">B</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    4    2
+## [2,]    3    5</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">det</span>(A <span class="op">%*%</span><span class="st"> </span>B)</a></code></pre></div>
+<pre><code>## [1] 140</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">det</span>(A) <span class="op">*</span><span class="st"> </span><span class="kw">det</span>(B)</a></code></pre></div>
+<pre><code>## [1] 140</code></pre>
+</div>
+<div id="proportional-rows-or-columns---det-0" class="section level3">
+<h3>6. proportional rows or columns -&gt; <code>det() == 0</code></h3>
+<p>Here we just add an additional copy of column 1 of a matrix, so <code>C[,3] == C[,1]</code>. The determinant is 0 because the columns are linearly dependent.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">C &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb25-2" title="2">             <span class="dv">2</span>, <span class="dv">6</span>,</a>
+<a class="sourceLine" id="cb25-3" title="3">             <span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb25-4" title="4">C &lt;-<span class="st"> </span><span class="kw">cbind</span>(C, C[,<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb25-5" title="5">C</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    5    1
+## [2,]    2    6    2
+## [3,]    4    4    4</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">det</span>(C)</a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="add-multiple-of-one-row-to-another---det-unchanged" class="section level3">
+<h3>7. Add multiple of one row to another -&gt; det unchanged</h3>
+<p>This is the principle behind one of the elementary row operations.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">A[<span class="dv">2</span>,] &lt;-<span class="st"> </span>A[<span class="dv">2</span>,] <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>A[<span class="dv">1</span>,]</a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+</div>
+<div id="geometric-interpretation" class="section level3">
+<h3>8. Geometric interpretation</h3>
+<p>Many aspects of matrices and vectors have geometric interpretations. For <span class="math inline">\(2 \times 2\)</span> matrices, the determinant is the <strong>area</strong> of the parallelogram defined by the rows (or columns), plotted in a 2D space. (For <span class="math inline">\(3 \times 3\)</span> matrices, the determinant is the <strong>volume</strong> of a parallelpiped in 3D space.)</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb31-2" title="2">              <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb31-3" title="3">A</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    3    1
+## [2,]    2    4</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<p>The <code>matlib</code> package has some handy functions (<code>vectors()</code>) for drawing geometric diagrams.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">library</span>(matlib)</a>
+<a class="sourceLine" id="cb35-2" title="2">xlim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb35-3" title="3">ylim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb35-4" title="4"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>)<span class="op">+</span>.<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="kw">plot</span>(xlim, ylim, <span class="dt">type=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;X1&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;X2&quot;</span>, <span class="dt">asp=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb35-6" title="6">sum &lt;-<span class="st"> </span>A[<span class="dv">1</span>,] <span class="op">+</span><span class="st"> </span>A[<span class="dv">2</span>,]</a>
+<a class="sourceLine" id="cb35-7" title="7"><span class="co"># draw the parallelogram determined by the rows of A</span></a>
+<a class="sourceLine" id="cb35-8" title="8"><span class="kw">polygon</span>( <span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), A[<span class="dv">1</span>,], sum, A[<span class="dv">2</span>,]), <span class="dt">col=</span><span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb35-9" title="9"><span class="kw">vectors</span>(A, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;a1&quot;</span>, <span class="st">&quot;a2&quot;</span>), <span class="dt">pos.lab=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb35-10" title="10"><span class="kw">vectors</span>(sum, <span class="dt">origin=</span>A[<span class="dv">1</span>,], <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)</a>
+<a class="sourceLine" id="cb35-11" title="11"><span class="kw">vectors</span>(sum, <span class="dt">origin=</span>A[<span class="dv">2</span>,], <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)</a>
+<a class="sourceLine" id="cb35-12" title="12"><span class="co"># add some annotations</span></a>
+<a class="sourceLine" id="cb35-13" title="13"><span class="kw">text</span>(<span class="dv">0</span>,<span class="dv">6</span>, <span class="st">&quot;det(A) is the area of its row vectors&quot;</span>, <span class="dt">pos=</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb35-14" title="14"><span class="kw">text</span>(<span class="kw">mean</span>(A[,<span class="dv">1</span>]), <span class="kw">mean</span>(A[,<span class="dv">2</span>]), <span class="st">&quot;det(A)&quot;</span>, <span class="dt">cex=</span><span class="fl">1.25</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>There is a simple <a href="https://math.stackexchange.com/questions/29128/why-determinant-of-a-2-by-2-matrix-is-the-area-of-a-parallelogram">visual proof of this fact about determinants</a> but it is easiest to see in the case of a diagonal matrix, where the row vectors are orthogonal, so area is just height x width.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">(D &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">diag</span>(<span class="dv">2</span>))</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    2    0
+## [2,]    0    2</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">det</span>(D)</a></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>Plot this as before:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>)<span class="op">+</span>.<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb40-2" title="2"><span class="kw">plot</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dt">type=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;X1&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;X2&quot;</span>, <span class="dt">asp=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb40-3" title="3">sum &lt;-<span class="st"> </span>D[<span class="dv">1</span>,] <span class="op">+</span><span class="st"> </span>D[<span class="dv">2</span>,]</a>
+<a class="sourceLine" id="cb40-4" title="4"><span class="kw">polygon</span>( <span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), D[<span class="dv">1</span>,], sum, D[<span class="dv">2</span>,]), <span class="dt">col=</span><span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,.<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb40-5" title="5"><span class="kw">vectors</span>(D, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;d1&quot;</span>, <span class="st">&quot;d2&quot;</span>), <span class="dt">pos.lab=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb40-6" title="6"><span class="kw">vectors</span>(sum, <span class="dt">origin=</span>D[<span class="dv">1</span>,], <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)</a>
+<a class="sourceLine" id="cb40-7" title="7"><span class="kw">vectors</span>(sum, <span class="dt">origin=</span>D[<span class="dv">2</span>,], <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)</a>
+<a class="sourceLine" id="cb40-8" title="8"><span class="kw">text</span>(<span class="kw">mean</span>(D[,<span class="dv">1</span>]), <span class="kw">mean</span>(D[,<span class="dv">2</span>]), <span class="st">&quot;det(D)&quot;</span>, <span class="dt">cex=</span><span class="fl">1.25</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Finally, we can also see why the determinant is zero when the rows or columns are proportional.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">(B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dv">2</span>,<span class="dv">2</span>))</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    2
+## [2,]    2    4</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">det</span>(B)</a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>Such vectors are called <em>collinear</em>. They enclose no <em>area</em>.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>)<span class="op">+</span>.<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb45-2" title="2"><span class="kw">plot</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>), <span class="dt">type=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;X1&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;X2&quot;</span>, <span class="dt">asp=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb45-3" title="3"><span class="kw">vectors</span>(B, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;b1&quot;</span>, <span class="st">&quot;b2&quot;</span>), <span class="dt">pos.lab=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">2</span>))</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

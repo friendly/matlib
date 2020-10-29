@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Draw a corner showing the angle between two vectors</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for corner {matlib}"><tr><td>corner {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Draw a corner showing the angle between two vectors</h2>
+
+<h3>Description</h3>
+
+<p>A utility function for drawing vector diagrams. Draws two line segments to indicate the angle between two vectors,
+typically used for indicating orthogonal vectors are at right angles in 2D and 3D diagrams.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+corner(p1, p2, p3, d = 0.1, absolute = TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>p1</code></td>
+<td>
+<p>Starting point of first vector</p>
+</td></tr>
+<tr valign="top"><td><code>p2</code></td>
+<td>
+<p>End point of first vector, and also start of second vector</p>
+</td></tr>
+<tr valign="top"><td><code>p3</code></td>
+<td>
+<p>End point of second vector</p>
+</td></tr>
+<tr valign="top"><td><code>d</code></td>
+<td>
+<p>The distance from <code>p2</code> along each vector for drawing their corner</p>
+</td></tr>
+<tr valign="top"><td><code>absolute</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, <code>d</code> is taken as an absolute distance along the vectors; otherwise it
+is calculated as a relative distance, i.e., a fraction of the length of the vectors.
+See <code><a href="pointOnLine.html">pointOnLine</a></code> for the precise definition.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed to <code>link[graphics]{lines}</code> or to <code>link[rgl]{lines3d}</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>In this implementation, the two vectors are specified by three points, <code>p1</code>, <code>p2</code>, <code>p3</code>, meaning
+a line from <code>p1</code> to <code>p2</code>, and another line from <code>p2</code> to <code>p3</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>none
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other vector diagrams: 
+<code><a href="Proj.html">Proj</a>()</code>,
+<code><a href="arc.html">arc</a>()</code>,
+<code><a href="arrows3d.html">arrows3d</a>()</code>,
+<code><a href="circle3d.html">circle3d</a>()</code>,
+<code><a href="plot.regvec3d.html">plot.regvec3d</a>()</code>,
+<code><a href="pointOnLine.html">pointOnLine</a>()</code>,
+<code><a href="regvec3d.html">regvec3d</a>()</code>,
+<code><a href="vectors3d.html">vectors3d</a>()</code>,
+<code><a href="vectors.html">vectors</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# none yet
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

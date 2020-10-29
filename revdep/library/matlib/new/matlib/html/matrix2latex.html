@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert matrix to LaTeX equation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for matrix2latex {matlib}"><tr><td>matrix2latex {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert matrix to LaTeX equation</h2>
+
+<h3>Description</h3>
+
+<p>This function provides a soft-wrapper to <code>xtable::xtableMatharray()</code> with support for
+<code>fraction</code>s output and square <code>bracket</code>s.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+matrix2latex(x, fractions = FALSE, brackets = TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>a matrix</p>
+</td></tr>
+<tr valign="top"><td><code>fractions</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, try to express non-integers as rational numbers</p>
+</td></tr>
+<tr valign="top"><td><code>brackets</code></td>
+<td>
+<p>logical; include square brackets around the matrices?</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>additional arguments passed to <code>xtable::xtableMatharray()</code></p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Phil Chalmers
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+A &lt;- matrix(c(2, 1, -1,
+             -3, -1, 2,
+             -2,  1, 2), 3, 3, byrow=TRUE)
+b &lt;- c(8, -11, -3)
+
+matrix2latex(cbind(A,b))
+matrix2latex(cbind(A,b), digits = 0)
+matrix2latex(cbind(A/2,b), fractions = TRUE)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

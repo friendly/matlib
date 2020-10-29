@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Draw 3D arrows</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for arrows3d {matlib}"><tr><td>arrows3d {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Draw 3D arrows</h2>
+
+<h3>Description</h3>
+
+<p>Draws nice 3D arrows with <code>cone3d</code>s at their tips.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+arrows3d(
+  coords,
+  headlength = 0.035,
+  head = "end",
+  scale = NULL,
+  radius = NULL,
+  ref.length = NULL,
+  draw = TRUE,
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>coords</code></td>
+<td>
+<p>A 2n x 3 matrix giving the start and end (x,y,z) coordinates of n arrows, in pairs.  The first vector
+in each pair is taken as the starting coordinates of the arrow, the second as the end coordinates.</p>
+</td></tr>
+<tr valign="top"><td><code>headlength</code></td>
+<td>
+<p>Length of the arrow heads, in device units</p>
+</td></tr>
+<tr valign="top"><td><code>head</code></td>
+<td>
+<p>Position of the arrow head. Only <code>head="end"</code> is presently implemented.</p>
+</td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+<p>Scale factor for base and tip of arrow head, a vector of length 3, giving relative scale factors for X, Y, Z</p>
+</td></tr>
+<tr valign="top"><td><code>radius</code></td>
+<td>
+<p>radius of the base of the arrow head</p>
+</td></tr>
+<tr valign="top"><td><code>ref.length</code></td>
+<td>
+<p>length of vector to be used to scale all of the arrow heads (permits drawing arrow heads of the same size as in a previous call);
+if <code>NULL</code>, arrows are scaled relative to the longest vector</p>
+</td></tr>
+<tr valign="top"><td><code>draw</code></td>
+<td>
+<p>if <code>TRUE</code> (the default) draw the arrow(s)</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>rgl arguments passed down to <code><a href="../../rgl/html/segments3d.html">segments3d</a></code> and <code>cone3d</code>, for example, <code>col</code> and <code>lwd</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function is meant to be analogous to <code><a href="../../graphics/html/arrows.html">arrows</a></code>, but for 3D plots using <code><a href="../../rgl/html/rgl.html">rgl</a></code>.
+<code>headlength</code>, <code>scale</code> and <code>radius</code> set the length, scale factor and base radius of the arrow head, a
+3D cone. The units of these are all in terms of the ranges of the current rgl 3D scene.
+</p>
+
+
+<h3>Value</h3>
+
+<p>invisibly returns the length of the vector used to scale the arrow heads
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>January Weiner, borrowed from the <span class="pkg">pca3d</span> package, slightly modified by John Fox
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="vectors3d.html">vectors3d</a></code>
+</p>
+<p>Other vector diagrams: 
+<code><a href="Proj.html">Proj</a>()</code>,
+<code><a href="arc.html">arc</a>()</code>,
+<code><a href="circle3d.html">circle3d</a>()</code>,
+<code><a href="corner.html">corner</a>()</code>,
+<code><a href="plot.regvec3d.html">plot.regvec3d</a>()</code>,
+<code><a href="pointOnLine.html">pointOnLine</a>()</code>,
+<code><a href="regvec3d.html">regvec3d</a>()</code>,
+<code><a href="vectors3d.html">vectors3d</a>()</code>,
+<code><a href="vectors.html">vectors</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+ #none yet
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

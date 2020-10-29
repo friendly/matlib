@@ -1,0 +1,223 @@
+---
+title: "Vector Spaces of Least Squares and Linear Equations"
+author: "Michael Friendly, Georges Monette, John Fox, Phil Chalmers"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vector Spaces of Least Squares and Linear Equations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  echo = TRUE,
+  collapse = TRUE,
+  fig.height = 5,
+  fig.width = 5
+)
+options(digits=4)
+par(mar=c(4,4,1,1)+.1)
+```
+```{r setuprgl, echo=FALSE}
+library(rgl)
+library(knitr)
+knit_hooks$set(webgl = hook_webgl)
+```
+
+```{r}
+library(matlib)   # use the package
+library(rgl)      # also using rgl
+```
+
+This vignette illustrates the relationship between simple linear regression
+via least squares, in the familiar **data space** of $(x, y)$
+and an equivalent representation by means of linear equations for the observations
+in the less familiar $\beta$ space of the model parameters in the model
+$y_i = \beta_0 + \beta_1 x_i + e_i$.
+
+In data space, we probably all know that the least squares solution can be visualized as a line
+with intercept $b_0 \equiv \widehat{\beta_0}$ and slope $b_1 \equiv \widehat{\beta_1}$.
+But in $\beta = (\beta_0, \beta_1)$ space, the same solution is the point, $(b_0, b_1)$.
+
+There is such a pleasing duality here:  
+
+* A line in data space corresponds to a point in beta space
+* A point in data space corresponds to a line in beta space
+
+But wait, there's one more space: **observation space**, the *n*-dimensional space
+for *n* observations.
+These ideas have a modern history that goes back to Dempster (1969). It was developed
+in the context of linear models by Fox (1984) and Monette (1990).
+Some of these geometric relations are explored  in a wider context in
+Friendly et al. (2013).
+
+## Data space
+We start with a simple linear regression problem, shown in **data space**.
+
+```{r}
+x <- c(1, 1, -1, -1)
+y <- 1:4
+```
+
+Fit the linear model, `y ~ x`. The intercept is `b0 = 2.5` and the slope is `b1 = -1`.
+```{r plotmod1}
+(mod <- lm(y ~ x))
+```
+Plot the data and the least squares line.
+```{r plotmod2}
+par(mar=c(4,4,1,1)+.1)
+plot(y ~ x, pch=16, cex=1.5)
+abline(mod, lwd=2)
+abline(h = coef(mod)[1], col="grey")
+```
+
+## Linear equation ($\beta$) space
+
+This problem can be represented by the matrix equation,  $\mathbf{y} = [\mathbf{1}, \mathbf{x}] \mathbf{b} + \mathbf{e} = \mathbf{X} \mathbf{b} + \mathbf{e}$. 
+
+```{r printmat}
+X <- cbind(1, x)
+printMatEqn(y, "=", X, "*", vec(c("b0", "b1")), "+", vec(paste0("e", 1:4)))
+
+```
+Each equation is of the form $y_i = b_0 + b_1 x_i + e_i$. The least squares solution minimizes $\sum e_i^2$.
+
+We can also describe this a representing four equations in two unknowns, `c("b0", "b1")`. 
+
+```{r}
+showEqn(X, y, vars=c("b0", "b1"), simplify=TRUE)
+```
+
+Each equation corresponds to a line in $(b_0, b_1)$ space. Let's plot them. `plotEqn` draws a point at the
+intersection of each pair of lines --- a solution for that pair of observations.
+
+```{r ploteqn1, echo=2}
+par(mar=c(4,4,1,1)+.1)
+plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))
+```
+
+In this space, not all observation equations can be satisfied simultaneously, but a best approximate solution
+can be represented in this space by the coefficients of the linear model $y = X \beta$, where the intercept is 
+already included as the first column in $X$.
+
+```{r ploteqn2, echo=-1}
+par(mar=c(4,4,1,1)+.1)
+plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))
+solution <- lm( y ~ 0 + X)
+loc <- coef(solution)
+points(x=loc[1], y=loc[2], pch=16, cex=1.5)
+```
+
+The LS solution is shown by the black point, corresponding to $(b_0, b_1) = (2.5, -1)$.
+
+## Observation space
+
+There is also a third vector space, one where the coordinate axes refer to the observations, $i:n$, with data $(y_i, x_{i0}, x_{i1}, ...)$.
+The $n$-length vectors in this space relate to the variables **y** and predictors **x1**, **x2** ... . Here, **x0** is the unit vector, `J(n)`, corresponding to the intercept in a model. For $n$ observations, this space has $n$ dimensions.
+
+In the case of simple linear regression, the fitted values, $\widehat{\mathbf{y}}$ correspond to the projection of 
+$\mathbf{y}$ on the plane spanned by $\mathbf{x_0}, \mathbf{x_1}$, or `yhat <- Proj(y, c(bind(x0, x1)))`.
+
+In this space, the vector of residuals, $\mathbf{e}$ is the
+orthogonal complement of $\widehat{\mathbf{y}}$, i.e., $\widehat{\mathbf{y}} \perp \mathbf{e}$. Another geometrical description is
+that the residual vector is the normal vector to the plane.
+
+This space corresponds to the matrix algebra representation of linear regression,
+
+$$
+\mathbf{y} = \mathbf{X} \widehat{\mathbf{b}} + \mathbf{e} = \widehat{\mathbf{y}} + \mathbf{e}
+$$
+In fact, the least squares solution can be derived purely from the requirement that the vector $\widehat{\mathbf{y}}$
+is orthogonal to the vector of residuals, $\mathbf{e}$, i.e., $\widehat{\mathbf{y}}' \mathbf{e} = 0$. (The margins of this vignette are too small to give the proof of this assertion.)
+
+Observation space can be illustrated in the vector diagram developed below, but only in $n=3$ dimensional space, 
+for an actual data problem.  Here, we create `x0`, `x1` and `y` for a simple example.
+
+
+```{r}
+O  <- c(0, 0, 0)    # origin
+x0 <- J(3)          # intercept
+x1 <- c(0, 1, -1)   # x
+y  <- c(1, 1, 4)    # y
+y <-  2 * y / floor(len(y))  # make length more convenient for 3D plot
+```
+This implies the following linear equations, ignoring residuals.
+```{r}
+X <- cbind(x0, x1)      # make a matrix
+showEqn(X, y, vars=colnames(X), simplify=TRUE)
+```
+
+To display this in observation space, 
+
+1. First create a basic 3D plot showing the coordinate axes.
+2. Then, use `vectors3d()` to draw the vectors `x0`, `x1` and `y`.
+3. The plane spanned by `x0`, and `x1` can be specified as as the normal vector orthogonal to both, using the
+new `matlib::xprod()` function.
+4. Finally, we use `Proj()` to find the projection of `y` on this plane.
+
+```{r plot3d, webgl=TRUE}
+win <- rgl::open3d()
+# (1) draw observation axes
+E <- diag(3)
+rownames(E) <- c("1", "2", "3")
+vectors3d(E, lwd=2, color="blue")
+
+# (2) draw variable vectors
+vectors3d(t(X), lwd=2, headlength=0.07)
+vectors3d(y, labels=c("", "y"), color="red", lwd=3, headlength=0.07)
+
+# (3) draw the plane spanned by x0, x1 
+normal <- xprod(x0, x1)
+rgl::planes3d(normal, col="turquoise", alpha=0.2)
+
+# (4) draw projection of y on X
+py <-  Proj(y, X)
+rgl::segments3d(rbind( y, py))       # draw y to plane
+rgl::segments3d(rbind( O, py))       # origin to py in the plane
+corner( O, py, y, d=0.15)            # show it's a right angle
+arc(y, O, py, d=0.2, color="red")
+
+```
+This plot is interactive in the HTML version.  Use the mouse wheel to expand/contract the plot. Drag it
+to rotate to a different view.
+
+You can also spin the plot around it's any axis or create a movie, but that isn't done in this vignette.
+```{r eval=FALSE}
+play3d(spin3d())
+```
+
+For comparison, we can also show the least squares solution in data or $\beta$ space. Here it is in
+linear equation ($\beta$) space.
+
+```{r}
+par(mar=c(4,4,1,1)+.1)
+X <- cbind(x0, x1)
+plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))
+solution <- lm( y ~ 0 + X)
+loc <- coef(solution)
+points(x=loc[1], y=loc[2], pch=16, cex=1.5)
+abline(v=loc[1], lty=2)
+abline(h=loc[2], lty=2)
+
+```
+
+
+## References
+
+Dempster, A. P. (1969). _Elements of Continuous Multivariate Analysis_, 
+Addison-Wesley,
+
+Fox, J. (1984). _Linear Statistical Models and Related Methods_. NY: John Wiley and Sons.
+
+Friendly, M.; Monette, G. & Fox, J. (2013).
+_Elliptical Insights: Understanding Statistical Methods Through Elliptical Geometry_
+Statistical Science, **28**, 1-39.
+
+Monette, G. (1990).
+"Geometry of Multiple Regression and Interactive 3-D Graphics"
+In: Fox, J. & Long, S. (Eds.)
+_Modern Methods of Data Analysis_, SAGE Publications, 209-256
+

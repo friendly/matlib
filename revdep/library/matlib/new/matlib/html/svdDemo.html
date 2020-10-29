@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Demonstrate the SVD for a 3 x 3 matrix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for svdDemo {matlib}"><tr><td>svdDemo {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Demonstrate the SVD for a 3 x 3 matrix</h2>
+
+<h3>Description</h3>
+
+<p>This function draws an <code>rgl</code> scene consisting of a representation of the identity matrix and a
+3 x 3 matrix <code>A</code>, together with the corresponding representation of the
+matrices U, D, and V in the SVD decomposition,
+A = U D V'.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+svdDemo(A, shape = c("cube", "sphere"), alpha = 0.7, col = rainbow(6))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>A</code></td>
+<td>
+<p>A 3 x 3 numeric matrix</p>
+</td></tr>
+<tr valign="top"><td><code>shape</code></td>
+<td>
+<p>Basic shape used to represent the identity matrix: <code>"cube"</code> or <code>"sphere"</code></p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>transparency value used to draw the shape</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>Vector of 6 colors for the faces of the basic cube</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Nothing
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Original idea from Duncan Murdoch
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+A &lt;- matrix(c(1,2,0.1, 0.1,1,0.1, 0.1,0.1,0.5), 3,3)
+svdDemo(A)
+
+## Not run: 
+B &lt;- matrix(c( 1, 0, 1, 0, 2, 0,  1, 0, 2), 3, 3)
+svdDemo(B)
+
+# a positive, semi-definite matrix with eigenvalues 12, 6, 0
+C &lt;- matrix(c(7, 4, 1,  4, 4, 4,  1, 4, 7), 3, 3)
+svdDemo(C)
+
+## End(Not run)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

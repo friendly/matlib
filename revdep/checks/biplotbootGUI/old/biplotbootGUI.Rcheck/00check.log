@@ -1,0 +1,17 @@
+* using log directory 'C:/Users/friendly/Dropbox/R/projects/matlib/revdep/checks/biplotbootGUI/old/biplotbootGUI.Rcheck'
+* using R version 3.6.3 (2020-02-29)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: ISO8859-1
+* using options '--no-manual --no-build-vignettes'
+* checking for file 'biplotbootGUI/DESCRIPTION' ... OK
+* checking extension type ... Package
+* this is package 'biplotbootGUI' version '1.2'
+* package encoding: latin1
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: 'shapes'
+
+See section 'The DESCRIPTION file' in the 'Writing R Extensions'
+manual.
+* DONE
+Status: 1 ERROR

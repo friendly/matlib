@@ -1,0 +1,240 @@
+
+R version 3.6.3 (2020-02-29) -- "Holding the Windsock"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "hyperoverlap"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('hyperoverlap')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("hyperoverlap_detect")
+> ### * hyperoverlap_detect
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: hyperoverlap_detect
+> ### Title: Overlap detection in n-dimensional space using support vector
+> ###   machines (SVMs)
+> ### Aliases: hyperoverlap_detect
+> 
+> ### ** Examples
+> 
+> 
+> data = iris[which(iris$Species!=("versicolor")),]
+> x = hyperoverlap_detect(data[,1:3],data$Species, kernel="linear")
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("hyperoverlap_lda")
+> ### * hyperoverlap_lda
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: hyperoverlap_lda
+> ### Title: Hyperoverlap visualisation using linear discriminant analysis
+> ###   (LDA)
+> ### Aliases: hyperoverlap_lda
+> 
+> ### ** Examples
+> 
+> #using iris dataset reduced to two species
+> data = iris[which(iris$Species!=("versicolor")),]
+> x = hyperoverlap_detect(data[1:4], data$Species)
+> hyperoverlap_lda(x)
+       Entity       LDA1 residualPCA
+1      setosa -1.1600845   1.5399197
+2      setosa -0.9947073   1.7656721
+3      setosa -1.0467366   1.9580274
+4      setosa -0.8649357   1.9428226
+5      setosa -1.1531993   1.6087918
+6      setosa -1.0024849   1.1115502
+7      setosa -0.9294784   1.9747599
+8      setosa -1.0440833   1.5793260
+9      setosa -0.8303326   2.1854683
+10     setosa -1.0167971   1.6834444
+11     setosa -1.2232310   1.2158294
+12     setosa -0.9211970   1.6876043
+13     setosa -1.0323954   1.8320728
+14     setosa -1.0870779   2.4031294
+15     setosa -1.5997777   1.0161659
+16     setosa -1.3280049   0.9135752
+17     setosa -1.2656838   1.3299944
+18     setosa -1.0938531   1.5549638
+19     setosa -1.1326882   0.8647446
+20     setosa -1.0930277   1.4626349
+21     setosa -1.0266572   1.1443251
+22     setosa -1.0051382   1.4902516
+23     setosa -1.3022249   2.1530148
+24     setosa -0.7206748   1.4463640
+25     setosa -0.7237979   1.5237712
+26     setosa -0.8916511   1.5750053
+27     setosa -0.8458208   1.5548031
+28     setosa -1.1228281   1.4038640
+29     setosa -1.1669697   1.4710476
+30     setosa -0.8493374   1.7941943
+31     setosa -0.8562226   1.7253222
+32     setosa -1.0257937   1.2836353
+33     setosa -1.3190082   1.3133843
+34     setosa -1.4258646   1.1261327
+35     setosa -0.9505657   1.6984885
+36     setosa -1.1981662   1.7683043
+37     setosa -1.3400575   1.2687519
+38     setosa -1.1908874   1.6751925
+39     setosa -0.9177904   2.2275067
+40     setosa -1.0726267   1.4978813
+41     setosa -1.1311095   1.6910195
+42     setosa -0.7284954   2.2491143
+43     setosa -0.9611066   2.2023615
+44     setosa -0.7350160   1.5723186
+45     setosa -0.7635974   1.2592348
+46     setosa -0.8999325   1.8621609
+47     setosa -1.0934594   1.3929798
+48     setosa -0.9523935   1.9848610
+49     setosa -1.1946876   1.2972741
+50     setosa -1.0882249   1.6465096
+101 virginica  3.0908217  -1.5783660
+102 virginica  2.3739010  -0.6944718
+103 virginica  2.5967241  -2.1977710
+104 virginica  2.4506353  -1.4149398
+105 virginica  2.7684157  -1.6394477
+106 virginica  2.9146055  -2.9872718
+107 virginica  2.1468459   0.3612538
+108 virginica  2.6258001  -2.6116642
+109 virginica  2.5546939  -1.7996503
+110 virginica  2.8347572  -2.4036972
+111 virginica  2.1320386  -1.3124037
+112 virginica  2.3342405  -1.2923622
+113 virginica  2.4191552  -1.7349927
+114 virginica  2.4461923  -0.5182268
+115 virginica  2.6834000  -0.6318241
+116 virginica  2.4908756  -1.2950489
+117 virginica  2.3060908  -1.5357908
+118 virginica  2.8448284  -3.2088643
+119 virginica  3.3025567  -3.1521711
+120 virginica  2.0943795  -0.8000635
+121 virginica  2.6113579  -1.9207166
+122 virginica  2.3439615  -0.4198889
+123 virginica  2.9289467  -3.1132264
+124 virginica  2.0333535  -1.0075174
+125 virginica  2.5143236  -1.8004879
+126 virginica  2.3919699  -2.4041042
+127 virginica  1.9744390  -0.8840342
+128 virginica  2.0254658  -0.8823457
+129 virginica  2.6424444  -1.4386798
+130 virginica  2.1712239  -2.2998250
+131 virginica  2.5535469  -2.5562701
+132 virginica  2.4578797  -3.2380087
+133 virginica  2.7086758  -1.4236357
+134 virginica  1.9446006  -1.1744442
+135 virginica  2.3077706  -1.2745089
+136 virginica  2.6895265  -2.7655732
+137 virginica  2.7397333  -1.3875385
+138 virginica  2.3129760  -1.4669187
+139 virginica  1.9882094  -0.7462900
+140 virginica  2.3031540  -1.7743990
+141 virginica  2.6905344  -1.6755995
+142 virginica  2.2382178  -1.5804778
+143 virginica  2.3739010  -0.6944718
+144 virginica  2.7715007  -1.9484940
+145 virginica  2.7792493  -1.7403117
+146 virginica  2.3827622  -1.4596268
+147 virginica  2.2087009  -1.0219391
+148 virginica  2.2411546  -1.3418696
+149 virginica  2.5704458  -1.2119157
+150 virginica  2.2141519  -0.8286784
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("hyperoverlap_pairs_plot")
+> ### * hyperoverlap_pairs_plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: hyperoverlap_pairs_plot
+> ### Title: Overlap heatmap plotting for analysis of multiple entities
+> ### Aliases: hyperoverlap_pairs_plot
+> 
+> ### ** Examples
+> 
+> hyperoverlap.iris.set = hyperoverlap_set(iris[1:3],iris$Species, kernel="linear")
+> hyperoverlap_pairs_plot(hyperoverlap.iris.set)
+Warning: Use of `x$result` is discouraged. Use `result` instead.
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("hyperoverlap_plot")
+> ### * hyperoverlap_plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: hyperoverlap_plot
+> ### Title: Overlap plotting for low-dimensional spaces
+> ### Aliases: hyperoverlap_plot
+> 
+> ### ** Examples
+> 
+> data = iris[which(iris$Species!=("versicolor")),]
+> x = hyperoverlap_detect(data[,1:3],data$Species, kernel="linear")
+> hyperoverlap_plot(x)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("hyperoverlap_set")
+> ### * hyperoverlap_set
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: hyperoverlap_set
+> ### Title: Pairwise overlap detection in n-dimensional space of multiple
+> ###   entities using support vector machines (SVMs)
+> ### Aliases: hyperoverlap_set
+> 
+> ### ** Examples
+> 
+> 
+> data(iris)
+> hyperoverlap.iris.set = hyperoverlap_set(iris[1:3],iris$Species, kernel="linear")
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  1.99 0.26 3.19 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

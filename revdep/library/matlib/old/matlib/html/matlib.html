@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: matlib: Matrix Functions for Teaching and Learning Linear...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for matlib {matlib}"><tr><td>matlib {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>matlib: Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics.</h2>
+
+<h3>Description</h3>
+
+<p>These functions are designed mainly for tutorial purposes in teaching &amp; learning matrix algebra
+ideas and applications to statistical methods using R.
+</p>
+
+
+<h3>Details</h3>
+
+<p>In some cases, functions are provided for concepts available
+elsewhere in R, but where the function call or name is not obvious.  In other
+cases, functions are provided to show or demonstrate an algorithm, sometimes
+providing a <code>verbose</code> argument to print the details of computations.
+</p>
+<p>In addition,
+a collection of functions are provided for drawing vector diagrams in 2D and 3D.
+</p>
+<p>These are not meant for production uses. Other methods are more efficient for larger problems.
+</p>
+
+
+<h3>Topics</h3>
+
+<p>The functions in this package are grouped under the following topics
+</p>
+
+<ul>
+<li><p> Convenience functions: <br />
+<code><a href="tr.html">tr</a></code>, <code><a href="R.html">R</a></code>, <code><a href="J.html">J</a></code>, <code><a href="len.html">len</a></code>,
+<code><a href="vec.html">vec</a></code>, <code><a href="Proj.html">Proj</a></code>, <code><a href="mpower.html">mpower</a></code>, <code><a href="vandermode.html">vandermode</a></code>
+</p>
+</li>
+<li><p> Determinants: functions for calculating determinants by cofactor expansion <br />
+<code><a href="minor.html">minor</a></code>, <code><a href="cofactor.html">cofactor</a></code>, <code><a href="rowMinors.html">rowMinors</a></code>, <code><a href="rowCofactors.html">rowCofactors</a></code>
+</p>
+</li>
+<li><p> Elementary row operations: functions for solving linear equations &quot;manually&quot; by the steps used in
+row echelon form and Gaussian elimination <br />
+<code><a href="rowadd.html">rowadd</a></code>, <code><a href="rowmult.html">rowmult</a></code>, <code><a href="rowswap.html">rowswap</a></code>
+</p>
+</li>
+<li><p> Linear equations: functions to illustrate linear equations of the form $A x = b$ <br />
+<code><a href="showEqn.html">showEqn</a></code>, <code><a href="plotEqn.html">plotEqn</a></code>
+</p>
+</li>
+<li><p> Gaussian elimination: functions for illustrating Gaussian elimination for solving
+systems of linear equations of the form $A x = b$. <br />
+<code><a href="gaussianElimination.html">gaussianElimination</a></code>, <code><a href="Inverse.html">Inverse</a></code>, <code><a href="Inverse.html">inv</a></code>, <code><a href="echelon.html">echelon</a></code>,
+<code><a href="Ginv.html">Ginv</a></code>, <code><a href="LU.html">LU</a></code>, <code><a href="cholesky.html">cholesky</a></code>, <code><a href="swp.html">swp</a></code>
+</p>
+</li>
+<li><p> Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues
+and eigenvectors <br />
+<code><a href="../../base/html/eigen.html">eigen</a></code>, <code><a href="SVD.html">SVD</a></code>, <code><a href="powerMethod.html">powerMethod</a></code>, <code><a href="showEig.html">showEig</a></code>
+</p>
+</li>
+<li><p> Vector diagrams: functions for drawing vector diagrams in 2D and 3D <br />
+<code><a href="arrows3d.html">arrows3d</a></code>, <code><a href="corner.html">corner</a></code>, <code><a href="arc.html">arc</a></code>, <code><a href="pointOnLine.html">pointOnLine</a></code>,
+<code><a href="vectors.html">vectors</a></code>, <code><a href="vectors3d.html">vectors3d</a></code>, <code><a href="regvec3d.html">regvec3d</a></code>
+</p>
+</li></ul>
+
+<p>Most of these ideas and implementations arose in courses and books by the authors.
+[Psychology 6140](http://friendly.apps01.yorku.ca/psy6140/) was a starting point.
+Fox (1984) introduced illustrations of vector geometry.
+</p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. Linear Statistical Models and Related Methods. John Wiley and Sons, 1984
+</p>
+<p>Fox, J. and Friendly, M. (2016). &quot;Visualizing Simultaneous Linear Equations, Geometric Vectors, and
+Least-Squares Regression with the matlib Package for R&quot;. <em>useR Conference</em>, Stanford, CA, June 27 - June 30, 2016.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

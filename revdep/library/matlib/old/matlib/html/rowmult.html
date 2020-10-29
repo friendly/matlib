@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Multiply Rows by Constants</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for rowmult {matlib}"><tr><td>rowmult {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Multiply Rows by Constants</h2>
+
+<h3>Description</h3>
+
+<p>Multiplies one or more rows of a matrix by constants. This corresponds to multiplying or dividing equations
+by constants.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rowmult(x, row, mult)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>a matrix, possibly consisting of the coefficient matrix, A, joined with a vector of constants, b.</p>
+</td></tr>
+<tr valign="top"><td><code>row</code></td>
+<td>
+<p>index of one or more rows.</p>
+</td></tr>
+<tr valign="top"><td><code>mult</code></td>
+<td>
+<p>row multiplier(s)</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>the matrix <code>x</code>, modified
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="echelon.html">echelon</a></code>, <code><a href="gaussianElimination.html">gaussianElimination</a></code>
+</p>
+<p>Other elementary row operations: 
+<code><a href="rowadd.html">rowadd</a>()</code>,
+<code><a href="rowswap.html">rowswap</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+A &lt;- matrix(c(2, 1, -1,
+             -3, -1, 2,
+             -2,  1, 2), 3, 3, byrow=TRUE)
+b &lt;- c(8, -11, -3)
+
+# using row operations to reduce below diagonal to 0
+Ab &lt;- cbind(A, b)
+(Ab &lt;- rowadd(Ab, 1, 2, 3/2))  # row 2 &lt;- row 2 + 3/2 row 1
+(Ab &lt;- rowadd(Ab, 1, 3, 1))    # row 3 &lt;- row 3 + 1 row 1
+(Ab &lt;- rowadd(Ab, 2, 3, -4))
+# multiply to make diagonals = 1
+(Ab &lt;- rowmult(Ab, 1:3, c(1/2, 2, -1)))
+# The matrix is now in triangular form
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

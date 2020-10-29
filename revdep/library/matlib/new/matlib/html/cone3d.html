@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Draw a 3D cone</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for cone3d {matlib}"><tr><td>cone3d {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Draw a 3D cone</h2>
+
+<h3>Description</h3>
+
+<p>Draws a cone in 3D from a <code>base</code> point to a <code>tip</code> point, with a given <code>radius</code> at the base.
+This is used to draw nice arrow heads in <code><a href="arrows3d.html">arrows3d</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+cone3d(base, tip, radius = 10, col = "grey", scale = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>base</code></td>
+<td>
+<p>coordinates of base of the cone</p>
+</td></tr>
+<tr valign="top"><td><code>tip</code></td>
+<td>
+<p>coordinates of tip of the cone</p>
+</td></tr>
+<tr valign="top"><td><code>radius</code></td>
+<td>
+<p>radius of the base</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>color</p>
+</td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+<p>scale factor for base and tip</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>rgl arguments passed down; see <code><a href="../../rgl/html/rgl.material.html">rgl.material</a></code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>returns the integer object ID of the shape that was added to the scene
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>January Weiner, borrowed from from the <span class="pkg">pca3d</span> package
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="arrows3d.html">arrows3d</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# none yet
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

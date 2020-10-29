@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Michael Friendly" />
+
+<meta name="date" content="2020-10-29" />
+
+<title>Inverse of a matrix</title>
+
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Inverse of a matrix</h1>
+<h4 class="author">Michael Friendly</h4>
+<h4 class="date">October 29, 2020</h4>
+
+
+
+<p>The inverse of a matrix plays the same roles in matrix algebra as the reciprocal of a number and division does in ordinary arithmetic: Just as we can solve a simple equation like <span class="math inline">\(4 x = 8\)</span> for <span class="math inline">\(x\)</span> by multiplying both sides by the reciprocal <span class="math display">\[ 4 x = 8 \Rightarrow 4^{-1} 4 x = 4^{-1} 8 \Rightarrow x = 8 / 4 = 2\]</span> we can solve a matrix equation like <span class="math inline">\(\mathbf{A x} = \mathbf{b}\)</span> for the vector <span class="math inline">\(\mathbf{x}\)</span> by multiplying both sides by the inverse of the matrix <span class="math inline">\(\mathbf{A}\)</span>, <span class="math display">\[\mathbf{A x} = \mathbf{b} \Rightarrow \mathbf{A}^{-1} \mathbf{A x} = \mathbf{A}^{-1} \mathbf{b} \Rightarrow \mathbf{x} = \mathbf{A}^{-1} \mathbf{b}\]</span></p>
+<p>The following examples illustrate the basic properties of the inverse of a matrix.</p>
+<div id="load-the-matlib-package" class="section level3">
+<h3>Load the <code>matlib</code> package</h3>
+<p>This defines: <code>inv()</code>, <code>Inverse()</code>; the standard R function for matrix inverse is <code>solve()</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(matlib)</a></code></pre></div>
+</div>
+<div id="create-a-3-x-3-matrix" class="section level3">
+<h3>Create a 3 x 3 matrix</h3>
+<p>The ordinary inverse is defined only for square matrices.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">    A &lt;-<span class="st"> </span><span class="kw">matrix</span>( <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb2-2" title="2">                   <span class="dv">3</span>,<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">                   <span class="dv">4</span>, <span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>), <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4">   <span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 16</code></pre>
+</div>
+<div id="basic-properties" class="section level2">
+<h2>Basic properties</h2>
+<div id="deta-0-so-inverse-exists" class="section level3">
+<h3>1. <code>det(A) != 0</code>, so inverse exists</h3>
+<p>Only non-singular matrices have an inverse.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">   (AI  &lt;-<span class="st"> </span><span class="kw">inv</span>(A))</a></code></pre></div>
+<pre><code>##        [,1]    [,2]   [,3]
+## [1,] 0.0625  0.0625  0.125
+## [2,] 0.6875 -0.3125 -0.625
+## [3,] 0.2500  0.2500 -0.500</code></pre>
+</div>
+<div id="definition-of-the-inverse-a-1-a-a-a-1-i-or-ai-a-diagnrowa" class="section level3">
+<h3>2. Definition of the inverse: <span class="math inline">\(A^{-1} A = A A^{-1} = I\)</span> or <code>AI * A = diag(nrow(A))</code></h3>
+<p>The inverse of a matrix <span class="math inline">\(A\)</span> is defined as the matrix <span class="math inline">\(A^{-1}\)</span> which multiplies <span class="math inline">\(A\)</span> to give the identity matrix, just as, for a scalar <span class="math inline">\(a\)</span>, <span class="math inline">\(a a^{-1} = a / a = 1\)</span>.</p>
+<p>NB: Sometimes you will get very tiny off-diagonal values (like <code>1.341e-13</code>). The function <code>zapsmall()</code> will round those to 0.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">   AI <span class="op">%*%</span><span class="st"> </span>A</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    0    1    0
+## [3,]    0    0    1</code></pre>
+</div>
+<div id="inverse-is-reflexive-invinva-a" class="section level3">
+<h3>3. Inverse is <strong>reflexive</strong>: <code>inv(inv(A)) = A</code></h3>
+<p>Taking the inverse twice gets you back to where you started.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">   <span class="kw">inv</span>(AI)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    5    1    0
+## [2,]    3   -1    2
+## [3,]    4    0   -1</code></pre>
+</div>
+<div id="inva-is-symmetric-if-and-only-if-a-is-symmetric" class="section level3">
+<h3>4. <code>inv(A)</code> is <strong>symmetric</strong> if and only if A is symmetric</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">   <span class="kw">inv</span>( <span class="kw">t</span>(A) )</a></code></pre></div>
+<pre><code>##        [,1]    [,2]  [,3]
+## [1,] 0.0625  0.6875  0.25
+## [2,] 0.0625 -0.3125  0.25
+## [3,] 0.1250 -0.6250 -0.50</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">   <span class="kw">is_symmetric_matrix</span>(A)</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">   <span class="kw">is_symmetric_matrix</span>( <span class="kw">inv</span>( <span class="kw">t</span>(A) ) )</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Here is a symmetric case:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">   B &lt;-<span class="st"> </span><span class="kw">matrix</span>( <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb16-2" title="2">                  <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb16-3" title="3">                  <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-4" title="4">   <span class="kw">inv</span>(B)</a></code></pre></div>
+<pre><code>##       [,1]  [,2]  [,3]
+## [1,]  0.50 -0.25 -0.25
+## [2,] -0.25  0.50  0.00
+## [3,] -0.25  0.00  0.50</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">   <span class="kw">inv</span>( <span class="kw">t</span>(B) )</a></code></pre></div>
+<pre><code>##       [,1]  [,2]  [,3]
+## [1,]  0.50 -0.25 -0.25
+## [2,] -0.25  0.50  0.00
+## [3,] -0.25  0.00  0.50</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">   <span class="kw">is_symmetric_matrix</span>(B)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">   <span class="kw">is_symmetric_matrix</span>( <span class="kw">inv</span>( <span class="kw">t</span>(B) ) )</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">   <span class="kw">all.equal</span>( <span class="kw">inv</span>(B), <span class="kw">inv</span>( <span class="kw">t</span>(B) ) )</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+<div id="more-properties-of-matrix-inverse" class="section level2">
+<h2>More properties of matrix inverse</h2>
+<div id="inverse-of-diagonal-matrix-diag-1-diagonal" class="section level3">
+<h3>1. inverse of diagonal matrix = diag( 1/ diagonal)</h3>
+<p>In these simple examples, it is often useful to show the results of matrix calculations as fractions, using <code>MASS::fractions()</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">   D &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb26-2" title="2">   <span class="kw">inv</span>(D)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1  0.0 0.00
+## [2,]    0  0.5 0.00
+## [3,]    0  0.0 0.25</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">   MASS<span class="op">::</span><span class="kw">fractions</span>( <span class="kw">diag</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)) )</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   1    0    0 
+## [2,]   0  1/2    0 
+## [3,]   0    0  1/4</code></pre>
+</div>
+<div id="inverse-of-an-inverse-invinva-a" class="section level3">
+<h3>2. Inverse of an inverse: <code>inv(inv(A)) = A</code></h3>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">   A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>,  <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">0</span>,  <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb30-2" title="2">   AI &lt;-<span class="st"> </span><span class="kw">inv</span>(A)</a>
+<a class="sourceLine" id="cb30-3" title="3">   <span class="kw">inv</span>(AI)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    2    3    0
+## [3,]    0    1    2</code></pre>
+</div>
+<div id="inverse-of-a-transpose-invta-tinva" class="section level3">
+<h3>3. inverse of a <strong>transpose</strong>: <code>inv(t(A)) = t(inv(A))</code></h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">   <span class="kw">inv</span>( <span class="kw">t</span>(A) )</a></code></pre></div>
+<pre><code>##       [,1] [,2]  [,3]
+## [1,]  1.50 -1.0  0.50
+## [2,] -0.25  0.5 -0.25
+## [3,] -2.25  1.5 -0.25</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">   <span class="kw">t</span>( <span class="kw">inv</span>(A) )</a></code></pre></div>
+<pre><code>##       [,1] [,2]  [,3]
+## [1,]  1.50 -1.0  0.50
+## [2,] -0.25  0.5 -0.25
+## [3,] -2.25  1.5 -0.25</code></pre>
+</div>
+<div id="inverse-of-a-scalar-matrix-inv-ka-1k-inva" class="section level3">
+<h3>4. inverse of a scalar * matrix: <code>inv( k*A ) = (1/k) * inv(A)</code></h3>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">   <span class="kw">inv</span>(<span class="dv">5</span> <span class="op">*</span><span class="st"> </span>A)</a></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3]
+## [1,]  0.3 -0.05 -0.45
+## [2,] -0.2  0.10  0.30
+## [3,]  0.1 -0.05 -0.05</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">   (<span class="dv">1</span><span class="op">/</span><span class="dv">5</span>) <span class="op">*</span><span class="st"> </span><span class="kw">inv</span>(A)</a></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3]
+## [1,]  0.3 -0.05 -0.45
+## [2,] -0.2  0.10  0.30
+## [3,]  0.1 -0.05 -0.05</code></pre>
+</div>
+<div id="inverse-of-a-matrix-product-inva-b-invb-inva" class="section level3">
+<h3>5. inverse of a matrix product: <code>inv(A * B) = inv(B) %*% inv(A)</code></h3>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1">   B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb40-2" title="2">   C &lt;-<span class="st"> </span>B[, <span class="dv">3</span><span class="op">:</span><span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb40-3" title="3">   A <span class="op">%*%</span><span class="st">  </span>B</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    9   20   10
+## [2,]    5   13   12
+## [3,]    5   11    4</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">   <span class="kw">inv</span>(A <span class="op">%*%</span><span class="st">  </span>B)</a></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3]
+## [1,]  4.0 -1.50 -5.50
+## [2,] -2.0  0.70  2.90
+## [3,]  0.5 -0.05 -0.85</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">   <span class="kw">inv</span>(B) <span class="op">%*%</span><span class="st">  </span><span class="kw">inv</span>(A)</a></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3]
+## [1,]  4.0 -1.50 -5.50
+## [2,] -2.0  0.70  2.90
+## [3,]  0.5 -0.05 -0.85</code></pre>
+<p>This extends to any number of terms: the inverse of a product is the product of the inverses in reverse order.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">   (ABC &lt;-<span class="st"> </span>A <span class="op">%*%</span><span class="st"> </span>B <span class="op">%*%</span><span class="st"> </span>C)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   77  118   49
+## [2,]   53   97   42
+## [3,]   41   59   24</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">   <span class="kw">inv</span>(A <span class="op">%*%</span><span class="st"> </span>B <span class="op">%*%</span><span class="st"> </span>C)</a></code></pre></div>
+<pre><code>##      [,1]  [,2]   [,3]
+## [1,]  1.5 -0.59  -2.03
+## [2,] -4.5  1.61   6.37
+## [3,]  8.5 -2.95 -12.15</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">   <span class="kw">inv</span>(C) <span class="op">%*%</span><span class="st"> </span><span class="kw">inv</span>(B) <span class="op">%*%</span><span class="st"> </span><span class="kw">inv</span>(A)</a></code></pre></div>
+<pre><code>##      [,1]  [,2]   [,3]
+## [1,]  1.5 -0.59  -2.03
+## [2,] -4.5  1.61   6.37
+## [3,]  8.5 -2.95 -12.15</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">   <span class="kw">inv</span>(ABC)</a></code></pre></div>
+<pre><code>##      [,1]  [,2]   [,3]
+## [1,]  1.5 -0.59  -2.03
+## [2,] -4.5  1.61   6.37
+## [3,]  8.5 -2.95 -12.15</code></pre>
+</div>
+<div id="det-a-1-1-deta-deta-1" class="section level3">
+<h3>6. <span class="math inline">\(\det (A^{-1}) = 1 / \det(A) = [\det(A)]^{-1}\)</span></h3>
+<p>The determinant of an inverse is the inverse (reciprocal) of the determinant</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">  <span class="kw">det</span>(AI)</a></code></pre></div>
+<pre><code>## [1] 0.25</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">  <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 0.25</code></pre>
+</div>
+</div>
+<div id="geometric-interpretations" class="section level2">
+<h2>Geometric interpretations</h2>
+<p>Some of these properties of the matrix inverse can be more easily understood from geometric diagrams. Here, we take a <span class="math inline">\(2 \times 2\)</span> non-singular matrix <span class="math inline">\(A\)</span>,</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb58-2" title="2">              <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb58-3" title="3">A</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    2    1
+## [2,]    1    2</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<p>The larger the determinant of <span class="math inline">\(A\)</span>, the smaller is the determinant of <span class="math inline">\(A^{-1}\)</span>.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">AI &lt;-<span class="st"> </span><span class="kw">inv</span>(A)</a>
+<a class="sourceLine" id="cb62-2" title="2">MASS<span class="op">::</span><span class="kw">fractions</span>(AI)</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]  2/3 -1/3
+## [2,] -1/3  2/3</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw">det</span>(AI)</a></code></pre></div>
+<pre><code>## [1] 0.3333</code></pre>
+<p>Now, plot the rows of <span class="math inline">\(A\)</span> as vectors <span class="math inline">\(a_1, a_2\)</span> from the origin in a 2D space. As illustrated in <code>vignette(&quot;det-ex1&quot;)</code>, the area of the parallelogram defined by these vectors is the determinant.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>)<span class="op">+</span>.<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb66-2" title="2">xlim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb66-3" title="3">ylim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb66-4" title="4"><span class="kw">plot</span>(xlim, ylim, <span class="dt">type=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;X1&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;X2&quot;</span>, <span class="dt">asp=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb66-5" title="5">sum &lt;-<span class="st"> </span>A[<span class="dv">1</span>,] <span class="op">+</span><span class="st"> </span>A[<span class="dv">2</span>,]</a>
+<a class="sourceLine" id="cb66-6" title="6"><span class="co"># draw the parallelogram determined by the rows of A</span></a>
+<a class="sourceLine" id="cb66-7" title="7"><span class="kw">polygon</span>( <span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), A[<span class="dv">1</span>,], sum, A[<span class="dv">2</span>,]), <span class="dt">col=</span><span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb66-8" title="8"><span class="kw">vectors</span>(A, <span class="dt">labels=</span><span class="kw">c</span>(<span class="kw">expression</span>(a[<span class="dv">1</span>]), <span class="kw">expression</span>(a[<span class="dv">2</span>])), <span class="dt">pos.lab=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb66-9" title="9"><span class="kw">vectors</span>(sum, <span class="dt">origin=</span>A[<span class="dv">1</span>,], <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)</a>
+<a class="sourceLine" id="cb66-10" title="10"><span class="kw">vectors</span>(sum, <span class="dt">origin=</span>A[<span class="dv">2</span>,], <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)</a>
+<a class="sourceLine" id="cb66-11" title="11"><span class="kw">text</span>(<span class="kw">mean</span>(A[,<span class="dv">1</span>]), <span class="kw">mean</span>(A[,<span class="dv">2</span>]), <span class="st">&quot;A&quot;</span>, <span class="dt">cex=</span><span class="fl">1.5</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The rows of the inverse <span class="math inline">\(A^{-1}\)</span> can be shown as vectors <span class="math inline">\(a^1, a^2\)</span> from the origin in the same space.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw">vectors</span>(AI, <span class="dt">labels=</span><span class="kw">c</span>(<span class="kw">expression</span>(a<span class="op">^</span><span class="dv">1</span>), <span class="kw">expression</span>(a<span class="op">^</span><span class="dv">2</span>)), <span class="dt">pos.lab=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb67-2" title="2">sum &lt;-<span class="st"> </span>AI[<span class="dv">1</span>,] <span class="op">+</span><span class="st"> </span>AI[<span class="dv">2</span>,]</a>
+<a class="sourceLine" id="cb67-3" title="3"><span class="kw">polygon</span>( <span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), AI[<span class="dv">1</span>,], sum, AI[<span class="dv">2</span>,]), <span class="dt">col=</span><span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb67-4" title="4"><span class="kw">text</span>(<span class="kw">mean</span>(AI[,<span class="dv">1</span>])<span class="op">-</span>.<span class="dv">3</span>, <span class="kw">mean</span>(AI[,<span class="dv">2</span>])<span class="op">-</span>.<span class="dv">2</span>, <span class="kw">expression</span>(A<span class="op">^</span>{<span class="op">-</span><span class="dv">1</span>}), <span class="dt">cex=</span><span class="fl">1.5</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Thus, we can see:</p>
+<ul>
+<li><p>The shape of <span class="math inline">\(A^{-1}\)</span> is a <span class="math inline">\(90^o\)</span> rotation of the shape of <span class="math inline">\(A\)</span>.</p></li>
+<li><p><span class="math inline">\(A^{-1}\)</span> is small in the directions where <span class="math inline">\(A\)</span> is large.</p></li>
+<li><p>The vector <span class="math inline">\(a^2\)</span> is at right angles to <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a^1\)</span> is at right angles to <span class="math inline">\(a_2\)</span></p></li>
+<li><p>If we multiplied <span class="math inline">\(A\)</span> by a constant <span class="math inline">\(k\)</span> to make its determinant larger (by a factor of <span class="math inline">\(k^2\)</span>), the inverse would have to be divided by the same factor to preserve <span class="math inline">\(A A^{-1} = I\)</span>.</p></li>
+</ul>
+<p>One might wonder whether these properties depend on symmetry of <span class="math inline">\(A\)</span>, so here is another example, for the matrix <code>A &lt;- matrix(c(2, 1, 1, 1), nrow=2)</code>, where <span class="math inline">\(\det(A)=1\)</span>.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">(A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">nrow=</span><span class="dv">2</span>))</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    2    1
+## [2,]    1    1</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">(AI &lt;-<span class="st"> </span><span class="kw">inv</span>(A))</a></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1   -1
+## [2,]   -1    2</code></pre>
+<p>The areas of the two parallelograms are the same because <span class="math inline">\(\det(A) = \det(A^{-1}) = 1\)</span>. <img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

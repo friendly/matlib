@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Position of a point along a line</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for pointOnLine {matlib}"><tr><td>pointOnLine {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Position of a point along a line</h2>
+
+<h3>Description</h3>
+
+<p>A utility function for drawing vector diagrams. Find position of an interpolated point along a line from <code>x1</code> to <code>x2</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+pointOnLine(x1, x2, d, absolute = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x1</code></td>
+<td>
+<p>A vector of length 2 or 3, representing the starting point of a line in  2D or 3D space</p>
+</td></tr>
+<tr valign="top"><td><code>x2</code></td>
+<td>
+<p>A vector of length 2 or 3, representing the ending point of a line in  2D or 3D space</p>
+</td></tr>
+<tr valign="top"><td><code>d</code></td>
+<td>
+<p>The distance along the line from <code>x1</code> to <code>x2</code> of the point to be found.</p>
+</td></tr>
+<tr valign="top"><td><code>absolute</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, <code>d</code> is taken as an absolute distance along the line; otherwise it
+is calculated as a relative distance, i.e., a fraction of the length of the line.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The function takes a step of length <code>d</code> along the line defined by the difference between the two points, <code>x2 - x1</code>.
+When <code>absolute=FALSE</code>, this step is proportional to the difference,
+while when <code>absolute=TRUE</code>, the difference is first scaled to unit length so that the step is always of length <code>d</code>.
+Note that the physical length of a line in different directions in a graph depends on the aspect ratio of the plot axes,
+and lines of the same length will only appear equal if the aspect ratio is one
+(<code>asp=1</code> in 2D, or <code>aspect3d("iso")</code> in 3D).
+</p>
+
+
+<h3>Value</h3>
+
+<p>The interpolated point, a vector of the same length as <code>x1</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other vector diagrams: 
+<code><a href="Proj.html">Proj</a>()</code>,
+<code><a href="arc.html">arc</a>()</code>,
+<code><a href="arrows3d.html">arrows3d</a>()</code>,
+<code><a href="circle3d.html">circle3d</a>()</code>,
+<code><a href="corner.html">corner</a>()</code>,
+<code><a href="plot.regvec3d.html">plot.regvec3d</a>()</code>,
+<code><a href="regvec3d.html">regvec3d</a>()</code>,
+<code><a href="vectors3d.html">vectors3d</a>()</code>,
+<code><a href="vectors.html">vectors</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x1 &lt;- c(0, 0)
+x2 &lt;- c(1, 4)
+pointOnLine(x1, x2, 0.5)
+pointOnLine(x1, x2, 0.5, absolute=FALSE)
+pointOnLine(x1, x2, 1.1)
+
+y1 &lt;- c(1, 2, 3)
+y2 &lt;- c(3, 2, 1)
+pointOnLine(y1, y2, 0.5)
+pointOnLine(y1, y2, 0.5, absolute=FALSE)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

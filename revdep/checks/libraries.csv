@@ -1,0 +1,10 @@
+package,old,new,delta
+matlib,0.9.4,0.9.4,
+digest,NA,0.6.27,*
+openxlsx,NA,4.2.3,*
+ps,NA,1.4.0,*
+quantreg,NA,5.75,*
+R6,NA,2.5.0,*
+RcppArmadillo,NA,0.10.1.0.0,*
+rlang,NA,0.4.8,*
+sp,NA,1.4-4,*

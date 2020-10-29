@@ -1,0 +1,122 @@
+
+R version 3.6.3 (2020-02-29) -- "Holding the Windsock"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "VIRF"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('VIRF')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("VIRF")
+> ### * VIRF
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: VIRF
+> ### Title: Volatility Impulse Response Function
+> ### Aliases: VIRF
+> 
+> ### ** Examples
+> 
+> 
+> 
+> k=3 #number of series
+> p=6 # maximum lag order
+> ns=100 #number of simulations
+> B=matrix(0,nrow=k,ncol=p*k)
+> A1<- matrix(c(.4,-.02,.01,-.02,.3,.02,.01,.04,.3),ncol=3,nrow=3)
+> A2 <- matrix(c(.2,0,0,0,.3,0,0,0,.13),ncol=3,nrow=3)
+> B[,1:k]=A1
+> B[,(4*k+1):(5*k)]=A2
+> A <- BigVAR::VarptoVar1MC(B,p,k)
+> Y <-BigVAR::MultVarSim(k,A,p,.1*diag(k),ns)
+> lr<-VIRF(Y,40) # Y: multivariate time series data, shock time point: 40
+H IS SINGULAR!...
+H IS SINGULAR!...
+H IS SINGULAR!...
+H IS SINGULAR!...
+Warning in BEKK(data1, order = c(1, 1), params = NULL, fixed = NULL, method = "BFGS",  :
+  negative inverted hessian matrix element
+> print(lr)
+$var_virf
+            [,1]          [,2]          [,3]
+dx  1.030208e-01  1.114241e-01  7.440826e-04
+dx -1.273291e-02  6.327569e-02 -1.194067e-03
+dx -8.166141e-03 -3.584320e-02 -9.452063e-04
+dx -2.414297e-02 -7.962456e-03 -3.341876e-03
+dx -4.362659e-03 -6.673739e-03  8.435981e-05
+dx  1.540190e-03 -4.061006e-03  2.423777e-04
+dx -1.552924e-03  5.181737e-04 -2.630742e-04
+dx  7.493841e-04  1.687294e-03  2.729141e-05
+dx  3.115869e-04  9.488263e-04  3.993998e-05
+dx  1.612469e-04  2.964397e-04  2.967206e-05
+dx -1.716077e-04 -5.618719e-04 -2.204067e-05
+dx -2.846854e-05 -2.927565e-05 -5.098161e-06
+dx -3.719781e-06  4.966283e-07 -1.190087e-06
+dx  1.679047e-05  2.264135e-05  2.568998e-07
+dx  8.652832e-06  1.817864e-05  8.013679e-07
+dx -5.504391e-06 -9.580303e-06 -4.155431e-07
+dx -4.772544e-07 -1.646527e-06  1.170137e-07
+dx  1.468545e-06  8.765106e-07  1.292841e-07
+dx  1.092066e-07 -4.001443e-07  1.728507e-08
+dx -9.042088e-07 -9.964259e-07 -7.911978e-08
+
+$cov_virf
+            [,1]          [,2]          [,3]
+ui  1.119406e-01  6.985173e-03  3.667639e-03
+ui  1.359090e-02 -1.704450e-03  1.784736e-03
+ui -1.122745e-02  1.247443e-04  2.575906e-04
+ui -2.625391e-03 -9.927726e-04  2.871763e-03
+ui -6.434796e-03 -2.784109e-04 -3.522071e-04
+ui -1.290881e-03  1.262019e-04 -2.857734e-04
+ui  4.319533e-04 -6.717603e-05  2.556230e-04
+ui  9.816887e-04  2.856058e-05  2.058894e-05
+ui  2.894894e-04  5.893506e-07 -2.060605e-05
+ui  3.686982e-05  9.552044e-07 -2.396283e-05
+ui -1.700538e-04  2.932450e-07  1.080532e-05
+ui -1.032904e-06 -5.612069e-07  4.417360e-06
+ui  4.495606e-06 -3.124147e-09  1.245383e-06
+ui  2.011170e-05  9.665450e-07  6.402792e-07
+ui  7.788678e-06  2.228535e-07 -3.414931e-07
+ui -5.021627e-06 -1.969984e-07  1.387630e-07
+ui -1.664109e-06 -4.447732e-08 -1.764018e-07
+ui  7.532450e-07  7.366077e-08 -8.358578e-08
+ui -1.233033e-07  1.065366e-08 -2.207187e-08
+ui -5.936412e-07 -3.843258e-08  4.401044e-08
+
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  4.79 0.57 7.02 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

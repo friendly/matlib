@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a vector, matrix or array of constants</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for J {matlib}"><tr><td>J {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a vector, matrix or array of constants</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a vector, matrix or array of constants, typically used for
+the unit vector or unit matrix in matrix expressions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+J(..., constant = 1, dimnames = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>One or more arguments supplying the dimensions of the array, all non-negative integers</p>
+</td></tr>
+<tr valign="top"><td><code>constant</code></td>
+<td>
+<p>The value of the constant used in the array</p>
+</td></tr>
+<tr valign="top"><td><code>dimnames</code></td>
+<td>
+<p>Either <code>NULL</code> or the names for the dimensions.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The <code>"dimnames"</code> attribute is optional: if present it is a list with one component for each dimension,
+either <code>NULL</code> or a character vector of the length given by the element of the <code>"dim"</code> attribute for that
+dimension. The list can be named, and the list names will be used as names for the dimensions.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+J(3)
+J(2,3)
+J(2,3,2)
+J(2,3, constant=2, dimnames=list(letters[1:2], LETTERS[1:3]))
+
+X &lt;- matrix(1:6, nrow=2, ncol=3)
+dimnames(X) &lt;- list(sex=c("M", "F"), day=c("Mon", "Wed", "Fri"))
+J(2) %*% X      # column sums
+X %*% J(3)      # row sums
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

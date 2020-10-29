@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Gram-Schmidt Orthogonalization of a Matrix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for GramSchmidt {matlib}"><tr><td>GramSchmidt {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Gram-Schmidt Orthogonalization of a Matrix</h2>
+
+<h3>Description</h3>
+
+<p>Carries out simple Gram-Schmidt orthogonalization of a matrix.
+Treating the columns of the matrix <code>X</code> in the given order,
+each successive column after the first is made orthogonal to all
+previous columns by subtracting their projections on the current
+column.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+GramSchmidt(
+  X,
+  normalize = TRUE,
+  verbose = FALSE,
+  tol = sqrt(.Machine$double.eps)
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>a matrix</p>
+</td></tr>
+<tr valign="top"><td><code>normalize</code></td>
+<td>
+<p>logical; should the resulting columns be normalized to unit length?</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, print intermediate steps</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>the tolerance for detecting linear dependencies in the columns of a. The default is <code>.Machine$double.eps</code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A matrix of the same size as <code>X</code>, with orthogonal columns
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Phil Chalmers, John Fox
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+(xx &lt;- matrix(c( 1:3, 3:1, 1, 0, -2), 3, 3))
+crossprod(xx)
+(zz &lt;- GramSchmidt(xx, normalize=FALSE))
+zapsmall(crossprod(zz))
+
+# normalized
+(zz &lt;- GramSchmidt(xx))
+zapsmall(crossprod(zz))
+
+# print steps
+GramSchmidt(xx, verbose=TRUE)
+
+# A non-invertible matrix;  hence, it is of deficient rank
+(xx &lt;- matrix(c( 1:3, 3:1, 1, 0, -1), 3, 3))
+R(xx)
+crossprod(xx)
+# GramSchmidt finds an orthonormal basis
+(zz &lt;- GramSchmidt(xx))
+zapsmall(crossprod(zz))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

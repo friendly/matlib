@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Eigen Decomposition of a Square Symmetric Matrix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Eigen {matlib}"><tr><td>Eigen {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Eigen Decomposition of a Square Symmetric Matrix</h2>
+
+<h3>Description</h3>
+
+<p><code>Eigen</code> calculates the eigenvalues and eigenvectors of a square, symmetric matrix using the iterated QR decomposition
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Eigen(X, tol = sqrt(.Machine$double.eps), max.iter = 100, retain.zeroes = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>a square symmetric matrix</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>tolerance passed to <code><a href="QR.html">QR</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>max.iter</code></td>
+<td>
+<p>maximum number of QR iterations</p>
+</td></tr>
+<tr valign="top"><td><code>retain.zeroes</code></td>
+<td>
+<p>logical; retain 0 eigenvalues?</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a list of two elements: <code>values</code>&ndash; eigenvalues, <code>vectors</code>&ndash; eigenvectors
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox and Georges Monette
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../base/html/eigen.html">eigen</a></code>
+</p>
+<p><code><a href="SVD.html">SVD</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+C &lt;- matrix(c(1,2,3,2,5,6,3,6,10), 3, 3) # nonsingular, symmetric
+C
+EC &lt;- Eigen(C) # eigenanalysis of C
+EC$vectors %*% diag(EC$values) %*% t(EC$vectors) # check
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

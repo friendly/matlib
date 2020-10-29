@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Solve and Display Solutions for Systems of Linear...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Solve {matlib}"><tr><td>Solve {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Solve and Display Solutions for Systems of Linear Simultaneous Equations</h2>
+
+<h3>Description</h3>
+
+<p>Solve the equation system <i>Ax = b</i>, given the coefficient matrix
+<i>A</i> and right-hand side vector <i>b</i>, using <code>link{gaussianElimination}</code>.
+Display the solutions using <code><a href="showEqn.html">showEqn</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Solve(
+  A,
+  b = rep(0, nrow(A)),
+  vars,
+  verbose = FALSE,
+  simplify = TRUE,
+  fractions = FALSE,
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>A, </code></td>
+<td>
+<p>the matrix of coefficients of a system of linear equations</p>
+</td></tr>
+<tr valign="top"><td><code>b, </code></td>
+<td>
+<p>the vector of constants on the right hand side of the equations. The default is a vector of zeros,
+giving the homogeneous equations <i>Ax = 0</i>.</p>
+</td></tr>
+<tr valign="top"><td><code>vars</code></td>
+<td>
+<p>a numeric or character vector of names of the variables.
+If supplied, the length must be equal to the number of unknowns in the equations.
+The default is <code>paste0("x", 1:ncol(A)</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose, </code></td>
+<td>
+<p>logical; show the steps of the Gaussian elimination algorithm?</p>
+</td></tr>
+<tr valign="top"><td><code>simplify</code></td>
+<td>
+<p>logical; try to simplify the equations?</p>
+</td></tr>
+<tr valign="top"><td><code>fractions</code></td>
+<td>
+<p>logical; express numbers as rational fractions?</p>
+</td></tr>
+<tr valign="top"><td><code>..., </code></td>
+<td>
+<p>arguments to be passed to <code>link{gaussianElimination}</code> and <code><a href="showEqn.html">showEqn</a></code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function mimics the base function <code><a href="../../base/html/solve.html">solve</a></code> when supplied with two arguments,
+<code>(A, b)</code>, but gives a prettier result, as a set of equations for the solution.  The call
+<code>solve(A)</code> with a single argument overloads this, returning the inverse of the matrix <code>A</code>.
+For that sense, use the function <code><a href="Inverse.html">inv</a></code> instead.
+</p>
+
+
+<h3>Value</h3>
+
+<p>the function is used primarily for its side effect of printing the solution in a
+readable form, but it invisibly returns the solution as a character vector
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="gaussianElimination.html">gaussianElimination</a></code>, <code><a href="showEqn.html">showEqn</a></code> <code><a href="Inverse.html">inv</a></code>, <code><a href="../../base/html/solve.html">solve</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  A1 &lt;- matrix(c(2, 1, -1,
+               -3, -1, 2,
+               -2,  1, 2), 3, 3, byrow=TRUE)
+  b1 &lt;- c(8, -11, -3)
+  Solve(A1, b1) # unique solution
+
+  A2 &lt;- matrix(1:9, 3, 3)
+  b2 &lt;- 1:3
+  Solve(A2,  b2, fractions=TRUE) # underdetermined
+
+  b3 &lt;- c(1, 2, 4)
+  Solve(A2, b3, fractions=TRUE) # overdetermined
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

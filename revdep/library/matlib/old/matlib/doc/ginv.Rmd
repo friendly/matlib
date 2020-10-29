@@ -1,0 +1,133 @@
+---
+title: "Generalized inverse"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Generalized inverse}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 5,
+  fig.width = 5
+)
+options(digits=4)
+par(mar=c(5,4,1,1)+.1)
+```
+
+In matrix algebra, the inverse of a matrix is defined only for *square* matrices,
+and if a matrix is *singular*, it does not have an inverse.
+
+The **generalized inverse** (or *pseudoinverse*)
+is an extension of the idea of a matrix inverse,
+which has some but not all the properties of an ordinary inverse.
+
+A common use of the pseudoinverse is to compute a 'best fit' (least squares)
+solution to a system of linear equations that lacks a unique solution.
+
+```{r }
+library(matlib)
+```
+
+ Construct a square, *singular* matrix [See: Timm, EX. 1.7.3]
+
+```{r }
+A <-matrix(c(4, 4, -2,
+             4, 4, -2,
+            -2, -2, 10), nrow=3, ncol=3, byrow=TRUE)
+det(A)
+```
+
+The rank is 2, so `inv(A)` won't work
+
+```{r }
+R(A)
+```
+
+ In the echelon form, this rank deficiency appears as the final row of zeros
+
+```{r }
+echelon(A)
+```
+
+`inv()` will throw an error
+
+```{r }
+try(inv(A))
+```
+
+ A **generalized inverse** does exist for any  matrix,
+ but unlike the ordinary inverse, the generalized inverse is not unique, in the
+ sense that there are various ways of defining a generalized inverse with
+ various inverse-like properties.  The function `matlib::Ginv()` calculates
+ a *Moore-Penrose* generalized inverse.
+
+```{r }
+(AI <- Ginv(A))
+```
+
+We can also view this as fractions:
+
+```{r }
+Ginv(A, fractions=TRUE)
+```
+
+### Properties of generalized inverse (Moore-Penrose inverse)
+
+The generalized inverse is defined as the matrix $A^-$ such that
+
+* $A * A^- * A = A$ and
+* $A^- * A * A^- = A^-$
+
+```{r }
+A %*% AI %*% A
+AI %*% A %*% AI
+```
+
+In addition, both $A * A^-$ and $A^- * A$ are symmetric, but
+neither product gives an identity matrix, `A %*% AI != AI %*% A != I`
+
+
+```{r }
+zapsmall(A %*% AI)
+zapsmall(AI %*% A)
+```
+
+## Rectangular matrices
+
+For a *rectangular matrix*, $A^- = (A^{T} A)^{-1} A^{T}$
+is the generalized inverse of $A$
+if $(A^{T} A)^-$  is the ginv of $(A^{T} A)$ [See: Timm: EX 1.6.11]
+
+```{r }
+A <- cbind( 1, matrix(c(1, 0, 1, 0, 0, 1, 0, 1), nrow=4, byrow=TRUE))
+A
+```
+
+This $4 \times 3$ matrix is not of full rank, because columns 2 and 3 sum to column 1.
+
+```{r }
+R(A)
+
+(AA <- t(A) %*% A)
+(AAI <- Ginv(AA))
+```
+
+The generalized inverse of $A$ is $(A^{T} A)^- A^{T}$,  `AAI * t(A)`
+
+```{r }
+AI <- AAI  %*%  t(A)
+```
+
+Show that it is a generalized inverse:
+
+```{r }
+A %*% AI %*% A
+AI %*% A %*% AI
+```
+

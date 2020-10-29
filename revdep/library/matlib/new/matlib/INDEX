@@ -1,0 +1,69 @@
+Det                     Determinant of a Square Matrix
+Eigen                   Eigen Decomposition of a Square Symmetric
+                        Matrix
+Ginv                    Generalized Inverse of a Matrix
+GramSchmidt             Gram-Schmidt Orthogonalization of a Matrix
+Inverse                 Inverse of a Matrix
+J                       Create a vector, matrix or array of constants
+LU                      LU Decomposition
+MoorePenrose            Moore-Penrose inverse of a matrix
+Proj                    Projection of Vector y on columns of X
+QR                      QR Decomposition by Graham-Schmidt
+                        Orthonormalization
+R                       Rank of a Matrix
+SVD                     Singular Value Decomposition of a Matrix
+Solve                   Solve and Display Solutions for Systems of
+                        Linear Simultaneous Equations
+adjoint                 Calculate the Adjoint of a matrix
+angle                   Angle between two vectors
+arc                     Draw an arc showing the angle between vectors
+arrows3d                Draw 3D arrows
+buildTmat               Build/Get transformation matrices
+cholesky                Cholesky Square Root of a Matrix
+circle3d                Draw a horizontal circle
+class                   Class Data Set
+cofactor                Cofactor of A[i,j]
+cone3d                  Draw a 3D cone
+corner                  Draw a corner showing the angle between two
+                        vectors
+echelon                 Echelon Form of a Matrix
+gaussianElimination     Gaussian Elimination
+gsorth                  Gram-Schmidt Orthogonalization of a Matrix
+len                     Length of a Vector or Column Lengths of a
+                        Matrix
+matlib                  matlib: Matrix Functions for Teaching and
+                        Learning Linear Algebra and Multivariate
+                        Statistics.
+matrix2latex            Convert matrix to LaTeX equation
+minor                   Minor of A[i,j]
+mpower                  Matrix Power
+plot.regvec3d           Plot method for regvec3d objects
+plotEqn                 Plot Linear Equations
+plotEqn3d               Plot Linear Equations in 3D
+pointOnLine             Position of a point along a line
+powerMethod             Power Method for Eigenvectors
+printMatEqn             Print Matrices or Matrix Operations Side by
+                        Side
+printMatrix             Print a matrix, allowing fractions or LaTeX
+                        output
+regvec3d                Vector space representation of a two-variable
+                        regression model
+rowCofactors            Row Cofactors of A[i,]
+rowMinors               Row Minors of A[i,]
+rowadd                  Add multiples of rows to other rows
+rowmult                 Multiply Rows by Constants
+rowswap                 Interchange two rows of a matrix
+showEig                 Show the eigenvectors associated with a
+                        covariance matrix
+showEqn                 Show Matrices (A, b) as Linear Equations
+svdDemo                 Demonstrate the SVD for a 3 x 3 matrix
+swp                     The Matrix Sweep Operator
+symMat                  Create a Symmetric Matrix from a Vector
+therapy                 Therapy Data
+tr                      Trace of a Matrix
+vandermode              Vandermode Matrix
+vec                     Vectorize a Matrix
+vectors                 Draw geometric vectors in 2D
+vectors3d               Draw 3D vectors
+workers                 Workers Data
+xprod                   Generalized Vector Cross Product

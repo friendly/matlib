@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Build/Get transformation matrices</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for buildTmat {matlib}"><tr><td>buildTmat {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Build/Get transformation matrices</h2>
+
+<h3>Description</h3>
+
+<p>Recover the history of the row operations that have been performed.
+This function combines the transformation matrices into a single transformation matrix
+representing all row operations or may optionally print all the individual operations which have
+been performed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+buildTmat(x, all = FALSE)
+
+## S3 method for class 'trace'
+as.matrix(x, ...)
+
+## S3 method for class 'trace'
+print(x, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>a matrix A, joined with a vector of constants, b, that has been passed to
+<code><a href="gaussianElimination.html">gaussianElimination</a></code> or the row operator matrix functions</p>
+</td></tr>
+<tr valign="top"><td><code>all</code></td>
+<td>
+<p>logical; print individual transformation ies?</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>additional arguments</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>the transformation matrix or a list of individual transformation matrices
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Phil Chalmers
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="echelon.html">echelon</a></code>, <code><a href="gaussianElimination.html">gaussianElimination</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+A &lt;- matrix(c(2, 1, -1,
+             -3, -1, 2,
+             -2,  1, 2), 3, 3, byrow=TRUE)
+b &lt;- c(8, -11, -3)
+
+# using row operations to reduce below diagonal to 0
+Abt &lt;- Ab &lt;- cbind(A, b)
+Abt &lt;- rowadd(Abt, 1, 2, 3/2)
+Abt &lt;- rowadd(Abt, 1, 3, 1)
+Abt &lt;- rowadd(Abt, 2, 3, -4)
+Abt
+
+# build T matrix and multiply by original form
+(T &lt;- buildTmat(Abt))
+T %*% Ab    # same as Abt
+
+# print all transformation matrices
+buildTmat(Abt, TRUE)
+
+# invert transformation matrix to reverse operations
+inv(T) %*% Abt
+
+# gaussian elimination
+(soln &lt;- gaussianElimination(A, b))
+T &lt;- buildTmat(soln)
+inv(T) %*% soln
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

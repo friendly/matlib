@@ -1,0 +1,121 @@
+---
+title: "Evaluation of determinants"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Evaluation of determinants}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+options(digits=4)
+par(mar=c(5,4,1,1)+.1)
+```
+
+This example shows two classical ways to find the determinant, $\det(A)$ of a square matrix. They each work
+by reducing the problem to a series of smaller ones which can be more easily calculated.
+
+```{r }
+	library(matlib)
+```
+
+##  1. Calculate `det()` by cofactor expansion
+
+Set up a $3 \times 3$ matrix, and find its determinant (so we know what the answer should be).
+
+```{r }
+  A <- matrix(c(4, 2, 1,
+                5, 6, 7,
+                1, 0, 3), nrow=3, byrow=TRUE)
+  det(A)
+```
+
+### Find cofactors of row 1 elements
+
+The cofactor $A_{i,j}$ of element $a_{i,j}$ is the signed determinant of what is left when row i, column j
+of the matrix $A$ are deleted.  NB: In R, negative subscripts delete rows or columns.
+
+```{r }
+  cat(cofactor(A, 1, 1),  "  ==  ",  1 * det( (A[-1, -1]), "\n" ))
+  cat(cofactor(A, 1, 2),  "  ==  ", -1 * det( (A[-1, -2]), "\n" ))
+  cat(cofactor(A, 1, 3),  "  ==  ",  1 * det( (A[-1, -3]), "\n" ))
+```
+
+### det() = product of row with cofactors
+
+In symbols: $\det(A) = a_{1,1} * A_{1,1} + a_{1,2} * A_{1,2} + a_{1,3} * A_{1,3}$
+
+`rowCofactors()` is a convenience function, that calculates these all together
+
+```{r }
+  rowCofactors(A, 1)
+```
+
+Voila: Multiply row 1 times the cofactors of its elements.  NB: In R, this multiplication gives a $1 \times 1$ matrix.
+
+```{r }
+  A[1,] %*% rowCofactors(A, 1)
+  all.equal( det(A), c(A[1,] %*% rowCofactors(A, 1)) )
+```
+
+##  2. Finding `det()` by Gaussian elimination (pivoting)
+
+This example follows Green and Carroll, Table 2.2.
+Start with a 4 x 4 matrix, $M$, and save `det(M)`.
+
+```{r }
+  M <- matrix(c(2, 3, 1, 2,
+                4, 2, 3, 4,
+                1, 4, 2, 2,
+                3, 1, 0, 1), nrow=4, ncol=4, byrow=TRUE)
+  (dsave <- det(M))
+
+# ### 'pivot' on the leading diagonal element, M[1,1]:
+```
+
+`det()` will be the product of the 'pivots', the leading diagonal elements.
+This step reduces row 1 and column 1 to 0, so it may be discarded.
+NB: In R, dropping a row/column can change a matrix to a vector, so we use
+`drop = FALSE` inside the subscript.
+
+```{r }
+  (d <- M[1,1])
+
+    #-- Reduce row 1, col 1 to 0
+  (M[1,] <- M[1,, drop=FALSE] / M[1, 1])
+  (M <- M - M[,1] %*%  M[1,, drop=FALSE])
+
+    #-- Drop first row and column
+  M <- M[-1, -1]
+
+    #-- Accumulate the product of pivots
+  d <- d * M[1, 1]
+```
+
+### Repeat, reducing new row, col 1 to 0
+
+```{r }
+  (M[1,] <- M[1,, drop=FALSE] / M[1,1])
+  (M <- M - M[,1] %*%  M[1,, drop=FALSE])
+  M <- M[-1, -1]
+  d = d * M[1, 1]
+```
+
+### Repeat once more. d = det(M)
+
+```{r }
+  (M[1,] <- M[1,, drop=FALSE] / M[1,1])
+  (M <- M - M[,1] %*%  M[1,, drop=FALSE])
+  M <- M[-1, -1, drop=FALSE]
+  d <- d * M[1, 1]
+
+  # did we get it right?
+  all.equal(d, dsave)
+```
+

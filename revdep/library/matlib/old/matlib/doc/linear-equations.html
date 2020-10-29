@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Michael Friendly and John Fox" />
+
+<meta name="date" content="2020-10-29" />
+
+<title>Solving Linear Equations</title>
+
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Solving Linear Equations</h1>
+<h4 class="author">Michael Friendly and John Fox</h4>
+<h4 class="date">2020-10-29</h4>
+
+
+
+<p>This vignette illustrates the ideas behind solving systems of linear equations of the form <span class="math inline">\(\mathbf{A x = b}\)</span> where</p>
+<ul>
+<li><span class="math inline">\(\mathbf{A}\)</span> is an <span class="math inline">\(m \times n\)</span> matrix of coefficients for <span class="math inline">\(m\)</span> equations in <span class="math inline">\(n\)</span> unknowns</li>
+<li><span class="math inline">\(\mathbf{x}\)</span> is an <span class="math inline">\(n \times 1\)</span> vector unknowns, <span class="math inline">\(x_1, x_2, \dots x_n\)</span></li>
+<li><span class="math inline">\(\mathbf{b}\)</span> is an <span class="math inline">\(m \times 1\)</span> vector of constants, the “right-hand sides” of the equations</li>
+</ul>
+<p>The general conditions for solutions are:</p>
+<ul>
+<li>the equations are <em>consistent</em> (solutions exist) if <span class="math inline">\(r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A})\)</span>
+<ul>
+<li>the solution is <em>unique</em> if <span class="math inline">\(r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A}) = n\)</span></li>
+<li>the solution is <em>underdetermined</em> if <span class="math inline">\(r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A}) &lt; n\)</span></li>
+</ul></li>
+<li>the equations are <em>inconsistent</em> (no solutions) if <span class="math inline">\(r( \mathbf{A} | \mathbf{b}) &gt; r( \mathbf{A})\)</span></li>
+</ul>
+<p>We use <code>c( R(A), R(cbind(A,b)) )</code> to show the ranks, and <code>all.equal( R(A), R(cbind(A,b)) )</code> to test for consistency.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(matlib)   <span class="co"># use the package</span></a></code></pre></div>
+<div id="equations-in-two-unknowns" class="section level2">
+<h2>Equations in two unknowns</h2>
+<p>Each equation in two unknowns corresponds to a line in 2D space. The equations have a unique solution if all lines intersect in a point.</p>
+<div id="two-consistent-equations" class="section level3">
+<h3>Two consistent equations</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">-1</span>, <span class="dv">2</span>), <span class="dv">2</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">showEqn</span>(A, b)</a></code></pre></div>
+<pre><code>## 1*x1 - 1*x2  =  2 
+## 2*x1 + 2*x2  =  1</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">c</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )          <span class="co"># show ranks</span></a></code></pre></div>
+<pre><code>## [1] 2 2</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">all.equal</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )  <span class="co"># consistent?</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Plot the equations:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">plotEqn</span>(A,b)</a></code></pre></div>
+<pre><code>##   x[1] - 1*x[2]  =  2 
+## 2*x[1] + 2*x[2]  =  1</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><code>Solve()</code> is a convenience function that shows the solution in a more comprehensible form:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">Solve</span>(A, b, <span class="dt">fractions =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## x1    =   5/4 
+##   x2  =  -3/4</code></pre>
+</div>
+<div id="three-consistent-equations" class="section level3">
+<h3>Three consistent equations</h3>
+<p>For three (or more) equations in two unknowns, <span class="math inline">\(r(\mathbf{A}) \le 2\)</span>, because <span class="math inline">\(r(\mathbf{A}) \le \min(m,n)\)</span>. The equations will be consistent <em>if</em> <span class="math inline">\(r(\mathbf{A}) = r(\mathbf{A | b})\)</span>. This means that whatever linear relations exist among the rows of <span class="math inline">\(\mathbf{A}\)</span> are the <em>same</em> as those among the elements of <span class="math inline">\(\mathbf{b}\)</span>.</p>
+<p>Geometrically, this means that all three lines intersect in a point.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">-1</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dv">3</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb12-2" title="2">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">showEqn</span>(A, b)</a></code></pre></div>
+<pre><code>## 1*x1 - 1*x2  =  2 
+## 2*x1 + 2*x2  =  1 
+## 3*x1 + 1*x2  =  3</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">c</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )          <span class="co"># show ranks</span></a></code></pre></div>
+<pre><code>## [1] 2 2</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">all.equal</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )  <span class="co"># consistent?</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">Solve</span>(A, b, <span class="dt">fractions=</span><span class="ot">TRUE</span>)       <span class="co"># show solution </span></a></code></pre></div>
+<pre><code>## x1    =   5/4 
+##   x2  =  -3/4 
+##    0  =     0</code></pre>
+<p>Plot the equations:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">plotEqn</span>(A,b)</a></code></pre></div>
+<pre><code>##   x[1] - 1*x[2]  =  2 
+## 2*x[1] + 2*x[2]  =  1 
+## 3*x[1]   + x[2]  =  3</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="three-inconsistent-equations" class="section level3">
+<h3>Three inconsistent equations</h3>
+<p>Three equations in two unknowns are <em>inconsistent</em> when <span class="math inline">\(r(\mathbf{A}) &lt; r(\mathbf{A | b})\)</span>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">-1</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dv">3</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb22-2" title="2">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="kw">showEqn</span>(A, b)</a></code></pre></div>
+<pre><code>## 1*x1 - 1*x2  =  2 
+## 2*x1 + 2*x2  =  1 
+## 3*x1 + 1*x2  =  6</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">c</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )          <span class="co"># show ranks</span></a></code></pre></div>
+<pre><code>## [1] 2 3</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">all.equal</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )  <span class="co"># consistent?</span></a></code></pre></div>
+<pre><code>## [1] &quot;Mean relative difference: 0.5&quot;</code></pre>
+<p>You can see this in the result of reducing <span class="math inline">\(\mathbf{A} | \mathbf{b}\)</span> to echelon form, where the last row indicates the inconsistency.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">echelon</span>(A, b)</a></code></pre></div>
+<pre><code>##      [,1] [,2]  [,3]
+## [1,]    1    0  2.75
+## [2,]    0    1 -2.25
+## [3,]    0    0 -3.00</code></pre>
+<p><code>Solve()</code> shows this more explicitly:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">Solve</span>(A, b, <span class="dt">fractions=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## x1    =  11/4 
+##   x2  =  -9/4 
+##    0  =    -3</code></pre>
+<p>An approximate solution is sometimes available using a generalized inverse.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">x &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">ginv</span>(A) <span class="op">%*%</span><span class="st"> </span>b</a>
+<a class="sourceLine" id="cb32-2" title="2">x</a></code></pre></div>
+<pre><code>##      [,1]
+## [1,]    2
+## [2,]   -1</code></pre>
+<p>Plot the equations. You can see that each pair of equations has a solution, but all three do not have a common, consistent solution.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>)<span class="op">+</span>.<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="kw">plotEqn</span>(A,b, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">4</span>))</a></code></pre></div>
+<pre><code>##   x[1] - 1*x[2]  =  2 
+## 2*x[1] + 2*x[2]  =  1 
+## 3*x[1]   + x[2]  =  6</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">points</span>(x[<span class="dv">1</span>], x[<span class="dv">2</span>], <span class="dt">pch=</span><span class="dv">15</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+</div>
+<div id="equations-in-three-unknowns" class="section level2">
+<h2>Equations in three unknowns</h2>
+<p>Each equation in three unknowns corresponds to a plane in 3D space. The equations have a unique solution if all planes intersect in a point.</p>
+<div id="three-consistent-equations-1" class="section level3">
+<h3>Three consistent equations</h3>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">-1</span>,</a>
+<a class="sourceLine" id="cb37-2" title="2">             <span class="dv">-3</span>, <span class="dv">-1</span>, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb37-3" title="3">             <span class="dv">-2</span>,  <span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">3</span>, <span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb37-4" title="4"><span class="kw">colnames</span>(A) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;x&#39;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb37-5" title="5">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">-11</span>, <span class="dv">-3</span>)</a>
+<a class="sourceLine" id="cb37-6" title="6"><span class="kw">showEqn</span>(A, b)</a></code></pre></div>
+<pre><code>##  2*x1 + 1*x2 - 1*x3  =    8 
+## -3*x1 - 1*x2 + 2*x3  =  -11 
+## -2*x1 + 1*x2 + 2*x3  =   -3</code></pre>
+<p>Are the equations consistent?</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">c</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )          <span class="co"># show ranks</span></a></code></pre></div>
+<pre><code>## [1] 3 3</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">all.equal</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )  <span class="co"># consistent?</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Solve for <span class="math inline">\(\mathbf{x}\)</span>.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">solve</span>(A, b)</a></code></pre></div>
+<pre><code>## x1 x2 x3 
+##  2  3 -1</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">solve</span>(A) <span class="op">%*%</span><span class="st"> </span>b</a></code></pre></div>
+<pre><code>##    [,1]
+## x1    2
+## x2    3
+## x3   -1</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">inv</span>(A) <span class="op">%*%</span><span class="st"> </span>b</a></code></pre></div>
+<pre><code>##      [,1]
+## [1,]    2
+## [2,]    3
+## [3,]   -1</code></pre>
+<p>Another way to see the solution is to reduce <span class="math inline">\(\mathbf{A | b}\)</span> to echelon form. The result is <span class="math inline">\(\mathbf{I | A^{-1}b}\)</span>, with the solution in the last column.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">echelon</span>(A, b)</a></code></pre></div>
+<pre><code>##      x1 x2 x3   
+## [1,]  1  0  0  2
+## [2,]  0  1  0  3
+## [3,]  0  0  1 -1</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">echelon</span>(A, b, <span class="dt">verbose=</span><span class="ot">TRUE</span>, <span class="dt">fractions=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## 
+## Initial matrix:
+##      x1  x2  x3     
+## [1,]   2   1  -1   8
+## [2,]  -3  -1   2 -11
+## [3,]  -2   1   2  -3
+## 
+## row: 1 
+## 
+##  exchange rows 1 and 2 
+##      x1  x2  x3     
+## [1,]  -3  -1   2 -11
+## [2,]   2   1  -1   8
+## [3,]  -2   1   2  -3
+## 
+##  multiply row 1 by -1/3 
+##      x1   x2   x3       
+## [1,]    1  1/3 -2/3 11/3
+## [2,]    2    1   -1    8
+## [3,]   -2    1    2   -3
+## 
+##  multiply row 1 by 2 and subtract from row 2 
+##      x1   x2   x3       
+## [1,]    1  1/3 -2/3 11/3
+## [2,]    0  1/3  1/3  2/3
+## [3,]   -2    1    2   -3
+## 
+##  multiply row 1 by 2 and add to row 3 
+##      x1   x2   x3       
+## [1,]    1  1/3 -2/3 11/3
+## [2,]    0  1/3  1/3  2/3
+## [3,]    0  5/3  2/3 13/3
+## 
+## row: 2 
+## 
+##  exchange rows 2 and 3 
+##      x1   x2   x3       
+## [1,]    1  1/3 -2/3 11/3
+## [2,]    0  5/3  2/3 13/3
+## [3,]    0  1/3  1/3  2/3
+## 
+##  multiply row 2 by 3/5 
+##      x1   x2   x3       
+## [1,]    1  1/3 -2/3 11/3
+## [2,]    0    1  2/5 13/5
+## [3,]    0  1/3  1/3  2/3
+## 
+##  multiply row 2 by 1/3 and subtract from row 1 
+##      x1   x2   x3       
+## [1,]    1    0 -4/5 14/5
+## [2,]    0    1  2/5 13/5
+## [3,]    0  1/3  1/3  2/3
+## 
+##  multiply row 2 by 1/3 and subtract from row 3 
+##      x1   x2   x3       
+## [1,]    1    0 -4/5 14/5
+## [2,]    0    1  2/5 13/5
+## [3,]    0    0  1/5 -1/5
+## 
+## row: 3 
+## 
+##  multiply row 3 by 5 
+##      x1   x2   x3       
+## [1,]    1    0 -4/5 14/5
+## [2,]    0    1  2/5 13/5
+## [3,]    0    0    1   -1
+## 
+##  multiply row 3 by 4/5 and add to row 1 
+##      x1   x2   x3       
+## [1,]    1    0    0    2
+## [2,]    0    1  2/5 13/5
+## [3,]    0    0    1   -1
+## 
+##  multiply row 3 by 2/5 and subtract from row 2 
+##      x1 x2 x3   
+## [1,]  1  0  0  2
+## [2,]  0  1  0  3
+## [3,]  0  0  1 -1</code></pre>
+<p>Plot them. <code>plotEqn3d</code> uses <code>rgl</code> for 3D graphics. If you rotate the figure, you’ll see an orientation where all three planes intersect at the solution point, <span class="math inline">\(\mathbf{x} = (2, 3, -1)\)</span></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="kw">plotEqn3d</span>(A,b, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>))</a></code></pre></div>
+<div id="plotEqn1div" class="rglWebGL">
+
+</div>
+<script type="text/javascript">
+var plotEqn1div = document.getElementById("plotEqn1div"),
+plotEqn1rgl = new rglwidgetClass();
+plotEqn1div.width = 289;
+plotEqn1div.height = 289;
+plotEqn1rgl.initialize(plotEqn1div,
+{"material":{"color":"#000000","alpha":1,"lit":true,"ambient":"#000000","specular":"#FFFFFF","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":false,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false,"polygon_offset":[0,0]},"rootSubscene":6,"objects":{"30":{"id":30,"type":"clipplanes","offsets":[[-0],[4],[-0],[4],[3],[3]],"normals":[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]],"flags":1024},"31":{"id":31,"type":"lines","material":{"lit":false},"vertices":[[1,1,1],[1,1,1],[3,3,3],[3,3,3]],"colors":[[0,0,0,1]],"centers":[[1,1,1],[3,3,3]],"ignoreExtent":false,"flags":64},"32":{"id":32,"type":"lines","material":{"lit":false},"vertices":[[0,0,-3],[0,0,-3],[4,4,3],[4,4,3]],"colors":[[0,0,0,1]],"centers":[[0,0,-3],[4,4,3]],"ignoreExtent":false,"flags":64},"34":{"id":34,"type":"text","material":{"lit":false},"vertices":[[2,-0.678,-4.017]],"colors":[[0,0,0,1]],"texts":[["x1"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[2,-0.678,-4.017]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"flags":2064},"35":{"id":35,"type":"text","material":{"lit":false},"vertices":[[-0.678,2,-4.017]],"colors":[[0,0,0,1]],"texts":[["x2"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[-0.678,2,-4.017]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"flags":2064},"36":{"id":36,"type":"text","material":{"lit":false},"vertices":[[-0.678,-0.678,0]],"colors":[[0,0,0,1]],"texts":[["x3"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[-0.678,-0.678,0]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"flags":2064},"37":{"id":37,"type":"planes","material":{"alpha":[0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392,0.8980392],"lit":false,"isTransparent":true},"vertices":[[4,0,0],[3.5,4,3],[4,3,3]],"colors":[[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[1,0,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0.8039216,0,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392],[0,0,1,0.8980392]],"offsets":[[-8],[11],[3]],"centers":[[3.833333,2.333333,2],[2.666667,2.666667,0],[2.333333,1.333333,-2],["NaN","NaN","NaN"],[2.777778,2.666667,0],[2,1.333333,-1.833333],["NaN","NaN","NaN"],["NaN","NaN","NaN"],[2.666667,1.333333,0.5],[1.5,2.666667,-1.333333],[0.1666667,2.333333,-2.5],["NaN","NaN","NaN"]],"ignoreExtent":true,"flags":34},"38":{"id":38,"type":"spheres","material":{},"vertices":[[2,3,-1]],"colors":[[0,0,0,1]],"radii":[[0.2]],"centers":[[2,3,-1]],"ignoreExtent":false,"flags":3},"10":{"id":10,"reuse":"plot3ddiv"},"11":{"id":11,"reuse":"plot3ddiv"},"33":{"id":33,"type":"bboxdeco","material":{"front":"lines","back":"lines"},"vertices":[[0,"NA","NA"],[1,"NA","NA"],[2,"NA","NA"],[3,"NA","NA"],[4,"NA","NA"],["NA",0,"NA"],["NA",1,"NA"],["NA",2,"NA"],["NA",3,"NA"],["NA",4,"NA"],["NA","NA",-3],["NA","NA",-2],["NA","NA",-1],["NA","NA",0],["NA","NA",1],["NA","NA",2],["NA","NA",3]],"colors":[[0,0,0,1]],"draw_front":true,"newIds":[47,48,49,50,51,52,53]},"29":{"id":29,"type":"subscene","par3d":{"antialias":8,"FOV":30,"ignoreExtent":false,"listeners":6,"mouseMode":{"left":"trackball","right":"zoom","middle":"fov","wheel":"pull"},"observer":[0,0,20.17858],"modelMatrix":[[1.190238,0,0,-2.380476],[0,0.4070854,0.7456386,-0.8141708],[0,-1.118458,0.2713903,-17.94166],[0,0,0,1]],"projMatrix":[["NaN",0,"NaN",0],["NaN",3.732051,"NaN",0],["NaN",0,"NaN",-72.74144],["NaN",0,"NaN",0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.3420201,0.9396926,0],[0,-0.9396926,0.3420201,0],[0,0,0,1]],"userProjection":[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],"scale":[1.190238,1.190238,0.793492],"viewport":{"x":"NaN","y":"NaN","width":"NaN","height":"NaN"},"zoom":1,"bbox":[1,3,1,3,1,3],"windowRect":[100,100,388,388],"family":"sans","font":1,"cex":1,"useFreeType":false,"fontname":"TT Arial","maxClipPlanes":8,"glVersion":4.2,"activeSubscene":0},"embeddings":{"viewport":"inherit","projection":"inherit","model":"inherit","mouse":"inherit"},"objects":[30,31,10],"parent":6,"subscenes":[],"flags":1600},"6":{"id":6,"type":"subscene","par3d":{"antialias":8,"FOV":30,"ignoreExtent":false,"listeners":6,"mouseMode":{"left":"trackball","right":"zoom","middle":"fov","wheel":"pull"},"observer":[0,0,20.17858],"modelMatrix":[[1.190238,0,0,-2.380476],[0,0.4070854,0.7456386,-0.8141708],[0,-1.118458,0.2713903,-17.94166],[0,0,0,1]],"projMatrix":[["NaN",0,"NaN",0],["NaN",3.732051,"NaN",0],["NaN",0,"NaN",-72.74144],["NaN",0,"NaN",0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.3420201,0.9396926,0],[0,-0.9396926,0.3420201,0],[0,0,0,1]],"userProjection":[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],"scale":[1.190238,1.190238,0.793492],"viewport":{"x":"NaN","y":"NaN","width":"NaN","height":"NaN"},"zoom":1,"bbox":[0,4,0,4,-3,3],"windowRect":[100,100,388,388],"family":"sans","font":1,"cex":1,"useFreeType":false,"fontname":"TT Arial","maxClipPlanes":8,"glVersion":4.2,"activeSubscene":0},"embeddings":{"viewport":"replace","projection":"replace","model":"replace","mouse":"replace"},"objects":[11,33,32,34,35,36,37,38,10,29,47,48,49,50,51,52,53],"subscenes":29,"flags":3699},"47":{"id":47,"type":"lines","material":{"lit":false},"vertices":[[0,-0.06,-3.09],[4,-0.06,-3.09],[0,-0.06,-3.09],[0,-0.163,-3.2445],[1,-0.06,-3.09],[1,-0.163,-3.2445],[2,-0.06,-3.09],[2,-0.163,-3.2445],[3,-0.06,-3.09],[3,-0.163,-3.2445],[4,-0.06,-3.09],[4,-0.163,-3.2445]],"colors":[[0,0,0,1]],"centers":[[2,-0.06,-3.09],[0,-0.1115,-3.16725],[1,-0.1115,-3.16725],[2,-0.1115,-3.16725],[3,-0.1115,-3.16725],[4,-0.1115,-3.16725]],"ignoreExtent":true,"origId":33,"flags":64},"48":{"id":48,"type":"text","material":{"lit":false},"vertices":[[0,-0.369,-3.5535],[1,-0.369,-3.5535],[2,-0.369,-3.5535],[3,-0.369,-3.5535],[4,-0.369,-3.5535]],"colors":[[0,0,0,1]],"texts":[["0"],["1"],["2"],["3"],["4"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[0,-0.369,-3.5535],[1,-0.369,-3.5535],[2,-0.369,-3.5535],[3,-0.369,-3.5535],[4,-0.369,-3.5535]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"origId":33,"flags":2064},"49":{"id":49,"type":"lines","material":{"lit":false},"vertices":[[-0.06,0,-3.09],[-0.06,4,-3.09],[-0.06,0,-3.09],[-0.163,0,-3.2445],[-0.06,1,-3.09],[-0.163,1,-3.2445],[-0.06,2,-3.09],[-0.163,2,-3.2445],[-0.06,3,-3.09],[-0.163,3,-3.2445],[-0.06,4,-3.09],[-0.163,4,-3.2445]],"colors":[[0,0,0,1]],"centers":[[-0.06,2,-3.09],[-0.1115,0,-3.16725],[-0.1115,1,-3.16725],[-0.1115,2,-3.16725],[-0.1115,3,-3.16725],[-0.1115,4,-3.16725]],"ignoreExtent":true,"origId":33,"flags":64},"50":{"id":50,"type":"text","material":{"lit":false},"vertices":[[-0.369,0,-3.5535],[-0.369,1,-3.5535],[-0.369,2,-3.5535],[-0.369,3,-3.5535],[-0.369,4,-3.5535]],"colors":[[0,0,0,1]],"texts":[["0"],["1"],["2"],["3"],["4"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[-0.369,0,-3.5535],[-0.369,1,-3.5535],[-0.369,2,-3.5535],[-0.369,3,-3.5535],[-0.369,4,-3.5535]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"origId":33,"flags":2064},"51":{"id":51,"type":"lines","material":{"lit":false},"vertices":[[-0.06,-0.06,-3],[-0.06,-0.06,3],[-0.06,-0.06,-3],[-0.163,-0.163,-3],[-0.06,-0.06,-2],[-0.163,-0.163,-2],[-0.06,-0.06,-1],[-0.163,-0.163,-1],[-0.06,-0.06,0],[-0.163,-0.163,0],[-0.06,-0.06,1],[-0.163,-0.163,1],[-0.06,-0.06,2],[-0.163,-0.163,2],[-0.06,-0.06,3],[-0.163,-0.163,3]],"colors":[[0,0,0,1]],"centers":[[-0.06,-0.06,0],[-0.1115,-0.1115,-3],[-0.1115,-0.1115,-2],[-0.1115,-0.1115,-1],[-0.1115,-0.1115,0],[-0.1115,-0.1115,1],[-0.1115,-0.1115,2],[-0.1115,-0.1115,3]],"ignoreExtent":true,"origId":33,"flags":64},"52":{"id":52,"type":"text","material":{"lit":false},"vertices":[[-0.369,-0.369,-3],[-0.369,-0.369,-2],[-0.369,-0.369,-1],[-0.369,-0.369,0],[-0.369,-0.369,1],[-0.369,-0.369,2],[-0.369,-0.369,3]],"colors":[[0,0,0,1]],"texts":[["-3"],["-2"],["-1"],["0"],["1"],["2"],["3"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[-0.369,-0.369,-3],[-0.369,-0.369,-2],[-0.369,-0.369,-1],[-0.369,-0.369,0],[-0.369,-0.369,1],[-0.369,-0.369,2],[-0.369,-0.369,3]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"origId":33,"flags":2064},"53":{"id":53,"type":"lines","material":{"lit":false},"vertices":[[-0.06,-0.06,-3.09],[-0.06,4.06,-3.09],[-0.06,-0.06,3.09],[-0.06,4.06,3.09],[-0.06,-0.06,-3.09],[-0.06,-0.06,3.09],[-0.06,4.06,-3.09],[-0.06,4.06,3.09],[-0.06,-0.06,-3.09],[4.06,-0.06,-3.09],[-0.06,-0.06,3.09],[4.06,-0.06,3.09],[-0.06,4.06,-3.09],[4.06,4.06,-3.09],[-0.06,4.06,3.09],[4.06,4.06,3.09],[4.06,-0.06,-3.09],[4.06,4.06,-3.09],[4.06,-0.06,3.09],[4.06,4.06,3.09],[4.06,-0.06,-3.09],[4.06,-0.06,3.09],[4.06,4.06,-3.09],[4.06,4.06,3.09]],"colors":[[0,0,0,1]],"centers":[[-0.06,2,-3.09],[-0.06,2,3.09],[-0.06,-0.06,0],[-0.06,4.06,0],[2,-0.06,-3.09],[2,-0.06,3.09],[2,4.06,-3.09],[2,4.06,3.09],[4.06,2,-3.09],[4.06,2,3.09],[4.06,-0.06,0],[4.06,4.06,0]],"ignoreExtent":true,"origId":33,"flags":64}},"snapshot":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAIAAACb4TnXAAAAHXRFWHRTb2Z0d2FyZQBSL1JHTCBwYWNrYWdlL2xpYnBuZ7GveO8AAAM0SURBVHic7dNBCQAwDMDA+je9qgiDcqcgn8wDMvM7AC4zGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAYhg0HIYBAyGIQMBiGDQchgEDIYhAwGIYNByGAQMhiEDAahBWEObLmfOztwAAAAAElFTkSuQmCC","width":289,"height":289,"sphereVerts":{"reuse":"plot3ddiv"},"context":{"shiny":false,"rmarkdown":"rmarkdown::html_vignette"},"crosstalk":{"key":[],"group":[],"id":[],"options":[]}});
+plotEqn1rgl.prefix = "plotEqn1";
+</script>
+<p id="plotEqn1debug">
+You must enable Javascript to view this page properly.
+</p>
+<script>plotEqn1rgl.start();</script>
+</div>
+<div id="three-inconsistent-equations-1" class="section level3">
+<h3>Three inconsistent equations</h3>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,  <span class="dv">3</span>, <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb54-2" title="2">              <span class="dv">1</span>, <span class="dv">-2</span>, <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb54-3" title="3">              <span class="dv">2</span>,  <span class="dv">1</span>, <span class="dv">-1</span>), <span class="dv">3</span>, <span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb54-4" title="4"><span class="kw">colnames</span>(A) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;x&#39;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb54-5" title="5">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb54-6" title="6"><span class="kw">showEqn</span>(A, b)</a></code></pre></div>
+<pre><code>## 1*x1 + 3*x2 + 1*x3  =  2 
+## 1*x1 - 2*x2 - 2*x3  =  3 
+## 2*x1 + 1*x2 - 1*x3  =  6</code></pre>
+<p>Are the equations consistent? No.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">c</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )          <span class="co"># show ranks</span></a></code></pre></div>
+<pre><code>## [1] 2 3</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">all.equal</span>( <span class="kw">R</span>(A), <span class="kw">R</span>(<span class="kw">cbind</span>(A,b)) )  <span class="co"># consistent?</span></a></code></pre></div>
+<pre><code>## [1] &quot;Mean relative difference: 0.5&quot;</code></pre>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Moore-Penrose inverse of a matrix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for MoorePenrose {matlib}"><tr><td>MoorePenrose {matlib}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Moore-Penrose inverse of a matrix</h2>
+
+<h3>Description</h3>
+
+<p>The Moore-Penrose inverse is a generalization of the regular inverse of a square, non-singular, symmetric matrix
+to other cases (rectangular, singular), yet retain similar properties to a regular inverse.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+MoorePenrose(X, tol = sqrt(.Machine$double.eps))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>A numeric matrix</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>Tolerance for a singular (rank-deficient) matrix</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The Moore-Penrose inverse of <code>X</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+X &lt;- matrix(rnorm(20), ncol=2)
+# introduce a linear dependency in X[,3]
+X &lt;- cbind(X, 1.5*X[, 1] - pi*X[, 2])
+
+Y &lt;- MoorePenrose(X)
+# demonstrate some properties of the M-P inverse
+# X Y X = X
+round(X %*% Y %*% X - X, 8)
+# Y X Y = Y
+round(Y %*% X %*% Y - Y, 8)
+# X Y = t(X Y)
+round(X %*% Y - t(X %*% Y), 8)
+# Y X = t(Y X)
+round(Y %*% X - t(Y %*% X), 8)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>matlib</em> version 0.9.4 <a href="00Index.html">Index</a>]</div>
+</body></html>

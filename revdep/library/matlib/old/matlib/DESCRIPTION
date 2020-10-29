@@ -1,0 +1,41 @@
+Package: matlib
+Type: Package
+Title: Matrix Functions for Teaching and Learning Linear Algebra and
+        Multivariate Statistics
+Version: 0.9.4
+Date: 2020-10-25
+Authors@R: c(person(given = "Michael", family = "Friendly", role=c("aut", "cre"), email="friendly@yorku.ca",
+             comment=c(ORCID="0000-0002-3237-0941")),
+            person(given = "John", family = "Fox", role="aut"),
+            person(given = "Phil", family = "Chalmers", role="aut"),
+            person(given = "Georges", family = "Monette", role="ctb"),
+            person(given = "Gaston", family = "Sanchez", role="ctb")
+            )
+Maintainer: Michael Friendly <friendly@yorku.ca>
+Description: A collection of matrix functions for teaching and learning matrix
+    linear algebra as used in multivariate statistical methods. These functions are
+    mainly for tutorial purposes in learning matrix algebra ideas using R. In some
+    cases, functions are provided for concepts available elsewhere in R, but where
+    the function call or name is not obvious. In other cases, functions are provided
+    to show or demonstrate an algorithm. In addition, a collection of functions are
+    provided for drawing vector diagrams in 2D and 3D.
+License: GPL (>= 2)
+Language: en-US
+URL: https://github.com/friendly/matlib
+BugReports: https://github.com/friendly/matlib/issues
+LazyData: TRUE
+Suggests: knitr, rglwidget, rmarkdown, carData
+Imports: xtable, MASS, rgl, car, methods
+VignetteBuilder: knitr
+RoxygenNote: 7.1.1
+Encoding: UTF-8
+NeedsCompilation: no
+Packaged: 2020-10-29 17:36:13 UTC; friendly
+Author: Michael Friendly [aut, cre] (<https://orcid.org/0000-0002-3237-0941>),
+  John Fox [aut],
+  Phil Chalmers [aut],
+  Georges Monette [ctb],
+  Gaston Sanchez [ctb]
+Repository: CRAN
+Date/Publication: 2020-10-29 18:40:05 UTC
+Built: R 3.6.3; ; 2020-10-29 20:50:10 UTC; windows

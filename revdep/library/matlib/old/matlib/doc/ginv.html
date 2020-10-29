@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Michael Friendly" />
+
+<meta name="date" content="2020-10-29" />
+
+<title>Generalized inverse</title>
+
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Generalized inverse</h1>
+<h4 class="author">Michael Friendly</h4>
+<h4 class="date">2020-10-29</h4>
+
+
+
+<p>In matrix algebra, the inverse of a matrix is defined only for <em>square</em> matrices, and if a matrix is <em>singular</em>, it does not have an inverse.</p>
+<p>The <strong>generalized inverse</strong> (or <em>pseudoinverse</em>) is an extension of the idea of a matrix inverse, which has some but not all the properties of an ordinary inverse.</p>
+<p>A common use of the pseudoinverse is to compute a ‘best fit’ (least squares) solution to a system of linear equations that lacks a unique solution.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(matlib)</a></code></pre></div>
+<p>Construct a square, <em>singular</em> matrix [See: Timm, EX. 1.7.3]</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">A &lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb2-2" title="2">             <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">-2</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">            <span class="dv">-2</span>, <span class="dv">-2</span>, <span class="dv">10</span>), <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">ncol=</span><span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>The rank is 2, so <code>inv(A)</code> won’t work</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">R</span>(A)</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>In the echelon form, this rank deficiency appears as the final row of zeros</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">echelon</span>(A)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    1    0
+## [2,]    0    0    1
+## [3,]    0    0    0</code></pre>
+<p><code>inv()</code> will throw an error</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">try</span>(<span class="kw">inv</span>(A))</a></code></pre></div>
+<pre><code>## Error in Inverse(X, tol = sqrt(.Machine$double.eps), ...) : 
+##   X is numerically singular</code></pre>
+<p>A <strong>generalized inverse</strong> does exist for any matrix, but unlike the ordinary inverse, the generalized inverse is not unique, in the sense that there are various ways of defining a generalized inverse with various inverse-like properties. The function <code>matlib::Ginv()</code> calculates a <em>Moore-Penrose</em> generalized inverse.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">(AI &lt;-<span class="st"> </span><span class="kw">Ginv</span>(A))</a></code></pre></div>
+<pre><code>##         [,1] [,2]    [,3]
+## [1,] 0.27778    0 0.05556
+## [2,] 0.00000    0 0.00000
+## [3,] 0.05556    0 0.11111</code></pre>
+<p>We can also view this as fractions:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">Ginv</span>(A, <span class="dt">fractions=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] 5/18    0 1/18
+## [2,]    0    0    0
+## [3,] 1/18    0  1/9</code></pre>
+<div id="properties-of-generalized-inverse-moore-penrose-inverse" class="section level3">
+<h3>Properties of generalized inverse (Moore-Penrose inverse)</h3>
+<p>The generalized inverse is defined as the matrix <span class="math inline">\(A^-\)</span> such that</p>
+<ul>
+<li><span class="math inline">\(A * A^- * A = A\)</span> and</li>
+<li><span class="math inline">\(A^- * A * A^- = A^-\)</span></li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">A <span class="op">%*%</span><span class="st"> </span>AI <span class="op">%*%</span><span class="st"> </span>A</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    4    4   -2
+## [2,]    4    4   -2
+## [3,]   -2   -2   10</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">AI <span class="op">%*%</span><span class="st"> </span>A <span class="op">%*%</span><span class="st"> </span>AI</a></code></pre></div>
+<pre><code>##         [,1] [,2]    [,3]
+## [1,] 0.27778    0 0.05556
+## [2,] 0.00000    0 0.00000
+## [3,] 0.05556    0 0.11111</code></pre>
+<p>In addition, both <span class="math inline">\(A * A^-\)</span> and <span class="math inline">\(A^- * A\)</span> are symmetric, but neither product gives an identity matrix, <code>A %*% AI != AI %*% A != I</code></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">zapsmall</span>(A <span class="op">%*%</span><span class="st"> </span>AI)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    1    0    0
+## [3,]    0    0    1</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">zapsmall</span>(AI <span class="op">%*%</span><span class="st"> </span>A)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    1    0
+## [2,]    0    0    0
+## [3,]    0    0    1</code></pre>
+</div>
+<div id="rectangular-matrices" class="section level2">
+<h2>Rectangular matrices</h2>
+<p>For a <em>rectangular matrix</em>, <span class="math inline">\(A^- = (A^{T} A)^{-1} A^{T}\)</span> is the generalized inverse of <span class="math inline">\(A\)</span> if <span class="math inline">\((A^{T} A)^-\)</span> is the ginv of <span class="math inline">\((A^{T} A)\)</span> [See: Timm: EX 1.6.11]</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">A &lt;-<span class="st"> </span><span class="kw">cbind</span>( <span class="dv">1</span>, <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">nrow=</span><span class="dv">4</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb22-2" title="2">A</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    1    0
+## [2,]    1    1    0
+## [3,]    1    0    1
+## [4,]    1    0    1</code></pre>
+<p>This <span class="math inline">\(4 \times 3\)</span> matrix is not of full rank, because columns 2 and 3 sum to column 1.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">R</span>(A)</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">(AA &lt;-<span class="st"> </span><span class="kw">t</span>(A) <span class="op">%*%</span><span class="st"> </span>A)</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    4    2    2
+## [2,]    2    2    0
+## [3,]    2    0    2</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">(AAI &lt;-<span class="st"> </span><span class="kw">Ginv</span>(AA))</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]  0.5 -0.5    0
+## [2,] -0.5  1.0    0
+## [3,]  0.0  0.0    0</code></pre>
+<p>The generalized inverse of <span class="math inline">\(A\)</span> is <span class="math inline">\((A^{T} A)^- A^{T}\)</span>, <code>AAI * t(A)</code></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">AI &lt;-<span class="st"> </span>AAI  <span class="op">%*%</span><span class="st">  </span><span class="kw">t</span>(A)</a></code></pre></div>
+<p>Show that it is a generalized inverse:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">A <span class="op">%*%</span><span class="st"> </span>AI <span class="op">%*%</span><span class="st"> </span>A</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    1    0
+## [2,]    1    1    0
+## [3,]    1    0    1
+## [4,]    1    0    1</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">AI <span class="op">%*%</span><span class="st"> </span>A <span class="op">%*%</span><span class="st"> </span>AI</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]  0.0  0.0  0.5  0.5
+## [2,]  0.5  0.5 -0.5 -0.5
+## [3,]  0.0  0.0  0.0  0.0</code></pre>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

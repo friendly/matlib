@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Michael Friendly" />
+
+<meta name="date" content="2020-10-29" />
+
+<title>Evaluation of determinants</title>
+
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Evaluation of determinants</h1>
+<h4 class="author">Michael Friendly</h4>
+<h4 class="date">2020-10-29</h4>
+
+
+
+<p>This example shows two classical ways to find the determinant, <span class="math inline">\(\det(A)\)</span> of a square matrix. They each work by reducing the problem to a series of smaller ones which can be more easily calculated.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">    <span class="kw">library</span>(matlib)</a></code></pre></div>
+<div id="calculate-det-by-cofactor-expansion" class="section level2">
+<h2>1. Calculate <code>det()</code> by cofactor expansion</h2>
+<p>Set up a <span class="math inline">\(3 \times 3\)</span> matrix, and find its determinant (so we know what the answer should be).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">  A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-2" title="2">                <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">                <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">3</span>), <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="kw">det</span>(A)</a></code></pre></div>
+<pre><code>## [1] 50</code></pre>
+<div id="find-cofactors-of-row-1-elements" class="section level3">
+<h3>Find cofactors of row 1 elements</h3>
+<p>The cofactor <span class="math inline">\(A_{i,j}\)</span> of element <span class="math inline">\(a_{i,j}\)</span> is the signed determinant of what is left when row i, column j of the matrix <span class="math inline">\(A\)</span> are deleted. NB: In R, negative subscripts delete rows or columns.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">  <span class="kw">cat</span>(<span class="kw">cofactor</span>(A, <span class="dv">1</span>, <span class="dv">1</span>),  <span class="st">&quot;  ==  &quot;</span>,  <span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="kw">det</span>( (A[<span class="op">-</span><span class="dv">1</span>, <span class="dv">-1</span>]), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span> ))</a></code></pre></div>
+<pre><code>## 18   ==   18</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">  <span class="kw">cat</span>(<span class="kw">cofactor</span>(A, <span class="dv">1</span>, <span class="dv">2</span>),  <span class="st">&quot;  ==  &quot;</span>, <span class="dv">-1</span> <span class="op">*</span><span class="st"> </span><span class="kw">det</span>( (A[<span class="op">-</span><span class="dv">1</span>, <span class="dv">-2</span>]), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span> ))</a></code></pre></div>
+<pre><code>## -8   ==   -8</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">  <span class="kw">cat</span>(<span class="kw">cofactor</span>(A, <span class="dv">1</span>, <span class="dv">3</span>),  <span class="st">&quot;  ==  &quot;</span>,  <span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="kw">det</span>( (A[<span class="op">-</span><span class="dv">1</span>, <span class="dv">-3</span>]), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span> ))</a></code></pre></div>
+<pre><code>## -6   ==   -6</code></pre>
+</div>
+<div id="det-product-of-row-with-cofactors" class="section level3">
+<h3>det() = product of row with cofactors</h3>
+<p>In symbols: <span class="math inline">\(\det(A) = a_{1,1} * A_{1,1} + a_{1,2} * A_{1,2} + a_{1,3} * A_{1,3}\)</span></p>
+<p><code>rowCofactors()</code> is a convenience function, that calculates these all together</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">  <span class="kw">rowCofactors</span>(A, <span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] 18 -8 -6</code></pre>
+<p>Voila: Multiply row 1 times the cofactors of its elements. NB: In R, this multiplication gives a <span class="math inline">\(1 \times 1\)</span> matrix.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">  A[<span class="dv">1</span>,] <span class="op">%*%</span><span class="st"> </span><span class="kw">rowCofactors</span>(A, <span class="dv">1</span>)</a></code></pre></div>
+<pre><code>##      [,1]
+## [1,]   50</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">  <span class="kw">all.equal</span>( <span class="kw">det</span>(A), <span class="kw">c</span>(A[<span class="dv">1</span>,] <span class="op">%*%</span><span class="st"> </span><span class="kw">rowCofactors</span>(A, <span class="dv">1</span>)) )</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+<div id="finding-det-by-gaussian-elimination-pivoting" class="section level2">
+<h2>2. Finding <code>det()</code> by Gaussian elimination (pivoting)</h2>
+<p>This example follows Green and Carroll, Table 2.2. Start with a 4 x 4 matrix, <span class="math inline">\(M\)</span>, and save <code>det(M)</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">  M &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb16-2" title="2">                <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb16-3" title="3">                <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb16-4" title="4">                <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">nrow=</span><span class="dv">4</span>, <span class="dt">ncol=</span><span class="dv">4</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-5" title="5">  (dsave &lt;-<span class="st"> </span><span class="kw">det</span>(M))</a></code></pre></div>
+<pre><code>## [1] 15</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># </span><span class="al">###</span><span class="co"> &#39;pivot&#39; on the leading diagonal element, M[1,1]:</span></a></code></pre></div>
+<p><code>det()</code> will be the product of the ‘pivots’, the leading diagonal elements. This step reduces row 1 and column 1 to 0, so it may be discarded. NB: In R, dropping a row/column can change a matrix to a vector, so we use <code>drop = FALSE</code> inside the subscript.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">  (d &lt;-<span class="st"> </span>M[<span class="dv">1</span>,<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">    <span class="co">#-- Reduce row 1, col 1 to 0</span></a>
+<a class="sourceLine" id="cb21-2" title="2">  (M[<span class="dv">1</span>,] &lt;-<span class="st"> </span>M[<span class="dv">1</span>,, <span class="dt">drop=</span><span class="ot">FALSE</span>] <span class="op">/</span><span class="st"> </span>M[<span class="dv">1</span>, <span class="dv">1</span>])</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1  1.5  0.5    1</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">  (M &lt;-<span class="st"> </span>M <span class="op">-</span><span class="st"> </span>M[,<span class="dv">1</span>] <span class="op">%*%</span><span class="st">  </span>M[<span class="dv">1</span>,, <span class="dt">drop=</span><span class="ot">FALSE</span>])</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0  0.0  0.0    0
+## [2,]    0 -4.0  1.0    0
+## [3,]    0  2.5  1.5    1
+## [4,]    0 -3.5 -1.5   -2</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">    <span class="co">#-- Drop first row and column</span></a>
+<a class="sourceLine" id="cb25-2" title="2">  M &lt;-<span class="st"> </span>M[<span class="op">-</span><span class="dv">1</span>, <span class="dv">-1</span>]</a>
+<a class="sourceLine" id="cb25-3" title="3"></a>
+<a class="sourceLine" id="cb25-4" title="4">    <span class="co">#-- Accumulate the product of pivots</span></a>
+<a class="sourceLine" id="cb25-5" title="5">  d &lt;-<span class="st"> </span>d <span class="op">*</span><span class="st"> </span>M[<span class="dv">1</span>, <span class="dv">1</span>]</a></code></pre></div>
+<div id="repeat-reducing-new-row-col-1-to-0" class="section level3">
+<h3>Repeat, reducing new row, col 1 to 0</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">  (M[<span class="dv">1</span>,] &lt;-<span class="st"> </span>M[<span class="dv">1</span>,, <span class="dt">drop=</span><span class="ot">FALSE</span>] <span class="op">/</span><span class="st"> </span>M[<span class="dv">1</span>,<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>##      [,1]  [,2] [,3]
+## [1,]    1 -0.25    0</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">  (M &lt;-<span class="st"> </span>M <span class="op">-</span><span class="st"> </span>M[,<span class="dv">1</span>] <span class="op">%*%</span><span class="st">  </span>M[<span class="dv">1</span>,, <span class="dt">drop=</span><span class="ot">FALSE</span>])</a></code></pre></div>
+<pre><code>##      [,1]   [,2] [,3]
+## [1,]    0  0.000    0
+## [2,]    0  2.125    1
+## [3,]    0 -2.375   -2</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">  M &lt;-<span class="st"> </span>M[<span class="op">-</span><span class="dv">1</span>, <span class="dv">-1</span>]</a>
+<a class="sourceLine" id="cb30-2" title="2">  d =<span class="st"> </span>d <span class="op">*</span><span class="st"> </span>M[<span class="dv">1</span>, <span class="dv">1</span>]</a></code></pre></div>
+</div>
+<div id="repeat-once-more.-d-detm" class="section level3">
+<h3>Repeat once more. d = det(M)</h3>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">  (M[<span class="dv">1</span>,] &lt;-<span class="st"> </span>M[<span class="dv">1</span>,, <span class="dt">drop=</span><span class="ot">FALSE</span>] <span class="op">/</span><span class="st"> </span>M[<span class="dv">1</span>,<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>##      [,1]   [,2]
+## [1,]    1 0.4706</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">  (M &lt;-<span class="st"> </span>M <span class="op">-</span><span class="st"> </span>M[,<span class="dv">1</span>] <span class="op">%*%</span><span class="st">  </span>M[<span class="dv">1</span>,, <span class="dt">drop=</span><span class="ot">FALSE</span>])</a></code></pre></div>
+<pre><code>##      [,1]    [,2]
+## [1,]    0  0.0000
+## [2,]    0 -0.8824</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">  M &lt;-<span class="st"> </span>M[<span class="op">-</span><span class="dv">1</span>, <span class="dv">-1</span>, drop=<span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb35-2" title="2">  d &lt;-<span class="st"> </span>d <span class="op">*</span><span class="st"> </span>M[<span class="dv">1</span>, <span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb35-3" title="3"></a>
+<a class="sourceLine" id="cb35-4" title="4">  <span class="co"># did we get it right?</span></a>
+<a class="sourceLine" id="cb35-5" title="5">  <span class="kw">all.equal</span>(d, dsave)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
