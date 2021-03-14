@@ -26,7 +26,6 @@ BugReports: https://github.com/friendly/matlib/issues
 LazyData: TRUE
 Suggests:
     knitr,
-    rglwidget,
     rmarkdown,
     carData
 Imports:
