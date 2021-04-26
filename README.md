@@ -39,6 +39,8 @@ so you will need to have R Tools installed on your system.  [R Tools for Windows
 takes you to the download page for Windows.  [R Tools for Mac OS X](https://cran.r-project.org/bin/macosx/tools/)
 has the required programs for Mac OS X.
 
+The functions that draw 3D graphs use the **rgl** package. On macOS, **rgl** requires that [XQuartz](https://www.xquartz.org/) be installed. After installing XQuartz, it's necessary either to log out of and back into your macOS account or to reboot your Mac.
+
 
 ## Topics
 The functions in this package are grouped under the following topics
