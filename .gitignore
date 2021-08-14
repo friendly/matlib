@@ -1,8 +1,7 @@
-.Rproj.user
-.Rhistory
+.Rproj.user*
 .RData
 *.Rproj
-
+.Rhistory
 inst/doc
 vignettes/*.R
 vignettes/*.html
