@@ -28,6 +28,7 @@
 #' Proj(y, cbind(p1, p2))
 #'
 #' # orthogonal complements
+#' y <- 1:4
 #' yp <-Proj(y, X, list=TRUE)
 #' yp$y
 #' P <- yp$P
