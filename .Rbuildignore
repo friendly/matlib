@@ -17,3 +17,4 @@ docs/
 ^CRAN-RELEASE$
 .build-steps.R
 
+^\.Rproj\.user$

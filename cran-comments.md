@@ -22,10 +22,7 @@ Package suggested but not available for checking: 'webshot2'
 
 # matlib 0.9.5
 
-- added `xprod()` for vector cross-product
-- added data-beta vignette
-- fix `sprintf` warning from LU [Phil Chalmers]
-- better plotting of planes in plotEqn3d, alpha=0.9
+- fix minor bug in Proj.R example
 
 
 ## Reverse dependencies
