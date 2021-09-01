@@ -9,7 +9,10 @@ matrix2latex(x, fractions = FALSE, brackets = TRUE, ...)
 \arguments{
 \item{x}{a matrix}
 
-\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
+\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}} 
+function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+\code{options(fractions=list(cycles=100, max.denominator=10^4))}.}
 
 \item{brackets}{logical; include square brackets around the matrices?}
 

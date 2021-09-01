@@ -17,7 +17,10 @@
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param simplify logical; try to simplify the equations?
 #' @param reduce logical; only show the unique linear equations
-#' @param fractions logical; express numbers as rational fractions?
+#' @param fractions logical; express numbers as rational fractions, using the \code{\link[MASS]{fractions}} 
+#'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+#'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+#'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
 #' @param latex logical; print equations in a form suitable for LaTeX output?
 #' @return a one-column character matrix, one row for each equation
 #' @author Michael Friendly, John Fox, and Phil Chalmers
@@ -91,14 +94,14 @@ showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
     b <- paste0('b', 1:nrow(A))
   }
   else b <- if (fractions){
-    as.character(MASS::fractions(b))
+    as.character(Fractions(b))
   } else as.character(b)
   if (missing(vars)) vars <- paste0("x", 1:ncol(A))
   V <- substr(vars[1], 1, 1)
   pat2 <- gsub("x", V, "0\\*x\\d")
   res <- character(nrow(A))
   res.matrix <- matrix("", nrow(A), ncol(A))
-  if (fractions) A <- as.character(MASS::fractions(A))
+  if (fractions) A <- as.character(Fractions(A))
   for (i in 1:nrow(A)){
     for (j in 1:ncol(A)){
       res.matrix[i, j] <- paste0(A[i, j], "*", vars[j])

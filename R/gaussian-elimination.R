@@ -16,7 +16,10 @@
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
 #' @param latex logical; if \code{TRUE}, and verbose is \code{TRUE}, print intermediate steps using LaTeX
 #'   equation outputs rather than R output
-#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
+#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
+#'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+#'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+#'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
 #' @return If \code{B} is absent, returns the reduced row-echelon form of \code{A}.
 #'         If \code{B} is present, returns the reduced row-echelon form of \code{A}, with the
 #'         same operations applied to \code{B}.
@@ -105,7 +108,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
             A <- rowmult(A, i, 1/pivot) # pivot (E1)
             if (verbose && abs(pivot - 1) > tol){
                 cat("\n multiply row", i, "by",
-                    if (fractions) as.character(MASS::fractions(1/pivot)) else 1/pivot, "\n")
+                    if (fractions) as.character(Fractions(1/pivot)) else 1/pivot, "\n")
                 printMatrix(A)
             }
             for (k in 1:n){
@@ -117,7 +120,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                 if (verbose){
                   if (abs(factor - 1) > tol){
                     cat("\n multiply row", i, "by",
-                        if (fractions) as.character(MASS::fractions(abs(factor))) else abs(factor),
+                        if (fractions) as.character(Fractions(abs(factor))) else abs(factor),
                         if (factor > 0) "and subtract from row" else "and add to row", k, "\n")
                   }
                   else{
@@ -267,7 +270,10 @@ echelon <- function(A, B, reduced = TRUE, ...) {
 #' @param A numerical matrix
 #' @param tol tolerance for checking for 0 pivot
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
-#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
+#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
+#'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+#'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+#'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
 #' @return the generalized inverse of \code{A}, expressed as fractions if \code{fractions=TRUE}, or rounded
 #' @seealso \code{\link[MASS]{ginv}} for a more generally usable function
 #' @export

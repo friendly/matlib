@@ -11,7 +11,10 @@
 #' @param X a square matrix
 #' @param method one of `"elimination"` (the default), `"eigenvalues"`, or `"cofactors"` (for computation by minors and cofactors)
 #' @param verbose logical; if \code{TRUE}, print intermediate steps
-#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
+#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}} 
+#'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+#'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+#'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
 #' @param ... arguments passed to \code{\link{gaussianElimination}} or \code{\link{Eigen}}
 #' @return the determinant of \code{X}
 #' @family determinants
@@ -43,8 +46,8 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
       det <- attr(res, "det")
       if (verbose){
         if (fractions){
-          pivots <- MASS::fractions(pivots)
-          det <- MASS::fractions(det)
+          pivots <- Fractions(pivots)
+          det <- Fractions(det)
         }
         else {
           pivots <- signif(pivots)
@@ -62,8 +65,8 @@ Det <- function(X, method=c("elimination", "eigenvalues", "cofactors"), verbose=
         values0 <- values
         det0 <- det
         if (fractions){
-          det0 <- MASS::fractions(det)
-          values0 <- MASS::fractions(values)
+          det0 <- Fractions(det)
+          values0 <- Fractions(values)
         }
         else {
           det0 <- signif(det)

@@ -51,6 +51,14 @@ Most of these ideas and implementations arose in courses and books by the author
 Fox (1984) introduced illustrations of vector geometry.
 }
 
+\section{macOS Installation Note}{
+
+The functions that draw 3D graphs use the \pkg{rgl} package. 
+On macOS, the \pkg{rgl} package requires that \href{https://www.xquartz.org/}{XQuartz}
+be installed. After installing XQuartz, it's necessary either to log out of and back 
+into your macOS account or to reboot your Mac.
+}
+
 \references{
 Fox, J. Linear Statistical Models and Related Methods. John Wiley and Sons, 1984
 

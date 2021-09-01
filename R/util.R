@@ -6,7 +6,10 @@
 #' @param A       A numeric matrix
 #' @param parent  flag used to search in the parent envir for suitable definitions of other arguments.
 #'                Set to \code{TRUE} (the default) if you want to only use the inputs provided.
-#' @param fractions If \code{TRUE}, print numbers as rational fractions
+#' @param fractions If \code{TRUE}, print numbers as rational fractions, using the \code{\link[MASS]{fractions}}
+#'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+#'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+#'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
 #' @param latex   If \code{TRUE}, print the matrix in LaTeX format
 #' @param tol     Tolerance for rounding small numbers to 0
 #'
@@ -35,10 +38,25 @@ printMatrix <- function(A, parent = TRUE, fractions = FALSE, latex = FALSE,
 }
 
 formatNumbers <- function(x, fractions=FALSE, tol=sqrt(.Machine$double.eps)){
-	ret <- if (fractions) MASS::fractions(x) else round(x, round(abs(log(tol, 10))))
+	ret <- if (fractions) Fractions(x) else round(x, round(abs(log(tol, 10))))
 	ret
 }
 
 r2d <-function(r) r/pi * 180
 
 d2r <-function(d) pi*d / 180
+
+Fractions <- function(x, ...){
+  opts <- getOption("fractions")
+  if (is.null(opts)){
+    cycles <- 10
+    max.denominator <- 2000
+  } else {
+    cycles <- opts$cycles
+    max.denominator <- opts$max.denominator
+    if (is.null(cycles)) cycles <- 10
+    if (is.null(max.denominator)) max.denominator <- 2000
+  }
+  MASS::fractions(x, cycles=cycles, max.denominator=max.denominator, ...)
+}
+
