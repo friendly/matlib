@@ -3,7 +3,6 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/matlib)](https://cran.r-project.org/package=matlib)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/matlib)](https://cran.r-project.org/package=matlib)
 [![Travis-CI Build Status](https://travis-ci.org/friendly/matlib.svg?branch=master)](https://travis-ci.org/friendly/matlib)
-[![Rdoc](http://www.rdocumentation.org/badges/version/matlib)](http://www.rdocumentation.org/packages/matlib)
 
 <!-- badges: end -->
 
@@ -11,7 +10,7 @@
 
 **Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics**, http://friendly.github.io/matlib/
 
-Version 0.9.4
+Version 0.9.6
 
 These functions are mainly for tutorial purposes in teaching & learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts or computations available
@@ -30,9 +29,8 @@ Get the released version from CRAN:
 
 The development version can be installed to your R library directly from this repo via:
 
-     if (!require(devtools)) install.packages("devtools")
-     library(devtools)
-     install_github("friendly/matlib", build_vignettes = TRUE)
+     if (!require(remotes)) install.packages("remotes")
+     remotes::install_github("friendly/matlib", build_vignettes = TRUE)
 
 This installs the package from the source and creates the package vignettes, 
 so you will need to have R Tools installed on your system.  [R Tools for Windows](https://cran.r-project.org/bin/windows/Rtools/)
