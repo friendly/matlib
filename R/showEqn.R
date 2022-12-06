@@ -85,6 +85,10 @@
 
 showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
                     fractions=FALSE, latex = FALSE) {
+  ndigits <- function(x){
+    x <- sub("[*].*$", "", x)
+    nchar(gsub("[^[:digit:]]", "", x))
+  }
   if(is(A, 'lm')){
   	X <- model.matrix(A)
   	return(showEqn(A=X, b=b, vars=vars, simplify=simplify, fractions=fractions,
@@ -108,6 +112,7 @@ showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
       if (j > 1) res.matrix[i, j] <- paste0(" + ", res.matrix[i, j])
       res.matrix[i, j] <- gsub("+ -", "- ", res.matrix[i, j], fixed=TRUE)  # map "+ -3" -> "-3"
       if (simplify) {
+          if (ndigits(res.matrix[i, j]) > 1) next
           if(j == 1L){
               res.matrix[i, j] <- gsub("1*", "", res.matrix[i, j], fixed=TRUE) # "1*x" -> "x"
               res.matrix[i, j] <- gsub(pat2, "", res.matrix[i, j])  # "0*x -> ""
