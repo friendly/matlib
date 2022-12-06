@@ -2,6 +2,7 @@
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/matlib)](https://cran.r-project.org/package=matlib)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/matlib)](https://cran.r-project.org/package=matlib)
+[![Dependencies](https://tinyverse.netlify.com/badge/matlib)](https://cran.r-project.org/package=matlib)
 [![Travis-CI Build Status](https://travis-ci.org/friendly/matlib.svg?branch=master)](https://travis-ci.org/friendly/matlib)
 
 <!-- badges: end -->
@@ -14,12 +15,26 @@ Version 0.9.6
 
 These functions are mainly for tutorial purposes in teaching & learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts or computations available
-elsewhere in R, but where the name is not obvious.  In other
+elsewhere in R, but where the name is not obvious, e.g., `R()` for the rank of a matrix,
+or `tr()` for matrix trace.
+
+In other
 cases, we provide cover functions to show or demonstrate an algorithm in more detail, sometimes
-providing a `verbose =` argument to print the details of computations.
+providing a `verbose =` argument to print the details of computations, e.g., `Det()` for a
+matrix determinant, `Inverse()` for a matrix inverse, using `gaussianElimination()` to show the
+steps.
 
 In addition, a collection of functions are provided for drawing vector diagrams in 2D and 3D, illustrating
 various concepts of linear algebra more concretely than has been available before.
+For example, 
+
+* `showEqn(A, b)` shows the matrix equations $A x = b$ in text or LaTeX form, while
+`plotEqn(A, b)` and `plotEqn3d(A, b)` plots those equations in 2D or 3D space.
+
+* `vectors()`, `vectors3d()` plot geometric vector diagrams in 2D or 3D, with other functions to draw
+angles and arcs.
+
+* `regvec3d()` calculates and plot vectors representing a bivariate regression model, `lm(y ~ x1 + x2)`
 
 ## Installation
 
@@ -43,18 +58,18 @@ The functions that draw 3D graphs use the **rgl** package. On macOS, **rgl** req
 ## Topics
 The functions in this package are grouped under the following topics
 
-1. Convenience functions:  
+1. **Convenience functions**:  
 
   - `tr()` - trace of a matrix
   - `R()` - rank of a matrix
   - `J()` - constant vector, matrix or array
   - `len()` - Euclidean length of a vector or columns of a matrix
   - `vec()` - vectorize a matrix
-  - `Proj(y, X)` - projection of vector y on columns of X
+  - `Proj(y, X)` - projection of vector y on columns of matrix **X**
   - `mpower(A, p)` - matrix powers for a square symmetric matrix
   - `xprod(...)` - vector cross-product
 
-2. Determinants: functions for calculating determinants by cofactor expansion
+2. **Determinants**: functions for calculating determinants by cofactor expansion
 
   - `minor()` - Minor of A[i,j]
   - `cofactor()` - Cofactor of A[i,j]
@@ -62,38 +77,38 @@ The functions in this package are grouped under the following topics
   - `rowCofactors()` - Row cofactors of A[i,]
   - `Det()` - Determinants by elimination or eigenvalues
 
-3. Elementary row operations: functions for solving linear equations "manually" by the steps used in row echelon form and Gaussian elimination
+3. **Elementary row operations**: functions for solving linear equations "manually" by the steps used in row echelon form and Gaussian elimination
 
   - `rowadd()` - Add multiples of rows to other rows
   - `rowmult()` - Multiply rows by constants
   - `rowswap()` - Interchange two rows of a matrix
 
-4. Linear equations: functions to illustrate linear equations of the form $\mathbf{A x = b}$
+4. **Linear equations**: functions to illustrate linear equations of the form $\mathbf{A x = b}$
 
   - `showEqn(A, b)` - show matrices (A, b) as linear equations
   - `plotEqn(A, b)`, `plotEqn3d(A, b)`  - plot matrices (A, b) as linear equations
   
-5. Gaussian elimination: functions for illustrating Gaussian elimination for solving systems of linear equations of the form
+5. **Gaussian elimination**: functions for illustrating Gaussian elimination for solving systems of linear equations of the form
 $\mathbf{A x = b}$.  These functions provide a `verbose=TRUE` argument to show the intermediate steps
-and a `fractions=TRUE` argument to show results using `MASS::fractions`.
+and a `fractions=TRUE` argument to show results using `MASS::fractions()`.
 
-  - `gaussianElimination(A, B)` - reduces (A, B) to (I, A^{-1} B)
-  - `Inverse(X)`, `inv()` - uses `gaussianElimination` to find the inverse of X
+  - `gaussianElimination(A, B)` - reduces $(A, B)$ to $(I, A^{-1} B)$
+  - `Inverse(X)`, `inv()` - uses `gaussianElimination` to find the inverse of X, $\mathbf{X}^{-1}$
   - `echelon(X)` - uses `gaussianElimination` to find the reduced echelon form of X
   - `Ginv(X)` - uses `gaussianElimination` to find the generalized inverse of X
   - `LU(X)` - LU decomposition of a matrix X
-  - `cholesky()` - calculates a Cholesky square root of a matrix
+  - `cholesky(X)` - calculates a Cholesky square root of a matrix
   - `swp()` - matrix sweep operator
 
-6. Eigenvalues: functions to illustrate the algorithms for calculating eigenvalues and eigenvectors and related matrix decompositions and generalizations.
+6. **Eigenvalues**: functions to illustrate the algorithms for calculating eigenvalues and eigenvectors and related matrix decompositions and generalizations.
 
   - `Eigen()` - eigenvalues and eigenvectors
-  - `SVD()` - singular value decomposition
+  - `SVD()` - singular value decomposition, \$mathbf{X = U D V}$
   - `powerMethod()` - find the dominant eigenvector using the power method 
   - `showEig()` - draw eigenvectors on a 2D scatterplot with a dataEllipse
   - `MoorePenrose()` - illustrates how the Moore-Penrose inverse can be calculated using `SVD()`
 
-7. Vector diagrams: functions for drawing vector diagrams in 2D and 3D
+7. **Vector diagrams**: functions for drawing vector diagrams in 2D and 3D
 
   - `arrows3d()` - draw nice 3D arrows
   - `corner()`, `arc()` -  draw a corner or arc showing the angle between two vectors in 2D/3D
