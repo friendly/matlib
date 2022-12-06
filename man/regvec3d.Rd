@@ -123,11 +123,11 @@ either \code{scale=TRUE} or \code{normalize=TRUE}.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{formula}: Formula method for regvec3d
+\item \code{regvec3d(formula)}: Formula method for regvec3d
 
-\item \code{default}: Default method for regvec3d
+\item \code{regvec3d(default)}: Default method for regvec3d
+
 }}
-
 \examples{
 library(rgl)
 therapy.vec <- regvec3d(therapy ~ perstest + IE, data=therapy)

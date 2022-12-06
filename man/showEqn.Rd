@@ -30,7 +30,10 @@ The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{reduce}{logical; only show the unique linear equations}
 
-\item{fractions}{logical; express numbers as rational fractions?}
+\item{fractions}{logical; express numbers as rational fractions, using the \code{\link[MASS]{fractions}} 
+function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+\code{options(fractions=list(cycles=100, max.denominator=10^4))}.}
 
 \item{latex}{logical; print equations in a form suitable for LaTeX output?}
 }

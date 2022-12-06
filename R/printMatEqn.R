@@ -9,7 +9,11 @@
 #' @param space amount of blank spaces to place around operations such as \code{"+"},
 #'   \code{"-"}, \code{"="}, etc
 #' @param tol tolerance for rounding
-#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers
+#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
+#'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+#'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+#'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
+#' 
 #' @return NULL; A formatted sequence of matrices and matrix operations is printed to the console
 #' @author Phil Chalmers
 #' @export

@@ -18,7 +18,10 @@ printMatrix(
 \item{parent}{flag used to search in the parent envir for suitable definitions of other arguments.
 Set to \code{TRUE} (the default) if you want to only use the inputs provided.}
 
-\item{fractions}{If \code{TRUE}, print numbers as rational fractions}
+\item{fractions}{If \code{TRUE}, print numbers as rational fractions, using the \code{\link[MASS]{fractions}}
+function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+\code{options(fractions=list(cycles=100, max.denominator=10^4))}.}
 
 \item{latex}{If \code{TRUE}, print the matrix in LaTeX format}
 

@@ -29,7 +29,10 @@ side of the equations with coefficients in \code{A}.}
 \item{latex}{logical; if \code{TRUE}, and verbose is \code{TRUE}, print intermediate steps using LaTeX
 equation outputs rather than R output}
 
-\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers}
+\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
+function; if you require greater accuracy, you can set the \code{cycles} (default 10)
+and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
+\code{options(fractions=list(cycles=100, max.denominator=10^4))}.}
 
 \item{x}{matrix to print}
 
