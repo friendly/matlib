@@ -2,6 +2,7 @@
 
 - fix some subtle problems related to the use of `MASS::fractions()` in various display functions, #42. (Thx: Phil Chalmers)
 - Fix a problem with `showEqn(..., simplify=TRUE), #45. (Thx: John Fox)
+- Remove Suggests: rglwidget as this is now in the rgl package (Thx: Duncan Murdoch)
 
 # matlib 0.9.5
 
