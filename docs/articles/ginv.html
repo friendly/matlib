@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">matlib</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -91,8 +87,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/friendly/matlib/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/friendly/matlib/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -106,144 +102,166 @@
 
       
 
-      </header><link href="ginv_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="ginv_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Generalized inverse</h1>
-                        <h4 class="author">Michael Friendly</h4>
+                        <h4 data-toc-skip class="author">Michael
+Friendly</h4>
             
-            <h4 class="date">2020-10-28</h4>
+            <h4 data-toc-skip class="date">2022-12-07</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/master/vignettes/ginv.Rmd"><code>vignettes/ginv.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/HEAD/vignettes/ginv.Rmd" class="external-link"><code>vignettes/ginv.Rmd</code></a></small>
       <div class="hidden name"><code>ginv.Rmd</code></div>
 
     </div>
 
     
     
-<p>In matrix algebra, the inverse of a matrix is defined only for <em>square</em> matrices, and if a matrix is <em>singular</em>, it does not have an inverse.</p>
-<p>The <strong>generalized inverse</strong> (or <em>pseudoinverse</em>) is an extension of the idea of a matrix inverse, which has some but not all the properties of an ordinary inverse.</p>
-<p>A common use of the pseudoinverse is to compute a ‘best fit’ (least squares) solution to a system of linear equations that lacks a unique solution.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/matlib">matlib</a></span><span class="op">)</span></pre></div>
-<p>Construct a square, <em>singular</em> matrix [See: Timm, EX. 1.7.3]</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">A</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span>, <span class="op">-</span><span class="fl">2</span>,
-             <span class="fl">4</span>, <span class="fl">4</span>, <span class="op">-</span><span class="fl">2</span>,
-            <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, ncol<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 0</code></pre>
-<p>The rank is 2, so <code><a href="../reference/Inverse.html">inv(A)</a></code> won’t work</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 2</code></pre>
-<p>In the echelon form, this rank deficiency appears as the final row of zeros</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/echelon.html">echelon</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    1    0
-## [2,]    0    0    1
-## [3,]    0    0    0</code></pre>
+<p>In matrix algebra, the inverse of a matrix is defined only for
+<em>square</em> matrices, and if a matrix is <em>singular</em>, it does
+not have an inverse.</p>
+<p>The <strong>generalized inverse</strong> (or <em>pseudoinverse</em>)
+is an extension of the idea of a matrix inverse, which has some but not
+all the properties of an ordinary inverse.</p>
+<p>A common use of the pseudoinverse is to compute a ‘best fit’ (least
+squares) solution to a system of linear equations that lacks a unique
+solution.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/matlib" class="external-link">matlib</a></span><span class="op">)</span></span></code></pre></div>
+<p>Construct a square, <em>singular</em> matrix [See: Timm, EX.
+1.7.3]</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span>, <span class="op">-</span><span class="fl">2</span>,</span>
+<span>             <span class="fl">4</span>, <span class="fl">4</span>, <span class="op">-</span><span class="fl">2</span>,</span>
+<span>            <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, ncol<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">det</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0</span></span></code></pre>
+<p>The rank is 2, so <code>inv(A)</code> won’t work</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 2</span></span></code></pre>
+<p>In the echelon form, this rank deficiency appears as the final row of
+zeros</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/echelon.html">echelon</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    1    1    0</span></span>
+<span><span class="co">## [2,]    0    0    1</span></span>
+<span><span class="co">## [3,]    0    0    0</span></span></code></pre>
 <p><code><a href="../reference/Inverse.html">inv()</a></code> will throw an error</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## Error in Inverse(X, tol = sqrt(.Machine$double.eps), ...) : 
-##   X is numerically singular</code></pre>
-<p>A <strong>generalized inverse</strong> does exist for any matrix, but unlike the ordinary inverse, the generalized inverse is not unique, in the sense that there are various ways of defining a generalized inverse with various inverse-like properties. The function <code><a href="../reference/Ginv.html">matlib::Ginv()</a></code> calculates a <em>Moore-Penrose</em> generalized inverse.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="op">(</span><span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Ginv.html">Ginv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>##         [,1] [,2]    [,3]
-## [1,] 0.27778    0 0.05556
-## [2,] 0.00000    0 0.00000
-## [3,] 0.05556    0 0.11111</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Error in Inverse(X, tol = sqrt(.Machine$double.eps), ...) : </span></span>
+<span><span class="co">##   X is numerically singular</span></span></code></pre>
+<p>A <strong>generalized inverse</strong> does exist for any matrix, but
+unlike the ordinary inverse, the generalized inverse is not unique, in
+the sense that there are various ways of defining a generalized inverse
+with various inverse-like properties. The function
+<code><a href="../reference/Ginv.html">matlib::Ginv()</a></code> calculates a <em>Moore-Penrose</em>
+generalized inverse.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Ginv.html">Ginv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##         [,1] [,2]    [,3]</span></span>
+<span><span class="co">## [1,] 0.27778    0 0.05556</span></span>
+<span><span class="co">## [2,] 0.00000    0 0.00000</span></span>
+<span><span class="co">## [3,] 0.05556    0 0.11111</span></span></code></pre>
 <p>We can also view this as fractions:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/Ginv.html">Ginv</a></span><span class="op">(</span><span class="va">A</span>, fractions<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,] 5/18    0 1/18
-## [2,]    0    0    0
-## [3,] 1/18    0  1/9</code></pre>
-<div id="properties-of-generalized-inverse-moore-penrose-inverse" class="section level3">
-<h3 class="hasAnchor">
-<a href="#properties-of-generalized-inverse-moore-penrose-inverse" class="anchor"></a>Properties of generalized inverse (Moore-Penrose inverse)</h3>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/Ginv.html">Ginv</a></span><span class="op">(</span><span class="va">A</span>, fractions<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,] 5/18    0 1/18</span></span>
+<span><span class="co">## [2,]    0    0    0</span></span>
+<span><span class="co">## [3,] 1/18    0  1/9</span></span></code></pre>
+<div class="section level3">
+<h3 id="properties-of-generalized-inverse-moore-penrose-inverse">Properties of generalized inverse (Moore-Penrose inverse)<a class="anchor" aria-label="anchor" href="#properties-of-generalized-inverse-moore-penrose-inverse"></a>
+</h3>
 <p>The generalized inverse is defined as the matrix <span class="math inline">\(A^-\)</span> such that</p>
 <ul>
 <li>
 <span class="math inline">\(A * A^- * A = A\)</span> and</li>
 <li><span class="math inline">\(A^- * A * A^- = A^-\)</span></li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">A</span> <span class="op">%*%</span> <span class="va">AI</span> <span class="op">%*%</span> <span class="va">A</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    4    4   -2
-## [2,]    4    4   -2
-## [3,]   -2   -2   10</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">AI</span> <span class="op">%*%</span> <span class="va">A</span> <span class="op">%*%</span> <span class="va">AI</span></pre></div>
-<pre><code>##         [,1] [,2]    [,3]
-## [1,] 0.27778    0 0.05556
-## [2,] 0.00000    0 0.00000
-## [3,] 0.05556    0 0.11111</code></pre>
-<p>In addition, both <span class="math inline">\(A * A^-\)</span> and <span class="math inline">\(A^- * A\)</span> are symmetric, but neither product gives an identity matrix, <code>A %*% AI != AI %*% A != I</code></p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html">zapsmall</a></span><span class="op">(</span><span class="va">A</span> <span class="op">%*%</span> <span class="va">AI</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    0    0
-## [2,]    1    0    0
-## [3,]    0    0    1</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html">zapsmall</a></span><span class="op">(</span><span class="va">AI</span> <span class="op">%*%</span> <span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    1    0
-## [2,]    0    0    0
-## [3,]    0    0    1</code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">AI</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">A</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    4    4   -2</span></span>
+<span><span class="co">## [2,]    4    4   -2</span></span>
+<span><span class="co">## [3,]   -2   -2   10</span></span></code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">AI</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">AI</span></span></code></pre></div>
+<pre><code><span><span class="co">##         [,1] [,2]    [,3]</span></span>
+<span><span class="co">## [1,] 0.27778    0 0.05556</span></span>
+<span><span class="co">## [2,] 0.00000    0 0.00000</span></span>
+<span><span class="co">## [3,] 0.05556    0 0.11111</span></span></code></pre>
+<p>In addition, both <span class="math inline">\(A * A^-\)</span> and
+<span class="math inline">\(A^- * A\)</span> are symmetric, but neither
+product gives an identity matrix,
+<code>A %*% AI != AI %*% A != I</code></p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall</a></span><span class="op">(</span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">AI</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    1    0    0</span></span>
+<span><span class="co">## [2,]    1    0    0</span></span>
+<span><span class="co">## [3,]    0    0    1</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall</a></span><span class="op">(</span><span class="va">AI</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    1    1    0</span></span>
+<span><span class="co">## [2,]    0    0    0</span></span>
+<span><span class="co">## [3,]    0    0    1</span></span></code></pre>
 </div>
-<div id="rectangular-matrices" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rectangular-matrices" class="anchor"></a>Rectangular matrices</h2>
-<p>For a <em>rectangular matrix</em>, <span class="math inline">\(A^- = (A^{T} A)^{-1} A^{T}\)</span> is the generalized inverse of <span class="math inline">\(A\)</span> if <span class="math inline">\((A^{T} A)^-\)</span> is the ginv of <span class="math inline">\((A^{T} A)\)</span> [See: Timm: EX 1.6.11]</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">4</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-<span class="va">A</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    1    0
-## [2,]    1    1    0
-## [3,]    1    0    1
-## [4,]    1    0    1</code></pre>
-<p>This <span class="math inline">\(4 \times 3\)</span> matrix is not of full rank, because columns 2 and 3 sum to column 1.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="op">(</span><span class="va">AA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    4    2    2
-## [2,]    2    2    0
-## [3,]    2    0    2</code></pre>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="op">(</span><span class="va">AAI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Ginv.html">Ginv</a></span><span class="op">(</span><span class="va">AA</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]  0.5 -0.5    0
-## [2,] -0.5  1.0    0
-## [3,]  0.0  0.0    0</code></pre>
-<p>The generalized inverse of <span class="math inline">\(A\)</span> is <span class="math inline">\((A^{T} A)^- A^{T}\)</span>, <code>AAI * t(A)</code></p>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="va">AI</span> <span class="op">&lt;-</span> <span class="va">AAI</span>  <span class="op">%*%</span>  <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
+<div class="section level2">
+<h2 id="rectangular-matrices">Rectangular matrices<a class="anchor" aria-label="anchor" href="#rectangular-matrices"></a>
+</h2>
+<p>For a <em>rectangular matrix</em>, <span class="math inline">\(A^- =
+(A^{T} A)^{-1} A^{T}\)</span> is the generalized inverse of <span class="math inline">\(A\)</span> if <span class="math inline">\((A^{T}
+A)^-\)</span> is the ginv of <span class="math inline">\((A^{T}
+A)\)</span> [See: Timm: EX 1.6.11]</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">4</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">A</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    1    1    0</span></span>
+<span><span class="co">## [2,]    1    1    0</span></span>
+<span><span class="co">## [3,]    1    0    1</span></span>
+<span><span class="co">## [4,]    1    0    1</span></span></code></pre>
+<p>This <span class="math inline">\(4 \times 3\)</span> matrix is not of
+full rank, because columns 2 and 3 sum to column 1.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 2</span></span></code></pre>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">AA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    4    2    2</span></span>
+<span><span class="co">## [2,]    2    2    0</span></span>
+<span><span class="co">## [3,]    2    0    2</span></span></code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">AAI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Ginv.html">Ginv</a></span><span class="op">(</span><span class="va">AA</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]  0.5 -0.5    0</span></span>
+<span><span class="co">## [2,] -0.5  1.0    0</span></span>
+<span><span class="co">## [3,]  0.0  0.0    0</span></span></code></pre>
+<p>The generalized inverse of <span class="math inline">\(A\)</span> is
+<span class="math inline">\((A^{T} A)^- A^{T}\)</span>,
+<code>AAI * t(A)</code></p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">AI</span> <span class="op">&lt;-</span> <span class="va">AAI</span>  <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span>  <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
 <p>Show that it is a generalized inverse:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="va">A</span> <span class="op">%*%</span> <span class="va">AI</span> <span class="op">%*%</span> <span class="va">A</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    1    0
-## [2,]    1    1    0
-## [3,]    1    0    1
-## [4,]    1    0    1</code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="va">AI</span> <span class="op">%*%</span> <span class="va">A</span> <span class="op">%*%</span> <span class="va">AI</span></pre></div>
-<pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]  0.0  0.0  0.5  0.5
-## [2,]  0.5  0.5 -0.5 -0.5
-## [3,]  0.0  0.0  0.0  0.0</code></pre>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">AI</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">A</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    1    1    0</span></span>
+<span><span class="co">## [2,]    1    1    0</span></span>
+<span><span class="co">## [3,]    1    0    1</span></span>
+<span><span class="co">## [4,]    1    0    1</span></span></code></pre>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">AI</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">AI</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3] [,4]</span></span>
+<span><span class="co">## [1,]  0.0  0.0  0.5  0.5</span></span>
+<span><span class="co">## [2,]  0.5  0.5 -0.5 -0.5</span></span>
+<span><span class="co">## [3,]  0.0  0.0  0.0  0.0</span></span></code></pre>
 </div>
   </div>
 
@@ -258,11 +276,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Friendly, John Fox, Phil Chalmers.</p>
+  <p></p>
+<p>Developed by Michael Friendly, John Fox, Phil Chalmers.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -270,6 +290,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -42,17 +42,17 @@
 #' Most of these ideas and implementations arose in courses and books by the authors.
 #' [Psychology 6140](http://friendly.apps01.yorku.ca/psy6140/) was a starting point.
 #' Fox (1984) introduced illustrations of vector geometry.
-#' 
+#'
 #' @section macOS Installation Note:
-#' The functions that draw 3D graphs use the \pkg{rgl} package. 
+#' The functions that draw 3D graphs use the \pkg{rgl} package.
 #' On macOS, the \pkg{rgl} package requires that \href{https://www.xquartz.org/}{XQuartz}
-#' be installed. After installing XQuartz, it's necessary either to log out of and back 
+#' be installed. After installing XQuartz, it's necessary either to log out of and back
 #' into your macOS account or to reboot your Mac.
 #'
 #' @docType package
-#' @name matlib
+#' @name matlib-package
 #' @importFrom MASS fractions
-#' @aliases matlib-package
+#' @aliases matlib
 #' @references
 #' Fox, J. Linear Statistical Models and Related Methods. John Wiley and Sons, 1984
 #'

@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">matlib</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -91,8 +87,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/friendly/matlib/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/friendly/matlib/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -106,159 +102,182 @@
 
       
 
-      </header><link href="eigen-ex2_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="eigen-ex2_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Eigenvalues: Spectral Decomposition</h1>
-                        <h4 class="author">Michael Friendly</h4>
+                        <h4 data-toc-skip class="author">Michael
+Friendly</h4>
             
-            <h4 class="date">2020-10-28</h4>
+            <h4 data-toc-skip class="date">2022-12-07</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/master/vignettes/eigen-ex2.Rmd"><code>vignettes/eigen-ex2.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/HEAD/vignettes/eigen-ex2.Rmd" class="external-link"><code>vignettes/eigen-ex2.Rmd</code></a></small>
       <div class="hidden name"><code>eigen-ex2.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/matlib">matlib</a></span><span class="op">)</span>   <span class="co"># use the package</span></pre></div>
-<div id="setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h2>
-<p>This vignette uses an example of a <span class="math inline">\(3 \times 3\)</span> matrix to illustrate some properties of eigenvalues and eigenvectors. We could consider this to be the variance-covariance matrix of three variables, but the main thing is that the matrix is <strong>square</strong> and <strong>symmetric</strong>, which guarantees that the eigenvalues, <span class="math inline">\(\lambda_i\)</span> are real numbers, and non-negative, <span class="math inline">\(\lambda_i \ge 0\)</span>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">13</span>, <span class="op">-</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="op">-</span><span class="fl">4</span>, <span class="fl">11</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span>, <span class="fl">3</span>, <span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">A</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   13   -4    2
-## [2,]   -4   11   -2
-## [3,]    2   -2    8</code></pre>
-<p>Get the eigenvalues and eigenvectors using <code><a href="https://rdrr.io/r/base/eigen.html">eigen()</a></code>; this returns a named list, with eigenvalues named <code>values</code> and eigenvectors named <code>vectors</code>. We call these <code>L</code> and <code>V</code> here, but in formulas they correspond to a diagonal matrix, <span class="math inline">\(\mathbf{\Lambda} = diag(\lambda_1, \lambda_2, \lambda_3)\)</span>, and a (orthogonal) matrix <span class="math inline">\(\mathbf{V}\)</span>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">ev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eigen.html">eigen</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>
-<span class="co"># extract components</span>
-<span class="op">(</span><span class="va">L</span> <span class="op">&lt;-</span> <span class="va">ev</span><span class="op">$</span><span class="va">values</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 17  8  7</code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="op">(</span><span class="va">V</span> <span class="op">&lt;-</span> <span class="va">ev</span><span class="op">$</span><span class="va">vectors</span><span class="op">)</span></pre></div>
-<pre><code>##         [,1]    [,2]   [,3]
-## [1,]  0.7454  0.6667 0.0000
-## [2,] -0.5963  0.6667 0.4472
-## [3,]  0.2981 -0.3333 0.8944</code></pre>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/matlib" class="external-link">matlib</a></span><span class="op">)</span>   <span class="co"># use the package</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>This vignette uses an example of a <span class="math inline">\(3
+\times 3\)</span> matrix to illustrate some properties of eigenvalues
+and eigenvectors. We could consider this to be the variance-covariance
+matrix of three variables, but the main thing is that the matrix is
+<strong>square</strong> and <strong>symmetric</strong>, which guarantees
+that the eigenvalues, <span class="math inline">\(\lambda_i\)</span> are
+real numbers, and non-negative, <span class="math inline">\(\lambda_i
+\ge 0\)</span>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">13</span>, <span class="op">-</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="op">-</span><span class="fl">4</span>, <span class="fl">11</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span>, <span class="fl">3</span>, <span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">A</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]   13   -4    2</span></span>
+<span><span class="co">## [2,]   -4   11   -2</span></span>
+<span><span class="co">## [3,]    2   -2    8</span></span></code></pre>
+<p>Get the eigenvalues and eigenvectors using <code><a href="https://rdrr.io/r/base/eigen.html" class="external-link">eigen()</a></code>; this
+returns a named list, with eigenvalues named <code>values</code> and
+eigenvectors named <code>vectors</code>. We call these <code>L</code>
+and <code>V</code> here, but in formulas they correspond to a diagonal
+matrix, <span class="math inline">\(\mathbf{\Lambda} = diag(\lambda_1,
+\lambda_2, \lambda_3)\)</span>, and a (orthogonal) matrix <span class="math inline">\(\mathbf{V}\)</span>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eigen.html" class="external-link">eigen</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span>
+<span><span class="co"># extract components</span></span>
+<span><span class="op">(</span><span class="va">L</span> <span class="op">&lt;-</span> <span class="va">ev</span><span class="op">$</span><span class="va">values</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 17  8  7</span></span></code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">V</span> <span class="op">&lt;-</span> <span class="va">ev</span><span class="op">$</span><span class="va">vectors</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##         [,1]    [,2]   [,3]</span></span>
+<span><span class="co">## [1,]  0.7454  0.6667 0.0000</span></span>
+<span><span class="co">## [2,] -0.5963  0.6667 0.4472</span></span>
+<span><span class="co">## [3,]  0.2981 -0.3333 0.8944</span></span></code></pre>
 </div>
-<div id="matrix-factorization" class="section level2">
-<h2 class="hasAnchor">
-<a href="#matrix-factorization" class="anchor"></a>Matrix factorization</h2>
+<div class="section level2">
+<h2 id="matrix-factorization">Matrix factorization<a class="anchor" aria-label="anchor" href="#matrix-factorization"></a>
+</h2>
 <ol style="list-style-type: decimal">
-<li>Factorization of A: A = V diag(L) V’. That is, the matrix <span class="math inline">\(\mathbf{A}\)</span> can be represented as the product <span class="math inline">\(\mathbf{A}= \mathbf{V} \mathbf{\Lambda} \mathbf{V}'\)</span>.</li>
+<li>Factorization of A: A = V diag(L) V’. That is, the matrix <span class="math inline">\(\mathbf{A}\)</span> can be represented as the
+product <span class="math inline">\(\mathbf{A}= \mathbf{V}
+\mathbf{\Lambda} \mathbf{V}'\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">V</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   13   -4    2
-## [2,]   -4   11   -2
-## [3,]    2   -2    8</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">V</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]   13   -4    2</span></span>
+<span><span class="co">## [2,]   -4   11   -2</span></span>
+<span><span class="co">## [3,]    2   -2    8</span></span></code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>V diagonalizes A: L = V’ A V. That is, the matrix <span class="math inline">\(\mathbf{V}\)</span> transforms <span class="math inline">\(\mathbf{A}\)</span> into the diagonal matrix <span class="math inline">\(\mathbf{\Lambda}\)</span>, corresponding to orthogonal (uncorrelated) variables.</li>
+<li>V diagonalizes A: L = V’ A V. That is, the matrix <span class="math inline">\(\mathbf{V}\)</span> transforms <span class="math inline">\(\mathbf{A}\)</span> into the diagonal matrix <span class="math inline">\(\mathbf{\Lambda}\)</span>, corresponding to
+orthogonal (uncorrelated) variables.</li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   17    0    0
-## [2,]    0    8    0
-## [3,]    0    0    7</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html">zapsmall</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">A</span> <span class="op">%*%</span> <span class="va">V</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   17    0    0
-## [2,]    0    8    0
-## [3,]    0    0    7</code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]   17    0    0</span></span>
+<span><span class="co">## [2,]    0    8    0</span></span>
+<span><span class="co">## [3,]    0    0    7</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">V</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]   17    0    0</span></span>
+<span><span class="co">## [2,]    0    8    0</span></span>
+<span><span class="co">## [3,]    0    0    7</span></span></code></pre>
 </div>
-<div id="spectral-decomposition" class="section level2">
-<h2 class="hasAnchor">
-<a href="#spectral-decomposition" class="anchor"></a>Spectral decomposition</h2>
-<p>The basic idea here is that each eigenvalue–eigenvector pair generates a rank 1 matrix, <span class="math inline">\(\lambda_i \mathbf{v}_i \mathbf{v}_i '\)</span>, and these sum to the original matrix, <span class="math inline">\(\mathbf{A} = \sum_i \lambda_i \mathbf{v}_i \mathbf{v}_i '\)</span>.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">A1</span> <span class="op">=</span> <span class="va">L</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">*</span> <span class="va">V</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="va">A1</span></pre></div>
-<pre><code>##        [,1]   [,2]   [,3]
-## [1,]  9.444 -7.556  3.778
-## [2,] -7.556  6.044 -3.022
-## [3,]  3.778 -3.022  1.511</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">A2</span> <span class="op">=</span> <span class="va">L</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">*</span> <span class="va">V</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>
-<span class="va">A2</span></pre></div>
-<pre><code>##        [,1]   [,2]    [,3]
-## [1,]  3.556  3.556 -1.7778
-## [2,]  3.556  3.556 -1.7778
-## [3,] -1.778 -1.778  0.8889</code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="va">A3</span> <span class="op">=</span> <span class="va">L</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">*</span> <span class="va">V</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>
-<span class="va">A3</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    0  0.0  0.0
-## [2,]    0  1.4  2.8
-## [3,]    0  2.8  5.6</code></pre>
-<p>Then, summing them gives <code>A</code>, so they do decompose <code>A</code>:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">A1</span> <span class="op">+</span> <span class="va">A2</span> <span class="op">+</span> <span class="va">A3</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   13   -4    2
-## [2,]   -4   11   -2
-## [3,]    2   -2    8</code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">A1</span><span class="op">+</span><span class="va">A2</span><span class="op">+</span><span class="va">A3</span><span class="op">)</span></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div id="further-properties" class="section level3">
-<h3 class="hasAnchor">
-<a href="#further-properties" class="anchor"></a>Further properties</h3>
+<div class="section level2">
+<h2 id="spectral-decomposition">Spectral decomposition<a class="anchor" aria-label="anchor" href="#spectral-decomposition"></a>
+</h2>
+<p>The basic idea here is that each eigenvalue–eigenvector pair
+generates a rank 1 matrix, <span class="math inline">\(\lambda_i
+\mathbf{v}_i \mathbf{v}_i '\)</span>, and these sum to the original
+matrix, <span class="math inline">\(\mathbf{A} = \sum_i \lambda_i
+\mathbf{v}_i \mathbf{v}_i '\)</span>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A1</span> <span class="op">=</span> <span class="va">L</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">*</span> <span class="va">V</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">A1</span></span></code></pre></div>
+<pre><code><span><span class="co">##        [,1]   [,2]   [,3]</span></span>
+<span><span class="co">## [1,]  9.444 -7.556  3.778</span></span>
+<span><span class="co">## [2,] -7.556  6.044 -3.022</span></span>
+<span><span class="co">## [3,]  3.778 -3.022  1.511</span></span></code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A2</span> <span class="op">=</span> <span class="va">L</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">*</span> <span class="va">V</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">A2</span></span></code></pre></div>
+<pre><code><span><span class="co">##        [,1]   [,2]    [,3]</span></span>
+<span><span class="co">## [1,]  3.556  3.556 -1.7778</span></span>
+<span><span class="co">## [2,]  3.556  3.556 -1.7778</span></span>
+<span><span class="co">## [3,] -1.778 -1.778  0.8889</span></span></code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A3</span> <span class="op">=</span> <span class="va">L</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">*</span> <span class="va">V</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">A3</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    0  0.0  0.0</span></span>
+<span><span class="co">## [2,]    0  1.4  2.8</span></span>
+<span><span class="co">## [3,]    0  2.8  5.6</span></span></code></pre>
+<p>Then, summing them gives <code>A</code>, so they do decompose
+<code>A</code>:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A1</span> <span class="op">+</span> <span class="va">A2</span> <span class="op">+</span> <span class="va">A3</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]   13   -4    2</span></span>
+<span><span class="co">## [2,]   -4   11   -2</span></span>
+<span><span class="co">## [3,]    2   -2    8</span></span></code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">A1</span><span class="op">+</span><span class="va">A2</span><span class="op">+</span><span class="va">A3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<div class="section level3">
+<h3 id="further-properties">Further properties<a class="anchor" aria-label="anchor" href="#further-properties"></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li>Sum of squares of A = sum of sum of squares of A1, A2, A3</li>
 </ol>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 402</code></pre>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A3</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>## [1] 289  64  49</code></pre>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A3</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>## [1] 402</code></pre>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="co">#' same as tr(A' A)</span>
-<span class="fu"><a href="../reference/tr.html">tr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/crossprod.html">crossprod</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 402</code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">A</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 402</span></span></code></pre>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">A1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">A2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">A3</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 289  64  49</span></span></code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">A1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">A2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">A3</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 402</span></span></code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' same as tr(A' A)</span></span>
+<span><span class="fu"><a href="../reference/tr.html">tr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 402</span></span></code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>Each squared eigenvalue gives the sum of squares accounted for by the latent vector</li>
+<li>Each squared eigenvalue gives the sum of squares accounted for by
+the latent vector</li>
 </ol>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="va">L</span><span class="op">^</span><span class="fl">2</span></pre></div>
-<pre><code>## [1] 289  64  49</code></pre>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">L</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>   <span class="co"># cumulative</span></pre></div>
-<pre><code>## [1] 289 353 402</code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">L</span><span class="op">^</span><span class="fl">2</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 289  64  49</span></span></code></pre>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">L</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>   <span class="co"># cumulative</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 289 353 402</span></span></code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li>The first <span class="math inline">\(i\)</span> eigenvalues and vectors give a rank <span class="math inline">\(i\)</span> approximation to <code>A</code>
+<li>The first <span class="math inline">\(i\)</span> eigenvalues and
+vectors give a rank <span class="math inline">\(i\)</span> approximation
+to <code>A</code>
 </li>
 </ol>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A1</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A1</span> <span class="op">+</span> <span class="va">A2</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb40"><pre class="downlit">
-<span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A1</span> <span class="op">+</span> <span class="va">A2</span> <span class="op">+</span> <span class="va">A3</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="co"># two dimensions</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">A1</span><span class="op">+</span><span class="va">A2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 353</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">A1</span><span class="op">+</span><span class="va">A2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">A</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>   <span class="co"># proportion</span></pre></div>
-<pre><code>## [1] 0.8781</code></pre>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1</span></span></code></pre>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A1</span> <span class="op">+</span> <span class="va">A2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 2</span></span></code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/R.html">R</a></span><span class="op">(</span><span class="va">A1</span> <span class="op">+</span> <span class="va">A2</span> <span class="op">+</span> <span class="va">A3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 3</span></span></code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># two dimensions</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">A1</span><span class="op">+</span><span class="va">A2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 353</span></span></code></pre>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">A1</span><span class="op">+</span><span class="va">A2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">A</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>   <span class="co"># proportion</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.8781</span></span></code></pre>
 </div>
 </div>
   </div>
@@ -274,11 +293,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Friendly, John Fox, Phil Chalmers.</p>
+  <p></p>
+<p>Developed by Michael Friendly, John Fox, Phil Chalmers.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -286,6 +307,8 @@
 
   
 
+
+  
 
   </body>
 </html>

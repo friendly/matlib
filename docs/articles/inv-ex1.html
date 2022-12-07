@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">matlib</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -91,8 +87,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/friendly/matlib/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/friendly/matlib/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -106,318 +102,356 @@
 
       
 
-      </header><link href="inv-ex1_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="inv-ex1_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Inverse of a matrix</h1>
-                        <h4 class="author">Michael Friendly</h4>
+                        <h4 data-toc-skip class="author">Michael
+Friendly</h4>
             
-            <h4 class="date">October 28, 2020</h4>
+            <h4 data-toc-skip class="date">December 07, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/master/vignettes/inv-ex1.Rmd"><code>vignettes/inv-ex1.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/HEAD/vignettes/inv-ex1.Rmd" class="external-link"><code>vignettes/inv-ex1.Rmd</code></a></small>
       <div class="hidden name"><code>inv-ex1.Rmd</code></div>
 
     </div>
 
     
     
-<p>The inverse of a matrix plays the same roles in matrix algebra as the reciprocal of a number and division does in ordinary arithmetic: Just as we can solve a simple equation like <span class="math inline">\(4 x = 8\)</span> for <span class="math inline">\(x\)</span> by multiplying both sides by the reciprocal <span class="math display">\[ 4 x = 8 \Rightarrow 4^{-1} 4 x = 4^{-1} 8 \Rightarrow x = 8 / 4 = 2\]</span> we can solve a matrix equation like <span class="math inline">\(\mathbf{A x} = \mathbf{b}\)</span> for the vector <span class="math inline">\(\mathbf{x}\)</span> by multiplying both sides by the inverse of the matrix <span class="math inline">\(\mathbf{A}\)</span>, <span class="math display">\[\mathbf{A x} = \mathbf{b} \Rightarrow \mathbf{A}^{-1} \mathbf{A x} = \mathbf{A}^{-1} \mathbf{b} \Rightarrow \mathbf{x} = \mathbf{A}^{-1} \mathbf{b}\]</span></p>
-<p>The following examples illustrate the basic properties of the inverse of a matrix.</p>
-<div id="load-the-matlib-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#load-the-matlib-package" class="anchor"></a>Load the <code>matlib</code> package</h3>
-<p>This defines: <code><a href="../reference/Inverse.html">inv()</a></code>, <code><a href="../reference/Inverse.html">Inverse()</a></code>; the standard R function for matrix inverse is <code><a href="https://rdrr.io/r/base/solve.html">solve()</a></code></p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/matlib">matlib</a></span><span class="op">)</span></pre></div>
-</div>
-<div id="create-a-3-x-3-matrix" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-a-3-x-3-matrix" class="anchor"></a>Create a 3 x 3 matrix</h3>
-<p>The ordinary inverse is defined only for square matrices.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-    <span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">0</span>,
-                   <span class="fl">3</span>,<span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span>,
-                   <span class="fl">4</span>, <span class="fl">0</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-   <span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 16</code></pre>
-</div>
-<div id="basic-properties" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-properties" class="anchor"></a>Basic properties</h2>
-<div id="deta-0-so-inverse-exists" class="section level3">
-<h3 class="hasAnchor">
-<a href="#deta-0-so-inverse-exists" class="anchor"></a>1. <code>det(A) != 0</code>, so inverse exists</h3>
-<p>Only non-singular matrices have an inverse.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-   <span class="op">(</span><span class="va">AI</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>##        [,1]    [,2]   [,3]
-## [1,] 0.0625  0.0625  0.125
-## [2,] 0.6875 -0.3125 -0.625
-## [3,] 0.2500  0.2500 -0.500</code></pre>
-</div>
-<div id="definition-of-the-inverse-a-1-a-a-a-1-i-or-ai-a-diagnrowa" class="section level3">
-<h3 class="hasAnchor">
-<a href="#definition-of-the-inverse-a-1-a-a-a-1-i-or-ai-a-diagnrowa" class="anchor"></a>2. Definition of the inverse: <span class="math inline">\(A^{-1} A = A A^{-1} = I\)</span> or <code>AI * A = diag(nrow(A))</code>
+<p>The inverse of a matrix plays the same roles in matrix algebra as the
+reciprocal of a number and division does in ordinary arithmetic: Just as
+we can solve a simple equation like <span class="math inline">\(4 x =
+8\)</span> for <span class="math inline">\(x\)</span> by multiplying
+both sides by the reciprocal <span class="math display">\[ 4 x = 8
+\Rightarrow 4^{-1} 4 x = 4^{-1} 8 \Rightarrow x = 8 / 4 = 2\]</span> we
+can solve a matrix equation like <span class="math inline">\(\mathbf{A
+x} = \mathbf{b}\)</span> for the vector <span class="math inline">\(\mathbf{x}\)</span> by multiplying both sides by
+the inverse of the matrix <span class="math inline">\(\mathbf{A}\)</span>, <span class="math display">\[\mathbf{A x} = \mathbf{b} \Rightarrow
+\mathbf{A}^{-1} \mathbf{A x} = \mathbf{A}^{-1} \mathbf{b} \Rightarrow
+\mathbf{x} = \mathbf{A}^{-1} \mathbf{b}\]</span></p>
+<p>The following examples illustrate the basic properties of the inverse
+of a matrix.</p>
+<div class="section level3">
+<h3 id="load-the-matlib-package">Load the <code>matlib</code> package<a class="anchor" aria-label="anchor" href="#load-the-matlib-package"></a>
 </h3>
-<p>The inverse of a matrix <span class="math inline">\(A\)</span> is defined as the matrix <span class="math inline">\(A^{-1}\)</span> which multiplies <span class="math inline">\(A\)</span> to give the identity matrix, just as, for a scalar <span class="math inline">\(a\)</span>, <span class="math inline">\(a a^{-1} = a / a = 1\)</span>.</p>
-<p>NB: Sometimes you will get very tiny off-diagonal values (like <code>1.341e-13</code>). The function <code><a href="https://rdrr.io/r/base/zapsmall.html">zapsmall()</a></code> will round those to 0.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-   <span class="va">AI</span> <span class="op">%*%</span> <span class="va">A</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    0    0
-## [2,]    0    1    0
-## [3,]    0    0    1</code></pre>
+<p>This defines: <code><a href="../reference/Inverse.html">inv()</a></code>, <code><a href="../reference/Inverse.html">Inverse()</a></code>; the
+standard R function for matrix inverse is <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/matlib" class="external-link">matlib</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="inverse-is-reflexive-invinva-a" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inverse-is-reflexive-invinva-a" class="anchor"></a>3. Inverse is <strong>reflexive</strong>: <code>inv(inv(A)) = A</code>
+<div class="section level3">
+<h3 id="create-a-3-x-3-matrix">Create a 3 x 3 matrix<a class="anchor" aria-label="anchor" href="#create-a-3-x-3-matrix"></a>
+</h3>
+<p>The ordinary inverse is defined only for square matrices.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>    <span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">0</span>,</span>
+<span>                   <span class="fl">3</span>,<span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span>,</span>
+<span>                   <span class="fl">4</span>, <span class="fl">0</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">det</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 16</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="basic-properties">Basic properties<a class="anchor" aria-label="anchor" href="#basic-properties"></a>
+</h2>
+<div class="section level3">
+<h3 id="deta-0-so-inverse-exists">1. <code>det(A) != 0</code>, so inverse exists<a class="anchor" aria-label="anchor" href="#deta-0-so-inverse-exists"></a>
+</h3>
+<p>Only non-singular matrices have an inverse.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="op">(</span><span class="va">AI</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##        [,1]    [,2]   [,3]</span></span>
+<span><span class="co">## [1,] 0.0625  0.0625  0.125</span></span>
+<span><span class="co">## [2,] 0.6875 -0.3125 -0.625</span></span>
+<span><span class="co">## [3,] 0.2500  0.2500 -0.500</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="definition-of-the-inverse-a-1-a-a-a-1-i-or-ai-a-diagnrowa">2. Definition of the inverse: <span class="math inline">\(A^{-1} A =
+A A^{-1} = I\)</span> or <code>AI * A = diag(nrow(A))</code><a class="anchor" aria-label="anchor" href="#definition-of-the-inverse-a-1-a-a-a-1-i-or-ai-a-diagnrowa"></a>
+</h3>
+<p>The inverse of a matrix <span class="math inline">\(A\)</span> is
+defined as the matrix <span class="math inline">\(A^{-1}\)</span> which
+multiplies <span class="math inline">\(A\)</span> to give the identity
+matrix, just as, for a scalar <span class="math inline">\(a\)</span>,
+<span class="math inline">\(a a^{-1} = a / a = 1\)</span>.</p>
+<p>NB: Sometimes you will get very tiny off-diagonal values (like
+<code>1.341e-13</code>). The function <code><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall()</a></code> will round
+those to 0.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="va">AI</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">A</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    1    0    0</span></span>
+<span><span class="co">## [2,]    0    1    0</span></span>
+<span><span class="co">## [3,]    0    0    1</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="inverse-is-reflexive-invinva-a">3. Inverse is <strong>reflexive</strong>:
+<code>inv(inv(A)) = A</code><a class="anchor" aria-label="anchor" href="#inverse-is-reflexive-invinva-a"></a>
 </h3>
 <p>Taking the inverse twice gets you back to where you started.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    5    1    0
-## [2,]    3   -1    2
-## [3,]    4    0   -1</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    5    1    0</span></span>
+<span><span class="co">## [2,]    3   -1    2</span></span>
+<span><span class="co">## [3,]    4    0   -1</span></span></code></pre>
 </div>
-<div id="inva-is-symmetric-if-and-only-if-a-is-symmetric" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inva-is-symmetric-if-and-only-if-a-is-symmetric" class="anchor"></a>4. <code>inv(A)</code> is <strong>symmetric</strong> if and only if A is symmetric</h3>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>##        [,1]    [,2]  [,3]
-## [1,] 0.0625  0.6875  0.25
-## [2,] 0.0625 -0.3125  0.25
-## [3,] 0.1250 -0.6250 -0.50</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-   <span class="fu"><a href="../reference/is_square_matrix.html">is_symmetric_matrix</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-   <span class="fu"><a href="../reference/is_square_matrix.html">is_symmetric_matrix</a></span><span class="op">(</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>## [1] FALSE</code></pre>
+<div class="section level3">
+<h3 id="inva-is-symmetric-if-and-only-if-a-is-symmetric">4. <code>inv(A)</code> is <strong>symmetric</strong> if and only if
+A is symmetric<a class="anchor" aria-label="anchor" href="#inva-is-symmetric-if-and-only-if-a-is-symmetric"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##        [,1]    [,2]  [,3]</span></span>
+<span><span class="co">## [1,] 0.0625  0.6875  0.25</span></span>
+<span><span class="co">## [2,] 0.0625 -0.3125  0.25</span></span>
+<span><span class="co">## [3,] 0.1250 -0.6250 -0.50</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/is_square.html">is_symmetric_matrix</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] FALSE</span></span></code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/is_square.html">is_symmetric_matrix</a></span><span class="op">(</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] FALSE</span></span></code></pre>
 <p>Here is a symmetric case:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-   <span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">2</span>,
-                  <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>,
-                  <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></pre></div>
-<pre><code>##       [,1]  [,2]  [,3]
-## [1,]  0.50 -0.25 -0.25
-## [2,] -0.25  0.50  0.00
-## [3,] -0.25  0.00  0.50</code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>##       [,1]  [,2]  [,3]
-## [1,]  0.50 -0.25 -0.25
-## [2,] -0.25  0.50  0.00
-## [3,] -0.25  0.00  0.50</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-   <span class="fu"><a href="../reference/is_square_matrix.html">is_symmetric_matrix</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-   <span class="fu"><a href="../reference/is_square_matrix.html">is_symmetric_matrix</a></span><span class="op">(</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-   <span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span>, <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">2</span>,</span>
+<span>                  <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>,</span>
+<span>                  <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       [,1]  [,2]  [,3]</span></span>
+<span><span class="co">## [1,]  0.50 -0.25 -0.25</span></span>
+<span><span class="co">## [2,] -0.25  0.50  0.00</span></span>
+<span><span class="co">## [3,] -0.25  0.00  0.50</span></span></code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       [,1]  [,2]  [,3]</span></span>
+<span><span class="co">## [1,]  0.50 -0.25 -0.25</span></span>
+<span><span class="co">## [2,] -0.25  0.50  0.00</span></span>
+<span><span class="co">## [3,] -0.25  0.00  0.50</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/is_square.html">is_symmetric_matrix</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/is_square.html">is_symmetric_matrix</a></span><span class="op">(</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span>, <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 </div>
 </div>
-<div id="more-properties-of-matrix-inverse" class="section level2">
-<h2 class="hasAnchor">
-<a href="#more-properties-of-matrix-inverse" class="anchor"></a>More properties of matrix inverse</h2>
-<div id="inverse-of-diagonal-matrix-diag-1-diagonal" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inverse-of-diagonal-matrix-diag-1-diagonal" class="anchor"></a>1. inverse of diagonal matrix = diag( 1/ diagonal)</h3>
-<p>In these simple examples, it is often useful to show the results of matrix calculations as fractions, using <code><a href="https://rdrr.io/pkg/MASS/man/fractions.html">MASS::fractions()</a></code>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-   <span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1  0.0 0.00
-## [2,]    0  0.5 0.00
-## [3,]    0  0.0 0.25</code></pre>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-   <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fractions.html">fractions</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   1    0    0 
-## [2,]   0  1/2    0 
-## [3,]   0    0  1/4</code></pre>
-</div>
-<div id="inverse-of-an-inverse-invinva-a" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inverse-of-an-inverse-invinva-a" class="anchor"></a>2. Inverse of an inverse: <code>inv(inv(A)) = A</code>
+<div class="section level2">
+<h2 id="more-properties-of-matrix-inverse">More properties of matrix inverse<a class="anchor" aria-label="anchor" href="#more-properties-of-matrix-inverse"></a>
+</h2>
+<div class="section level3">
+<h3 id="inverse-of-diagonal-matrix-diag-1-diagonal">1. inverse of diagonal matrix = diag( 1/ diagonal)<a class="anchor" aria-label="anchor" href="#inverse-of-diagonal-matrix-diag-1-diagonal"></a>
 </h3>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-   <span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>,  <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">0</span>,  <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-   <span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    2    3
-## [2,]    2    3    0
-## [3,]    0    1    2</code></pre>
+<p>In these simple examples, it is often useful to show the results of
+matrix calculations as fractions, using
+<code><a href="https://rdrr.io/pkg/MASS/man/fractions.html" class="external-link">MASS::fractions()</a></code>.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    1  0.0 0.00</span></span>
+<span><span class="co">## [2,]    0  0.5 0.00</span></span>
+<span><span class="co">## [3,]    0  0.0 0.25</span></span></code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fractions.html" class="external-link">fractions</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]   1    0    0 </span></span>
+<span><span class="co">## [2,]   0  1/2    0 </span></span>
+<span><span class="co">## [3,]   0    0  1/4</span></span></code></pre>
 </div>
-<div id="inverse-of-a-transpose-invta-tinva" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inverse-of-a-transpose-invta-tinva" class="anchor"></a>3. inverse of a <strong>transpose</strong>: <code>inv(t(A)) = t(inv(A))</code>
+<div class="section level3">
+<h3 id="inverse-of-an-inverse-invinva-a">2. Inverse of an inverse: <code>inv(inv(A)) = A</code><a class="anchor" aria-label="anchor" href="#inverse-of-an-inverse-invinva-a"></a>
 </h3>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>##       [,1] [,2]  [,3]
-## [1,]  1.50 -1.0  0.50
-## [2,] -0.25  0.5 -0.25
-## [3,] -2.25  1.5 -0.25</code></pre>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-   <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">)</span></pre></div>
-<pre><code>##       [,1] [,2]  [,3]
-## [1,]  1.50 -1.0  0.50
-## [2,] -0.25  0.5 -0.25
-## [3,] -2.25  1.5 -0.25</code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>,  <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">0</span>,  <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>   <span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span>
+<span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    1    2    3</span></span>
+<span><span class="co">## [2,]    2    3    0</span></span>
+<span><span class="co">## [3,]    0    1    2</span></span></code></pre>
 </div>
-<div id="inverse-of-a-scalar-matrix-inv-ka-1k-inva" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inverse-of-a-scalar-matrix-inv-ka-1k-inva" class="anchor"></a>4. inverse of a scalar * matrix: <code>inv( k*A ) = (1/k) * inv(A)</code>
+<div class="section level3">
+<h3 id="inverse-of-a-transpose-invta-tinva">3. inverse of a <strong>transpose</strong>:
+<code>inv(t(A)) = t(inv(A))</code><a class="anchor" aria-label="anchor" href="#inverse-of-a-transpose-invta-tinva"></a>
 </h3>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="fl">5</span> <span class="op">*</span> <span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1]  [,2]  [,3]
-## [1,]  0.3 -0.05 -0.45
-## [2,] -0.2  0.10  0.30
-## [3,]  0.1 -0.05 -0.05</code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-   <span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1]  [,2]  [,3]
-## [1,]  0.3 -0.05 -0.45
-## [2,] -0.2  0.10  0.30
-## [3,]  0.1 -0.05 -0.05</code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       [,1] [,2]  [,3]</span></span>
+<span><span class="co">## [1,]  1.50 -1.0  0.50</span></span>
+<span><span class="co">## [2,] -0.25  0.5 -0.25</span></span>
+<span><span class="co">## [3,] -2.25  1.5 -0.25</span></span></code></pre>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       [,1] [,2]  [,3]</span></span>
+<span><span class="co">## [1,]  1.50 -1.0  0.50</span></span>
+<span><span class="co">## [2,] -0.25  0.5 -0.25</span></span>
+<span><span class="co">## [3,] -2.25  1.5 -0.25</span></span></code></pre>
 </div>
-<div id="inverse-of-a-matrix-product-inva-b-invb-inva" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inverse-of-a-matrix-product-inva-b-invb-inva" class="anchor"></a>5. inverse of a matrix product: <code>inv(A * B) = inv(B) %*% inv(A)</code>
+<div class="section level3">
+<h3 id="inverse-of-a-scalar-matrix-inv-ka-1k-inva">4. inverse of a scalar * matrix:
+<code>inv( k*A ) = (1/k) * inv(A)</code><a class="anchor" aria-label="anchor" href="#inverse-of-a-scalar-matrix-inv-ka-1k-inva"></a>
 </h3>
-<div class="sourceCode" id="cb40"><pre class="downlit">
-   <span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-   <span class="va">C</span> <span class="op">&lt;-</span> <span class="va">B</span><span class="op">[</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">1</span><span class="op">]</span>
-   <span class="va">A</span> <span class="op">%*%</span>  <span class="va">B</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    9   20   10
-## [2,]    5   13   12
-## [3,]    5   11    4</code></pre>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span> <span class="op">%*%</span>  <span class="va">B</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1]  [,2]  [,3]
-## [1,]  4.0 -1.50 -5.50
-## [2,] -2.0  0.70  2.90
-## [3,]  0.5 -0.05 -0.85</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">%*%</span>  <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1]  [,2]  [,3]
-## [1,]  4.0 -1.50 -5.50
-## [2,] -2.0  0.70  2.90
-## [3,]  0.5 -0.05 -0.85</code></pre>
-<p>This extends to any number of terms: the inverse of a product is the product of the inverses in reverse order.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit">
-   <span class="op">(</span><span class="va">ABC</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op">%*%</span> <span class="va">B</span> <span class="op">%*%</span> <span class="va">C</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   77  118   49
-## [2,]   53   97   42
-## [3,]   41   59   24</code></pre>
-<div class="sourceCode" id="cb48"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span> <span class="op">%*%</span> <span class="va">B</span> <span class="op">%*%</span> <span class="va">C</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1]  [,2]   [,3]
-## [1,]  1.5 -0.59  -2.03
-## [2,] -4.5  1.61   6.37
-## [3,]  8.5 -2.95 -12.15</code></pre>
-<div class="sourceCode" id="cb50"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">C</span><span class="op">)</span> <span class="op">%*%</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">%*%</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1]  [,2]   [,3]
-## [1,]  1.5 -0.59  -2.03
-## [2,] -4.5  1.61   6.37
-## [3,]  8.5 -2.95 -12.15</code></pre>
-<div class="sourceCode" id="cb52"><pre class="downlit">
-   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">ABC</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1]  [,2]   [,3]
-## [1,]  1.5 -0.59  -2.03
-## [2,] -4.5  1.61   6.37
-## [3,]  8.5 -2.95 -12.15</code></pre>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="fl">5</span> <span class="op">*</span> <span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1]  [,2]  [,3]</span></span>
+<span><span class="co">## [1,]  0.3 -0.05 -0.45</span></span>
+<span><span class="co">## [2,] -0.2  0.10  0.30</span></span>
+<span><span class="co">## [3,]  0.1 -0.05 -0.05</span></span></code></pre>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1]  [,2]  [,3]</span></span>
+<span><span class="co">## [1,]  0.3 -0.05 -0.45</span></span>
+<span><span class="co">## [2,] -0.2  0.10  0.30</span></span>
+<span><span class="co">## [3,]  0.1 -0.05 -0.05</span></span></code></pre>
 </div>
-<div id="det-a-1-1-deta-deta-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#det-a-1-1-deta-deta-1" class="anchor"></a>6. <span class="math inline">\(\det (A^{-1}) = 1 / \det(A) = [\det(A)]^{-1}\)</span>
+<div class="section level3">
+<h3 id="inverse-of-a-matrix-product-inva-b-invb-inva">5. inverse of a matrix product:
+<code>inv(A * B) = inv(B) %*% inv(A)</code><a class="anchor" aria-label="anchor" href="#inverse-of-a-matrix-product-inva-b-invb-inva"></a>
 </h3>
-<p>The determinant of an inverse is the inverse (reciprocal) of the determinant</p>
-<div class="sourceCode" id="cb54"><pre class="downlit">
-  <span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 0.25</code></pre>
-<div class="sourceCode" id="cb56"><pre class="downlit">
-  <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 0.25</code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>   <span class="va">C</span> <span class="op">&lt;-</span> <span class="va">B</span><span class="op">[</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">1</span><span class="op">]</span></span>
+<span>   <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span>  <span class="va">B</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]    9   20   10</span></span>
+<span><span class="co">## [2,]    5   13   12</span></span>
+<span><span class="co">## [3,]    5   11    4</span></span></code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span>  <span class="va">B</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1]  [,2]  [,3]</span></span>
+<span><span class="co">## [1,]  4.0 -1.50 -5.50</span></span>
+<span><span class="co">## [2,] -2.0  0.70  2.90</span></span>
+<span><span class="co">## [3,]  0.5 -0.05 -0.85</span></span></code></pre>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span>  <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1]  [,2]  [,3]</span></span>
+<span><span class="co">## [1,]  4.0 -1.50 -5.50</span></span>
+<span><span class="co">## [2,] -2.0  0.70  2.90</span></span>
+<span><span class="co">## [3,]  0.5 -0.05 -0.85</span></span></code></pre>
+<p>This extends to any number of terms: the inverse of a product is the
+product of the inverses in reverse order.</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="op">(</span><span class="va">ABC</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">C</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,]   77  118   49</span></span>
+<span><span class="co">## [2,]   53   97   42</span></span>
+<span><span class="co">## [3,]   41   59   24</span></span></code></pre>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">C</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1]  [,2]   [,3]</span></span>
+<span><span class="co">## [1,]  1.5 -0.59  -2.03</span></span>
+<span><span class="co">## [2,] -4.5  1.61   6.37</span></span>
+<span><span class="co">## [3,]  8.5 -2.95 -12.15</span></span></code></pre>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">C</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1]  [,2]   [,3]</span></span>
+<span><span class="co">## [1,]  1.5 -0.59  -2.03</span></span>
+<span><span class="co">## [2,] -4.5  1.61   6.37</span></span>
+<span><span class="co">## [3,]  8.5 -2.95 -12.15</span></span></code></pre>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>   <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">ABC</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1]  [,2]   [,3]</span></span>
+<span><span class="co">## [1,]  1.5 -0.59  -2.03</span></span>
+<span><span class="co">## [2,] -4.5  1.61   6.37</span></span>
+<span><span class="co">## [3,]  8.5 -2.95 -12.15</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="det-a-1-1-deta-deta-1">6. <span class="math inline">\(\det (A^{-1}) = 1 / \det(A) =
+[\det(A)]^{-1}\)</span><a class="anchor" aria-label="anchor" href="#det-a-1-1-deta-deta-1"></a>
+</h3>
+<p>The determinant of an inverse is the inverse (reciprocal) of the
+determinant</p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">det</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.25</span></span></code></pre>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>  <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">det</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.25</span></span></code></pre>
 </div>
 </div>
-<div id="geometric-interpretations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#geometric-interpretations" class="anchor"></a>Geometric interpretations</h2>
-<p>Some of these properties of the matrix inverse can be more easily understood from geometric diagrams. Here, we take a <span class="math inline">\(2 \times 2\)</span> non-singular matrix <span class="math inline">\(A\)</span>,</p>
-<div class="sourceCode" id="cb58"><pre class="downlit">
-<span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, 
-              <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">2</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">A</span></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,]    2    1
-## [2,]    1    2</code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 3</code></pre>
-<p>The larger the determinant of <span class="math inline">\(A\)</span>, the smaller is the determinant of <span class="math inline">\(A^{-1}\)</span>.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit">
-<span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>
-<span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fractions.html">fractions</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,]  2/3 -1/3
-## [2,] -1/3  2/3</code></pre>
-<div class="sourceCode" id="cb64"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 0.3333</code></pre>
-<p>Now, plot the rows of <span class="math inline">\(A\)</span> as vectors <span class="math inline">\(a_1, a_2\)</span> from the origin in a 2D space. As illustrated in <code><a href="../articles/det-ex1.html">vignette("det-ex1")</a></code>, the area of the parallelogram defined by these vectors is the determinant.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">+</span><span class="fl">.1</span><span class="op">)</span>
-<span class="va">xlim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>
-<span class="va">ylim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span><span class="op">(</span><span class="va">xlim</span>, <span class="va">ylim</span>, type<span class="op">=</span><span class="st">"n"</span>, xlab<span class="op">=</span><span class="st">"X1"</span>, ylab<span class="op">=</span><span class="st">"X2"</span>, asp<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
-<span class="va">sum</span> <span class="op">&lt;-</span> <span class="va">A</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">+</span> <span class="va">A</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>
-<span class="co"># draw the parallelogram determined by the rows of A</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html">polygon</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, <span class="va">A</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, <span class="va">sum</span>, <span class="va">A</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html">rgb</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">.2</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/vectors.html">vectors</a></span><span class="op">(</span><span class="va">A</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">a</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">a</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, pos.lab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/vectors.html">vectors</a></span><span class="op">(</span><span class="va">sum</span>, origin<span class="op">=</span><span class="va">A</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, col<span class="op">=</span><span class="st">"gray"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/vectors.html">vectors</a></span><span class="op">(</span><span class="va">sum</span>, origin<span class="op">=</span><span class="va">A</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>, col<span class="op">=</span><span class="st">"gray"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>, <span class="st">"A"</span>, cex<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></pre></div>
+<div class="section level2">
+<h2 id="geometric-interpretations">Geometric interpretations<a class="anchor" aria-label="anchor" href="#geometric-interpretations"></a>
+</h2>
+<p>Some of these properties of the matrix inverse can be more easily
+understood from geometric diagrams. Here, we take a <span class="math inline">\(2 \times 2\)</span> non-singular matrix <span class="math inline">\(A\)</span>,</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, </span>
+<span>              <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">2</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">A</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2]</span></span>
+<span><span class="co">## [1,]    2    1</span></span>
+<span><span class="co">## [2,]    1    2</span></span></code></pre>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">det</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 3</span></span></code></pre>
+<p>The larger the determinant of <span class="math inline">\(A\)</span>,
+the smaller is the determinant of <span class="math inline">\(A^{-1}\)</span>.</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span>
+<span><span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fractions.html" class="external-link">fractions</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2]</span></span>
+<span><span class="co">## [1,]  2/3 -1/3</span></span>
+<span><span class="co">## [2,] -1/3  2/3</span></span></code></pre>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">det</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.3333</span></span></code></pre>
+<p>Now, plot the rows of <span class="math inline">\(A\)</span> as
+vectors <span class="math inline">\(a_1, a_2\)</span> from the origin in
+a 2D space. As illustrated in <code><a href="../articles/det-ex1.html">vignette("det-ex1")</a></code>, the area
+of the parallelogram defined by these vectors is the determinant.</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">+</span><span class="fl">.1</span><span class="op">)</span></span>
+<span><span class="va">xlim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">ylim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">xlim</span>, <span class="va">ylim</span>, type<span class="op">=</span><span class="st">"n"</span>, xlab<span class="op">=</span><span class="st">"X1"</span>, ylab<span class="op">=</span><span class="st">"X2"</span>, asp<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">sum</span> <span class="op">&lt;-</span> <span class="va">A</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">+</span> <span class="va">A</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span></span>
+<span><span class="co"># draw the parallelogram determined by the rows of A</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, <span class="va">A</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, <span class="va">sum</span>, <span class="va">A</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">.2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/vectors.html">vectors</a></span><span class="op">(</span><span class="va">A</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">a</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">a</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, pos.lab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/vectors.html">vectors</a></span><span class="op">(</span><span class="va">sum</span>, origin<span class="op">=</span><span class="va">A</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, col<span class="op">=</span><span class="st">"gray"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/vectors.html">vectors</a></span><span class="op">(</span><span class="va">sum</span>, origin<span class="op">=</span><span class="va">A</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>, col<span class="op">=</span><span class="st">"gray"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>, <span class="st">"A"</span>, cex<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="inv-ex1_files/figure-html/plot-inv1-1.png" width="480"></p>
-<p>The rows of the inverse <span class="math inline">\(A^{-1}\)</span> can be shown as vectors <span class="math inline">\(a^1, a^2\)</span> from the origin in the same space.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit">
-<span class="fu"><a href="../reference/vectors.html">vectors</a></span><span class="op">(</span><span class="va">AI</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">a</span><span class="op">^</span><span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">a</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>, pos.lab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="va">sum</span> <span class="op">&lt;-</span> <span class="va">AI</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">+</span> <span class="va">AI</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html">polygon</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, <span class="va">AI</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, <span class="va">sum</span>, <span class="va">AI</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html">rgb</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">.2</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">AI</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fl">.3</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">AI</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fl">.2</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">A</span><span class="op">^</span><span class="op">{</span><span class="op">-</span><span class="fl">1</span><span class="op">}</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></pre></div>
+<p>The rows of the inverse <span class="math inline">\(A^{-1}\)</span>
+can be shown as vectors <span class="math inline">\(a^1, a^2\)</span>
+from the origin in the same space.</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectors.html">vectors</a></span><span class="op">(</span><span class="va">AI</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">a</span><span class="op">^</span><span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">a</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>, pos.lab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sum</span> <span class="op">&lt;-</span> <span class="va">AI</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">+</span> <span class="va">AI</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, <span class="va">AI</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, <span class="va">sum</span>, <span class="va">AI</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">.2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">AI</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fl">.3</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">AI</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fl">.2</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">A</span><span class="op">^</span><span class="op">{</span><span class="op">-</span><span class="fl">1</span><span class="op">}</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="inv-ex1_files/figure-html/plot-inv2-1.png" width="480"></p>
 <p>Thus, we can see:</p>
 <ul>
-<li><p>The shape of <span class="math inline">\(A^{-1}\)</span> is a <span class="math inline">\(90^o\)</span> rotation of the shape of <span class="math inline">\(A\)</span>.</p></li>
-<li><p><span class="math inline">\(A^{-1}\)</span> is small in the directions where <span class="math inline">\(A\)</span> is large.</p></li>
-<li><p>The vector <span class="math inline">\(a^2\)</span> is at right angles to <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a^1\)</span> is at right angles to <span class="math inline">\(a_2\)</span></p></li>
-<li><p>If we multiplied <span class="math inline">\(A\)</span> by a constant <span class="math inline">\(k\)</span> to make its determinant larger (by a factor of <span class="math inline">\(k^2\)</span>), the inverse would have to be divided by the same factor to preserve <span class="math inline">\(A A^{-1} = I\)</span>.</p></li>
+<li><p>The shape of <span class="math inline">\(A^{-1}\)</span> is a
+<span class="math inline">\(90^o\)</span> rotation of the shape of <span class="math inline">\(A\)</span>.</p></li>
+<li><p><span class="math inline">\(A^{-1}\)</span> is small in the
+directions where <span class="math inline">\(A\)</span> is
+large.</p></li>
+<li><p>The vector <span class="math inline">\(a^2\)</span> is at right
+angles to <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a^1\)</span> is at right angles to <span class="math inline">\(a_2\)</span></p></li>
+<li><p>If we multiplied <span class="math inline">\(A\)</span> by a
+constant <span class="math inline">\(k\)</span> to make its determinant
+larger (by a factor of <span class="math inline">\(k^2\)</span>), the
+inverse would have to be divided by the same factor to preserve <span class="math inline">\(A A^{-1} = I\)</span>.</p></li>
 </ul>
-<p>One might wonder whether these properties depend on symmetry of <span class="math inline">\(A\)</span>, so here is another example, for the matrix <code>A &lt;- matrix(c(2, 1, 1, 1), nrow=2)</code>, where <span class="math inline">\(\det(A)=1\)</span>.</p>
-<div class="sourceCode" id="cb68"><pre class="downlit">
-<span class="op">(</span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,]    2    1
-## [2,]    1    1</code></pre>
-<div class="sourceCode" id="cb70"><pre class="downlit">
-<span class="op">(</span><span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,]    1   -1
-## [2,]   -1    2</code></pre>
-<p>The areas of the two parallelograms are the same because <span class="math inline">\(\det(A) = \det(A^{-1}) = 1\)</span>. <img src="inv-ex1_files/figure-html/plot-inv3-1.png" width="480"></p>
+<p>One might wonder whether these properties depend on symmetry of <span class="math inline">\(A\)</span>, so here is another example, for the
+matrix <code>A &lt;- matrix(c(2, 1, 1, 1), nrow=2)</code>, where <span class="math inline">\(\det(A)=1\)</span>.</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2]</span></span>
+<span><span class="co">## [1,]    2    1</span></span>
+<span><span class="co">## [2,]    1    1</span></span></code></pre>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2]</span></span>
+<span><span class="co">## [1,]    1   -1</span></span>
+<span><span class="co">## [2,]   -1    2</span></span></code></pre>
+<p>The areas of the two parallelograms are the same because <span class="math inline">\(\det(A) = \det(A^{-1}) = 1\)</span>.
+<img src="inv-ex1_files/figure-html/plot-inv3-1.png" width="480"></p>
 </div>
   </div>
 
@@ -432,11 +466,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Friendly, John Fox, Phil Chalmers.</p>
+  <p></p>
+<p>Developed by Michael Friendly, John Fox, Phil Chalmers.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -444,6 +480,8 @@
 
   
 
+
+  
 
   </body>
 </html>

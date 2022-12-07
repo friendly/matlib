@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://friendly.github.io/matlib/404.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/announce.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/data-beta.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/det-ex1.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/det-ex2.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/eigen-ex1.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/eigen-ex2.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/ginv.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/gramreg.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/inv-ex1.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/inv-ex2.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/articles/linear-equations.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/authors.html</loc>
+  </url>
+  <url>
     <loc>http://friendly.github.io/matlib/index.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/news/index.html</loc>
   </url>
   <url>
     <loc>http://friendly.github.io/matlib/reference/adjoint.html</loc>
@@ -58,6 +103,9 @@
     <loc>http://friendly.github.io/matlib/reference/gsorth.html</loc>
   </url>
   <url>
+    <loc>http://friendly.github.io/matlib/reference/index.html</loc>
+  </url>
+  <url>
     <loc>http://friendly.github.io/matlib/reference/Inverse.html</loc>
   </url>
   <url>
@@ -71,6 +119,9 @@
   </url>
   <url>
     <loc>http://friendly.github.io/matlib/reference/LU.html</loc>
+  </url>
+  <url>
+    <loc>http://friendly.github.io/matlib/reference/matlib-package.html</loc>
   </url>
   <url>
     <loc>http://friendly.github.io/matlib/reference/matlib.html</loc>
@@ -179,35 +230,5 @@
   </url>
   <url>
     <loc>http://friendly.github.io/matlib/reference/xprod.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/data-beta.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/det-ex1.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/det-ex2.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/eigen-ex1.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/eigen-ex2.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/ginv.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/gramreg.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/inv-ex1.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/inv-ex2.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/linear-equations.html</loc>
   </url>
 </urlset>

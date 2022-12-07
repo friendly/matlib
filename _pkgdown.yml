@@ -5,6 +5,10 @@ template:
     bootswatch: cerulean
 
 reference:
+  - title: Package description
+    contents:
+      - matlib-package
+
   - title: Convenience functions
     desc:  Simple functions for matrix algebra oparations
     contents:
@@ -34,6 +38,7 @@ reference:
       - rowadd
       - rowmult
       - rowswap
+      - buildTmat
 
   - Linear equations:
     desc:  Functions to illustrate linear equations of the form $\mathbf{A x = b}$
@@ -79,6 +84,7 @@ reference:
       - corner
       - pointOnLine
       - regvec3d
+      - plot.regvec3d
       - vectors
       - vectors3d
 
