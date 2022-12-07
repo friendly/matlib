@@ -1,5 +1,5 @@
 ## Test environments
-* local Windows 10 install, 4.0.2 (2020-06-22)
+* local Windows 10 install, 4.1.3 (2022-03-10)
 * local windows 7, 4.2.1 (2022-06-23 ucrt)
 * travis.ci on github
 * win-builder R Under development (unstable) (2022-12-05 r83406 ucrt)
@@ -15,7 +15,7 @@ There were no ERRORs or WARNINGs.
 
 - fix some subtle problems related to the use of `MASS::fractions()` in various display functions, #42. (Thx: Phil Chalmers)
 - Fix a problem with `showEqn(..., simplify=TRUE), #45. (Thx: John Fox)
-- Remove Suggests: rglwidget as this is now in the rgl package (Thx: Duncan Murdoch)
+- Remove Suggests: rglwidget as this is now in the rgl package (Thx: Duncan Murdoch);  Merge pull request #39 from dmurdoch/norglwidget 
 
 
 ## Reverse dependencies
