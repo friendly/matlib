@@ -1,5 +1,6 @@
 ## Test environments
 * local Windows 10 install, 4.0.2 (2020-06-22)
+* local windows 7, 4.2.1 (2022-06-23 ucrt)
 * travis.ci on github
 * win-builder R Under development (unstable) (2021-08-13 r80752)
 

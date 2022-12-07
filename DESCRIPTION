@@ -31,7 +31,6 @@ Suggests:
     carData,
     webshot2,
     markdown
-Additional_repositories: https://dmurdoch.github.io/drat
 Imports:
     xtable,
     MASS,
