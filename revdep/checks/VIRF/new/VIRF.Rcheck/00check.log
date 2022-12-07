@@ -1,5 +1,5 @@
-* using log directory 'C:/Users/friendly/Dropbox/R/projects/matlib/revdep/checks/VIRF/new/VIRF.Rcheck'
-* using R version 3.6.3 (2020-02-29)
+* using log directory 'C:/Dropbox/R/projects/matlib/revdep/checks/VIRF/new/VIRF.Rcheck'
+* using R version 4.2.1 (2022-06-23 ucrt)
 * using platform: x86_64-w64-mingw32 (64-bit)
 * using session charset: ISO8859-1
 * using options '--no-manual --no-build-vignettes'
@@ -42,6 +42,8 @@
 * checking Rd \usage sections ... OK
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
+* checking LazyData ... NOTE
+  'LazyData' is specified without a 'data' directory
 * checking examples ... OK
 * DONE
-Status: OK
+Status: 1 NOTE

@@ -1,10 +1,10 @@
-* using log directory 'C:/Users/friendly/Dropbox/R/projects/matlib/revdep/checks/hyperoverlap/old/hyperoverlap.Rcheck'
-* using R version 3.6.3 (2020-02-29)
+* using log directory 'C:/Dropbox/R/projects/matlib/revdep/checks/hyperoverlap/old/hyperoverlap.Rcheck'
+* using R version 4.2.1 (2022-06-23 ucrt)
 * using platform: x86_64-w64-mingw32 (64-bit)
 * using session charset: ISO8859-1
 * using options '--no-manual --no-build-vignettes'
 * checking for file 'hyperoverlap/DESCRIPTION' ... OK
-* this is package 'hyperoverlap' version '1.0'
+* this is package 'hyperoverlap' version '1.1.1'
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -14,7 +14,10 @@
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
 * checking whether package 'hyperoverlap' can be installed ... OK
-* checking installed package size ... OK
+* checking installed package size ... NOTE
+  installed size is  6.4Mb
+  sub-directories of 1Mb or more:
+    doc   6.3Mb
 * checking package directory ... OK
 * checking 'build' directory ... OK
 * checking DESCRIPTION meta-information ... OK
@@ -49,7 +52,7 @@
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in 'inst/doc' ... OK
 * checking running R code from vignettes ... NONE
-  'hyperoverlap-vignette.Rmd'using 'UTF-8'... OK
+  'hyperoverlap-vignette.Rmd' using 'UTF-8'... OK
 * checking re-building of vignette outputs ... SKIPPED
 * DONE
-Status: OK
+Status: 1 NOTE

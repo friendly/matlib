@@ -1,0 +1,14 @@
+* installing *source* package 'MIIPW' ...
+** package 'MIIPW' successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rjags', details:
+  call: inDL(x, as.logical(local), as.logical(now), ...)
+  error: unable to load shared object 'C:/Dropbox/R/projects/matlib/revdep/library/MIIPW/rjags/libs/x64/rjags.dll':
+  LoadLibrary failure:  The specified procedure could not be found.
+Execution halted
+ERROR: lazy loading failed for package 'MIIPW'
+* removing 'C:/Dropbox/R/projects/matlib/revdep/checks/MIIPW/new/MIIPW.Rcheck/MIIPW'

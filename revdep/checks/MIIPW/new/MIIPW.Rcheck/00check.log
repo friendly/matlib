@@ -1,0 +1,21 @@
+* using log directory 'C:/Dropbox/R/projects/matlib/revdep/checks/MIIPW/new/MIIPW.Rcheck'
+* using R version 4.2.1 (2022-06-23 ucrt)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: ISO8859-1
+* using options '--no-manual --no-build-vignettes'
+* checking for file 'MIIPW/DESCRIPTION' ... OK
+* checking extension type ... Package
+* this is package 'MIIPW' version '0.1.0'
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking whether package 'MIIPW' can be installed ... ERROR
+Installation failed.
+See 'C:/Dropbox/R/projects/matlib/revdep/checks/MIIPW/new/MIIPW.Rcheck/00install.out' for details.
+* DONE
+Status: 1 ERROR

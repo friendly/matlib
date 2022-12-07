@@ -5,98 +5,87 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Thierry Onkelinx and Dirk Eddelbuettel" />
-  <meta name="dcterms.date" content="2020-10-20" />
   <title>Calculating SHA1 hashes with digest() and sha1()</title>
   <style>
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <style>
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-  </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-  <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
-// be compatible with the behavior of Pandoc < 2.8).
-document.addEventListener('DOMContentLoaded', function(e) {
-  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
-  var i, h, a;
-  for (i = 0; i < hs.length; i++) {
-    h = hs[i];
-    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
-    a = h.attributes;
-    while (a.length > 0) h.removeAttribute(a[0].name);
-  }
-});
-</script>
-  <style type="text/css">@charset "UTF-8";body{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;line-height:1.4;max-width:800px;margin:20px auto;padding:0 10px;color:#363636;background:#fff;text-rendering:optimizeLegibility}button,input,textarea{transition:background-color .1s linear,border-color .1s linear,color .1s linear,box-shadow .1s linear,transform .1s ease}h1{font-size:2.2em;margin-top:0}h1,h2,h3,h4,h5,h6{margin-bottom:12px}h1,h2,h3,h4,h5,h6,strong{color:#000}b,h1,h2,h3,h4,h5,h6,strong,th{font-weight:600}blockquote{border-left:4px solid rgba(0,150,191,.67);margin:1.5em 0;padding:.5em 1em;font-style:italic}blockquote>footer{margin-top:10px;font-style:normal}address,blockquote cite{font-style:normal}a[href^=mailto]:before{content:"📧 "}a[href^=tel]:before{content:"📞 "}a[href^=sms]:before{content:"💬 "}button,input[type=button],input[type=checkbox],input[type=submit]{cursor:pointer}input:not([type=checkbox]):not([type=radio]),select{display:block}button,input,select,textarea{color:#000;background-color:#efefef;font-family:inherit;font-size:inherit;margin-right:6px;margin-bottom:6px;padding:10px;border:none;border-radius:6px;outline:none}button,input:not([type=checkbox]):not([type=radio]),select,textarea{-webkit-appearance:none}textarea{margin-right:0;width:100%;box-sizing:border-box;resize:vertical}button,input[type=button],input[type=submit]{padding-right:30px;padding-left:30px}button:hover,input[type=button]:hover,input[type=submit]:hover{background:#ddd}button:focus,input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px rgba(0,150,191,.67)}button:active,input[type=button]:active,input[type=checkbox]:active,input[type=radio]:active,input[type=submit]:active{transform:translateY(2px)}button:disabled,input:disabled,select:disabled,textarea:disabled{cursor:not-allowed;opacity:.5}::-webkit-input-placeholder{color:#949494}:-ms-input-placeholder{color:#949494}::-ms-input-placeholder{color:#949494}::placeholder{color:#949494}a{text-decoration:none;color:#0076d1}a:hover{text-decoration:underline}code,kbd{background:#efefef;color:#000;padding:5px;border-radius:6px}pre>code{padding:10px;display:block;overflow-x:auto}img{max-width:100%}hr{border:none;border-top:1px solid #dbdbdb}table{border-collapse:collapse;margin-bottom:10px;width:100%}td,th{padding:6px;text-align:left}th{border-bottom:1px solid #dbdbdb}tbody tr:nth-child(2n){background-color:#efefef}::-webkit-scrollbar{height:10px;width:10px}::-webkit-scrollbar-track{background:#efefef;border-radius:6px}::-webkit-scrollbar-thumb{background:#d5d5d5;border-radius:6px}::-webkit-scrollbar-thumb:hover{background:#c4c4c4}
-
-</style>
   <style type="text/css">
+body {
+max-width: 50rem;
+margin-left: auto;
+margin-right: auto;
+font-family: system-ui;
+}
+
 code {
 padding: 2px;
 border-radius: unset;
@@ -166,312 +155,121 @@ background-color: unset;
 color: unset;
 }
 </style>
-  <style type="text/css">.tooltip {
-position: relative;
-display: inline-block;
-}
-.tooltip:before, .tooltip:after {
-position: absolute;
-opacity: 0;
-clip: rect(0 0 0 0);
--webkit-clip-path: inset(100%);
-clip-path: inset(100%);
-transition: all 0.3s;
-z-index: 1010;
-left: 50%;
-}
-.tooltip:not(.bottom):before, .tooltip:not(.bottom):after {
-bottom: 75%;
-}
-.tooltip.bottom:before, .tooltip.bottom:after {
-top: 75%;
-}
-.tooltip:hover:before, .tooltip:hover:after, .tooltip:focus:before, .tooltip:focus:after {
-opacity: 1;
-clip: auto;
--webkit-clip-path: inset(0%);
-clip-path: inset(0%);
-}
-.tooltip:before {
-content: '';
-background: transparent;
-border: 0.5rem solid transparent;
-left: calc(50% - 0.5rem);
-}
-.tooltip:not(.bottom):before {
-border-top-color: #212121;
-}
-.tooltip.bottom:before {
-border-bottom-color: #212121;
-}
-.tooltip:after {
-content: attr(aria-label);
-color: #fafafa;
-background: #212121;
-border-radius: 0.125rem;
-padding: 0.5rem;
-white-space: nowrap;
-transform: translateX(-50%);
-}
-.tooltip:not(.bottom):after {
-margin-bottom: 1rem;
-}
-.tooltip.bottom:after {
-margin-top: 1rem;
-}
-</style>
-  <style type="text/css">
-.collapse {
-width: calc(100% - 1rem);
-opacity: 1;
-display: flex;
-flex-direction: column;
-margin: 0.5rem;
-border-radius: 0.125rem;
-}
-.collapse > [type="radio"], .collapse > [type="checkbox"] {
-height: 1px;
-width: 1px;
-margin: -1px;
-overflow: hidden;
-position: absolute;
-clip: rect(0 0 0 0);
--webkit-clip-path: inset(100%);
-clip-path: inset(100%);
-}
-.collapse > label {
-flex-grow: 1;
-display: inline-block;
-height: 1.5rem;
-cursor: pointer;
-transition: background 0.3s;
-color: #212121;
-background: #e8e8e8;
-border: 0.0625rem solid #ddd;
-padding: 0.75rem;
-}
-.collapse > label:hover, .collapse > label:focus {
-background: #f0f0f0;
-}
-.collapse > label + div {
-flex-basis: auto;
-height: 1px;
-width: 1px;
-margin: -1px;
-overflow: hidden;
-position: absolute;
-clip: rect(0 0 0 0);
--webkit-clip-path: inset(100%);
-clip-path: inset(100%);
-transition: max-height 0.3s;
-max-height: 1px;
-}
-.collapse > :checked + label {
-background: #ececec;
-border-bottom-color: #ececec;
-}
-.collapse > :checked + label + div {
-box-sizing: border-box;
-position: relative;
-width: 100%;
-height: auto;
-overflow: auto;
-margin: 0;
-border: 0.0625rem solid #ddd;
-border-top: 0;
-padding: 0.5rem;
-clip: auto;
--webkit-clip-path: inset(0%);
-clip-path: inset(0%);
-max-height: 400px;
-}
-.collapse > label:not(:first-of-type) {
-border-top: 0;
-}
-.collapse > label:first-of-type {
-border-radius: 0.125rem 0.125rem 0 0;
-}
-.collapse > label:last-of-type:not(:first-of-type) {
-border-radius: 0 0 0.125rem 0.125rem;
-}
-.collapse > label:last-of-type:first-of-type {
-border-radius: 0.125rem;
-}
-.collapse > :checked:last-of-type:not(:first-of-type) + label {
-border-radius: 0;
-}
-.collapse > :checked:last-of-type + label + div {
-border-radius: 0 0 0.125rem 0.125rem;
-}
-</style>
-  <style type="text/css">@media screen and (max-width: 900px) {
-header, nav, article {
-padding: 0 3rem;
-}
-}
-</style>
-  <style type="text/css">
-a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
-a.anchor-section::before {content: '#';}
-.hasAnchor:hover a.anchor-section {visibility: visible;}
-</style>
-  <script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
-document.addEventListener('DOMContentLoaded', function() {
-  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-
-  // Do nothing if sections are already anchored
-  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
-    return null;
-  }
-
-  // Use section id when pandoc runs with --section-divs
-  const section_id = function(x) {
-    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
-            ? x.id : '');
-  };
-
-  // Add anchors
-  h.forEach(function(x) {
-    const id = x.id || section_id(x.parentElement);
-    if (id === '') {
-      return null;
-    }
-    let anchor = document.createElement('a');
-    anchor.href = '#' + id;
-    anchor.classList = ['anchor-section'];
-    x.classList.add('hasAnchor');
-    x.appendChild(anchor);
-  });
-});
-</script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous" data-external="1">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous" data-external="1"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);" data-external="1"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      renderMathInElement(document.body, {
-        delimiters: [
-          {left: "$$", right: "$$", display: true},
-          {left: "$", right: "$", display: false}
-        ],
-        displayMode: true
-      });
-    });
-  </script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<main>
 <header id="title-block-header">
 <h1 class="title">Calculating SHA1 hashes with digest() and sha1()</h1>
 <p class="author">Thierry Onkelinx and Dirk Eddelbuettel</p>
-<p class="date">2020-10-20</p>
+<p class="date">Written Jan 2016, updated Jan 2018 and Oct 2020</p>
 </header>
-<article>
-<p>NB: This vignette is work-in-progress and not yet complete.</p>
-<section id="short-intro-on-hashes" class="level2">
-<h2>Short intro on hashes</h2>
+<!--
+%\VignetteIndexEntry{sha1() versus digest()}
+%\VignetteEngine{simplermarkdown::mdweave_to_html}
+%\VignetteEncoding{UTF-8}
+-->
+<p>NB: This vignette is (still) work-in-progress and not yet complete.</p>
+<h2 id="short-intro-on-hashes">Short intro on hashes</h2>
 <p>TBD</p>
-</section>
-<section id="difference-between-digest-and-sha1" class="level2">
-<h2>Difference between <code>digest()</code> and <code>sha1()</code></h2>
-<p>R <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f">FAQ 7.31</a> illustrates potential problems with floating point arithmetic. Mathematically the equality <span class="math inline">\(x = \sqrt{x}^2\)</span> should hold. But the precision of floating points numbers is finite. Hence some rounding is done, leading to numbers which are no longer identical.</p>
+<h2 id="difference-between-digest-and-sha1">Difference between <code>digest()</code> and <code>sha1()</code></h2>
+<p>R <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f">FAQ 7.31</a> illustrates potential problems with floating point arithmetic. Mathematically the equality <span class="math inline">$x = \sqrt{x}^2$</span> should hold. But the precision of floating points numbers is finite. Hence some rounding is done, leading to numbers which are no longer identical.</p>
 <p>An illustration:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># FAQ 7.31</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>a0 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(a0)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>a1 <span class="ot">&lt;-</span> b <span class="sc">^</span> <span class="dv">2</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(a0, a1)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>a0 <span class="sc">-</span> a1</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -4.440892e-16</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(a0, a1)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># hexadecimal representation</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">&quot;%a&quot;</span>, a)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;0x1p+1&quot;               &quot;0x1.0000000000001p+1&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="faq7_31"><pre class="sourceCode R"><code class="sourceCode r"><span id="faq7_31-1"><a href="#faq7_31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a0 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="faq7_31-2"><a href="#faq7_31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31-3"><a href="#faq7_31-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(a0)</span>
+<span id="faq7_31-4"><a href="#faq7_31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31-5"><a href="#faq7_31-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1 <span class="ot">&lt;-</span> b<span class="sc">^</span><span class="dv">2</span></span>
+<span id="faq7_31-6"><a href="#faq7_31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31-7"><a href="#faq7_31-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">identical</span>(a0, a1)</span>
+<span id="faq7_31-8"><a href="#faq7_31-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="faq7_31-9"><a href="#faq7_31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31-10"><a href="#faq7_31-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a0 <span class="sc">-</span> a1</span>
+<span id="faq7_31-11"><a href="#faq7_31-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="sc">-</span><span class="fl">4.440892e-16</span></span>
+<span id="faq7_31-12"><a href="#faq7_31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31-13"><a href="#faq7_31-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">c</span>(a0, a1)</span>
+<span id="faq7_31-14"><a href="#faq7_31-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31-15"><a href="#faq7_31-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sprintf</span>(<span class="st">&quot;%a&quot;</span>, a)</span>
+<span id="faq7_31-16"><a href="#faq7_31-16" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;0x1p+1&quot;</span>               <span class="st">&quot;0x1.0000000000001p+1&quot;</span></span></code></pre></div>
 <p>Although the difference is small, any difference will result in different hash when using the <code>digest()</code> function. However, the <code>sha1()</code> function tackles this problem by using the hexadecimal representation of the numbers and truncates that representation to a certain number of digits prior to calculating the hash function.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(digest)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># different hashes with digest</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(a, digest, <span class="at">algo =</span> <span class="st">&quot;sha1&quot;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;315a5aa84aa6cfa4f3fb4b652a596770be0365e8&quot;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;5e3999bf79c230f7430e97d7f30070a7eff5ec92&quot;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># same hash with sha1 with default digits (14)</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(a, sha1)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;8a938d8f5fb9b8ccb6893aa1068babcc517f32d4&quot;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;8a938d8f5fb9b8ccb6893aa1068babcc517f32d4&quot;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># larger digits can lead to different hashes</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(a, sha1, <span class="at">digits =</span> <span class="dv">15</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;98eb1dc9fada00b945d3ef01c77049ee5a4b7b9c&quot;</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;5a173e2445df1134908037f69ac005fbd8afee74&quot;</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># decreasing the number of digits gives a stronger truncation</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># the hash will change when then truncation gives a different result</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># case where truncating gives same hexadecimal value</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(a, sha1, <span class="at">digits =</span> <span class="dv">13</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;43b3b465c975af322c85473190a9214b79b79bf6&quot;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;43b3b465c975af322c85473190a9214b79b79bf6&quot;</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(a, sha1, <span class="at">digits =</span> <span class="dv">10</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;6b537a9693c750ed535ca90527152f06e358aa3a&quot;</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;6b537a9693c750ed535ca90527152f06e358aa3a&quot;</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># case where truncating gives different hexadecimal value</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">sha1</span>(pi), <span class="fu">sha1</span>(pi, <span class="at">digits =</span> <span class="dv">13</span>), <span class="fu">sha1</span>(pi, <span class="at">digits =</span> <span class="dv">10</span>))</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;169388cf1ce60dc4e9904a22bc934c5db33d975b&quot;</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;20dc38536b6689d5f2d053f30efb09c44af78378&quot;</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;3a727417bd1807af2f0148cf3de69abff32c23ec&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="faq7_31digest"><pre class="sourceCode R"><code class="sourceCode r"><span id="faq7_31digest-1"><a href="#faq7_31digest-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(digest)</span>
+<span id="faq7_31digest-2"><a href="#faq7_31digest-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31digest-3"><a href="#faq7_31digest-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sapply</span>(a, digest, <span class="at">algo =</span> <span class="st">&quot;sha1&quot;</span>)</span>
+<span id="faq7_31digest-4"><a href="#faq7_31digest-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;315a5aa84aa6cfa4f3fb4b652a596770be0365e8&quot;</span></span>
+<span id="faq7_31digest-5"><a href="#faq7_31digest-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">&quot;5e3999bf79c230f7430e97d7f30070a7eff5ec92&quot;</span></span>
+<span id="faq7_31digest-6"><a href="#faq7_31digest-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31digest-7"><a href="#faq7_31digest-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sapply</span>(a, sha1)</span>
+<span id="faq7_31digest-8"><a href="#faq7_31digest-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;8a938d8f5fb9b8ccb6893aa1068babcc517f32d4&quot;</span></span>
+<span id="faq7_31digest-9"><a href="#faq7_31digest-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">&quot;8a938d8f5fb9b8ccb6893aa1068babcc517f32d4&quot;</span></span>
+<span id="faq7_31digest-10"><a href="#faq7_31digest-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31digest-11"><a href="#faq7_31digest-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sapply</span>(a, sha1, <span class="at">digits =</span> <span class="dv">15</span>)</span>
+<span id="faq7_31digest-12"><a href="#faq7_31digest-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;98eb1dc9fada00b945d3ef01c77049ee5a4b7b9c&quot;</span></span>
+<span id="faq7_31digest-13"><a href="#faq7_31digest-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">&quot;5a173e2445df1134908037f69ac005fbd8afee74&quot;</span></span>
+<span id="faq7_31digest-14"><a href="#faq7_31digest-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31digest-15"><a href="#faq7_31digest-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sapply</span>(a, sha1, <span class="at">digits =</span> <span class="dv">13</span>)</span>
+<span id="faq7_31digest-16"><a href="#faq7_31digest-16" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;43b3b465c975af322c85473190a9214b79b79bf6&quot;</span></span>
+<span id="faq7_31digest-17"><a href="#faq7_31digest-17" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">&quot;43b3b465c975af322c85473190a9214b79b79bf6&quot;</span></span>
+<span id="faq7_31digest-18"><a href="#faq7_31digest-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31digest-19"><a href="#faq7_31digest-19" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sapply</span>(a, sha1, <span class="at">digits =</span> <span class="dv">10</span>)</span>
+<span id="faq7_31digest-20"><a href="#faq7_31digest-20" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;6b537a9693c750ed535ca90527152f06e358aa3a&quot;</span></span>
+<span id="faq7_31digest-21"><a href="#faq7_31digest-21" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">&quot;6b537a9693c750ed535ca90527152f06e358aa3a&quot;</span></span>
+<span id="faq7_31digest-22"><a href="#faq7_31digest-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="faq7_31digest-23"><a href="#faq7_31digest-23" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">c</span>(<span class="fu">sha1</span>(pi), <span class="fu">sha1</span>(pi, <span class="at">digits =</span> <span class="dv">13</span>), <span class="fu">sha1</span>(pi, <span class="at">digits =</span> <span class="dv">10</span>))</span>
+<span id="faq7_31digest-24"><a href="#faq7_31digest-24" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;169388cf1ce60dc4e9904a22bc934c5db33d975b&quot;</span></span>
+<span id="faq7_31digest-25"><a href="#faq7_31digest-25" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">&quot;20dc38536b6689d5f2d053f30efb09c44af78378&quot;</span></span>
+<span id="faq7_31digest-26"><a href="#faq7_31digest-26" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">&quot;3a727417bd1807af2f0148cf3de69abff32c23ec&quot;</span></span></code></pre></div>
 <p>The result of floating point arithematic on 32-bit and 64-bit can be slightly different. E.g. <code>print(pi ^ 11, 22)</code> returns <code>294204.01797389047</code> on 32-bit and <code>294204.01797389053</code> on 64-bit. Note that only the last 2 digits are different.</p>
-<table>
+<table style="width:98%;">
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 26%" />
+<col style="width: 35%" />
+<col style="width: 35%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>command</th>
-<th>32-bit</th>
-<th>64-bit</th>
+<th style="text-align: left;">command</th>
+<th style="text-align: left;">32-bit</th>
+<th style="text-align: left;">64-bit</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>print(pi ^ 11, 22)</code></td>
-<td><code>294204.01797389047</code></td>
-<td><code>294204.01797389053</code></td>
+<td style="text-align: left;"><code>print(pi ^ 11, 22)</code></td>
+<td style="text-align: left;"><code>294204.01797389047</code></td>
+<td style="text-align: left;"><code>294204.01797389053</code></td>
 </tr>
 <tr class="even">
-<td><code>sprintf(&quot;%a&quot;, pi ^ 11)</code></td>
-<td><code>&quot;0x1.1f4f01267bf5fp+18&quot;</code></td>
-<td><code>&quot;0x1.1f4f01267bf6p+18&quot;</code></td>
+<td style="text-align: left;"><code>sprintf(&quot;%a&quot;, pi ^ 11)</code></td>
+<td style="text-align: left;"><code>&quot;0x1.1f4f01267bf5fp+18&quot;</code></td>
+<td style="text-align: left;"><code>&quot;0x1.1f4f01267bf6p+18&quot;</code></td>
 </tr>
 <tr class="odd">
-<td><code>digest(pi ^ 11, algo = &quot;sha1&quot;)</code></td>
-<td><code>&quot;c5efc7f167df1bb402b27cf9b405d7cebfba339a&quot;</code></td>
-<td><code>&quot;b61f6fea5e2a7952692cefe8bba86a00af3de713&quot;</code></td>
+<td style="text-align: left;"><code>digest(pi ^ 11, algo = &quot;sha1&quot;)</code></td>
+<td style="text-align: left;"><code>&quot;c5efc7f167df1bb402b27cf9b405d7cebfba339a&quot;</code></td>
+<td style="text-align: left;"><code>&quot;b61f6fea5e2a7952692cefe8bba86a00af3de713&quot;</code></td>
 </tr>
 <tr class="even">
-<td><code>sha1(pi ^ 11, digits = 14)</code></td>
-<td><code>&quot;5c7740500b8f78ec2354ea6af58ea69634d9b7b1&quot;</code></td>
-<td><code>&quot;4f3e296b9922a7ddece2183b1478d0685609a359&quot;</code></td>
+<td style="text-align: left;"><code>sha1(pi ^ 11, digits = 14)</code></td>
+<td style="text-align: left;"><code>&quot;5c7740500b8f78ec2354ea6af58ea69634d9b7b1&quot;</code></td>
+<td style="text-align: left;"><code>&quot;4f3e296b9922a7ddece2183b1478d0685609a359&quot;</code></td>
 </tr>
 <tr class="odd">
-<td><code>sha1(pi ^ 11, digits = 13)</code></td>
-<td><code>&quot;372289f87396b0877ccb4790cf40bcb5e658cad7&quot;</code></td>
-<td><code>&quot;372289f87396b0877ccb4790cf40bcb5e658cad7&quot;</code></td>
+<td style="text-align: left;"><code>sha1(pi ^ 11, digits = 13)</code></td>
+<td style="text-align: left;"><code>&quot;372289f87396b0877ccb4790cf40bcb5e658cad7&quot;</code></td>
+<td style="text-align: left;"><code>&quot;372289f87396b0877ccb4790cf40bcb5e658cad7&quot;</code></td>
 </tr>
 <tr class="even">
-<td><code>sha1(pi ^ 11, digits = 10)</code></td>
-<td><code>&quot;c05965af43f9566bfb5622f335817f674abfc9e4&quot;</code></td>
-<td><code>&quot;c05965af43f9566bfb5622f335817f674abfc9e4&quot;</code></td>
+<td style="text-align: left;"><code>sha1(pi ^ 11, digits = 10)</code></td>
+<td style="text-align: left;"><code>&quot;c05965af43f9566bfb5622f335817f674abfc9e4&quot;</code></td>
+<td style="text-align: left;"><code>&quot;c05965af43f9566bfb5622f335817f674abfc9e4&quot;</code></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="choosing-digest-or-sha1" class="level2">
-<h2>Choosing <code>digest()</code> or <code>sha1()</code></h2>
+<h2 id="choosing-digest-or-sha1">Choosing <code>digest()</code> or <code>sha1()</code></h2>
 <p>TBD</p>
-</section>
-<section id="creating-a-sha1-method-for-other-classes" class="level2">
-<h2>Creating a sha1 method for other classes</h2>
-<section id="how-to" class="level3">
-<h3>How to</h3>
+<h2 id="creating-a-sha1-method-for-other-classes">Creating a sha1 method for other classes</h2>
+<h3 id="how-to">How to</h3>
 <ol type="1">
 <li>Identify the relevant components for the hash.</li>
 <li>Determine the class of each relevant component and check if they are handled by <code>sha1()</code>.
@@ -490,187 +288,192 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><code>digits = 4</code> is recommended in case some numerics stem from floating point arithmetic.</li>
 </ul></li>
 </ol>
-</section>
-<section id="summary.lm" class="level3">
-<h3>summary.lm</h3>
+<h3 id="summary.lm">summary.lm</h3>
 <p>Let’s illustrate this using the summary of a simple linear regression. Suppose that we want a hash that takes into account the coefficients, their standard error and sigma.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># taken from the help file of lm.influence</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lm_SR <span class="ot">&lt;-</span> <span class="fu">lm</span>(sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi, <span class="at">data =</span> LifeCycleSavings)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lm_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(lm_SR)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(lm_sum)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;summary.lm&quot;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># str() gives the structure of the lm object</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(lm_sum)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 11</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ call         : language lm(formula = sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ terms        :Classes &#39;terms&#39;, &#39;formula&#39;  language sr ~ pop15 + pop75 + dpi + ddpi</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;variables&quot;)= language list(sr, pop15, pop75, dpi, ddpi)</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;factors&quot;)= int [1:5, 1:4] 0 1 0 0 0 0 0 1 0 0 ...</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. .. ..$ : chr [1:5] &quot;sr&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. .. ..$ : chr [1:4] &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; &quot;ddpi&quot;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;term.labels&quot;)= chr [1:4] &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; &quot;ddpi&quot;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;order&quot;)= int [1:4] 1 1 1 1</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;intercept&quot;)= int 1</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;response&quot;)= int 1</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;.Environment&quot;)=&lt;environment: R_GlobalEnv&gt; </span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;predvars&quot;)= language list(sr, pop15, pop75, dpi, ddpi)</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;dataClasses&quot;)= Named chr [1:5] &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; ...</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;names&quot;)= chr [1:5] &quot;sr&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ residuals    : Named num [1:50] 0.864 0.616 2.219 -0.698 3.553 ...</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;names&quot;)= chr [1:50] &quot;Australia&quot; &quot;Austria&quot; &quot;Belgium&quot; &quot;Bolivia&quot; ...</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ coefficients : num [1:5, 1:4] 28.566087 -0.461193 -1.691498 -0.000337 0.409695 ...</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..$ : chr [1:5] &quot;(Intercept)&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..$ : chr [1:4] &quot;Estimate&quot; &quot;Std. Error&quot; &quot;t value&quot; &quot;Pr(&gt;|t|)&quot;</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ aliased      : Named logi [1:5] FALSE FALSE FALSE FALSE FALSE</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;names&quot;)= chr [1:5] &quot;(Intercept)&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ sigma        : num 3.8</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ df           : int [1:3] 5 45 5</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ r.squared    : num 0.338</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ adj.r.squared: num 0.28</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ fstatistic   : Named num [1:3] 5.76 4 45</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;value&quot; &quot;numdf&quot; &quot;dendf&quot;</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ cov.unscaled : num [1:5, 1:5] 3.74 -7.24e-02 -4.46e-01 -7.86e-05 -1.88e-02 ...</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..$ : chr [1:5] &quot;(Intercept)&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..$ : chr [1:5] &quot;(Intercept)&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  - attr(*, &quot;class&quot;)= chr &quot;summary.lm&quot;</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the coefficients and their standard error</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>coef_sum <span class="ot">&lt;-</span> <span class="fu">coef</span>(lm_sum)[, <span class="fu">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Std. Error&quot;</span>)]</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co"># extract sigma</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> lm_sum<span class="sc">$</span>sigma</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co"># check the class of each component</span></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(coef_sum)</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;matrix&quot; &quot;array&quot;</span></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sigma)</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;numeric&quot;</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co"># sha1() has methods for both matrix and numeric</span></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="co"># because the values originate from floating point arithmetic it is better to use a low number of digits</span></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(coef_sum, <span class="at">digits =</span> <span class="dv">4</span>)</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;3f0b0c552f94d753fcc8deb4d3e9fc11a83197af&quot;</span></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(sigma, <span class="at">digits =</span> <span class="dv">4</span>)</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;cbc83d1791ef1eeadd824ea9a038891b5889056b&quot;</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="co"># we want a single hash</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="co"># combining the components in a list is a solution that works</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(<span class="fu">list</span>(coef_sum, sigma), <span class="at">digits =</span> <span class="dv">4</span>)</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;476d27265365cd41662eedf059b335d38a221cc2&quot;</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="co"># now turn everything into an S3 method</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="co">#   - a function with name &quot;sha1.classname&quot;</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="co">#   - must have the same arguments as sha1()</span></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>sha1.summary.lm <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">4</span>, <span class="at">zapsmall =</span> <span class="dv">7</span>){</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    coef_sum <span class="ot">&lt;-</span> <span class="fu">coef</span>(x)[, <span class="fu">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Std. Error&quot;</span>)]</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    sigma <span class="ot">&lt;-</span> x<span class="sc">$</span>sigma</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    combined <span class="ot">&lt;-</span> <span class="fu">list</span>(coef_sum, sigma)</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sha1</span>(combined, <span class="at">digits =</span> digits, <span class="at">zapsmall =</span> zapsmall)</span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(lm_sum)</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;476d27265365cd41662eedf059b335d38a221cc2&quot;</span></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="co"># try an altered dataset</span></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>LCS2 <span class="ot">&lt;-</span> LifeCycleSavings[<span class="fu">rownames</span>(LifeCycleSavings) <span class="sc">!=</span> <span class="st">&quot;Zambia&quot;</span>, ]</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>lm_SR2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi, <span class="at">data =</span> LCS2)</span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(<span class="fu">summary</span>(lm_SR2))</span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;90beb028833bf0542997fde7c3f19e5b9fdfeef4&quot;</span></span></code></pre></div>
-</section>
-<section id="lm" class="level3">
-<h3>lm</h3>
+<div class="sourceCode" id="sha1_lm_sum"><pre class="sourceCode R"><code class="sourceCode r"><span id="sha1_lm_sum-1"><a href="#sha1_lm_sum-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm_SR <span class="ot">&lt;-</span> <span class="fu">lm</span>(sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi, <span class="at">data =</span> LifeCycleSavings)</span>
+<span id="sha1_lm_sum-2"><a href="#sha1_lm_sum-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-3"><a href="#sha1_lm_sum-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(lm_SR)</span>
+<span id="sha1_lm_sum-4"><a href="#sha1_lm_sum-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-5"><a href="#sha1_lm_sum-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(lm_sum)</span>
+<span id="sha1_lm_sum-6"><a href="#sha1_lm_sum-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;summary.lm&quot;</span></span>
+<span id="sha1_lm_sum-7"><a href="#sha1_lm_sum-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-8"><a href="#sha1_lm_sum-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(lm_sum)</span>
+<span id="sha1_lm_sum-9"><a href="#sha1_lm_sum-9" aria-hidden="true" tabindex="-1"></a>List of <span class="dv">11</span></span>
+<span id="sha1_lm_sum-10"><a href="#sha1_lm_sum-10" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> call         <span class="sc">:</span> language <span class="fu">lm</span>(<span class="at">formula =</span> sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi, <span class="at">data =</span> LifeCycleSavings)</span>
+<span id="sha1_lm_sum-11"><a href="#sha1_lm_sum-11" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> terms        <span class="sc">:</span>Classes <span class="st">&#39;terms&#39;</span>, <span class="st">&#39;formula&#39;</span>  language sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi</span>
+<span id="sha1_lm_sum-12"><a href="#sha1_lm_sum-12" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;variables&quot;</span>)<span class="ot">=</span> language <span class="fu">list</span>(sr, pop15, pop75, dpi, ddpi)</span>
+<span id="sha1_lm_sum-13"><a href="#sha1_lm_sum-13" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;factors&quot;</span>)<span class="ot">=</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="sha1_lm_sum-14"><a href="#sha1_lm_sum-14" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dimnames&quot;</span>)<span class="ot">=</span>List of <span class="dv">2</span></span>
+<span id="sha1_lm_sum-15"><a href="#sha1_lm_sum-15" aria-hidden="true" tabindex="-1"></a>  .. .. .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;sr&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm_sum-16"><a href="#sha1_lm_sum-16" aria-hidden="true" tabindex="-1"></a>  .. .. .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> <span class="st">&quot;ddpi&quot;</span></span>
+<span id="sha1_lm_sum-17"><a href="#sha1_lm_sum-17" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;term.labels&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> <span class="st">&quot;ddpi&quot;</span></span>
+<span id="sha1_lm_sum-18"><a href="#sha1_lm_sum-18" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;order&quot;</span>)<span class="ot">=</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span></span>
+<span id="sha1_lm_sum-19"><a href="#sha1_lm_sum-19" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;intercept&quot;</span>)<span class="ot">=</span> int <span class="dv">1</span></span>
+<span id="sha1_lm_sum-20"><a href="#sha1_lm_sum-20" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;response&quot;</span>)<span class="ot">=</span> int <span class="dv">1</span></span>
+<span id="sha1_lm_sum-21"><a href="#sha1_lm_sum-21" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;.Environment&quot;</span>)<span class="ot">=</span><span class="er">&lt;</span>environment<span class="sc">:</span> R_GlobalEnv<span class="sc">&gt;</span> </span>
+<span id="sha1_lm_sum-22"><a href="#sha1_lm_sum-22" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;predvars&quot;</span>)<span class="ot">=</span> language <span class="fu">list</span>(sr, pop15, pop75, dpi, ddpi)</span>
+<span id="sha1_lm_sum-23"><a href="#sha1_lm_sum-23" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dataClasses&quot;</span>)<span class="ot">=</span> Named chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> ...</span>
+<span id="sha1_lm_sum-24"><a href="#sha1_lm_sum-24" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;sr&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm_sum-25"><a href="#sha1_lm_sum-25" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> residuals    <span class="sc">:</span> Named num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="fl">0.864</span> <span class="fl">0.616</span> <span class="fl">2.219</span> <span class="sc">-</span><span class="fl">0.698</span> <span class="fl">3.553</span> ...</span>
+<span id="sha1_lm_sum-26"><a href="#sha1_lm_sum-26" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="st">&quot;Australia&quot;</span> <span class="st">&quot;Austria&quot;</span> <span class="st">&quot;Belgium&quot;</span> <span class="st">&quot;Bolivia&quot;</span> ...</span>
+<span id="sha1_lm_sum-27"><a href="#sha1_lm_sum-27" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> coefficients <span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="fl">28.566087</span> <span class="sc">-</span><span class="fl">0.461193</span> <span class="sc">-</span><span class="fl">1.691498</span> <span class="sc">-</span><span class="fl">0.000337</span> <span class="fl">0.409695</span> ...</span>
+<span id="sha1_lm_sum-28"><a href="#sha1_lm_sum-28" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dimnames&quot;</span>)<span class="ot">=</span>List of <span class="dv">2</span></span>
+<span id="sha1_lm_sum-29"><a href="#sha1_lm_sum-29" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;(Intercept)&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm_sum-30"><a href="#sha1_lm_sum-30" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">&quot;Estimate&quot;</span> <span class="st">&quot;Std. Error&quot;</span> <span class="st">&quot;t value&quot;</span> <span class="st">&quot;Pr(&gt;|t|)&quot;</span></span>
+<span id="sha1_lm_sum-31"><a href="#sha1_lm_sum-31" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> aliased      <span class="sc">:</span> Named logi [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span> <span class="cn">FALSE</span></span>
+<span id="sha1_lm_sum-32"><a href="#sha1_lm_sum-32" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;(Intercept)&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm_sum-33"><a href="#sha1_lm_sum-33" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> sigma        <span class="sc">:</span> num <span class="fl">3.8</span></span>
+<span id="sha1_lm_sum-34"><a href="#sha1_lm_sum-34" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> df           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="dv">5</span> <span class="dv">45</span> <span class="dv">5</span></span>
+<span id="sha1_lm_sum-35"><a href="#sha1_lm_sum-35" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> r.squared    <span class="sc">:</span> num <span class="fl">0.338</span></span>
+<span id="sha1_lm_sum-36"><a href="#sha1_lm_sum-36" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> adj.r.squared<span class="sc">:</span> num <span class="fl">0.28</span></span>
+<span id="sha1_lm_sum-37"><a href="#sha1_lm_sum-37" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> fstatistic   <span class="sc">:</span> Named num [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="fl">5.76</span> <span class="dv">4</span> <span class="dv">45</span></span>
+<span id="sha1_lm_sum-38"><a href="#sha1_lm_sum-38" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="st">&quot;value&quot;</span> <span class="st">&quot;numdf&quot;</span> <span class="st">&quot;dendf&quot;</span></span>
+<span id="sha1_lm_sum-39"><a href="#sha1_lm_sum-39" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> cov.unscaled <span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="fl">3.74</span> <span class="sc">-</span><span class="fl">7.24e-02</span> <span class="sc">-</span><span class="fl">4.46e-01</span> <span class="sc">-</span><span class="fl">7.86e-05</span> <span class="sc">-</span><span class="fl">1.88e-02</span> ...</span>
+<span id="sha1_lm_sum-40"><a href="#sha1_lm_sum-40" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dimnames&quot;</span>)<span class="ot">=</span>List of <span class="dv">2</span></span>
+<span id="sha1_lm_sum-41"><a href="#sha1_lm_sum-41" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;(Intercept)&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm_sum-42"><a href="#sha1_lm_sum-42" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;(Intercept)&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm_sum-43"><a href="#sha1_lm_sum-43" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;class&quot;</span>)<span class="ot">=</span> chr <span class="st">&quot;summary.lm&quot;</span></span>
+<span id="sha1_lm_sum-44"><a href="#sha1_lm_sum-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-45"><a href="#sha1_lm_sum-45" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> coef_sum <span class="ot">&lt;-</span> <span class="fu">coef</span>(lm_sum)[, <span class="fu">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Std. Error&quot;</span>)]</span>
+<span id="sha1_lm_sum-46"><a href="#sha1_lm_sum-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-47"><a href="#sha1_lm_sum-47" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sigma <span class="ot">&lt;-</span> lm_sum<span class="sc">$</span>sigma</span>
+<span id="sha1_lm_sum-48"><a href="#sha1_lm_sum-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-49"><a href="#sha1_lm_sum-49" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(coef_sum)</span>
+<span id="sha1_lm_sum-50"><a href="#sha1_lm_sum-50" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;matrix&quot;</span> <span class="st">&quot;array&quot;</span> </span>
+<span id="sha1_lm_sum-51"><a href="#sha1_lm_sum-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-52"><a href="#sha1_lm_sum-52" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(sigma)</span>
+<span id="sha1_lm_sum-53"><a href="#sha1_lm_sum-53" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;numeric&quot;</span></span>
+<span id="sha1_lm_sum-54"><a href="#sha1_lm_sum-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-55"><a href="#sha1_lm_sum-55" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(coef_sum, <span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="sha1_lm_sum-56"><a href="#sha1_lm_sum-56" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;3f0b0c552f94d753fcc8deb4d3e9fc11a83197af&quot;</span></span>
+<span id="sha1_lm_sum-57"><a href="#sha1_lm_sum-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-58"><a href="#sha1_lm_sum-58" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(sigma, <span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="sha1_lm_sum-59"><a href="#sha1_lm_sum-59" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;cbc83d1791ef1eeadd824ea9a038891b5889056b&quot;</span></span>
+<span id="sha1_lm_sum-60"><a href="#sha1_lm_sum-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-61"><a href="#sha1_lm_sum-61" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(<span class="fu">list</span>(coef_sum, sigma), <span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="sha1_lm_sum-62"><a href="#sha1_lm_sum-62" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;476d27265365cd41662eedf059b335d38a221cc2&quot;</span></span>
+<span id="sha1_lm_sum-63"><a href="#sha1_lm_sum-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-64"><a href="#sha1_lm_sum-64" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sha1.summary.lm <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">4</span>, <span class="at">zapsmall =</span> <span class="dv">7</span>) {</span>
+<span id="sha1_lm_sum-65"><a href="#sha1_lm_sum-65" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     coef_sum <span class="ot">&lt;-</span> <span class="fu">coef</span>(x)[, <span class="fu">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Std. Error&quot;</span>)]</span>
+<span id="sha1_lm_sum-66"><a href="#sha1_lm_sum-66" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     sigma <span class="ot">&lt;-</span> x<span class="sc">$</span>sigma</span>
+<span id="sha1_lm_sum-67"><a href="#sha1_lm_sum-67" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     combined <span class="ot">&lt;-</span> <span class="fu">list</span>(coef_sum, sigma)</span>
+<span id="sha1_lm_sum-68"><a href="#sha1_lm_sum-68" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">sha1</span>(combined, <span class="at">digits =</span> digits, <span class="at">zapsmall =</span> zapsmall)</span>
+<span id="sha1_lm_sum-69"><a href="#sha1_lm_sum-69" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span>
+<span id="sha1_lm_sum-70"><a href="#sha1_lm_sum-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-71"><a href="#sha1_lm_sum-71" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(lm_sum)</span>
+<span id="sha1_lm_sum-72"><a href="#sha1_lm_sum-72" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;476d27265365cd41662eedf059b335d38a221cc2&quot;</span></span>
+<span id="sha1_lm_sum-73"><a href="#sha1_lm_sum-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-74"><a href="#sha1_lm_sum-74" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> LCS2 <span class="ot">&lt;-</span> LifeCycleSavings[<span class="fu">rownames</span>(LifeCycleSavings) <span class="sc">!=</span> </span>
+<span id="sha1_lm_sum-75"><a href="#sha1_lm_sum-75" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="st">&quot;Zambia&quot;</span>, ]</span>
+<span id="sha1_lm_sum-76"><a href="#sha1_lm_sum-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-77"><a href="#sha1_lm_sum-77" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm_SR2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi, <span class="at">data =</span> LCS2)</span>
+<span id="sha1_lm_sum-78"><a href="#sha1_lm_sum-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm_sum-79"><a href="#sha1_lm_sum-79" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(<span class="fu">summary</span>(lm_SR2))</span>
+<span id="sha1_lm_sum-80"><a href="#sha1_lm_sum-80" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;90beb028833bf0542997fde7c3f19e5b9fdfeef4&quot;</span></span></code></pre></div>
+<h3 id="lm">lm</h3>
 <p>Let’s illustrate this using the summary of a simple linear regression. Suppose that we want a hash that takes into account the coefficients, their standard error and sigma.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(lm_SR)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;lm&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># str() gives the structure of the lm object</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(lm_SR)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 12</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ coefficients : Named num [1:5] 28.566087 -0.461193 -1.691498 -0.000337 0.409695</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;names&quot;)= chr [1:5] &quot;(Intercept)&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ residuals    : Named num [1:50] 0.864 0.616 2.219 -0.698 3.553 ...</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;names&quot;)= chr [1:50] &quot;Australia&quot; &quot;Austria&quot; &quot;Belgium&quot; &quot;Bolivia&quot; ...</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ effects      : Named num [1:50] -68.38 -14.29 7.3 -3.52 -7.94 ...</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;names&quot;)= chr [1:50] &quot;(Intercept)&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ rank         : int 5</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ fitted.values: Named num [1:50] 10.57 11.45 10.95 6.45 9.33 ...</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;names&quot;)= chr [1:50] &quot;Australia&quot; &quot;Austria&quot; &quot;Belgium&quot; &quot;Bolivia&quot; ...</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ assign       : int [1:5] 0 1 2 3 4</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ qr           :List of 5</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ qr   : num [1:50, 1:5] -7.071 0.141 0.141 0.141 0.141 ...</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..$ : chr [1:50] &quot;Australia&quot; &quot;Austria&quot; &quot;Belgium&quot; &quot;Bolivia&quot; ...</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..$ : chr [1:5] &quot;(Intercept)&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;assign&quot;)= int [1:5] 0 1 2 3 4</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ qraux: num [1:5] 1.14 1.17 1.16 1.15 1.05</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ pivot: int [1:5] 1 2 3 4 5</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ tol  : num 1e-07</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ rank : int 5</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;class&quot;)= chr &quot;qr&quot;</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ df.residual  : int 45</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ xlevels      : Named list()</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ call         : language lm(formula = sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ terms        :Classes &#39;terms&#39;, &#39;formula&#39;  language sr ~ pop15 + pop75 + dpi + ddpi</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;variables&quot;)= language list(sr, pop15, pop75, dpi, ddpi)</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;factors&quot;)= int [1:5, 1:4] 0 1 0 0 0 0 0 1 0 0 ...</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. .. ..$ : chr [1:5] &quot;sr&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. .. ..$ : chr [1:4] &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; &quot;ddpi&quot;</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;term.labels&quot;)= chr [1:4] &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; &quot;ddpi&quot;</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;order&quot;)= int [1:4] 1 1 1 1</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;intercept&quot;)= int 1</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;response&quot;)= int 1</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;.Environment&quot;)=&lt;environment: R_GlobalEnv&gt; </span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;predvars&quot;)= language list(sr, pop15, pop75, dpi, ddpi)</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. ..- attr(*, &quot;dataClasses&quot;)= Named chr [1:5] &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; ...</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;names&quot;)= chr [1:5] &quot;sr&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ model        :&#39;data.frame&#39;:   50 obs. of  5 variables:</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ sr   : num [1:50] 11.43 12.07 13.17 5.75 12.88 ...</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ pop15: num [1:50] 29.4 23.3 23.8 41.9 42.2 ...</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ pop75: num [1:50] 2.87 4.41 4.43 1.67 0.83 2.85 1.34 0.67 1.06 1.14 ...</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ dpi  : num [1:50] 2330 1508 2108 189 728 ...</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ ddpi : num [1:50] 2.87 3.93 3.82 0.22 4.56 2.43 2.67 6.51 3.08 2.8 ...</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..- attr(*, &quot;terms&quot;)=Classes &#39;terms&#39;, &#39;formula&#39;  language sr ~ pop15 + pop75 + dpi + ddpi</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;variables&quot;)= language list(sr, pop15, pop75, dpi, ddpi)</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;factors&quot;)= int [1:5, 1:4] 0 1 0 0 0 0 0 1 0 0 ...</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. .. ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. .. .. ..$ : chr [1:5] &quot;sr&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. .. .. ..$ : chr [1:4] &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; &quot;ddpi&quot;</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;term.labels&quot;)= chr [1:4] &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; &quot;ddpi&quot;</span></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;order&quot;)= int [1:4] 1 1 1 1</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;intercept&quot;)= int 1</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;response&quot;)= int 1</span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;.Environment&quot;)=&lt;environment: R_GlobalEnv&gt; </span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;predvars&quot;)= language list(sr, pop15, pop75, dpi, ddpi)</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. ..- attr(*, &quot;dataClasses&quot;)= Named chr [1:5] &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; ...</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="do">##   .. .. .. ..- attr(*, &quot;names&quot;)= chr [1:5] &quot;sr&quot; &quot;pop15&quot; &quot;pop75&quot; &quot;dpi&quot; ...</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="do">##  - attr(*, &quot;class&quot;)= chr &quot;lm&quot;</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the model and the terms</span></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> lm_SR<span class="sc">$</span>model</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>lm_terms <span class="ot">&lt;-</span> lm_SR<span class="sc">$</span>terms</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co"># check their class</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(lm_model) <span class="co"># handled by sha1()</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;data.frame&quot;</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(lm_terms) <span class="co"># not handled by sha1()</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;terms&quot;   &quot;formula&quot;</span></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co"># define a method for formula</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>sha1.formula <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">14</span>, <span class="at">zapsmall =</span> <span class="dv">7</span>, ..., <span class="at">algo =</span> <span class="st">&quot;sha1&quot;</span>){</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sha1</span>(<span class="fu">as.character</span>(x), <span class="at">digits =</span> digits, <span class="at">zapsmall =</span> zapsmall, <span class="at">algo =</span> algo)</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(lm_terms)</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;2737d209720aa7d1c0555050ad06ebe89f3850cd&quot;</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(lm_model)</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;27b7dd9e3e09b9577da6947b8473b63a1d0b6eb4&quot;</span></span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="co"># define a method for lm</span></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>sha1.lm <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">14</span>, <span class="at">zapsmall =</span> <span class="dv">7</span>, ..., <span class="at">algo =</span> <span class="st">&quot;sha1&quot;</span>){</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    lm_model <span class="ot">&lt;-</span> x<span class="sc">$</span>model</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    lm_terms <span class="ot">&lt;-</span> x<span class="sc">$</span>terms</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    combined <span class="ot">&lt;-</span> <span class="fu">list</span>(lm_model, lm_terms)</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sha1</span>(combined, <span class="at">digits =</span> digits, <span class="at">zapsmall =</span> zapsmall, ..., <span class="at">algo =</span> algo)</span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(lm_SR)</span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;7eda2a9d58e458c8e782e40ce140d62b836b2a2f&quot;</span></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="fu">sha1</span>(lm_SR2)</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;4d3abdb1f17bd12fdf9d9b91a2ad04c07824fe4a&quot;</span></span></code></pre></div>
-</section>
-</section>
-<section id="using-hashes-to-track-changes-in-analysis" class="level2">
-<h2>Using hashes to track changes in analysis</h2>
+<div class="sourceCode" id="sha1_lm"><pre class="sourceCode R"><code class="sourceCode r"><span id="sha1_lm-1"><a href="#sha1_lm-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(lm_SR)</span>
+<span id="sha1_lm-2"><a href="#sha1_lm-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;lm&quot;</span></span>
+<span id="sha1_lm-3"><a href="#sha1_lm-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-4"><a href="#sha1_lm-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(lm_SR)</span>
+<span id="sha1_lm-5"><a href="#sha1_lm-5" aria-hidden="true" tabindex="-1"></a>List of <span class="dv">12</span></span>
+<span id="sha1_lm-6"><a href="#sha1_lm-6" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> coefficients <span class="sc">:</span> Named num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="fl">28.566087</span> <span class="sc">-</span><span class="fl">0.461193</span> <span class="sc">-</span><span class="fl">1.691498</span> <span class="sc">-</span><span class="fl">0.000337</span> <span class="fl">0.409695</span></span>
+<span id="sha1_lm-7"><a href="#sha1_lm-7" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;(Intercept)&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm-8"><a href="#sha1_lm-8" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> residuals    <span class="sc">:</span> Named num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="fl">0.864</span> <span class="fl">0.616</span> <span class="fl">2.219</span> <span class="sc">-</span><span class="fl">0.698</span> <span class="fl">3.553</span> ...</span>
+<span id="sha1_lm-9"><a href="#sha1_lm-9" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="st">&quot;Australia&quot;</span> <span class="st">&quot;Austria&quot;</span> <span class="st">&quot;Belgium&quot;</span> <span class="st">&quot;Bolivia&quot;</span> ...</span>
+<span id="sha1_lm-10"><a href="#sha1_lm-10" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> effects      <span class="sc">:</span> Named num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="sc">-</span><span class="fl">68.38</span> <span class="sc">-</span><span class="fl">14.29</span> <span class="fl">7.3</span> <span class="sc">-</span><span class="fl">3.52</span> <span class="sc">-</span><span class="fl">7.94</span> ...</span>
+<span id="sha1_lm-11"><a href="#sha1_lm-11" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="st">&quot;(Intercept)&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm-12"><a href="#sha1_lm-12" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> rank         <span class="sc">:</span> int <span class="dv">5</span></span>
+<span id="sha1_lm-13"><a href="#sha1_lm-13" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> fitted.values<span class="sc">:</span> Named num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="fl">10.57</span> <span class="fl">11.45</span> <span class="fl">10.95</span> <span class="fl">6.45</span> <span class="fl">9.33</span> ...</span>
+<span id="sha1_lm-14"><a href="#sha1_lm-14" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="st">&quot;Australia&quot;</span> <span class="st">&quot;Austria&quot;</span> <span class="st">&quot;Belgium&quot;</span> <span class="st">&quot;Bolivia&quot;</span> ...</span>
+<span id="sha1_lm-15"><a href="#sha1_lm-15" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> assign       <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span></span>
+<span id="sha1_lm-16"><a href="#sha1_lm-16" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> qr           <span class="sc">:</span>List of <span class="dv">5</span></span>
+<span id="sha1_lm-17"><a href="#sha1_lm-17" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> qr   <span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="sc">-</span><span class="fl">7.071</span> <span class="fl">0.141</span> <span class="fl">0.141</span> <span class="fl">0.141</span> <span class="fl">0.141</span> ...</span>
+<span id="sha1_lm-18"><a href="#sha1_lm-18" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dimnames&quot;</span>)<span class="ot">=</span>List of <span class="dv">2</span></span>
+<span id="sha1_lm-19"><a href="#sha1_lm-19" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="st">&quot;Australia&quot;</span> <span class="st">&quot;Austria&quot;</span> <span class="st">&quot;Belgium&quot;</span> <span class="st">&quot;Bolivia&quot;</span> ...</span>
+<span id="sha1_lm-20"><a href="#sha1_lm-20" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;(Intercept)&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm-21"><a href="#sha1_lm-21" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;assign&quot;</span>)<span class="ot">=</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span></span>
+<span id="sha1_lm-22"><a href="#sha1_lm-22" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> qraux<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="fl">1.14</span> <span class="fl">1.17</span> <span class="fl">1.16</span> <span class="fl">1.15</span> <span class="fl">1.05</span></span>
+<span id="sha1_lm-23"><a href="#sha1_lm-23" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> pivot<span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span></span>
+<span id="sha1_lm-24"><a href="#sha1_lm-24" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> tol  <span class="sc">:</span> num <span class="fl">1e-07</span></span>
+<span id="sha1_lm-25"><a href="#sha1_lm-25" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> rank <span class="sc">:</span> int <span class="dv">5</span></span>
+<span id="sha1_lm-26"><a href="#sha1_lm-26" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;class&quot;</span>)<span class="ot">=</span> chr <span class="st">&quot;qr&quot;</span></span>
+<span id="sha1_lm-27"><a href="#sha1_lm-27" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> df.residual  <span class="sc">:</span> int <span class="dv">45</span></span>
+<span id="sha1_lm-28"><a href="#sha1_lm-28" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> xlevels      <span class="sc">:</span> Named <span class="fu">list</span>()</span>
+<span id="sha1_lm-29"><a href="#sha1_lm-29" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> call         <span class="sc">:</span> language <span class="fu">lm</span>(<span class="at">formula =</span> sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi, <span class="at">data =</span> LifeCycleSavings)</span>
+<span id="sha1_lm-30"><a href="#sha1_lm-30" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> terms        <span class="sc">:</span>Classes <span class="st">&#39;terms&#39;</span>, <span class="st">&#39;formula&#39;</span>  language sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi</span>
+<span id="sha1_lm-31"><a href="#sha1_lm-31" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;variables&quot;</span>)<span class="ot">=</span> language <span class="fu">list</span>(sr, pop15, pop75, dpi, ddpi)</span>
+<span id="sha1_lm-32"><a href="#sha1_lm-32" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;factors&quot;</span>)<span class="ot">=</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="sha1_lm-33"><a href="#sha1_lm-33" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dimnames&quot;</span>)<span class="ot">=</span>List of <span class="dv">2</span></span>
+<span id="sha1_lm-34"><a href="#sha1_lm-34" aria-hidden="true" tabindex="-1"></a>  .. .. .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;sr&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm-35"><a href="#sha1_lm-35" aria-hidden="true" tabindex="-1"></a>  .. .. .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> <span class="st">&quot;ddpi&quot;</span></span>
+<span id="sha1_lm-36"><a href="#sha1_lm-36" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;term.labels&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> <span class="st">&quot;ddpi&quot;</span></span>
+<span id="sha1_lm-37"><a href="#sha1_lm-37" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;order&quot;</span>)<span class="ot">=</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span></span>
+<span id="sha1_lm-38"><a href="#sha1_lm-38" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;intercept&quot;</span>)<span class="ot">=</span> int <span class="dv">1</span></span>
+<span id="sha1_lm-39"><a href="#sha1_lm-39" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;response&quot;</span>)<span class="ot">=</span> int <span class="dv">1</span></span>
+<span id="sha1_lm-40"><a href="#sha1_lm-40" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;.Environment&quot;</span>)<span class="ot">=</span><span class="er">&lt;</span>environment<span class="sc">:</span> R_GlobalEnv<span class="sc">&gt;</span> </span>
+<span id="sha1_lm-41"><a href="#sha1_lm-41" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;predvars&quot;</span>)<span class="ot">=</span> language <span class="fu">list</span>(sr, pop15, pop75, dpi, ddpi)</span>
+<span id="sha1_lm-42"><a href="#sha1_lm-42" aria-hidden="true" tabindex="-1"></a>  .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dataClasses&quot;</span>)<span class="ot">=</span> Named chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> ...</span>
+<span id="sha1_lm-43"><a href="#sha1_lm-43" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;sr&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm-44"><a href="#sha1_lm-44" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> model        <span class="sc">:</span><span class="st">&#39;data.frame&#39;</span><span class="sc">:</span>  <span class="dv">50</span> obs. of  <span class="dv">5</span> variables<span class="sc">:</span></span>
+<span id="sha1_lm-45"><a href="#sha1_lm-45" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> sr   <span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="fl">11.43</span> <span class="fl">12.07</span> <span class="fl">13.17</span> <span class="fl">5.75</span> <span class="fl">12.88</span> ...</span>
+<span id="sha1_lm-46"><a href="#sha1_lm-46" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> pop15<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="fl">29.4</span> <span class="fl">23.3</span> <span class="fl">23.8</span> <span class="fl">41.9</span> <span class="fl">42.2</span> ...</span>
+<span id="sha1_lm-47"><a href="#sha1_lm-47" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> pop75<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="fl">2.87</span> <span class="fl">4.41</span> <span class="fl">4.43</span> <span class="fl">1.67</span> <span class="fl">0.83</span> <span class="fl">2.85</span> <span class="fl">1.34</span> <span class="fl">0.67</span> <span class="fl">1.06</span> <span class="fl">1.14</span> ...</span>
+<span id="sha1_lm-48"><a href="#sha1_lm-48" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> dpi  <span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="dv">2330</span> <span class="dv">1508</span> <span class="dv">2108</span> <span class="dv">189</span> <span class="dv">728</span> ...</span>
+<span id="sha1_lm-49"><a href="#sha1_lm-49" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> ddpi <span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>] <span class="fl">2.87</span> <span class="fl">3.93</span> <span class="fl">3.82</span> <span class="fl">0.22</span> <span class="fl">4.56</span> <span class="fl">2.43</span> <span class="fl">2.67</span> <span class="fl">6.51</span> <span class="fl">3.08</span> <span class="fl">2.8</span> ...</span>
+<span id="sha1_lm-50"><a href="#sha1_lm-50" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;terms&quot;</span>)<span class="ot">=</span>Classes <span class="st">&#39;terms&#39;</span>, <span class="st">&#39;formula&#39;</span>  language sr <span class="sc">~</span> pop15 <span class="sc">+</span> pop75 <span class="sc">+</span> dpi <span class="sc">+</span> ddpi</span>
+<span id="sha1_lm-51"><a href="#sha1_lm-51" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;variables&quot;</span>)<span class="ot">=</span> language <span class="fu">list</span>(sr, pop15, pop75, dpi, ddpi)</span>
+<span id="sha1_lm-52"><a href="#sha1_lm-52" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;factors&quot;</span>)<span class="ot">=</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="sha1_lm-53"><a href="#sha1_lm-53" aria-hidden="true" tabindex="-1"></a>  .. .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dimnames&quot;</span>)<span class="ot">=</span>List of <span class="dv">2</span></span>
+<span id="sha1_lm-54"><a href="#sha1_lm-54" aria-hidden="true" tabindex="-1"></a>  .. .. .. .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;sr&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm-55"><a href="#sha1_lm-55" aria-hidden="true" tabindex="-1"></a>  .. .. .. .. ..<span class="sc">$</span> <span class="er">:</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> <span class="st">&quot;ddpi&quot;</span></span>
+<span id="sha1_lm-56"><a href="#sha1_lm-56" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;term.labels&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> <span class="st">&quot;ddpi&quot;</span></span>
+<span id="sha1_lm-57"><a href="#sha1_lm-57" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;order&quot;</span>)<span class="ot">=</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span></span>
+<span id="sha1_lm-58"><a href="#sha1_lm-58" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;intercept&quot;</span>)<span class="ot">=</span> int <span class="dv">1</span></span>
+<span id="sha1_lm-59"><a href="#sha1_lm-59" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;response&quot;</span>)<span class="ot">=</span> int <span class="dv">1</span></span>
+<span id="sha1_lm-60"><a href="#sha1_lm-60" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;.Environment&quot;</span>)<span class="ot">=</span><span class="er">&lt;</span>environment<span class="sc">:</span> R_GlobalEnv<span class="sc">&gt;</span> </span>
+<span id="sha1_lm-61"><a href="#sha1_lm-61" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;predvars&quot;</span>)<span class="ot">=</span> language <span class="fu">list</span>(sr, pop15, pop75, dpi, ddpi)</span>
+<span id="sha1_lm-62"><a href="#sha1_lm-62" aria-hidden="true" tabindex="-1"></a>  .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;dataClasses&quot;</span>)<span class="ot">=</span> Named chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> <span class="st">&quot;numeric&quot;</span> ...</span>
+<span id="sha1_lm-63"><a href="#sha1_lm-63" aria-hidden="true" tabindex="-1"></a>  .. .. .. ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;names&quot;</span>)<span class="ot">=</span> chr [<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="st">&quot;sr&quot;</span> <span class="st">&quot;pop15&quot;</span> <span class="st">&quot;pop75&quot;</span> <span class="st">&quot;dpi&quot;</span> ...</span>
+<span id="sha1_lm-64"><a href="#sha1_lm-64" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;class&quot;</span>)<span class="ot">=</span> chr <span class="st">&quot;lm&quot;</span></span>
+<span id="sha1_lm-65"><a href="#sha1_lm-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-66"><a href="#sha1_lm-66" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm_model <span class="ot">&lt;-</span> lm_SR<span class="sc">$</span>model</span>
+<span id="sha1_lm-67"><a href="#sha1_lm-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-68"><a href="#sha1_lm-68" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lm_terms <span class="ot">&lt;-</span> lm_SR<span class="sc">$</span>terms</span>
+<span id="sha1_lm-69"><a href="#sha1_lm-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-70"><a href="#sha1_lm-70" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(lm_model)</span>
+<span id="sha1_lm-71"><a href="#sha1_lm-71" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;data.frame&quot;</span></span>
+<span id="sha1_lm-72"><a href="#sha1_lm-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-73"><a href="#sha1_lm-73" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(lm_terms)</span>
+<span id="sha1_lm-74"><a href="#sha1_lm-74" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;terms&quot;</span>   <span class="st">&quot;formula&quot;</span></span>
+<span id="sha1_lm-75"><a href="#sha1_lm-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-76"><a href="#sha1_lm-76" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sha1.formula <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">14</span>, <span class="at">zapsmall =</span> <span class="dv">7</span>, </span>
+<span id="sha1_lm-77"><a href="#sha1_lm-77" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     ..., <span class="at">algo =</span> <span class="st">&quot;sha1&quot;</span>) {</span>
+<span id="sha1_lm-78"><a href="#sha1_lm-78" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">sha1</span>(<span class="fu">as.character</span>(x), <span class="at">digits =</span> digits, <span class="at">zapsmall =</span> zapsmall, </span>
+<span id="sha1_lm-79"><a href="#sha1_lm-79" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>         <span class="at">algo =</span> algo)</span>
+<span id="sha1_lm-80"><a href="#sha1_lm-80" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span>
+<span id="sha1_lm-81"><a href="#sha1_lm-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-82"><a href="#sha1_lm-82" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(lm_terms)</span>
+<span id="sha1_lm-83"><a href="#sha1_lm-83" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;2737d209720aa7d1c0555050ad06ebe89f3850cd&quot;</span></span>
+<span id="sha1_lm-84"><a href="#sha1_lm-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-85"><a href="#sha1_lm-85" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(lm_model)</span>
+<span id="sha1_lm-86"><a href="#sha1_lm-86" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;27b7dd9e3e09b9577da6947b8473b63a1d0b6eb4&quot;</span></span>
+<span id="sha1_lm-87"><a href="#sha1_lm-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-88"><a href="#sha1_lm-88" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sha1.lm <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">14</span>, <span class="at">zapsmall =</span> <span class="dv">7</span>, </span>
+<span id="sha1_lm-89"><a href="#sha1_lm-89" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     ..., <span class="at">algo =</span> <span class="st">&quot;sha1&quot;</span>) {</span>
+<span id="sha1_lm-90"><a href="#sha1_lm-90" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     lm_model <span class="ot">&lt;-</span> x<span class="sc">$</span>model</span>
+<span id="sha1_lm-91"><a href="#sha1_lm-91" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     lm_terms <span class="ot">&lt;-</span> x<span class="sc">$</span>terms</span>
+<span id="sha1_lm-92"><a href="#sha1_lm-92" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     combined <span class="ot">&lt;-</span> <span class="fu">list</span>(lm_model, lm_terms)</span>
+<span id="sha1_lm-93"><a href="#sha1_lm-93" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">sha1</span>(combined, <span class="at">digits =</span> digits, <span class="at">zapsmall =</span> zapsmall, ..., </span>
+<span id="sha1_lm-94"><a href="#sha1_lm-94" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>         <span class="at">algo =</span> algo)</span>
+<span id="sha1_lm-95"><a href="#sha1_lm-95" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span>
+<span id="sha1_lm-96"><a href="#sha1_lm-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-97"><a href="#sha1_lm-97" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(lm_SR)</span>
+<span id="sha1_lm-98"><a href="#sha1_lm-98" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;7eda2a9d58e458c8e782e40ce140d62b836b2a2f&quot;</span></span>
+<span id="sha1_lm-99"><a href="#sha1_lm-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="sha1_lm-100"><a href="#sha1_lm-100" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sha1</span>(lm_SR2)</span>
+<span id="sha1_lm-101"><a href="#sha1_lm-101" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;4d3abdb1f17bd12fdf9d9b91a2ad04c07824fe4a&quot;</span></span></code></pre></div>
+<h2 id="using-hashes-to-track-changes-in-analysis">Using hashes to track changes in analysis</h2>
 <p>Use case</p>
 <ul>
 <li><p>automated analysis</p></li>
@@ -705,8 +508,5 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Otherwise run the analysis and update the status and status fingerprint</li>
 </ul></li>
 </ol>
-</section>
-</article>
-</main>
 </body>
 </html>

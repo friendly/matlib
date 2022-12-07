@@ -1,5 +1,5 @@
-* using log directory 'C:/Users/friendly/Dropbox/R/projects/matlib/revdep/checks/MPkn/old/MPkn.Rcheck'
-* using R version 3.6.3 (2020-02-29)
+* using log directory 'C:/Dropbox/R/projects/matlib/revdep/checks/MPkn/old/MPkn.Rcheck'
+* using R version 4.2.1 (2022-06-23 ucrt)
 * using platform: x86_64-w64-mingw32 (64-bit)
 * using session charset: ISO8859-1
 * using options '--no-manual --no-build-vignettes'
@@ -8,8 +8,7 @@
 * this is package 'MPkn' version '0.1.0'
 * package encoding: UTF-8
 * checking package namespace information ... OK
-* checking package dependencies ... NOTE
-Package suggested but not available for checking: 'markovchain'
+* checking package dependencies ... OK
 * checking if this is a source package ... OK
 * checking if there is a namespace ... OK
 * checking for executable files ... OK
@@ -45,46 +44,16 @@ Package suggested but not available for checking: 'markovchain'
 * checking Rd \usage sections ... OK
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
+* checking LazyData ... NOTE
+  'LazyData' is specified without a 'data' directory
 * checking sizes of PDF files under 'inst/doc' ... OK
 * checking installed files from 'inst/doc' ... OK
 * checking files in 'vignettes' ... OK
-* checking examples ... ERROR
-Running examples in 'MPkn-Ex.R' failed
-The error most likely occurred in:
-
-> ### Name: MPkn-package
-> ### Title: Calculations of One Discrete Model in Several Time Steps
-> ### Aliases: MPkn-package
-> 
-> ### ** Examples
-> 
-> require(MPkn)
-> require(markovchain)
-Loading required package: markovchain
-Warning in library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-  there is no package called 'markovchain'
-> options(digits = 14)
-> n = 12
-> k = 2
-> rz = 11
-> P = array(0, c(rz, rz))
-> for (i in 1:rz){
-+   po = runif(rz)
-+   P[i, ] = po/sum(po)
-+ }
-> I = diag(1, rz, rz)
-> Myy = MUPkL(P, P, I, n, k, c(1:rz))
-> StSy = NULL
-> for (i in 1:rz) StSy = c(StSy, Myy$Navg[,,i][n])
-> mrkv = new("markovchain", transitionMatrix = P)
-Error in getClass(Class, where = topenv(parent.frame())) : 
-  "markovchain" is not a defined class
-Calls: new -> getClass
-Execution halted
+* checking examples ... OK
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in 'inst/doc' ... OK
 * checking running R code from vignettes ... NONE
-  'Fundament.Rmd'using 'UTF-8'... OK
+  'Fundament.Rmd' using 'UTF-8'... OK
 * checking re-building of vignette outputs ... SKIPPED
 * DONE
-Status: 1 ERROR, 1 NOTE
+Status: 1 NOTE

@@ -1,11 +1,13 @@
 
-R version 3.6.3 (2020-02-29) -- "Holding the Windsock"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R version 4.2.1 (2022-06-23 ucrt) -- "Funny-Looking Kid"
+Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -179,7 +181,8 @@ Type 'q()' to quit R.
 > 
 > hyperoverlap.iris.set = hyperoverlap_set(iris[1:3],iris$Species, kernel="linear")
 > hyperoverlap_pairs_plot(hyperoverlap.iris.set)
-Warning: Use of `x$result` is discouraged. Use `result` instead.
+Warning: Use of `x$result` is discouraged.
+i Use `result` instead.
 > 
 > 
 > 
@@ -228,7 +231,7 @@ Warning: Use of `x$result` is discouraged. Use `result` instead.
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.99 0.26 3.19 NA NA 
+Time elapsed:  1.72 0.42 2.44 NA NA 
 > grDevices::dev.off()
 null device 
           1 

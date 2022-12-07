@@ -1,3 +1,13 @@
+# matlib 0.9.6
+
+- fix some subtle problems related to the use of `MASS::fractions()` in various display functions, #42. (Thx: Phil Chalmers)
+- Fix a problem with `showEqn(..., simplify=TRUE), #45. (Thx: John Fox)
+
+# matlib 0.9.5
+
+- fix 'CRAN packages requiring webshot2 but not declaring it'
+- fix error from Proj.Rd
+
 # matlib 0.9.4
 
 - added `xprod()` for vector cross-product

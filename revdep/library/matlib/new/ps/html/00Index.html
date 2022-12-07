@@ -1,9 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: List, Query, Manipulate System Processes</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
-</head><body>
+</head><body><div class="container">
 <h1> List, Query, Manipulate System Processes
 <img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
 </h1>
@@ -11,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;ps&rsquo; version 1.4.0</h2>
+</div><h2>Documentation for package &lsquo;ps&rsquo; version 1.7.2</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 </ul>
@@ -19,7 +20,7 @@
 <h2>Help Pages</h2>
 
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="ps_handle.html">as.character.ps_handle</a></td>
 <td>Create a process handle</td></tr>
 <tr><td style="width: 25%;"><a href="CleanupReporter.html">CleanupReporter</a></td>
@@ -48,6 +49,8 @@
 <td>Start time of a process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_cwd.html">ps_cwd</a></td>
 <td>Process current working directory as an absolute path.</td></tr>
+<tr><td style="width: 25%;"><a href="ps_descent.html">ps_descent</a></td>
+<td>Query the ancestry of a process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_disk_partitions.html">ps_disk_partitions</a></td>
 <td>List all mounted partitions</td></tr>
 <tr><td style="width: 25%;"><a href="ps_disk_usage.html">ps_disk_usage</a></td>
@@ -60,6 +63,8 @@
 <td>Full path of the executable of a process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_kill_tree.html">ps_find_tree</a></td>
 <td>Mark a process and its (future) child tree</td></tr>
+<tr><td style="width: 25%;"><a href="ps_get_cpu_affinity.html">ps_get_cpu_affinity</a></td>
+<td>Query or set CPU affinity</td></tr>
 <tr><td style="width: 25%;"><a href="ps_get_nice.html">ps_get_nice</a></td>
 <td>Get or set the priority of a process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_uids.html">ps_gids</a></td>
@@ -76,8 +81,12 @@
 <td>Kill a process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_kill_tree.html">ps_kill_tree</a></td>
 <td>Mark a process and its (future) child tree</td></tr>
+<tr><td style="width: 25%;"><a href="ps_loadavg.html">ps_loadavg</a></td>
+<td>Return the average system load over the last 1, 5 and 15 minutes as a tuple.</td></tr>
 <tr><td style="width: 25%;"><a href="ps_kill_tree.html">ps_mark_tree</a></td>
 <td>Mark a process and its (future) child tree</td></tr>
+<tr><td style="width: 25%;"><a href="ps_memory_info.html">ps_memory_full_info</a></td>
+<td>Memory usage information</td></tr>
 <tr><td style="width: 25%;"><a href="ps_memory_info.html">ps_memory_info</a></td>
 <td>Memory usage information</td></tr>
 <tr><td style="width: 25%;"><a href="ps_name.html">ps_name</a></td>
@@ -102,12 +111,20 @@
 <td>Resume (continue) a stopped process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_send_signal.html">ps_send_signal</a></td>
 <td>Send signal to a process</td></tr>
+<tr><td style="width: 25%;"><a href="ps_get_cpu_affinity.html">ps_set_cpu_affinity</a></td>
+<td>Query or set CPU affinity</td></tr>
 <tr><td style="width: 25%;"><a href="ps_get_nice.html">ps_set_nice</a></td>
 <td>Get or set the priority of a process</td></tr>
+<tr><td style="width: 25%;"><a href="ps_shared_libs.html">ps_shared_libs</a></td>
+<td>List the dynamically loaded libraries of a process</td></tr>
+<tr><td style="width: 25%;"><a href="ps_shared_lib_users.html">ps_shared_lib_users</a></td>
+<td>List all processes that loaded a shared library</td></tr>
 <tr><td style="width: 25%;"><a href="ps_status.html">ps_status</a></td>
 <td>Current process status</td></tr>
 <tr><td style="width: 25%;"><a href="ps_suspend.html">ps_suspend</a></td>
 <td>Suspend (stop) the process</td></tr>
+<tr><td style="width: 25%;"><a href="ps_system_cpu_times.html">ps_system_cpu_times</a></td>
+<td>System CPU times.</td></tr>
 <tr><td style="width: 25%;"><a href="ps_system_memory.html">ps_system_memory</a></td>
 <td>Statistics about system memory usage</td></tr>
 <tr><td style="width: 25%;"><a href="ps_system_swap.html">ps_system_swap</a></td>
@@ -131,4 +148,4 @@
 <tr><td style="width: 25%;"><a href="ps_kill_tree.html">with_process_cleanup</a></td>
 <td>Mark a process and its (future) child tree</td></tr>
 </table>
-</body></html>
+</div></body></html>

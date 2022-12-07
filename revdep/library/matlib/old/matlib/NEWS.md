@@ -1,3 +1,8 @@
+# matlib 0.9.5
+
+- fix 'CRAN packages requiring webshot2 but not declaring it'
+- fix error from Proj.Rd
+
 # matlib 0.9.4
 
 - added `xprod()` for vector cross-product
