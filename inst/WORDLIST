@@ -31,7 +31,8 @@ Hotelling's
 inv
 Jarecki
 Lundberg
-mathbfS
+macOS
+mathbf
 matrixkit
 mikewlcheung
 orthogonalization
@@ -41,6 +42,8 @@ Orthonormalization
 parallelpiped
 partialled
 Penrose
+plotEqn
+Proj
 pseudoinverse
 Rdoc
 regvec
@@ -48,6 +51,7 @@ repo
 req
 revdep
 rgl
+rglwidget
 Rightarrow
 Scazzocchio
 stackoverflow
@@ -62,5 +66,9 @@ useR
 Vandermode
 vectorize
 Vectorize
+webshot
 Weiner
+widehat
 wikipedia
+XQuartz
+yorku

@@ -19,7 +19,7 @@
 #' @return the matrix \code{M} with rows and columns in \code{indices} swept.
 #' @references Beaton, A. E. (1964), \emph{The Use of Special Matrix Operations in Statistical Calculus}, Princeton, NJ: Educational Testing Service.
 #'
-#'      Dempster, A. P. (1969) \emph{Elements of Continuous Multivariate Analysis}. Addison-Wesley Publ. Co., Reading, Mass.
+#'      Dempster, A. P. (1969) \emph{Elements of Continuous Multivariate Analysis}. Addison-Wesley, Reading, Mass.
 #'
 #' @seealso \code{\link{Proj}}, \code{\link{QR}}
 #' @export
