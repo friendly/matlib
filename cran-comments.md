@@ -38,5 +38,7 @@ Issues with CRAN packages are summarised below.
 * MIIPW (NA)
 
 I have contacted the package maintainer, Atanu Bhattacharjee <atanustat at gmail.com> regarding this problem.
+The error loading this package has nothing to do with matlib.
+
 
 
