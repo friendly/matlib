@@ -18,3 +18,4 @@ docs/
 .build-steps.R
 
 ^\.Rproj\.user$
+^CRAN-SUBMISSION$

@@ -8,20 +8,23 @@ GramSchmidt(
   X,
   normalize = TRUE,
   verbose = FALSE,
-  tol = sqrt(.Machine$double.eps)
+  tol = sqrt(.Machine$double.eps),
+  omit_zero_columns = TRUE
 )
 }
 \arguments{
 \item{X}{a matrix}
 
-\item{normalize}{logical; should the resulting columns be normalized to unit length?}
+\item{normalize}{logical; should the resulting columns be normalized to unit length? The default is \code{TRUE}}
 
-\item{verbose}{logical; if \code{TRUE}, print intermediate steps}
+\item{verbose}{logical; if \code{TRUE}, print intermediate steps. The default is \code{FALSE}}
 
-\item{tol}{the tolerance for detecting linear dependencies in the columns of a. The default is \code{.Machine$double.eps}}
+\item{tol}{the tolerance for detecting linear dependencies in the columns of a. The default is \code{sqrt(.Machine$double.eps)}}
+
+\item{omit_zero_columns}{if \code{TRUE} (the default), remove linearly dependent columns from the result}
 }
 \value{
-A matrix of the same size as \code{X}, with orthogonal columns
+A matrix of the same size as \code{X}, with orthogonal columns (but with 0 columns removed by default)
 }
 \description{
 Carries out simple Gram-Schmidt orthogonalization of a matrix.
