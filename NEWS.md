@@ -1,3 +1,7 @@
+# matlib 0.9.7
+
+- GramSchmidt gains an argument, `omit_zero_columns` to control whether all-zero columns are retained in the output (issue #48) [Thx: @ggrothendieck]
+
 # matlib 0.9.6
 
 - fix some subtle problems related to the use of `MASS::fractions()` in various display functions, #42. (Thx: Phil Chalmers)
