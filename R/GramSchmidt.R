@@ -7,10 +7,11 @@
 #' column.
 #'
 #' @param X a matrix
-#' @param normalize logical; should the resulting columns be normalized to unit length?
-#' @param verbose logical; if \code{TRUE}, print intermediate steps
-#' @param tol the tolerance for detecting linear dependencies in the columns of a. The default is \code{.Machine$double.eps}
-#' @return A matrix of the same size as \code{X}, with orthogonal columns
+#' @param normalize logical; should the resulting columns be normalized to unit length? The default is \code{TRUE}
+#' @param verbose logical; if \code{TRUE}, print intermediate steps. The default is \code{FALSE}
+#' @param tol the tolerance for detecting linear dependencies in the columns of a. The default is \code{sqrt(.Machine$double.eps)}
+#' @param omit_zero_columns if \code{TRUE} (the default), remove linearly dependent columns from the result
+#' @return A matrix of the same size as \code{X}, with orthogonal columns (but with 0 columns removed by default)
 #' @author Phil Chalmers, John Fox
 #' @export
 #' @examples
@@ -35,7 +36,7 @@
 #' zapsmall(crossprod(zz))
 #'
 GramSchmidt <- function (X, normalize = TRUE, verbose = FALSE,
-                         tol=sqrt(.Machine$double.eps)) {
+                         tol=sqrt(.Machine$double.eps), omit_zero_columns=TRUE) {
   B <- X
   B[, 2L:ncol(B)] <- 0
   if (verbose) {
@@ -58,10 +59,17 @@ GramSchmidt <- function (X, normalize = TRUE, verbose = FALSE,
       printMatrix(B)
     }
   }
-  B <- B[, !apply(B, 2, function(b) all(b == 0))]
+  zeros <- apply(B, 2, function(b) all(b == 0))
+  if (omit_zero_columns && any(zeros)){
+    B <- B[, !zeros]
+    which_zeros <- (1:ncol(X))[zeros]
+    message("linearly dependent column", if (length(which_zeros) > 1) "s" else "",
+            " omitted: ", paste(which_zeros, collapse=", "))
+  }
   if (normalize) {
     norm <- diag(1/len(B))
     B <- B %*% norm
+    if (!omit_zero_columns && any(zeros)) B[, zeros] <- 0
     if (verbose) {
       cat("\nNormalized matrix: Z * inv(L) \n")
       printMatrix(B)
