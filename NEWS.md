@@ -1,6 +1,7 @@
 # matlib 0.9.7
 
-- GramSchmidt gains an argument, `omit_zero_columns` to control whether all-zero columns are retained in the output (issue #48) [Thx: @ggrothendieck]
+- `GramSchmidt()` gains an argument, `omit_zero_columns` to control whether all-zero columns are retained in the output (issue #48) [Thx: @ggrothendieck]
+- Merge pull request #49 from JF to retain column names in `GramSchmidt()`.
 
 # matlib 0.9.6
 
