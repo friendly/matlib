@@ -68,7 +68,9 @@ GramSchmidt <- function (X, normalize = TRUE, verbose = FALSE,
   }
   if (normalize) {
     norm <- diag(1/len(B))
+    colnames <- colnames(B)
     B <- B %*% norm
+    colnames(B) <- colnames
     if (!omit_zero_columns && any(zeros)) B[, zeros] <- 0
     if (verbose) {
       cat("\nNormalized matrix: Z * inv(L) \n")
