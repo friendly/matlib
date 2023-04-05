@@ -134,6 +134,11 @@ A small collection of vignettes is now available.  Use `browseVignettes("matlib"
 | [data-beta](http://friendly.github.io/matlib/articles/data-beta.html)               | Vector Spaces of Least Squares and Linear Equations |
 
 
-See also: Fox & Friendly, [_Visualizing Simultaneous Linear Equations, Geometric Vectors, and Least-Squares Regression with the matlib Package for R_](https://socialsciences.mcmaster.ca/jfox/Papers/matlib-useR2016.pdf),
+See also: 
+
+* Fox & Friendly, [_Visualizing Simultaneous Linear Equations, Geometric Vectors, and Least-Squares Regression with the matlib Package for R_](https://socialsciences.mcmaster.ca/jfox/Papers/matlib-useR2016.pdf),
 June 2016, useR! Conference, Stanford.
+
+* Ivan Savov, [Linear algebra explained in four pages](https://souravsengupta.com/cds2016/lectures/Savov_Notes.pdf)
+
 
