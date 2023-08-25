@@ -1,13 +1,13 @@
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/matlib)](https://cran.r-project.org/package=matlib)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/matlib)](https://cran.r-project.org/package=matlib)
+[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/matlib)](https://cran.r-project.org/package=matlib)
 [![Dependencies](https://tinyverse.netlify.com/badge/matlib)](https://cran.r-project.org/package=matlib)
 [![Travis-CI Build Status](https://travis-ci.org/friendly/matlib.svg?branch=master)](https://travis-ci.org/friendly/matlib)
 
 <!-- badges: end -->
 
-# matlib <img src="matlib-logo.png" align="right" height="200px" />
+# matlib <img src="man/figures/logo.png" align="right" height="200px" />
 
 **Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics**, http://friendly.github.io/matlib/
 
