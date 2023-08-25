@@ -16,6 +16,6 @@ docs/
 ^revdep$
 ^CRAN-RELEASE$
 .build-steps.R
-
+pkgdown/
 ^\.Rproj\.user$
 ^CRAN-SUBMISSION$
