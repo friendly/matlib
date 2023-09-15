@@ -1,5 +1,6 @@
 # matlib 0.9.7
 
+- `inv()` and aliases now return invisible matrix when `verbose = TRUE` to match behaviour of related functions (e.g., `gaussianElimination()`)
 - `GramSchmidt()` gains an argument, `omit_zero_columns` to control whether all-zero columns are retained in the output (issue #48) [Thx: @ggrothendieck]
 - Merge pull request #49 from JF to retain column names in `GramSchmidt()`.
 

@@ -5,12 +5,14 @@
 \alias{inv}
 \title{Inverse of a Matrix}
 \usage{
-Inverse(X, tol = sqrt(.Machine$double.eps), ...)
+Inverse(X, tol = sqrt(.Machine$double.eps), verbose = FALSE, ...)
 }
 \arguments{
 \item{X}{a square numeric matrix}
 
 \item{tol}{tolerance for checking for 0 pivot}
+
+\item{verbose}{logical; if \code{TRUE}, print intermediate steps}
 
 \item{...}{other arguments passed on}
 }

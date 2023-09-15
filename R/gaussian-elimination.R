@@ -180,6 +180,7 @@ print.enhancedMatrix <- function(x, ...){
 #' @aliases inv
 #' @param X a square numeric matrix
 #' @param tol tolerance for checking for 0 pivot
+#' @param verbose logical; if \code{TRUE}, print intermediate steps
 #' @param ... other arguments passed on
 #' @return the inverse of \code{X}
 #' @author John Fox
@@ -191,17 +192,19 @@ print.enhancedMatrix <- function(x, ...){
 #'   Inverse(A)
 #'   Inverse(A, verbose=TRUE, fractions=TRUE)
 
-Inverse <- function(X, tol=sqrt(.Machine$double.eps), ...){
+Inverse <- function(X, tol=sqrt(.Machine$double.eps), verbose=FALSE, ...){
     # returns the inverse of nonsingular X
     if ((!is.matrix(X)) || (nrow(X) != ncol(X)) || (!is.numeric(X)))
         stop("X must be a square numeric matrix")
     n <- nrow(X)
-    X <- gaussianElimination(X, diag(n), tol=tol, ...) # append identity matrix
+    X <- gaussianElimination(X, diag(n), tol=tol, verbose=verbose, ...) # append identity matrix
     # check for 0 rows in the RREF of X:
     if (any(apply(abs(X[,1:n]) <= sqrt(.Machine$double.eps), 1, all)))
         stop ("X is numerically singular")
-    X[,(n + 1):(2*n)]  # return inverse
+    ret <- X[,(n + 1):(2*n)]  # return inverse
+    if (verbose) invisible(ret) else ret
 }
+
 # synonym
 #' @export
 inv <- function(X, ...) Inverse(X, tol=sqrt(.Machine$double.eps), ...)
