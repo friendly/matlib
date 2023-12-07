@@ -42,9 +42,14 @@ formatNumbers <- function(x, fractions=FALSE, tol=sqrt(.Machine$double.eps)){
 	ret
 }
 
+# radians and degrees
 r2d <-function(r) r/pi * 180
 
 d2r <-function(d) pi*d / 180
+
+rad2deg <- function(rad) (rad * 180) / pi
+
+deg2rad <- function(deg) (deg * pi) / 180
 
 Fractions <- function(x, ...){
   opts <- getOption("fractions")
