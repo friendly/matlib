@@ -50,7 +50,12 @@ vectors <- function(X, origin=c(0,0),
                     labels=TRUE, cex.lab=1.5, pos.lab=4, frac.lab=1,  ...) {
 
   if (is.vector(X)) X <- matrix(X, ncol=2)
-  .arrows(origin[1], origin[2], X[,1], X[,2], lwd=lwd, length=length, angle=angle, ...)
+  vl <- len(t(X)) < 1e-4
+  if (any(vl)) {
+    ok <- !vl
+    warning("Row(s) ", paste(which(vl), collapse=', '), " are too small to draw and have been ignored.")
+  }
+  .arrows(origin[1], origin[2], X[ok,1], X[ok,2], lwd=lwd, length=length, angle=angle, ...)
   if (is.logical(labels) && labels) {
     labels <- rownames(X)
   }
