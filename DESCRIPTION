@@ -37,5 +37,5 @@ Imports:
     car,
     methods
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Encoding: UTF-8

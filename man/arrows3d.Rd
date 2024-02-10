@@ -59,8 +59,8 @@ Other vector diagrams:
 \code{\link{plot.regvec3d}()},
 \code{\link{pointOnLine}()},
 \code{\link{regvec3d}()},
-\code{\link{vectors3d}()},
-\code{\link{vectors}()}
+\code{\link{vectors}()},
+\code{\link{vectors3d}()}
 }
 \author{
 January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox

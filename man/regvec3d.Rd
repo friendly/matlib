@@ -152,7 +152,7 @@ Other vector diagrams:
 \code{\link{corner}()},
 \code{\link{plot.regvec3d}()},
 \code{\link{pointOnLine}()},
-\code{\link{vectors3d}()},
-\code{\link{vectors}()}
+\code{\link{vectors}()},
+\code{\link{vectors3d}()}
 }
 \concept{vector diagrams}

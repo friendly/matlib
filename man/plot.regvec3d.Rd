@@ -128,7 +128,7 @@ Other vector diagrams:
 \code{\link{corner}()},
 \code{\link{pointOnLine}()},
 \code{\link{regvec3d}()},
-\code{\link{vectors3d}()},
-\code{\link{vectors}()}
+\code{\link{vectors}()},
+\code{\link{vectors3d}()}
 }
 \concept{vector diagrams}

@@ -49,8 +49,8 @@
 #' be installed. After installing XQuartz, it's necessary either to log out of and back
 #' into your macOS account or to reboot your Mac.
 #'
-#' @docType package
 #' @name matlib-package
+#' @aliases matlib-package
 #' @importFrom MASS fractions
 #' @aliases matlib
 #' @references
