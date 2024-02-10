@@ -11,7 +11,8 @@
 #'
 #' This function was copied from \code{\link[plotrix]{draw.circle}}
 #'
-#' @param x,y     Coordinates of the center of the circle.
+#' @param x,y     Coordinates of the center of the circle. If \code{x} is a vector of length 2, \code{y} is ignored and the
+#'                center is taken as \code{x[1], x[2]}.
 #' @param radius  Radius (or radii) of the circle(s) in user units.
 #' @param nv      Number of vertices to draw the circle.
 #' @param border  Color to use for drawing the circumference. \code{\link[graphics]{polygon}}
@@ -57,6 +58,10 @@ circle <- function(x, y,
   angles <- seq(0, 2 * pi - angle.inc, by = angle.inc)
   if (length(col) < length(radius)) {
     col <- rep(col, length.out = length(radius))
+  }
+  if(length(x)==2){
+    y <- x[2]
+    x <- x[1]
   }
   for (circle in 1:length(radius)) {
     xv <- cos(angles) * radius[circle] + x

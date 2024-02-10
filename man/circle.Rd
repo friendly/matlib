@@ -18,7 +18,8 @@ circle(
 )
 }
 \arguments{
-\item{x, y}{Coordinates of the center of the circle.}
+\item{x, y}{Coordinates of the center of the circle. If \code{x} is a vector of length 2, \code{y} is ignored and the
+center is taken as \code{x[1], x[2]}.}
 
 \item{radius}{Radius (or radii) of the circle(s) in user units.}
 
