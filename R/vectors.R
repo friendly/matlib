@@ -51,8 +51,8 @@ vectors <- function(X, origin=c(0,0),
 
   if (is.vector(X)) X <- matrix(X, ncol=2)
   vl <- len(t(X)) < 1e-4
+  ok <- !vl
   if (any(vl)) {
-    ok <- !vl
     warning("Row(s) ", paste(which(vl), collapse=', '), " are too small to draw and have been ignored.")
   }
   .arrows(origin[1], origin[2], X[ok,1], X[ok,2], lwd=lwd, length=length, angle=angle, ...)

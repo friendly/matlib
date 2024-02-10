@@ -4,15 +4,17 @@
 #' Draw circles on an existing plot.
 #'
 #' @details
-#' Rather than depending on the aspect ratio set in the call to \code{\link[base]{plot}},
-#' \code{circle} uses the dimensions of the plot and the \code{x} and \code{y} coordinates to draw a circle rather than an ellipse.
+#' Rather than depending on the aspect ratio \code{par("asp")} set globally or
+#' in the call to \code{\link[base]{plot}},
+#' \code{circle} uses the dimensions of the current plot and the \code{x} and \code{y} coordinates to draw a circle rather than an ellipse.
+#' Of course, if you resize the plot the aspect ratio can change.
 #'
-#' This function was copied from
+#' This function was copied from \code{\link[plotrix]{draw.circle}}
 #'
 #' @param x,y     Coordinates of the center of the circle.
 #' @param radius  Radius (or radii) of the circle(s) in user units.
 #' @param nv      Number of vertices to draw the circle.
-#' @param border  Color to use for drawing the circumference.
+#' @param border  Color to use for drawing the circumference. \code{\link[graphics]{polygon}}
 #' @param col     Color to use for filling the circle.
 #' @param lty     Line type for the circumference.
 #' @param density Density for patterned fill. See \code{\link[graphics]{polygon}}.
@@ -20,6 +22,7 @@
 #' @param lwd     Line width for the circumference.
 #'
 #' @return Invisibly returns a list with the \code{x} and \code{y} coordinates of the points on the circumference of the last circle displayed.
+#' @importFrom graphics polygon
 #' @export
 #' @seealso \code{\link[graphics]{polygon}}
 #' @author Jim Lemon, thanks to David Winsemius for the density and angle args
@@ -31,6 +34,7 @@
 #' # draw three concentric circles
 #' circle(2, 4, c(1, 0.66, 0.33),border="purple",
 #'             col=c("#ff00ff","#ff77ff","#ffccff"),lty=1,lwd=1)
+#' # draw some others
 #' circle(2.5, 8, 0.6,border="red",lty=3,lwd=3)
 #' circle(4, 3, 0.7,border="green",col="yellow",lty=1,
 #'             density=5,angle=30,lwd=10)
@@ -74,7 +78,8 @@ circle <- function(x, y,
 #' \code{getYmult} retrieves the plot aspect ratio and the coordinate ratio for the current graphics device, calculates a
 #' multiplicative factor to equalize the X and Y dimensions of a plotted graphic object.
 #'
-#'
+#' @importFrom grDevices dev.cur
+#' @importFrom graphics par
 #' @return The correction factor for the Y dimension.
 #' @author Jim Lemon
 #' @export
