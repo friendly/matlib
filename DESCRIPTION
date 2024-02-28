@@ -22,7 +22,7 @@ Description: A collection of matrix functions for teaching and learning matrix
     provided for drawing vector diagrams in 2D and 3D.
 License: GPL (>= 2)
 Language: en-US
-URL: https://github.com/friendly/matlib
+URL: https://github.com/friendly/matlib, http://friendly.github.io/matlib/
 BugReports: https://github.com/friendly/matlib/issues
 LazyData: TRUE
 Suggests:
@@ -36,7 +36,8 @@ Imports:
     MASS,
     rgl,
     car,
-    methods
+    methods,
+    dplyr
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1
 Encoding: UTF-8

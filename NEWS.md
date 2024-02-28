@@ -1,3 +1,9 @@
+# matlib 0.9.8
+
+- added `circle()` for drawing circles in diagrams
+- `vectors()` now handles 0-length vectors more gracefully #50.
+- `matrix2latex()` generalized to allow different bracket types and optionally show the size of the matrix.
+
 # matlib 0.9.7
 
 - `inv()` and aliases now return invisible matrix when `verbose = TRUE` to match behaviour of related functions (e.g., `gaussianElimination()`)

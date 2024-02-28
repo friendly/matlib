@@ -4,23 +4,44 @@
 \alias{matrix2latex}
 \title{Convert matrix to LaTeX equation}
 \usage{
-matrix2latex(x, fractions = FALSE, brackets = TRUE, ...)
+matrix2latex(
+  x,
+  fractions = FALSE,
+  brackets = TRUE,
+  show.size = FALSE,
+  digits = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{a matrix}
 
-\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}} 
+\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
 function; if you require greater accuracy, you can set the \code{cycles} (default 10)
 and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
 \code{options(fractions=list(cycles=100, max.denominator=10^4))}.}
 
-\item{brackets}{logical; include square brackets around the matrices?}
+\item{brackets}{logical or a character in \code{"p", "b", "B", "V"}. If \code{TRUE}, uses square brackets
+around the matrix, \code{FALSE} produces no brackets. Otherwise
+\code{"p")} uses parentheses, \code{( )};
+\code{"b")} uses square brackets \code{[ ]},
+\code{"B")} uses braces \code{{ }},
+\code{"V")} uses vertical bars \code{| |}.}
+
+\item{show.size}{logical; if \code{TRUE} shows the size of the matrix as an appended subscript.}
+
+\item{digits}{Number of digits to display. If \code{digits == NULL} (the default), the function sets
+\code{digits = 0} if the elements of \code{x} are all integers}
 
 \item{...}{additional arguments passed to \code{xtable::xtableMatharray()}}
 }
 \description{
-This function provides a soft-wrapper to \code{xtable::xtableMatharray()} with support for
-\code{fraction}s output and square \code{bracket}s.
+This function provides a soft-wrapper to \code{xtable::xtableMatharray()} with additional support for
+\code{fractions} output and \code{brackets}.
+}
+\details{
+The code for \code{brackets} matches some of the options from the AMS matrix LaTeX package:
+\code{\\pmatrix{}}, \code{\\bmatrix{}}, \code{\\Bmatrix{}}, ... .
 }
 \examples{
 A <- matrix(c(2, 1, -1,
