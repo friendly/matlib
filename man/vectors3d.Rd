@@ -83,7 +83,7 @@ corner(p1, p4, p3, col="blue")
 rgl.bringtotop()
 }
 \seealso{
-\code{\link{arrows3d}}, code{\link[rgl]{texts3d}}, code{\link[rgl]{rgl.material}}
+\code{\link{arrows3d}}, \code{\link[rgl]{texts3d}}, \code{\link[rgl]{rgl.material}}
 
 Other vector diagrams: 
 \code{\link{Proj}()},

@@ -26,7 +26,7 @@
 #' @return invisibly returns the vector \code{ref.length} used to scale arrow heads
 #' @export
 #' @author Michael Friendly
-#' @seealso \code{\link{arrows3d}}, code{\link[rgl]{texts3d}}, code{\link[rgl]{rgl.material}}
+#' @seealso \code{\link{arrows3d}}, \code{\link[rgl]{texts3d}}, \code{\link[rgl]{rgl.material}}
 #' @family vector diagrams
 #' @import rgl
 #'

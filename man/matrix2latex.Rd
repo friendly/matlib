@@ -53,6 +53,8 @@ matrix2latex(cbind(A,b))
 matrix2latex(cbind(A,b), digits = 0)
 matrix2latex(cbind(A/2,b), fractions = TRUE)
 
+matrix2latex(A, digits=0, brackets="p", show.size = TRUE)
+
 }
 \author{
 Phil Chalmers
