@@ -1,0 +1,99 @@
+---
+title: "R Markdown: Display a Matrix for R Variable"
+author: "Romain Lesur"
+output: 
+  html_document:
+    keep_md: true
+---
+
+This is from:
+[StackOverflow](https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable)
+
+
+
+```{r setup, include=FALSE}
+# Define a generic method that transforms an object x in a LaTeX string
+as_latex = function(x, ...) {
+  UseMethod('as_latex', x)
+}
+
+# Define a class latex for LaTeX expressions
+as_latex.character = function(x) {
+  structure(
+    paste(x, collapse = ' '), 
+    class = c('latex', 'character')
+  )
+}
+
+# A character string of class latex is rendered in display mode
+# Define a knit_print() method for the latex class
+knit_print.latex = function(x, ...) {
+  knitr::asis_output(
+    paste0('$$', x, '$$')
+  )
+} 
+
+# Now, define a method as_latex for matrix
+as_latex.matrix = function(x, ...) {
+  as_latex(c(
+    '\\begin{bmatrix}',
+    paste(
+      t(x),
+      rep(c(rep('&', nrow(x) - 1), '\\\\'), ncol(x)),
+      collapse = ''
+    ),
+    '\\end{bmatrix}'
+  ))
+}
+
+# Indicate to knitr that matrix are rendered as latex
+knit_print.matrix = function(x, ...) {
+  knitr::knit_print(as_latex(x))
+}
+
+# Build a knitr inline hook to display inline latex in inline mode
+default_inline_hook = knitr::knit_hooks$get('inline')
+knitr::knit_hooks$set(inline = function(x) {
+  x = paste(gsub('\\$\\$', '$', x))
+  default_inline_hook(x)
+})
+```
+
+
+```{r}
+A = matrix(c(1,3,0,1),2,2)
+B = matrix(c(5,3,1,4),2,2)
+```
+
+
+Now, matrix are rendered as LaTeX:
+
+Matrix A in inline mode: `r A`
+
+Matrix A in display mode:
+
+```{r echo=FALSE}
+A
+```
+
+### Operators
+
+As other answers suggested, it could be useful to define operators.  
+With the previous class, it is relatively straightforward:
+
+```{r operators, include=FALSE}
+`%times%` = function(x, y) {
+  as_latex(sapply(list(x, '\\times', y), as_latex))  
+}
+
+`%add%` = function(x, y) {
+  as_latex(sapply(list(x, '+', y), as_latex))  
+}
+```
+
+Example in inline mode: `r A %add% A %times% B`
+
+Display mode:
+```{r echo=FALSE}
+A %times% B
+```
