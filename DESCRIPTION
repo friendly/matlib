@@ -3,7 +3,7 @@ Type: Package
 Title: Matrix Functions for Teaching and Learning Linear Algebra and
     Multivariate Statistics
 Version: 0.9.8
-Date: 2024-02-10
+Date: 2024-07-22
 Authors@R: c(person(given = "Michael", family = "Friendly", 
                     role=c("aut", "cre"), email="friendly@yorku.ca",
                     comment=c(ORCID="0000-0002-3237-0941")),
