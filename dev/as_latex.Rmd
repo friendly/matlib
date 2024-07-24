@@ -9,6 +9,8 @@ output:
 This is from:
 [StackOverflow](https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable)
 
+Uses `knitr::knit_print()` to define methods for printing objects of class `"matrix"`. 
+
 
 
 ```{r setup, include=FALSE}
