@@ -31,8 +31,8 @@ symb_matrix <- function(
     brackets=c("p", "b", "B", "V")) {
 
   brackets <- match.arg(brackets)
-  begin <- paste0("\\begin{", brackets, "matrix}")
-  end   <- paste0("\\end{", brackets, "matrix}")
+  begin <- paste0("\\begin{", brackets, "matrix}\n\t")
+  end   <- paste0("\\end{", brackets, "matrix}\n")
 
   # make a symbolic row
   symb_row <- function(symbol, i, cols) {
@@ -67,7 +67,7 @@ symb_matrix <- function(
 
   # end each with \\
   # should indent lines
-  result <- paste(mat, sep = "\\\\ \n")
-  result <- c(begin, result, end)
-  result
+  result <- paste(mat, collapse = " \\\\ \n\t")
+  result <- c(begin, result, "\n", end)
+  cat(result)
 }
