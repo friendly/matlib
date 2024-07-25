@@ -34,16 +34,7 @@ There were no ERRORs or WARNINGs.
 We checked 9 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
- * We failed to check 1 packages
 
-Issues with CRAN packages are summarised below.
-
-### Failed to check
-
-* MIIPW (NA)
-
-I have contacted the package maintainer, Atanu Bhattacharjee <atanustat at gmail.com> regarding this problem.
-The error loading this package has nothing to do with matlib.
 
 
 
