@@ -23,6 +23,8 @@
 #' symb_matrix("x", rows = "n", cols = "m", brackets = "p)  # default
 #' symb_matrix("\\beta", "p", "q")
 #'
+#' # numeric rows/cols
+#' symb_matrix("y", "p", 5)
 
 symb_matrix <- function(
     symbol = "x",
@@ -31,8 +33,8 @@ symb_matrix <- function(
     brackets=c("p", "b", "B", "V")) {
 
   brackets <- match.arg(brackets)
-  begin <- paste0("\\begin{", brackets, "matrix}")
-  end   <- paste0("\\end{", brackets, "matrix}")
+  begin <- paste0("\\begin{", brackets, "matrix}\n\t")
+  end   <- paste0("\\end{", brackets, "matrix}\n")
 
   # make a symbolic row
   symb_row <- function(symbol, i, cols) {
@@ -57,7 +59,11 @@ symb_matrix <- function(
       mat[4] <- symb_row(symbol, rows, cols) |> paste(collapse = " & ")
     }
     else {    # cols is numeric
-
+      mat <- rep("", cols)
+      mat[1] <- numb_row(symbol, 1, cols) |> paste(collapse = " & ")
+      mat[2] <- numb_row(symbol, 2, cols) |> paste(collapse = " & ")
+      mat[3] <- rep("\\vdots", cols) |> paste(collapse = " & ")
+      mat[4] <- numb_row(symbol, rows, cols) |> paste(collapse = " & ")
     }
   }
   else {   # rows is numeric
@@ -67,7 +73,8 @@ symb_matrix <- function(
 
   # end each with \\
   # should indent lines
-  result <- paste(mat, sep = "\\\\ \n")
+  result <- paste(mat, collapse = " \\\\ \n\t")
+#  result <- c(begin, result, "\n", end)
   result <- c(begin, result, end)
-  result
+  cat(result)
 }
