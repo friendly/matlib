@@ -74,7 +74,11 @@ symb_matrix <- function(
   # end each with \\
   # should indent lines
   result <- paste(mat, collapse = " \\\\ \n\t")
+<<<<<<< HEAD
 #  result <- c(begin, result, "\n", end)
   result <- c(begin, result, end)
+=======
+  result <- c(begin, result, "\n", end)
+>>>>>>> 3b2e99ed7bcc9a97313ae3a86d9c125002aed6eb
   cat(result)
 }
