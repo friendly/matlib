@@ -11,9 +11,11 @@
 #' @details
 #' This so far assumes that the \code{amsmath} package will be available.
 #'
+#' The intention is to allow rows/cols to be either a character or an integer
+#'
 #'
 #' @param symbol A single character, the name of the matrix elements
-#' @param rows   Number of rows.
+#' @param rows   Number of rows, a single character representing rows symbolically, or an integer, generating that many rows.
 #' @param cols   Number of columns
 #' @param brackets Type of brackets: \code{"p"} uses parentheses "(", ")";  \code{"b"} uses square braqckets "[", "]"; ...
 #'
@@ -32,6 +34,40 @@ symb_matrix <- function(
   begin <- paste0("\\begin{", brackets, "matrix}")
   end   <- paste0("\\end{", brackets, "matrix}")
 
-  if (is.character(rows)) {}
+  # make a symbolic row
+  symb_row <- function(symbol, i, cols) {
+    row <- paste0(symbol, "_{", i, 1:4, "}")
+    row[3] <- "\\dots"
+    row[4] <- paste0(symbol, "_{", i, cols, "}")
+    row
+  }
 
+  # make a numeric row
+  numb_row <- function(symbol, i, cols) {
+    row <- paste0(symbol, "_{", i, 1:cols, "}")
+    row
+  }
+
+  if (is.character(rows)) {
+    if (is.character(cols)) {
+      mat <- rep("", 4)
+      mat[1] <- symb_row(symbol, 1, cols) |> paste(collapse = " & ")
+      mat[2] <- symb_row(symbol, 2, cols) |> paste(collapse = " & ")
+      mat[3] <- c("\\vdots", "\\vdots", "\\ddots", "\\vdots") |> paste(collapse = " & ")
+      mat[4] <- symb_row(symbol, rows, cols) |> paste(collapse = " & ")
+    }
+    else {    # cols is numeric
+
+    }
+  }
+  else {   # rows is numeric
+    if (is.character(cols)) {
+    }
+  }
+
+  # end each with \\
+  # should indent lines
+  result <- paste(mat, sep = "\\\\ \n")
+  result <- c(begin, result, end)
+  result
 }
