@@ -11,9 +11,9 @@
 
 **Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics**, http://friendly.github.io/matlib/
 
-Version 0.9.7
+Version 0.9.8
 
-These functions are mainly for tutorial purposes in teaching & learning matrix algebra
+These functions were originally designed for tutorial purposes in teaching & learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts or computations available
 elsewhere in R, but where the name is not obvious, e.g., `R()` for the rank of a matrix,
 or `tr()` for matrix trace.
@@ -42,15 +42,15 @@ Get the released version from CRAN:
 
      install.packages("matlib")
 
+Or from my [R-universe](https://friendly.r-universe.dev):
+
+    install.packages('matlib', repos = c('https://friendly.r-universe.dev', 'https://cloud.r-project.org'))
+
 The development version can be installed to your R library directly from this repo via:
 
      if (!require(remotes)) install.packages("remotes")
      remotes::install_github("friendly/matlib", build_vignettes = TRUE)
 
-This installs the package from the source and creates the package vignettes, 
-so you will need to have R Tools installed on your system.  [R Tools for Windows](https://cran.r-project.org/bin/windows/Rtools/)
-takes you to the download page for Windows.  [R Tools for Mac OS X](https://cran.r-project.org/bin/macosx/tools/)
-has the required programs for Mac OS X.
 
 The functions that draw 3D graphs use the **rgl** package. On macOS, **rgl** requires that [XQuartz](https://www.xquartz.org/) be installed. After installing XQuartz, it's necessary either to log out of and back into your macOS account or to reboot your Mac.
 
@@ -115,6 +115,8 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions()`.
   - `pointOnLine()` - position of a point along a line
   - `vectors()`, `vectors3d()` - plot geometric vector diagrams in 2D/3D 
   - `regvec3d()` - calculate and plot vectors representing a bivariate regression model, `lm(y ~ x1 + x2)` in mean-deviation form.
+
+8. **matix2latex** - `matrix2latex()`: Convert matrix to LaTeX equation
 
 ### Vignettes and presentations
 

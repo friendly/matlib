@@ -1,8 +1,9 @@
 url: http://friendly.github.io/matlib
 
 template:
-  # params:
-  #   bootswatch: cerulean
+  bootstrap: 5
+# params:
+#   bootswatch: cerulean
   bslib:
     base_font: {google: "Roboto"}
     heading_font: {google: "Roboto Slab"}
@@ -83,9 +84,11 @@ reference:
       - angle
       - arc
       - arrows3d
+      - circle
       - circle3d
       - cone3d
       - corner
+      - getYmult
       - pointOnLine
       - regvec3d
       - plot.regvec3d
