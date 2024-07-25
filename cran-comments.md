@@ -1,21 +1,26 @@
 ## Test environments
-* local Windows 10 install, 4.1.3 (2022-03-10)
-* local windows 7, 4.2.1 (2022-06-23 ucrt)
+* local Windows 10 install, 4.4.1 (2024-06-14 ucrt) 
 * travis.ci on github
-* win-builder R Under development (unstable) (2022-12-05 r83406 ucrt)
+* win-builder  R Under development (unstable) (2024-07-20 r86909 ucrt)
 
 ## Comments
-This is a minor release, designed to fix a few bugs 
+This is a modest update, fixing bugs and adding some new features 
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.  
 
 
-# matlib 0.9.6
+# matlib 0.9.8
 
-- fix some subtle problems related to the use of `MASS::fractions()` in various display functions, #42. (Thx: Phil Chalmers)
-- Fix a problem with `showEqn(..., simplify=TRUE), #45. (Thx: John Fox)
-- Remove Suggests: rglwidget as this is now in the rgl package (Thx: Duncan Murdoch);  Merge pull request #39 from dmurdoch/norglwidget 
+- added `circle()` for drawing circles in diagrams
+- `vectors()` now handles 0-length vectors more gracefully #50.
+- `matrix2latex()` generalized to allow different bracket types and optionally show the size of the matrix.
+
+# matlib 0.9.7
+
+- `inv()` and aliases now return invisible matrix when `verbose = TRUE` to match behaviour of related functions (e.g., `gaussianElimination()`)
+- `GramSchmidt()` gains an argument, `omit_zero_columns` to control whether all-zero columns are retained in the output (issue #48) [Thx: @ggrothendieck]
+- Merge pull request #49 from JF to retain column names in `GramSchmidt()`.
 
 
 ## Reverse dependencies
