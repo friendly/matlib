@@ -8,10 +8,18 @@
 #'  x_{n1}  & x_{n2}  & \\dots  & x_{nm}
 #'  \end{pmatrix}
 #'
-#' @param symbol
-#' @param rows
-#' @param cols
-#' @param brackets
+#' @details
+#' This so far assumes that the \code{amsmath} package will be available.
+#'
+#'
+#' @param symbol A single character, the name of the matrix elements
+#' @param rows   Number of rows.
+#' @param cols   Number of columns
+#' @param brackets Type of brackets: \code{"p"} uses parentheses "(", ")";  \code{"b"} uses square braqckets "[", "]"; ...
+#'
+#' @examples
+#' symb_matrix("x", rows = "n", cols = "m", brackets = "p)  # default
+#' symb_matrix("\\beta", "p", "q")
 #'
 
 symb_matrix <- function(
