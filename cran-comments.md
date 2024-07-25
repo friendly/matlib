@@ -7,7 +7,7 @@
 This is a modest update, fixing bugs and adding some new features 
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.  
+There were no ERRORs or WARNINGs or NOTEs. 
 
 
 # matlib 0.9.8
