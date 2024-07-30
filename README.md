@@ -11,7 +11,7 @@
 
 **Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics**, http://friendly.github.io/matlib/
 
-Version 0.9.8
+Version 0.9.9
 
 These functions were originally designed for tutorial purposes in teaching & learning matrix algebra
 ideas using R. In some cases, functions are provided for concepts or computations available

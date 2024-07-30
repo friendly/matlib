@@ -1,3 +1,7 @@
+# matlib 0.9.9
+
+- added `symb_matrix()` to create a symbolic matrix
+
 # matlib 0.9.8
 
 - added `circle()` for drawing circles in diagrams

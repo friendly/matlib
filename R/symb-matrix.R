@@ -30,12 +30,12 @@
 #'               \code{"v"} uses vertical bars \code{"|", "|"};
 #'               \code{"V"} uses double vertical bars \code{"||", "||"};
 #'               \code{""} generates a plain matrix without delimeters
-#' @param indent characters to indent each line
+#' @param indent characters to indent each line [not yet implemented]
 #'
 #' @author Michael Friendly
 #' @export
 #' @examples
-#' symb_matrix("x", rows = "n", cols = "m", brackets = "p)  # default
+#' symb_matrix("x", rows = "n", cols = "m", brackets = "p")  # default
 #' symb_matrix("\\beta", "p", "q")
 #'
 #' # numeric rows/cols
