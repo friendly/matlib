@@ -18,7 +18,8 @@
 #' As presently designed, the function outputs the LaTeX code to the console, which can then be copied/pasted into a document.
 #'
 #' @details
-#' This implementation assumes that the \code{amsmath} package will be available.
+#' This implementation assumes that the \code{amsmath} package will be available because it uses the shorthands
+#' \code{\begin{pmatrix}}, ... rather than \code{\left( ... \right)}
 #'
 #'
 #' @param symbol A single character, the name of the matrix elements
@@ -33,12 +34,16 @@
 #'               \code{"V"} uses double vertical bars \code{"||", "||"};
 #'               \code{""} generates a plain matrix without delimeters
 #' @param indent characters to indent each line [not yet implemented]
+#' @param start base value for indexing rows and columns, \code{0} or \code{1}. The default, \code{start=1} generates
+#'              rows indices from 1 to \code{rows}. \code{start=0} generates
+#'              rows indices from 0 to \code{rows-1}.
 #'
 #' @author Michael Friendly
 #' @export
 #' @examples
 #' symb_matrix("x", rows = "n", cols = "m", brackets = "p")  # default
 #' symb_matrix("\\beta", "p", "q")
+#' symb_matrix("\\beta", "p", "q", start=0)
 #'
 #' # numeric rows/cols
 #' symb_matrix("y", "p", 5)
@@ -50,7 +55,8 @@ symb_matrix <- function(
     rows = "n",
     cols = "m",
     brackets=c("p", "b", "B", "v", "V", ""),
-    indent = "\t") {
+    indent = "\t",
+    start = 1) {
 
   brackets <- match.arg(brackets)
   begin <- paste0("\\begin{", brackets, "matrix}\n\t")
@@ -58,7 +64,8 @@ symb_matrix <- function(
 
   # make a symbolic row
   symb_row <- function(symbol, i, cols) {
-    row <- paste0(symbol, "_{", i, 1:4, "}")
+    ind <- if(start==1) 1:3 else 0:3
+    row <- paste0(symbol, "_{", i, ind, "}")
     row[3] <- "\\dots"
     row[4] <- paste0(symbol, "_{", i, cols, "}")
     row
@@ -66,12 +73,14 @@ symb_matrix <- function(
 
   # make a numeric row
   numb_row <- function(symbol, i, cols) {
-    row <- paste0(symbol, "_{", i, 1:cols, "}")
+    ind <- if(start==1) 1:cols else 0:(cols-1)
+    row <- paste0(symbol, "_{", i, ind, "}")
     row
   }
 
   if (is.character(rows)) {   # rows is symbolic
     if (is.character(cols)) {
+#      ind <- if(start==1) 1:cols else 0:(cols-1)
       mat <- rep("", 4)
       mat[1] <- symb_row(symbol, 1, cols) |> paste(collapse = " & ")
       mat[2] <- symb_row(symbol, 2, cols) |> paste(collapse = " & ")
@@ -88,15 +97,17 @@ symb_matrix <- function(
   }
   else {   # rows is numeric
     if (is.character(cols)) {   # cols is symbolic
+      ind <- if(start==1) 1:rows else 0:(rows-1)
       mat <- rep("", rows)
       for(i in seq(rows)) {
-        mat[i] <- symb_row(symbol, i, cols) |> paste(collapse = " & ")
+        mat[i] <- symb_row(symbol, ind[i], cols) |> paste(collapse = " & ")
       }
     }
     else {    # cols is numeric
+      ind <- if(start==1) 1:rows else 0:(rows-1)
       mat <- rep("", rows)
       for(i in seq(rows)) {
-        mat[i] <- numb_row(symbol, i, cols) |> paste(collapse = " & ")
+        mat[i] <- numb_row(symbol, ind[i], cols) |> paste(collapse = " & ")
       }
     }
   }

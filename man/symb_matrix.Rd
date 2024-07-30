@@ -9,7 +9,8 @@ symb_matrix(
   rows = "n",
   cols = "m",
   brackets = c("p", "b", "B", "v", "V", ""),
-  indent = "\\t"
+  indent = "\\t",
+  start = 1
 )
 }
 \arguments{
@@ -29,6 +30,10 @@ that many columns.}
 \code{""} generates a plain matrix without delimeters}
 
 \item{indent}{characters to indent each line [not yet implemented]}
+
+\item{start}{base value for indexing rows and columns, \code{0} or \code{1}. The default, \code{start=1} generates
+rows indices from 1 to \code{rows}. \code{start=0} generates
+rows indices from 0 to \code{rows-1}.}
 }
 \description{
 Constructs the latex code for a symbolic matrix, like:
@@ -46,11 +51,13 @@ Alternatively, the number of rows and/or columns can be integers, generating a m
 As presently designed, the function outputs the LaTeX code to the console, which can then be copied/pasted into a document.
 }
 \details{
-This implementation assumes that the \code{amsmath} package will be available.
+This implementation assumes that the \code{amsmath} package will be available because it uses the shorthands
+\code{\begin{pmatrix}}, ... rather than \code{\left( ... \right)}
 }
 \examples{
 symb_matrix("x", rows = "n", cols = "m", brackets = "p")  # default
 symb_matrix("\\\\beta", "p", "q")
+symb_matrix("\\\\beta", "p", "q", start=0)
 
 # numeric rows/cols
 symb_matrix("y", "p", 5)
