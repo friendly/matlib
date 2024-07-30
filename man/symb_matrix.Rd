@@ -32,12 +32,14 @@ that many columns.}
 }
 \description{
 Constructs the latex code for a symbolic matrix, like:
-\begin{pmatrix}
- x_{11}  & x_{12}  & \\dots  & x_{1m}  \\
- x_{21}  & x_{22}  & \\dots  & x_{2m}  \\
- \\vdots & \\vdots & \\ddots & \\vdots \\
- x_{n1}  & x_{n2}  & \\dots  & x_{nm}
+\code{
+ \begin{pmatrix}
+   x_{11}  & x_{12}  & \\dots  & x_{1m}  \\
+   x_{21}  & x_{22}  & \\dots  & x_{2m}  \\
+   \\vdots & \\vdots & \\ddots & \\vdots \\
+   x_{n1}  & x_{n2}  & \\dots  & x_{nm}
  \end{pmatrix}
+ }
 
 Alternatively, the number of rows and/or columns can be integers, generating a matrix of given size.
 
