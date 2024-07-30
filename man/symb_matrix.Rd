@@ -38,12 +38,12 @@ rows indices from 0 to \code{rows-1}.}
 \description{
 Constructs the latex code for a symbolic matrix, like:
 \code{
- \begin{pmatrix}
+ \\begin{pmatrix}
    x_{11}  & x_{12}  & \\dots  & x_{1m}  \\
    x_{21}  & x_{22}  & \\dots  & x_{2m}  \\
    \\vdots & \\vdots & \\ddots & \\vdots \\
    x_{n1}  & x_{n2}  & \\dots  & x_{nm}
- \end{pmatrix}
+ \\end{pmatrix}
  }
 
 Alternatively, the number of rows and/or columns can be integers, generating a matrix of given size.
@@ -52,7 +52,7 @@ As presently designed, the function outputs the LaTeX code to the console, which
 }
 \details{
 This implementation assumes that the \code{amsmath} package will be available because it uses the shorthands
-\code{\begin{pmatrix}}, ... rather than \code{\left( ... \right)}
+\code{\\begin{pmatrix}}, ... rather than \code{\\left( ... \\right)}
 }
 \examples{
 symb_matrix("x", rows = "n", cols = "m", brackets = "p")  # default
@@ -63,6 +63,7 @@ symb_matrix("\\\\beta", "p", "q", start=0)
 symb_matrix("y", "p", 5)
 symb_matrix("y", 4, "q")
 symb_matrix("y", 4, 4)
+symb_matrix("\\\\beta", 4, 4, start=0)
 }
 \author{
 Michael Friendly

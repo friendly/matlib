@@ -5,12 +5,12 @@
 #' @description
 #' Constructs the latex code for a symbolic matrix, like:
 #' \code{
-#'  \begin{pmatrix}
+#'  \\begin{pmatrix}
 #'    x_{11}  & x_{12}  & \\dots  & x_{1m}  \\
 #'    x_{21}  & x_{22}  & \\dots  & x_{2m}  \\
 #'    \\vdots & \\vdots & \\ddots & \\vdots \\
 #'    x_{n1}  & x_{n2}  & \\dots  & x_{nm}
-#'  \end{pmatrix}
+#'  \\end{pmatrix}
 #'  }
 #'
 #' Alternatively, the number of rows and/or columns can be integers, generating a matrix of given size.
@@ -19,7 +19,7 @@
 #'
 #' @details
 #' This implementation assumes that the \code{amsmath} package will be available because it uses the shorthands
-#' \code{\begin{pmatrix}}, ... rather than \code{\left( ... \right)}
+#' \code{\\begin{pmatrix}}, ... rather than \code{\\left( ... \\right)}
 #'
 #'
 #' @param symbol A single character, the name of the matrix elements
@@ -49,6 +49,7 @@
 #' symb_matrix("y", "p", 5)
 #' symb_matrix("y", 4, "q")
 #' symb_matrix("y", 4, 4)
+#' symb_matrix("\\beta", 4, 4, start=0)
 
 symb_matrix <- function(
     symbol = "x",
