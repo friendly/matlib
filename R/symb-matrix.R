@@ -4,7 +4,7 @@
 #'
 #' @description
 #' Constructs the latex code for a symbolic matrix, like:
-#' \code{
+#' \preformatted{
 #'  \\begin{pmatrix}
 #'    x_{11}  & x_{12}  & \\dots  & x_{1m}  \\
 #'    x_{21}  & x_{22}  & \\dots  & x_{2m}  \\
