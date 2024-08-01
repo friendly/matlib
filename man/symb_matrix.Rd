@@ -10,7 +10,7 @@ symb_matrix(
   cols = "m",
   brackets = c("p", "b", "B", "v", "V", ""),
   indent = "\\t",
-  start = 1
+  start = c(1, 1)
 )
 }
 \arguments{
@@ -31,9 +31,9 @@ that many columns.}
 
 \item{indent}{characters to indent each line [not yet implemented]}
 
-\item{start}{base value for indexing rows and columns, \code{0} or \code{1}. The default, \code{start=1} generates
-rows indices from 1 to \code{rows}. \code{start=0} generates
-rows indices from 0 to \code{rows-1}.}
+\item{start}{A vector of length 2 giving the base value for indexing rows and columns, \code{0} or \code{1}.
+The default, \code{start=1} generates rows indices from 1 to \code{rows}.
+\code{start=0} generates rows indices from 0 to \code{rows-1}.}
 }
 \description{
 Constructs the latex code for a symbolic matrix, like:
@@ -64,6 +64,7 @@ symb_matrix("y", "p", 5)
 symb_matrix("y", 4, "q")
 symb_matrix("y", 4, 4)
 symb_matrix("\\\\beta", 4, 4, start=0)
+symb_matrix("\\\\beta", 4, 4, start=c(0,1))
 }
 \author{
 Michael Friendly

@@ -34,9 +34,9 @@
 #'               \code{"V"} uses double vertical bars \code{"||", "||"};
 #'               \code{""} generates a plain matrix without delimeters
 #' @param indent characters to indent each line [not yet implemented]
-#' @param start base value for indexing rows and columns, \code{0} or \code{1}. The default, \code{start=1} generates
-#'              rows indices from 1 to \code{rows}. \code{start=0} generates
-#'              rows indices from 0 to \code{rows-1}.
+#' @param start  A vector of length 2 giving the base value for indexing rows and columns, \code{0} or \code{1}.
+#'               The default, \code{start=1} generates rows indices from 1 to \code{rows}.
+#'               \code{start=0} generates rows indices from 0 to \code{rows-1}.
 #'
 #' @author Michael Friendly
 #' @export
@@ -50,6 +50,7 @@
 #' symb_matrix("y", 4, "q")
 #' symb_matrix("y", 4, 4)
 #' symb_matrix("\\beta", 4, 4, start=0)
+#' symb_matrix("\\beta", 4, 4, start=c(0,1))
 
 symb_matrix <- function(
     symbol = "x",
@@ -57,15 +58,17 @@ symb_matrix <- function(
     cols = "m",
     brackets=c("p", "b", "B", "v", "V", ""),
     indent = "\t",
-    start = 1) {
+    start = c(1,1)) {
 
   brackets <- match.arg(brackets)
   begin <- paste0("\\begin{", brackets, "matrix}\n\t")
   end   <- paste0("\\end{", brackets, "matrix}\n")
+  start <- rep_len(start, length.out = 2)
+
 
   # make a symbolic row
   symb_row <- function(symbol, i, cols) {
-    ind <- if(start==1) 1:3 else 0:3
+    ind <- if(start[2]==1) 1:3 else 0:3
     row <- paste0(symbol, "_{", i, ind, "}")
     row[3] <- "\\dots"
     row[4] <- paste0(symbol, "_{", i, cols, "}")
@@ -74,38 +77,39 @@ symb_matrix <- function(
 
   # make a numeric row
   numb_row <- function(symbol, i, cols) {
-    ind <- if(start==1) 1:cols else 0:(cols-1)
+    ind <- if(start[2]==1) 1:cols else 0:(cols-1)
     row <- paste0(symbol, "_{", i, ind, "}")
     row
   }
 
   if (is.character(rows)) {   # rows is symbolic
     if (is.character(cols)) {
-#      ind <- if(start==1) 1:cols else 0:(cols-1)
+      ind <- if(start[1]==1) 1:2 else 0:1
       mat <- rep("", 4)
-      mat[1] <- symb_row(symbol, 1, cols) |> paste(collapse = " & ")
-      mat[2] <- symb_row(symbol, 2, cols) |> paste(collapse = " & ")
+      mat[1] <- symb_row(symbol, ind[1], cols) |> paste(collapse = " & ")
+      mat[2] <- symb_row(symbol, ind[2], cols) |> paste(collapse = " & ")
       mat[3] <- c("\\vdots", "\\vdots", "\\ddots", "\\vdots") |> paste(collapse = " & ")
       mat[4] <- symb_row(symbol, rows, cols) |> paste(collapse = " & ")
     }
     else {    # cols is numeric
+      ind <- if(start[1]==1) 1:2 else 0:1
       mat <- rep("", cols)
-      mat[1] <- numb_row(symbol, 1, cols) |> paste(collapse = " & ")
-      mat[2] <- numb_row(symbol, 2, cols) |> paste(collapse = " & ")
+      mat[1] <- numb_row(symbol, ind[1], cols) |> paste(collapse = " & ")
+      mat[2] <- numb_row(symbol, ind[2], cols) |> paste(collapse = " & ")
       mat[3] <- rep("\\vdots", cols) |> paste(collapse = " & ")
       mat[4] <- numb_row(symbol, rows, cols) |> paste(collapse = " & ")
     }
   }
   else {   # rows is numeric
     if (is.character(cols)) {   # cols is symbolic
-      ind <- if(start==1) 1:rows else 0:(rows-1)
+      ind <- if(start[1]==1) 1:rows else 0:(rows-1)
       mat <- rep("", rows)
       for(i in seq(rows)) {
         mat[i] <- symb_row(symbol, ind[i], cols) |> paste(collapse = " & ")
       }
     }
     else {    # cols is numeric
-      ind <- if(start==1) 1:rows else 0:(rows-1)
+      ind <- if(start[1]==1) 1:rows else 0:(rows-1)
       mat <- rep("", rows)
       for(i in seq(rows)) {
         mat[i] <- numb_row(symbol, ind[i], cols) |> paste(collapse = " & ")
