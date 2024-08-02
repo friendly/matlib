@@ -42,11 +42,11 @@ Get the released version from CRAN:
 
      install.packages("matlib")
 
-Or from my [R-universe](https://friendly.r-universe.dev):
+Or the development version from my [R-universe](https://friendly.r-universe.dev):
 
     install.packages('matlib', repos = c('https://friendly.r-universe.dev', 'https://cloud.r-project.org'))
 
-The development version can be installed to your R library directly from this repo via:
+The development version can also be installed to your R library directly from this repo via:
 
      if (!require(remotes)) install.packages("remotes")
      remotes::install_github("friendly/matlib", build_vignettes = TRUE)

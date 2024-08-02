@@ -54,5 +54,6 @@ X <- symbolicMatrix("x", "n", "p")
 U <- symbolicMatrix("u", "n", "k")
 D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
 V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
-cat("SVD:\n", X, "=\n", U, "\n", D, "\n", V)
+cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V)
+#cat("SVD:\n", X, "=\n", U, "\n", D, "\n", V)
 
