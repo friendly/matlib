@@ -10,25 +10,11 @@
 #'    x_{n1}  & x_{n2}  & \\dots  & x_{nm}
 #'  \\end{pmatrix}
 #'  }
-#'
-#' Alternatively, the number of rows and/or columns can be integers, generating a matrix of given size.
-#'
-#' The function prints the resulting code to the console, or, using \code{\link[clipr]{write_clip}}, can be copied to the console,
-#' or can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
-#' \preformatted{
-#' ```{r results = "asis"}
-#' symbolicMatrix("\\lambda", nrow=3, ncol=3, diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
-#' ```
-#' }
+#'#' Alternatively, the number of rows and/or columns can be integers, generating a matrix of given size.
 #'
 #' @details
-#' This implementation assumes that the LaTeX \code{amsmath} package will be available because it uses the shorthands
-#' \code{\\begin{pmatrix}}, ... rather than \code{\\left( \begin{array} ... \end{array} \\right)}.
-#'
-#' This function is experimental. Other features may be added.  E.g., it would be nice to
-#'
-#' * Specify exponents for the matrix elements, e.g, a diagonal matrix of square roots of eigenvalues, \code{\lambda_i^{1/2}}
-#' * Specify "accents" for the symbols, e.g., when you want the elements to be \code{\\widehat{\\beta}_{ij}}.
+#' This implementation assumes that the \code{amsmath} package will be available because it uses the shorthands
+#' \code{\\begin{pmatrix}}, ... rather than \code{\\left( \begin{array} ... \end{array} \\right)}
 #'
 #' @param symbol name for matrix elements, character string. For LaTeX symbols, the backslash must be escaped, e.g, \code{\\beta}.
 #' @param nrow   Number of rows, a single character representing rows symbolically, or an integer, generating
@@ -43,68 +29,39 @@
 #'               \code{"Vmatrix"} (uses doublevertical bars \code{"||", "||"});
 #'               \code{"matrix"} (generates a plain matrix without delimeters).
 #'
-#' @param diag   logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})
-#' @param comma  logical; if \code{TRUE}, commas are inserted between row and column subscripts
+#' @param diag   logical; if TRUE, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})
+#' @param comma  if TRUE, commas are inserted between row and column subscripts
 #' @param exponent if specified, e.g., "-1", or "1/2",  the exponent is applied to the matrix
 #' @param transpose if TRUE, the transpose symbol "\\top" is appended to the matrix; may
-#'               also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"}
-#' @param lhs    optional LaTeX expression, e.g, "\\boldsymbol{\\Lamda}", for left-hand side of an equation
-#'               with the matrix on the right-hand side.
-#' @param print  logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}
+#'               also be a character, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"}
+#' @param print  print the LaTeX code for the matrix on the console
 #'
 #' @returns Returns invisibly the LaTeX representation of the matrix as a character sting.
 #'        Use \code{cat()} to display it at the console, or \code{clipr::write_clip()} to copy it to the clipboard
 #'
 #' @author John Fox
 #' @export
-#' @examples
-#' symbolicMatrix()
-#'
-#' # return value
-#' mat <- symbolicMatrix(print = FALSE)
-#' str(mat)
-#' cat(mat)
-#' # copy to clipboard
-#' clipr::write_clip(mat)
-#'
-#' # numeric rows/cols
-#' symbolicMatrix(ncol=3)
-#' symbolicMatrix(nrow=4)
-#' symbolicMatrix(nrow=4, ncol=4)
-#'
-#' # diagonal matrices
-#' symbolicMatrix(nrow=3, ncol=3, diag=TRUE)
-#' symbolicMatrix(nrow="n", ncol="n", diag=TRUE)
-#'
-#' # commas, exponents, transpose
-#' symbolicMatrix("\\beta", comma=TRUE, exponent="-1")
-#' symbolicMatrix("\\beta", comma=TRUE, transpose=TRUE)
-#' symbolicMatrix("\\beta", comma=TRUE, exponent="-1", transpose=TRUE)
-
 symbolicMatrix <- function(
-      symbol="x",
-      nrow="n",
-      ncol="m",
-      matrix="pmatrix",
-      diag=FALSE,
-      comma=FALSE,
-      exponent,
-      transpose=FALSE,
-      lhs,
-      print=TRUE){
+    symbol="x",
+    nrow="n",
+    ncol="m",
+    matrix="pmatrix",
+    diag=FALSE,
+    comma=FALSE,
+    exponent,
+    transpose=FALSE,
+    print=TRUE){
 
   # Args:
-  #   symbol: for matrix elements, character string
+  #   symbol:
   #   nrow: number of rows, can be a character
   #   ncol: number of columns, can be a character
   #   matrix: LaTeX matix environment
   #   diag: if TRUE, off-diagonal elements are all 0 (and nrow must == ncol)
   #   comma: if TRUE, commas are inserted between row and column subscripts
-  #   exponent: if specified, e.g., "-1", the exponent is applied to the matrix
-  #   transpose: if TRUE, the transpose symbol "\\top" is appended to the
-  #              matrix; may also be a character, e.g., "T".
-  #   lhs: optional LaTeX expression, e.g, "\\boldsymbol{\\Lamda}", for
-  #        left-hand side of an equation with the matrix on the right-hand side.
+  #   exponent: if specified, e.g., "-1", or "1/2",  the exponent is applied to the matrix
+  #   transpose: if TRUE, the transpose symbol "\\top" is appended to the matrix; may
+  #              also be a character, e.g., "T" or "\\prime"
   #   print: print the LaTeX code for the matrix on the console
 
   if (is.numeric(nrow)){
@@ -130,41 +87,31 @@ symbolicMatrix <- function(
   right.sub <- c("}", "}", "", "}")
   post.element <- c(" & ", " & ", " & ", " \\\\ \n")
 
-  result <- paste0(if (!missing(lhs)) paste0(lhs, " = "),
-    "\\begin{", matrix, "} \n")
+  result <- paste0("\\begin{", matrix, "} \n")
 
   if (diag){
-    zero <- paste0("0", paste(rep(" ", nchar(symbol) + 3), collapse=""))
     if (nrow != ncol) stop("nrow and ncol must be the same if diag = TRUE")
     if (is.numeric(nrow)){
-      mat <- matrix(zero, nrow, nrow)
+      mat <- matrix("0", nrow, nrow)
       diag(mat) <- paste0(symbol, "_{", 1:nrow, "}")
     } else {
-      mat <- matrix(zero, 4, 4)
-      mat[3, ] <- paste0("\\vdots",
-                         paste0(paste(rep(" ", max(0, nchar(symbol) - 2)),
-                                      collapse = "")))
-      mat[, 3] <- paste0("\\cdots",
-                         paste0(paste(rep(" ", max(0, nchar(symbol) - 2)),
-                                      collapse = "")))
-      mat[3, 3] <- paste0("\\ddots",
-                          paste0(paste(rep(" ", max(0, nchar(symbol) - 2)),
-                                       collapse = "")))
-      mat[cbind(c(1, 2, 4), c(1, 2, 4))] <-
-        paste0(symbol, c("_{1}", "_{2}", paste0("_{", nrow, "}")))
+      mat <- matrix("0", 4, 4)
+      mat[3, ] <- "\\vdots"
+      mat[, 3] <- "\\cdots"
+      mat[3, 3] <- "\\ddots"
+      mat[cbind(c(1, 2, 4), c(1, 2, 4))] <- paste0(symbol,
+                                                   c("_1", "_2", paste0("_{", nrow, "}")))
     }
     if (is.character(nrow)) nrow <- 4
     for (i in 1:nrow){
       result <- paste0(result, "  ")
       for (j in 1:nrow){
-        result <- paste0(result, mat[i, j],
-                         if (j == nrow) " \\\\ \n" else " & ")
+        result <- paste0(result, mat[i, j], if (j == nrow) " \\\\ \n" else " & ")
       }
     }
   } else if (is.character(nrow)){
     vdots <- paste0("\\vdots",
-                    paste0(paste(rep(" ", nchar(symbol) - 1), collapse = ""),
-                           if (comma == ",") " "))
+                    paste(rep(" ", nchar(symbol) - 1), collapse = ""))
     row.subscripts <- c("1", "2", "", nrow)
     if (is.character(ncol)){
       vdots <- paste0(vdots, " & ", vdots, " & ",
@@ -193,8 +140,7 @@ symbolicMatrix <- function(
         }
         for (j in 1:ncol){
           result <- paste0(result,
-                           paste0(symbol, "_{", row.subscripts[i],
-                                  if (ncol > 1) paste0(comma, j), "}",
+                           paste0(symbol, "_{", row.subscripts[i], if (ncol > 1) paste0(comma, j), "}",
                                   if (j == ncol) " \\\\ \n" else " & ")
           )
         }
