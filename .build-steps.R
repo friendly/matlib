@@ -18,7 +18,7 @@ devtools::release()
 devtools::build_vignettes()
 
 # no longer necessary
-tools::compactPDF("doc/HE-examples.pdf", gs_quality="ebook")
+#tools::compactPDF("doc/HE-examples.pdf", gs_quality="ebook")
 # compacted ‘HE-examples.pdf’ from 765Kb to 415Kb
 
 # build the package site

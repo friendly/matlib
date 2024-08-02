@@ -45,7 +45,7 @@ reference:
       - rowswap
       - buildTmat
 
-  - Linear equations:
+  - title: Linear equations
     desc:  Functions to illustrate linear equations of the form $\mathbf{A x = b}$
     contents:
       - showEqn
