@@ -46,12 +46,13 @@
 #' \\right)
 #' }.
 #'
-#' This function is experimental. Other features may be added.  E.g., it would be nice to:
+#' This function is \bold{experimental}. Other features may be added.  E.g., it would be nice to:
 #'
 #' \itemize{
 #'  \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
 #'  \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
-#'  \item Specify "accents" for the symbols, e.g., when you want the elements to be given bars or hats: \code{\\widehat{\\beta}_{ij}}.
+#'  \item Specify "accents" for the symbols, e.g., when you want the elements to be given bars or hats, e.g.,
+#'  \code{\\widehat{\\beta}_{ij}}, giving \eqn{\widehat{\beta}_{ij}}
 #' }
 #'
 #' @param symbol name for matrix elements, character string. For LaTeX symbols, the backslash must be escaped, e.g, \code{\\beta}.
@@ -59,13 +60,15 @@
 #'               that many rows.
 #' @param ncol   Number of columns, a single character representing columns symbolically, or an integer, generating
 #'               that many columns.
-#' @param matrix Character string giving the LaTeX matrix environment used in \code{\\begin{}}, \code{\\end{}}. Typically one of
-#'               \code{"pmatrix"} (uses parentheses \code{"(", ")"});
-#'               \code{"bmatrix"} (uses square brackets \code{"[", "]"});
-#'               \code{"Bmatrix"} (uses braces \code{"{", "}"};),
-#'               \code{"vmatrix"} (uses vertical bars \code{"|", "|"});
-#'               \code{"Vmatrix"} (uses double vertical bars \code{"||", "||"});
-#'               \code{"matrix"} (generates a plain matrix without delimeters).
+#' @param matrix Character string giving the LaTeX matrix environment used in \code{\\begin{}}, \code{\\end{}}. Typically one of:
+#' \describe{
+#'    \item{\code{"pmatrix"}}{uses parentheses: \code{"(", ")"}}
+#'    \item{\code{"bmatrix"}}{uses square brackets: \code{"[", "]"}}
+#'    \item{\code{"Bmatrix"}}{uses braces: \code{"{", "}"}}
+#'    \item{\code{"vmatrix"}}{uses vertical bars: \code{"|", "|"}}
+#'    \item{\code{"Vmatrix"}}{uses double vertical bars: \code{"||", "||"}}
+#'    \item{\code{"matrix"}}{generates a plain matrix without delimeters}
+#' }
 #'
 #' @param diag   logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})
 #' @param comma  logical; if \code{TRUE}, commas are inserted between row and column subscripts
@@ -106,6 +109,14 @@
 #' symbolicMatrix("\\beta", comma=TRUE, exponent="-1")
 #' symbolicMatrix("\\beta", comma=TRUE, transpose=TRUE)
 #' symbolicMatrix("\\beta", comma=TRUE, exponent="-1", transpose=TRUE)
+#'
+#' # represent the SVD, X = U D V'  symbolically
+#' X <- symbolicMatrix("x", "n", "p")
+#' U <- symbolicMatrix("u", "n", "k")
+#' D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
+#' V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
+#' cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V)
+
 
 symbolicMatrix <- function(
       symbol="x",
