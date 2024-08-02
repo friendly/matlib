@@ -30,7 +30,8 @@ Suggests:
     rmarkdown,
     carData,
     webshot2,
-    markdown
+    markdown,
+    clipr
 Imports:
     xtable,
     MASS,

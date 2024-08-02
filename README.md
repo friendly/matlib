@@ -1,8 +1,10 @@
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/matlib)](https://cran.r-project.org/package=matlib)
+[![R-universe](https://friendly.r-universe.dev/badges/matlib)](https://friendly.r-universe.dev)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/matlib)](https://cran.r-project.org/package=matlib)
-[![Dependencies](https://tinyverse.netlify.com/badge/matlib)](https://cran.r-project.org/package=matlib)
+[![downloads](http://cranlogs.r-pkg.org/badges/matlib)](https://cran.r-project.org/package=matlib)
+<!-- [![Dependencies](https://tinyverse.netlify.com/badge/matlib)](https://cran.r-project.org/package=matlib) -->
 [![Travis-CI Build Status](https://travis-ci.org/friendly/matlib.svg?branch=master)](https://travis-ci.org/friendly/matlib)
 
 <!-- badges: end -->
@@ -30,6 +32,8 @@ For example,
 
 * `showEqn(A, b)` shows the matrix equations $A x = b$ in text or LaTeX form, while
 `plotEqn(A, b)` and `plotEqn3d(A, b)` plots those equations in 2D or 3D space.
+
+* `matrix2latex()` and `symbolicMatrix()` facilitate writing matrix equations in LaTeX
 
 * `vectors()`, `vectors3d()` plot geometric vector diagrams in 2D or 3D, with other functions to draw
 angles and arcs.
@@ -116,7 +120,9 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions()`.
   - `vectors()`, `vectors3d()` - plot geometric vector diagrams in 2D/3D 
   - `regvec3d()` - calculate and plot vectors representing a bivariate regression model, `lm(y ~ x1 + x2)` in mean-deviation form.
 
-8. **matix2latex** - `matrix2latex()`: Convert matrix to LaTeX equation
+8. **Matrix equations** 
+  - `matrix2latex()`: Convert matrix to LaTeX equation
+  - `symbolicMatrix()`: Create a symbolic matrix for LaTeX
 
 ### Vignettes and presentations
 

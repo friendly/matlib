@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="matlib">
 <title>Gram-Schmidt Orthogonalization and Regression • matlib</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -17,54 +18,70 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Gram-Schmidt Orthogonalization and Regression">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Gram-Schmidt Orthogonalization and Regression">
+<meta property="og:description" content="matlib">
+<meta property="og:image" content="http://friendly.github.io/matlib/logo.png">
+<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
-
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
     <a class="navbar-brand me-2" href="../index.html">matlib</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.9</small>
 
-
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/data-beta.html">Vector Spaces of Least Squares and Linear Equations</a></li>
-    <li><a class="dropdown-item" href="../articles/det-ex1.html">Properties of determinants</a></li>
-    <li><a class="dropdown-item" href="../articles/det-ex2.html">Evaluation of determinants</a></li>
-    <li><a class="dropdown-item" href="../articles/eigen-ex1.html">Eigenvalues and Eigenvectors: Properties</a></li>
-    <li><a class="dropdown-item" href="../articles/eigen-ex2.html">Eigenvalues: Spectral Decomposition</a></li>
-    <li><a class="dropdown-item" href="../articles/ginv.html">Generalized inverse</a></li>
-    <li><a class="dropdown-item" href="../articles/gramreg.html">Gram-Schmidt Orthogonalization and Regression</a></li>
-    <li><a class="dropdown-item" href="../articles/inv-ex1.html">Inverse of a matrix</a></li>
-    <li><a class="dropdown-item" href="../articles/inv-ex2.html">Matrix inversion by elementary row operations</a></li>
-    <li><a class="dropdown-item" href="../articles/linear-equations.html">Solving Linear Equations</a></li>
-  </ul>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/data-beta.html">Vector Spaces of Least Squares and Linear Equations</a>
+    <a class="dropdown-item" href="../articles/det-ex1.html">Properties of determinants</a>
+    <a class="dropdown-item" href="../articles/det-ex2.html">Evaluation of determinants</a>
+    <a class="dropdown-item" href="../articles/eigen-ex1.html">Eigenvalues and Eigenvectors: Properties</a>
+    <a class="dropdown-item" href="../articles/eigen-ex2.html">Eigenvalues: Spectral Decomposition</a>
+    <a class="dropdown-item" href="../articles/ginv.html">Generalized inverse</a>
+    <a class="dropdown-item" href="../articles/gramreg.html">Gram-Schmidt Orthogonalization and Regression</a>
+    <a class="dropdown-item" href="../articles/inv-ex1.html">Inverse of a matrix</a>
+    <a class="dropdown-item" href="../articles/inv-ex2.html">Matrix inversion by elementary row operations</a>
+    <a class="dropdown-item" href="../articles/linear-equations.html">Solving Linear Equations</a>
+  </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul>
-<ul class="navbar-nav">
-<li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
-</form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/friendly/matlib/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/friendly/matlib/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
 </div>
 
-
+    
   </div>
 </nav><div class="container template-article">
 
@@ -77,7 +94,7 @@
                         <h4 data-toc-skip class="author">Michael
 Friendly</h4>
             
-            <h4 data-toc-skip class="date">2024-07-25</h4>
+            <h4 data-toc-skip class="date">2024-08-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/HEAD/vignettes/gramreg.Rmd" class="external-link"><code>vignettes/gramreg.Rmd</code></a></small>
       <div class="d-none name"><code>gramreg.Rmd</code></div>
@@ -112,12 +129,12 @@ a response variable</p>
 <span>                   IQ <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">20</span> <span class="op">+</span> <span class="va">height</span> <span class="op">+</span> <span class="fl">3</span><span class="op">*</span><span class="va">age</span> <span class="op">-</span><span class="fl">.1</span><span class="op">*</span><span class="va">weight</span> <span class="op">-</span><span class="fl">3</span><span class="op">*</span><span class="va">male</span> <span class="op">+</span> <span class="fl">10</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##         sex age height weight male  IQ</span></span>
-<span><span class="co">## Alfred    M  14   69.0  112.5    1 103</span></span>
-<span><span class="co">## Alice     F  13   56.5   84.0    0 110</span></span>
-<span><span class="co">## Barbara   F  13   65.3   98.0    0  90</span></span>
-<span><span class="co">## Carol     F  14   62.8  102.5    0 114</span></span>
-<span><span class="co">## Henry     M  14   63.5  102.5    1 118</span></span>
-<span><span class="co">## James     M  12   57.3   83.0    1 113</span></span></code></pre>
+<span><span class="co">## Alfred    M  14   69.0  112.5    1 115</span></span>
+<span><span class="co">## Alice     F  13   56.5   84.0    0 104</span></span>
+<span><span class="co">## Barbara   F  13   65.3   98.0    0 112</span></span>
+<span><span class="co">## Carol     F  14   62.8  102.5    0 105</span></span>
+<span><span class="co">## Henry     M  14   63.5  102.5    1 110</span></span>
+<span><span class="co">## James     M  12   57.3   83.0    1  93</span></span></code></pre>
 <p>Reorder the predictors we want, forming a numeric matrix,
 <code>X</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -170,8 +187,7 @@ length,</p>
 <span><span class="co">## [3,]     0    0    7    0</span></span>
 <span><span class="co">## [4,]     0    0    0    2</span></span></code></pre>
 <p>We make standardize column to unit length, giving <code>Z</code> as
-an <strong>orthonormal</strong> matrix, such that
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mi>′</mi><mi>Z</mi><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">Z' Z = I</annotation></semantics></math>.</p>
+an <strong>orthonormal</strong> matrix, such that <span class="math inline">\(Z' Z = I\)</span>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="va">Z</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="../reference/len.html">len</a></span><span class="op">(</span><span class="va">Z</span><span class="op">)</span><span class="op">)</span>    <span class="co"># make each column unit length</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">Z</span><span class="op">)</span><span class="op">)</span>         <span class="co"># check orthonormal</span></span></code></pre></div>
@@ -186,17 +202,11 @@ an <strong>orthonormal</strong> matrix, such that
 <h3 id="relationship-to-qr-factorization">Relationship to QR factorization<a class="anchor" aria-label="anchor" href="#relationship-to-qr-factorization"></a>
 </h3>
 <p>The QR method uses essentially the same process, factoring the matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
-as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo mathvariant="bold">=</mo><mi>𝐐</mi><mi>𝐑</mi></mrow><annotation encoding="application/x-tex">\mathbf{X = Q R}</annotation></semantics></math>,
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐐</mi><annotation encoding="application/x-tex">\mathbf{Q}</annotation></semantics></math>
-is the orthonormal matrix corresponding to <code>Z</code> and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐑</mi><annotation encoding="application/x-tex">\mathbf{R}</annotation></semantics></math>
-is an upper triangular matrix. However, the signs of the columns of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐐</mi><annotation encoding="application/x-tex">\mathbf{Q}</annotation></semantics></math>
-are arbitrary, and <code><a href="../reference/QR.html">QR()</a></code> returns <code>QR(X)$Q</code> with
-signs reversed, compared to <code>Z</code>.</p>
+<span class="math inline">\(\mathbf{X}\)</span> as <span class="math inline">\(\mathbf{X = Q R}\)</span>, where <span class="math inline">\(\mathbf{Q}\)</span> is the orthonormal matrix
+corresponding to <code>Z</code> and <span class="math inline">\(\mathbf{R}\)</span> is an upper triangular matrix.
+However, the signs of the columns of <span class="math inline">\(\mathbf{Q}\)</span> are arbitrary, and
+<code><a href="../reference/QR.html">QR()</a></code> returns <code>QR(X)$Q</code> with signs reversed,
+compared to <code>Z</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># same result as QR(X)$Q, but with signs reversed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Z</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
@@ -226,9 +236,8 @@ signs reversed, compared to <code>Z</code>.</p>
 <code>X</code> and in <code>Z</code>. These are equivalent, in the sense
 that</p>
 <ul>
-<li>The
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math>
-and MSE are the same in both models</li>
+<li>The <span class="math inline">\(R^2\)</span> and MSE are the same in
+both models</li>
 <li>Residuals are the same</li>
 <li>The Type I tests given by <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> are the same.</li>
 </ul>
@@ -242,11 +251,11 @@ and MSE are the same in both models</li>
 <span><span class="co">## </span></span>
 <span><span class="co">## Response: IQ</span></span>
 <span><span class="co">##           Df Sum Sq Mean Sq F value Pr(&gt;F)  </span></span>
-<span><span class="co">## height     1    127     127    1.09  0.321  </span></span>
-<span><span class="co">## weight     1    194     194    1.67  0.225  </span></span>
-<span><span class="co">## age        1    417     417    3.59  0.087 .</span></span>
-<span><span class="co">## male       1    200     200    1.72  0.218  </span></span>
-<span><span class="co">## Residuals 10   1162     116                 </span></span>
+<span><span class="co">## height     1    389     389    6.08  0.033 *</span></span>
+<span><span class="co">## weight     1    196     196    3.07  0.110  </span></span>
+<span><span class="co">## age        1     82      82    1.28  0.284  </span></span>
+<span><span class="co">## male       1     12      12    0.18  0.678  </span></span>
+<span><span class="co">## Residuals 10    639      64                 </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
 <p>Regression of IQ on the orthogonalized variables in
@@ -258,11 +267,11 @@ and MSE are the same in both models</li>
 <span><span class="co">## </span></span>
 <span><span class="co">## Response: IQ</span></span>
 <span><span class="co">##           Df Sum Sq Mean Sq F value Pr(&gt;F)  </span></span>
-<span><span class="co">## height     1    127     127    1.09  0.321  </span></span>
-<span><span class="co">## weight     1    194     194    1.67  0.225  </span></span>
-<span><span class="co">## age        1    417     417    3.59  0.087 .</span></span>
-<span><span class="co">## male       1    200     200    1.72  0.218  </span></span>
-<span><span class="co">## Residuals 10   1162     116                 </span></span>
+<span><span class="co">## height     1    389     389    6.08  0.033 *</span></span>
+<span><span class="co">## weight     1    196     196    3.07  0.110  </span></span>
+<span><span class="co">## age        1     82      82    1.28  0.284  </span></span>
+<span><span class="co">## male       1     12      12    0.18  0.678  </span></span>
+<span><span class="co">## Residuals 10    639      64                 </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
 <p>This illustrates that <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> tests for linear models
@@ -271,26 +280,28 @@ contribution of each variable over and above all previous ones, in a
 given order. These usually do not make substantive sense, except in
 testing ordered (“hierarchical”) models.</p>
 </div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Michael Friendly, John Fox, Phil Chalmers.</p>
+  <p></p>
+<p>Developed by Michael Friendly, John Fox, Phil Chalmers.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
 </div>
 
+  
 
-
-
+  
 
   </body>
 </html>

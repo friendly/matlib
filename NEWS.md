@@ -1,6 +1,6 @@
 # matlib 0.9.9
 
-- added `symb_matrix()` to create a symbolic matrix
+- added `symbolicMatrix()` to create a symbolic matrix
 
 # matlib 0.9.8
 

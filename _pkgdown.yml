@@ -55,6 +55,7 @@ reference:
       - printMatEqn
       - printMatrix
       - matrix2latex
+      - symbolicMatrix
 
   - title: Gaussian elimination
     desc:  Functions for illustrating Gaussian elimination

@@ -118,7 +118,7 @@ mat <- symbolicMatrix(print = FALSE)
 str(mat)
 cat(mat)
 # copy to clipboard
-clipr::write_clip(mat)
+#clipr::write_clip(mat)    # can't be done in non-interactive mode
 
 # numeric rows/cols
 symbolicMatrix(ncol=3)
