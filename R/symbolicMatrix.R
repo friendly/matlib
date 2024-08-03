@@ -225,6 +225,7 @@ symbolicMatrix <- function(
       }
     }
 
+    # check for vector symbol
     # } else {
     #   if(is.vector(symbol) && is.atomic(symbol)) {
     #     stop("'symbol' must be a character or matrix, not a vector of class", class(symbol))
