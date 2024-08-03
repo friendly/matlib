@@ -1,273 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://friendly.github.io/matlib/404.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/announce.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/data-beta.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/det-ex1.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/det-ex2.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/eigen-ex1.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/eigen-ex2.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/ginv.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/gramreg.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/inv-ex1.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/inv-ex2.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/articles/linear-equations.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/authors.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/index.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/news/index.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/adjoint.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/angle.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/arc.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/arrows3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/as.matrix.trace.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/buildTmat.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/cholesky.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/circle.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/circle3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/class.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/cofactor.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/cone3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/corner.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/Det.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/echelon.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/Eigen.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/gaussianElimination.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/getYmult.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/Ginv.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/GramSchmidt.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/gsorth.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/inv.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/Inverse.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/is_orthogonal_matrix.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/is_square.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/is_symmetric_matrix.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/J.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/len.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/LU.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/matlib-package.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/matlib.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/matrix2latex.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/minor.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/MoorePenrose.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/mpower.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/plot.regvec3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/plotEqn.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/plotEqn3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/pointOnLine.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/powerMethod.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/print.enhancedMatrix.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/print.regvec3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/print.trace.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/printMatEqn.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/printMatrix.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/Proj.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/QR.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/R.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/regvec3d.default.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/regvec3d.formula.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/regvec3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/rowadd.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/rowCofactors.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/rowMinors.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/rowmult.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/rowswap.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/showEig.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/showEqn.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/Solve.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/summary.regvec3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/SVD.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/svdDemo.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/swp.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/symbolicMatrix.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/symMat.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/therapy.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/tr.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/vandermode.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/vec.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/vectors.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/vectors3d.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/workers.html</loc>
-  </url>
-  <url>
-    <loc>http://friendly.github.io/matlib/reference/xprod.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://friendly.github.io/matlib/404.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/announce.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/data-beta.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/det-ex1.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/det-ex2.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/eigen-ex1.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/eigen-ex2.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/ginv.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/gramreg.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/index.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/inv-ex1.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/inv-ex2.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/linear-equations.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/authors.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/index.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/news/index.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/adjoint.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/angle.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/arc.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/arrows3d.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/buildTmat.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/cholesky.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/circle.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/circle3d.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/class.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/cofactor.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/cone3d.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/corner.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/Det.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/echelon.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/Eigen.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/gaussianElimination.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/getYmult.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/Ginv.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/GramSchmidt.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/gsorth.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/index.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/Inverse.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/is_square.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/J.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/len.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/LU.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/matlib-package.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/matrix2latex.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/minor.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/MoorePenrose.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/mpower.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/plot.regvec3d.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/plotEqn.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/plotEqn3d.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/pointOnLine.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/powerMethod.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/printMatEqn.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/printMatrix.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/Proj.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/QR.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/R.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/regvec3d.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/rowadd.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/rowCofactors.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/rowMinors.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/rowmult.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/rowswap.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/showEig.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/showEqn.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/Solve.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/SVD.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/svdDemo.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/swp.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/symbolicMatrix.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/symMat.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/therapy.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/tr.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/vandermode.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/vec.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/vectors.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/vectors3d.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/workers.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/xprod.html</loc></url>
 </urlset>
+
