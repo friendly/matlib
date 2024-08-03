@@ -10,6 +10,9 @@ cat(mat)
 # copy to clipboard
 clipr::write_clip(mat)
 
+# use a complex symbol
+symbolicMatrix("\\widehat{\\beta}", 2, 4)
+
 symbolicMatrix("\\beta")
 symbolicMatrix(nrow="n", ncol="n")
 symbolicMatrix(ncol=3)

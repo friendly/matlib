@@ -29,11 +29,19 @@
 #' or can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
 #' \preformatted{
 #' ```{r results = "asis"}
-#' symbolicMatrix("\\lambda", nrow=3, ncol=3,
+#' symbolicMatrix("\\lambda", nrow=2, ncol=2,
 #'                diag=TRUE,
 #'                lhs = "\\boldsymbol{\\Lambda}")
 #' ```
 #' }
+#'
+#' This generates
+#' \deqn{
+#'  \boldsymbol{\Lambda} = \begin{pmatrix}
+#'  \lambda_{1} & 0           \\
+#'  0           & \lambda_{2} \\
+#'  \end{pmatrix}
+#'  }
 #'
 #' @details
 #' This implementation assumes that the LaTeX \code{amsmath} package will be available because it uses the shorthands
@@ -51,11 +59,11 @@
 #' \itemize{
 #'  \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
 #'  \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
-#'  \item Specify "accents" for the symbols, e.g., when you want the elements to be given bars or hats, e.g.,
-#'  \code{\\widehat{\\beta}_{ij}}, giving \eqn{\widehat{\beta}_{ij}}
 #' }
 #'
-#' @param symbol name for matrix elements, character string. For LaTeX symbols, the backslash must be escaped, e.g, \code{\\beta}.
+#' @param symbol name for matrix elements, character string. For LaTeX symbols,
+#'        the backslash must be doubled because it is an escape character in R.
+#'        That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}.
 #' @param nrow   Number of rows, a single character representing rows symbolically, or an integer, generating
 #'               that many rows.
 #' @param ncol   Number of columns, a single character representing columns symbolically, or an integer, generating
@@ -96,6 +104,9 @@
 #' # copy to clipboard
 #' #clipr::write_clip(mat)    # can't be done in non-interactive mode
 #'
+#' # can use a complex symbol
+#' symbolicMatrix("\\widehat{\\beta}", 2, 4)
+#'
 #' # numeric rows/cols
 #' symbolicMatrix(ncol=3)
 #' symbolicMatrix(nrow=4)
@@ -116,6 +127,9 @@
 #' D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
 #' V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
 #' cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V)
+#'
+#' # specify left hand side
+#' symbolicMatrix("\\lambda", 3, 3, diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
 
 
 symbolicMatrix <- function(

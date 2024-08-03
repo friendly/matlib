@@ -18,7 +18,9 @@ symbolicMatrix(
 )
 }
 \arguments{
-\item{symbol}{name for matrix elements, character string. For LaTeX symbols, the backslash must be escaped, e.g, \code{\\beta}.}
+\item{symbol}{name for matrix elements, character string. For LaTeX symbols,
+the backslash must be doubled because it is an escape character in R.
+That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}.}
 
 \item{nrow}{Number of rows, a single character representing rows symbolically, or an integer, generating
 that many rows.}
@@ -45,15 +47,17 @@ that many columns.}
 \item{transpose}{if TRUE, the transpose symbol "\\top" is appended to the matrix; may
 also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"}}
 
-\item{lhs}{optional LaTeX expression, e.g, "\\boldsymbol{\\Lamda}", for left-hand side of an equation
-with the matrix on the right-hand side.}
+\item{lhs}{character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand side of an equation
+with the generated matrix on the right-hand side.}
 
 \item{print}{logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}}
 }
 \value{
 Returns invisibly the LaTeX representation of the matrix as a character string.
+       If you assign to a variable, you can use \code{\link[clipr]{write_clip}} to copy it to the clipboard.
 
-       Use \code{cat()} to display it at the console, or \code{\link[clipr]{write_clip}} to copy it to the clipboard
+       As a side-effect, by default (unless \code{print = FALSE}) the function uses
+       \code{cat()} to display the result at the console.
 }
 \description{
 Constructs the LaTeX code for a symbolic matrix, like:
@@ -84,11 +88,19 @@ The function prints the resulting code to the console, or, using \code{\link[cli
 or can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
 \preformatted{
 ```{r results = "asis"}
-symbolicMatrix("\\lambda", nrow=3, ncol=3,
+symbolicMatrix("\\lambda", nrow=2, ncol=2,
                diag=TRUE,
                lhs = "\\boldsymbol{\\Lambda}")
 ```
 }
+
+This generates
+\deqn{
+ \boldsymbol{\Lambda} = \begin{pmatrix}
+ \lambda_{1} & 0           \\
+ 0           & \lambda_{2} \\
+ \end{pmatrix}
+ }
 }
 \details{
 This implementation assumes that the LaTeX \code{amsmath} package will be available because it uses the shorthands
@@ -106,8 +118,6 @@ This function is \bold{experimental}. Other features may be added.  E.g., it wou
 \itemize{
  \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
  \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
- \item Specify "accents" for the symbols, e.g., when you want the elements to be given bars or hats, e.g.,
- \code{\\widehat{\\beta}_{ij}}, giving \eqn{\widehat{\beta}_{ij}}
 }
 }
 \examples{
@@ -119,6 +129,9 @@ str(mat)
 cat(mat)
 # copy to clipboard
 #clipr::write_clip(mat)    # can't be done in non-interactive mode
+
+# can use a complex symbol
+symbolicMatrix("\\\\widehat{\\\\beta}", 2, 4)
 
 # numeric rows/cols
 symbolicMatrix(ncol=3)
@@ -140,9 +153,12 @@ U <- symbolicMatrix("u", "n", "k")
 D <- symbolicMatrix("\\\\lambda", "k", "k", diag=TRUE)
 V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
 cat("\\\\mathrm{SVD:}\n", X, "=\n", U, D, V)
+
+# specify left hand side
+symbolicMatrix("\\\\lambda", 3, 3, diag=TRUE, lhs = "\\\\boldsymbol{\\\\Lambda}")
 }
 \seealso{
-\code{\link{matrix2latex}}
+\code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
 }
 \author{
 John Fox

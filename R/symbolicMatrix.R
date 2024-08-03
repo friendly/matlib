@@ -29,11 +29,19 @@
 #' or can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
 #' \preformatted{
 #' ```{r results = "asis"}
-#' symbolicMatrix("\\lambda", nrow=3, ncol=3,
+#' symbolicMatrix("\\lambda", nrow=2, ncol=2,
 #'                diag=TRUE,
 #'                lhs = "\\boldsymbol{\\Lambda}")
 #' ```
 #' }
+#'
+#' This generates
+#' \deqn{
+#'  \boldsymbol{\Lambda} = \begin{pmatrix}
+#'  \lambda_{1} & 0           \\
+#'  0           & \lambda_{2} \\
+#'  \end{pmatrix}
+#'  }
 #'
 #' @details
 #' This implementation assumes that the LaTeX \code{amsmath} package will be available because it uses the shorthands
@@ -51,11 +59,11 @@
 #' \itemize{
 #'  \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
 #'  \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
-#'  \item Specify "accents" for the symbols, e.g., when you want the elements to be given bars or hats, e.g.,
-#'  \code{\\widehat{\\beta}_{ij}}, giving \eqn{\widehat{\beta}_{ij}}
 #' }
 #'
-#' @param symbol name for matrix elements, character string. For LaTeX symbols, the backslash must be escaped, e.g, \code{\\beta}.
+#' @param symbol name for matrix elements, character string. For LaTeX symbols,
+#'        the backslash must be doubled because it is an escape character in R.
+#'        That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}.
 #' @param nrow   Number of rows, a single character representing rows symbolically, or an integer, generating
 #'               that many rows.
 #' @param ncol   Number of columns, a single character representing columns symbolically, or an integer, generating
@@ -75,16 +83,18 @@
 #' @param exponent if specified, e.g., "-1", or "1/2",  the exponent is applied to the matrix
 #' @param transpose if TRUE, the transpose symbol "\\top" is appended to the matrix; may
 #'               also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"}
-#' @param lhs    optional LaTeX expression, e.g, "\\boldsymbol{\\Lamda}", for left-hand side of an equation
-#'               with the matrix on the right-hand side.
+#' @param lhs    character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand side of an equation
+#'               with the generated matrix on the right-hand side.
 #' @param print  logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}
 #'
 #' @returns Returns invisibly the LaTeX representation of the matrix as a character string.
+#'        If you assign to a variable, you can use \code{\link[clipr]{write_clip}} to copy it to the clipboard.
 #'
-#'        Use \code{cat()} to display it at the console, or \code{\link[clipr]{write_clip}} to copy it to the clipboard
+#'        As a side-effect, by default (unless \code{print = FALSE}) the function uses
+#'        \code{cat()} to display the result at the console.
 #'
 #' @author John Fox
-#' @seealso \code{\link{matrix2latex}}
+#' @seealso \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
 #' @export
 #' @examples
 #' symbolicMatrix()
@@ -95,6 +105,9 @@
 #' cat(mat)
 #' # copy to clipboard
 #' #clipr::write_clip(mat)    # can't be done in non-interactive mode
+#'
+#' # can use a complex symbol
+#' symbolicMatrix("\\widehat{\\beta}", 2, 4)
 #'
 #' # numeric rows/cols
 #' symbolicMatrix(ncol=3)
@@ -116,6 +129,9 @@
 #' D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
 #' V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
 #' cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V)
+#'
+#' # specify left hand side
+#' symbolicMatrix("\\lambda", 3, 3, diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
 
 
 symbolicMatrix <- function(
