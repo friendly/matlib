@@ -1,6 +1,6 @@
 # test symbolicMatrix
 
-source(here::here("dev", "symbolicMatrix.R"))
+source(here::here("dev", "symbolicMatrix2.R"))
 
 symbolicMatrix()
 # return value
@@ -60,4 +60,46 @@ V <- symbolicMatrix("v", "k", "p", transpose = TRUE, print=FALSE)
 cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V)
 
 #cat("SVD:\n", X, "=\n", U, "\n", D, "\n", V)
+
+# John's new version
+
+m <- matrix(c(
+   "\\alpha", "\\beta",
+   "\\gamma", "\\delta",
+   "\\epsilon", "\\pi",
+   0 , 0), 4, 2, byrow=TRUE)
+
+symbolicMatrix(m)
+
+symbolicMatrix(diag(4), lhs = "\\mathbf{I}_4")
+
+symbolicMatrix(m, transpose=TRUE)
+symbolicMatrix(m, exponent="-1")
+symbolicMatrix(m, transpose=TRUE, exponent="-1")
+
+# prefix / suffix
+symbolicMatrix(prefix="\\sqrt{", suffix="}")
+
+# doesn't compile
+# symbolicMatrix(prefix="{", suffix="^{1/2}")
+
+# OK
+symbolicMatrix(prefix="", suffix="^{1/2}")
+
+
+# numerics that aren't integers: options(digits) has no effect
+mm <- matrix(1:4, 2,2)
+symbolicMatrix(sqrt(mm))
+
+# what about a vector?
+symbolicMatrix(1:4)
+# Error in rep(" ", nchar(symbol) + nchar(prefix) + nchar(suffix) - 1) :
+#   invalid 'times' argument
+
+symbolicMatrix(LETTERS[1:4])
+# Error in rep(" ", nchar(symbol) + nchar(prefix) + nchar(suffix) - 1) :
+#   invalid 'times' argument
+
+obj <- 1:4
+is.vector(obj) && is.atomic(obj)
 

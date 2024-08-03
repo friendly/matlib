@@ -1,6 +1,3 @@
-# JF version of 8 Aug 24, w/ prefix, suffix
-# TODO: Trap the case of a vector symbol, e.g, symbolicMatrix(1:4)
-
 #' Create a Symbolic Matrix for LaTeX
 #'
 #' @description
@@ -29,7 +26,7 @@
 #'
 #' Alternatively, instead of characters,
 #' the number of rows and/or columns can be \bold{integers}, generating a matrix of given size.
-#'
+
 #' As well, instead of a character for the matrix \code{symbol}, you can supply a \bold{matrix} of arbitrary character
 #' strings (in LaTeX notation), and these will be used as the elements of the matrix.
 #'
@@ -58,15 +55,11 @@
 #' \code{\\begin{pmatrix}}, ... rather than
 #' \preformatted{
 #' \\left(
-#'   \\begin{array}(ccc)
+#'   \\begin{array}
 #'   ...
 #'   \\end{array}
 #' \\right)
 #' }.
-#'
-#' You can actually supply a numeric matrix as the \code{symbol}, but the result will not be pretty
-#' unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
-#' \code{\link{matrix2latex}}.
 #'
 #' % This function is \bold{experimental}. Other features may be added.  E.g., it would be nice to:
 #'
@@ -77,8 +70,7 @@
 #'
 #' @param symbol name for matrix elements, character string. For LaTeX symbols,
 #'        the backslash must be doubled because it is an escape character in R.
-#'        That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}. Alternatively, this can be an
-#'        R matrix object, containing LaTeX code for the elements.
+#'        That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}.
 #' @param nrow   Number of rows, a single character representing rows symbolically, or an integer, generating
 #'               that many rows.
 #' @param ncol   Number of columns, a single character representing columns symbolically, or an integer, generating
@@ -101,7 +93,7 @@
 #'               also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"} are
 #'               commonly used.
 #' @param prefix optional character string to be pre-pended to each matrix element, e.g, to wrap each
-#'               element in a function like \code{"\\sqrt"} (but add braces)
+#'               element in a function like \code{"\\sqrt{"}
 #' @param suffix optional character string to be appended to each matrix element, e.g., for exponents
 #'               on each element
 #' @param lhs    character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand
@@ -155,21 +147,9 @@
 #' # specify left hand side
 #' symbolicMatrix("\\lambda", 3, 3, diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
 #'
-#' # supply a matrix for 'symbol'
-#' m <- matrix(c(
-#'   "\\alpha", "\\beta",
-#'   "\\gamma", "\\delta",
-#'   "\\epsilon", "\\pi",
-#'   0 , 0), 4, 2, byrow=TRUE)
-#' symbolicMatrix(m)
-#'
-#' # Identity matrix
-#' symbolicMatrix(diag(3), lhs = "\\mathbf{I}_3")
-#'
 #' # prefix / suffix
 #' symbolicMatrix(prefix="\\sqrt{", suffix="}")
-#' symbolicMatrix(prefix="", suffix="^{1/2}")
-#'
+
 
 
 symbolicMatrix <- function(
@@ -208,7 +188,7 @@ symbolicMatrix <- function(
     transpose <- FALSE
   }
 
-  result <- paste0(if (!missing(lhs)) paste0(lhs, " = \n"),
+  result <- paste0(if (!missing(lhs)) paste0(lhs, " = "),
                    "\\begin{", matrix, "} \n")
 
   if (is.matrix(symbol)){
@@ -225,12 +205,7 @@ symbolicMatrix <- function(
       }
     }
 
-    # } else {
-    #   if(is.vector(symbol) && is.atomic(symbol)) {
-    #     stop("'symbol' must be a character or matrix, not a vector of class", class(symbol))
-    #   }
-
-    } else {
+  } else {
 
     if (is.numeric(nrow)){
       if (round(nrow) != nrow || nrow <= 0)

@@ -13,6 +13,8 @@ symbolicMatrix(
   comma = FALSE,
   exponent,
   transpose = FALSE,
+  prefix = "",
+  suffix = "",
   lhs,
   print = TRUE
 )
@@ -20,7 +22,8 @@ symbolicMatrix(
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
 the backslash must be doubled because it is an escape character in R.
-That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}.}
+That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}. Alternatively, this can be an
+R matrix object, containing LaTeX code for the elements.}
 
 \item{nrow}{Number of rows, a single character representing rows symbolically, or an integer, generating
 that many rows.}
@@ -40,14 +43,23 @@ that many columns.}
 
 \item{diag}{logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})}
 
-\item{comma}{logical; if \code{TRUE}, commas are inserted between row and column subscripts}
+\item{comma}{logical; if \code{TRUE}, commas are inserted between row and column subscripts, as in
+\code{x_{1,1}}.}
 
 \item{exponent}{if specified, e.g., "-1", or "1/2",  the exponent is applied to the matrix}
 
-\item{transpose}{if TRUE, the transpose symbol "\\top" is appended to the matrix; may
-also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"}}
+\item{transpose}{if TRUE, the transpose symbol "\\top" is appended to the matrix; this may
+also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"} are
+commonly used.}
 
-\item{lhs}{character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand side of an equation
+\item{prefix}{optional character string to be pre-pended to each matrix element, e.g, to wrap each
+element in a function like \code{"\\sqrt"} (but add braces)}
+
+\item{suffix}{optional character string to be appended to each matrix element, e.g., for exponents
+on each element}
+
+\item{lhs}{character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand
+side of an equation
 with the generated matrix on the right-hand side.}
 
 \item{print}{logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}}
@@ -60,7 +72,8 @@ Returns invisibly the LaTeX representation of the matrix as a character string.
        \code{cat()} to display the result at the console.
 }
 \description{
-Constructs the LaTeX code for a symbolic matrix, like:
+Constructs the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
+For example:
 \preformatted{
  \\begin{pmatrix}
    x_{11}  & x_{12}  & \\dots  & x_{1m}  \\
@@ -82,10 +95,16 @@ Constructs the LaTeX code for a symbolic matrix, like:
 
 % \figure{man/figures/symbMat-x.png}{options: width=150 alt="LaTeX result for the symbolic n x m matrix"}.
 
-Alternatively, the number of rows and/or columns can be integers, generating a matrix of given size.
+Alternatively, instead of characters,
+the number of rows and/or columns can be \bold{integers}, generating a matrix of given size.
 
-The function prints the resulting code to the console, or, using \code{\link[clipr]{write_clip}}, can be copied to the console,
-or can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
+As well, instead of a character for the matrix \code{symbol}, you can supply a \bold{matrix} of arbitrary character
+strings (in LaTeX notation), and these will be used as the elements of the matrix.
+
+The function prints the resulting code to the console (by default). When the result is assigned to variable,
+you can send it to the clipboard using \code{\link[clipr]{write_clip}}. Perhaps most convenient of all,
+the function can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
+
 \preformatted{
 ```{r results = "asis"}
 symbolicMatrix("\\lambda", nrow=2, ncol=2,
@@ -107,18 +126,22 @@ This implementation assumes that the LaTeX \code{amsmath} package will be availa
 \code{\\begin{pmatrix}}, ... rather than
 \preformatted{
 \\left(
-  \\begin{array}
+  \\begin{array}(ccc)
   ...
   \\end{array}
 \\right)
 }.
 
-This function is \bold{experimental}. Other features may be added.  E.g., it would be nice to:
+You can actually supply a numeric matrix as the \code{symbol}, but the result will not be pretty
+unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
+\code{\link{matrix2latex}}.
 
-\itemize{
- \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
- \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
-}
+% This function is \bold{experimental}. Other features may be added.  E.g., it would be nice to:
+
+%\itemize{
+% \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
+% \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
+%}
 }
 \examples{
 symbolicMatrix()
@@ -128,7 +151,7 @@ mat <- symbolicMatrix(print = FALSE)
 str(mat)
 cat(mat)
 # copy to clipboard
-#clipr::write_clip(mat)    # can't be done in non-interactive mode
+#clipr::write_clip(mat)    # this can't be done in non-interactive mode
 
 # can use a complex symbol
 symbolicMatrix("\\\\widehat{\\\\beta}", 2, 4)
@@ -156,6 +179,22 @@ cat("\\\\mathrm{SVD:}\n", X, "=\n", U, D, V)
 
 # specify left hand side
 symbolicMatrix("\\\\lambda", 3, 3, diag=TRUE, lhs = "\\\\boldsymbol{\\\\Lambda}")
+
+# supply a matrix for 'symbol'
+m <- matrix(c(
+  "\\\\alpha", "\\\\beta",
+  "\\\\gamma", "\\\\delta",
+  "\\\\epsilon", "\\\\pi",
+  0 , 0), 4, 2, byrow=TRUE)
+symbolicMatrix(m)
+
+# Identity matrix
+symbolicMatrix(diag(3), lhs = "\\\\mathbf{I}_3")
+
+# prefix / suffix
+symbolicMatrix(prefix="\\\\sqrt{", suffix="}")
+symbolicMatrix(prefix="", suffix="^{1/2}")
+
 }
 \seealso{
 \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}

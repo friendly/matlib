@@ -83,18 +83,16 @@
 #' @param exponent if specified, e.g., "-1", or "1/2",  the exponent is applied to the matrix
 #' @param transpose if TRUE, the transpose symbol "\\top" is appended to the matrix; may
 #'               also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"}
-#' @param lhs    character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand side of an equation
-#'               with the generated matrix on the right-hand side.
+#' @param lhs    optional LaTeX expression, e.g, "\\boldsymbol{\\Lamda}", for left-hand side of an equation
+#'               with the matrix on the right-hand side.
 #' @param print  logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}
 #'
 #' @returns Returns invisibly the LaTeX representation of the matrix as a character string.
-#'        If you assign to a variable, you can use \code{\link[clipr]{write_clip}} to copy it to the clipboard.
 #'
-#'        As a side-effect, by default (unless \code{print = FALSE}) the function uses
-#'        \code{cat()} to display the result at the console.
+#'        Use \code{cat()} to display it at the console, or \code{\link[clipr]{write_clip}} to copy it to the clipboard
 #'
 #' @author John Fox
-#' @seealso \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
+#' @seealso \code{\link{matrix2latex}}
 #' @export
 #' @examples
 #' symbolicMatrix()
