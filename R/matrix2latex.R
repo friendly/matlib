@@ -8,7 +8,8 @@
 #' \code{\\pmatrix{}}, \code{\\bmatrix{}}, \code{\\Bmatrix{}}, ... .
 #'
 #'
-#' @param x a matrix
+#' @param x a numeric or character matrix. If the latter a numeric-based arguments will
+#'   be ignored
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
 #'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
 #'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
@@ -40,6 +41,12 @@
 #'
 #' matrix2latex(A, digits=0, brackets="p", show.size = TRUE)
 #'
+#' # character matrices
+#' A <- matrix(paste0('a_', 1:9), 3, 3)
+#' matrix2latex(cbind(A,b))
+#' b <- paste0("\\beta_", 1:3)
+#' matrix2latex(cbind(A,b))
+#'
 matrix2latex <- function(x,
                          fractions = FALSE,
                          brackets = TRUE,
@@ -47,7 +54,7 @@ matrix2latex <- function(x,
                          digits = NULL,
                          ...){
 
-  if( is.null(digits) & all(trunc(x) == x) ) digits <- 0
+  if( is.numeric(x) && is.null(digits) && all(trunc(x) == x) ) digits <- 0
   ret <- if (fractions) xtable::xtableMatharray(as.character(Fractions(x)), digits=digits, ...)
     else xtable::xtableMatharray(x, digits=digits, ...)
   if (is.logical(brackets)) {
@@ -72,7 +79,7 @@ matrix2latex <- function(x,
   else NULL
 
   cat(begin)
-  print(ret)
+  print(ret, sanitize.text.function = function(x){x})
   cat(end)
   cat(size, "\n")
 
