@@ -193,7 +193,7 @@ symbolicMatrix(diag(3), lhs = "\\\\mathbf{I}_3")
 
 # prefix / suffix
 symbolicMatrix(prefix="\\\\sqrt{", suffix="}")
-symbolicMatrix(prefix="", suffix="^{1/2}")
+symbolicMatrix(suffix="^{1/2}")
 
 }
 \seealso{
