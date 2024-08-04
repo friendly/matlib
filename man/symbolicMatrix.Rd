@@ -23,7 +23,8 @@ symbolicMatrix(
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
 the backslash must be doubled because it is an escape character in R.
 That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}. Alternatively, this can be an
-R matrix object, containing LaTeX code for the elements.}
+R matrix object, containing LaTeX code for the elements. For a row or column vector, use
+\code{matrix(..., nrow=1)} or \code{matrix(..., ncol=1)}}
 
 \item{nrow}{Number of rows, a single character representing rows symbolically, or an integer, generating
 that many rows.}
@@ -169,6 +170,10 @@ symbolicMatrix(nrow="n", ncol="n", diag=TRUE)
 symbolicMatrix("\\\\beta", comma=TRUE, exponent="-1")
 symbolicMatrix("\\\\beta", comma=TRUE, transpose=TRUE)
 symbolicMatrix("\\\\beta", comma=TRUE, exponent="-1", transpose=TRUE)
+
+# for a row/column vector, wrap in matrix()
+symbolicMatrix(matrix(LETTERS[1:4], nrow=1))
+symbolicMatrix(matrix(LETTERS[1:4], ncol=1))
 
 # represent the SVD, X = U D V'  symbolically
 X <- symbolicMatrix("x", "n", "p")

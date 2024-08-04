@@ -28,6 +28,7 @@
 #' @param ... additional arguments passed to \code{xtable::xtableMatharray()}
 #' @importFrom xtable xtableMatharray
 #' @importFrom dplyr case_when
+#' @importFrom utils capture.output
 #' @author Phil Chalmers
 #' @export
 #' @examples
