@@ -10,6 +10,7 @@ matrix2latex(
   brackets = TRUE,
   show.size = FALSE,
   digits = NULL,
+  print = TRUE,
   ...
 )
 }
@@ -33,6 +34,8 @@ around the matrix, \code{FALSE} produces no brackets. Otherwise
 
 \item{digits}{Number of digits to display. If \code{digits == NULL} (the default), the function sets
 \code{digits = 0} if the elements of \code{x} are all integers}
+
+\item{print}{logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}}
 
 \item{...}{additional arguments passed to \code{xtable::xtableMatharray()}}
 }

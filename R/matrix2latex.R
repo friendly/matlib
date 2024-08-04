@@ -23,6 +23,7 @@
 #' @param show.size logical; if \code{TRUE} shows the size of the matrix as an appended subscript.
 #' @param digits Number of digits to display. If \code{digits == NULL} (the default), the function sets
 #'     \code{digits = 0} if the elements of \code{x} are all integers
+#' @param print  logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}
 #'
 #' @param ... additional arguments passed to \code{xtable::xtableMatharray()}
 #' @importFrom xtable xtableMatharray
@@ -52,6 +53,7 @@ matrix2latex <- function(x,
                          brackets = TRUE,
                          show.size = FALSE,
                          digits = NULL,
+                         print = TRUE,
                          ...){
 
   if( is.numeric(x) && is.null(digits) && all(trunc(x) == x) ) digits <- 0
@@ -78,10 +80,10 @@ matrix2latex <- function(x,
   size <- if (show.size) paste0("_{", nrow(x), " \\times ", ncol(x), "}")
   else NULL
 
-  cat(begin)
-  print(ret, sanitize.text.function = function(x){x})
-  cat(end)
-  cat(size, "\n")
+  output <- paste0(capture.output(
+      print(ret, sanitize.text.function = function(x){x})), collapse='\n')
+  ret <- c(begin, output, end, size)
 
-  invisible(NULL)
+  if(print) cat(ret)
+  invisible(ret)
 }
