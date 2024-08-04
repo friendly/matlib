@@ -1,0 +1,82 @@
+---
+title: "Visualizing the SVD"
+author: "Duncan Murdoch"
+date: "February 2, 2015"
+output: 
+  html_document
+---
+
+These notes are taken from a presentation by Duncan Murdoch, titled "Recent Developments in rgl".
+
+## The Singular Value Decomposition
+
+For a square $n \times n$ matrix $A$, the SVD is
+$$ A = U D V^T $$
+where 
+
+- $U$ and $V$ are $n \times n$ orthogonal matrices (i.e. $U^TU = V^TV = I$)
+- $D$ is an $n \times n$ diagonal matrix with non-negative
+entries
+
+## Displaying a Matrix Graphically
+
+- Matrices are representations of
+linear operators on vector spaces.
+- The matrix $A$ is characterized by the behaviour of $y = A x$
+as we vary $x$.
+- Use the `rgl` package to develop a graphical representation of 
+$3 \times 3$ matrices, e.g.
+$$ A = \left(\begin{array}{rrr}
+1 & 0.1 & 0.1 \\
+2 & 1 & 0.1 \\
+0.1 & 0.1 & 0.5
+\end{array}\right) $$
+
+## Attempt 1:  display the actions on the basis vectors
+
+```{r rgl=TRUE,fig.height=2}
+A <- matrix(c(1,2,0.1, 0.1,1,0.1, 0.1,0.1,0.5), 3,3)
+basis <- cbind(c(0,1,0,0,0,0), c(0,0,0,1,0,0), c(0,0,0,0,0,1))
+segments3d(basis, lwd = 3)
+segments3d(basis %*% t(A), col = "red", lwd = 5)
+text3d(1.1*basis, texts = c("","x", "", "y", "", "z"), cex = 2)
+text3d(1.1*basis %*% t(A), col = "red", 
+       texts=c("", "x", "", "y", "", "z"), cex = 2)
+```
+
+## Attempt 2:  coloured ellipsoids.
+
+```{r rgl=TRUE, echo=FALSE}
+sphere <- subdivision3d(cube3d(color=rep(rainbow(6),rep(4*4^4,6))),depth=4)
+sphere$vb[4,] <- apply(sphere$vb[1:3,], 2, function(x) sqrt(sum(x^2)))
+mult <- function(matrix, obj) transform3d(obj, t(matrix))
+mat <- matrix(1:6, 2, 3)
+layout3d(rbind(mat,mat+6), height = c(3,1,3,1), sharedMouse=TRUE)
+shade3d(sphere)
+next3d()
+text3d(0,0,0, "Identity", cex=1.5)
+next3d()
+next3d(reuse=FALSE)
+next3d(reuse=FALSE)
+shade3d(mult(A, sphere))
+next3d()
+text3d(0,0,0,"A", cex=1.5)
+
+svd <- svd(A)
+U <- svd$u
+D <- diag(svd$d)
+V <- svd$v
+next3d()
+shade3d(mult(U, sphere))
+next3d()
+text3d(0,0,0, "U", cex=1.5)
+next3d()
+shade3d(mult(D, sphere))
+next3d()
+text3d(0,0,0, "D", cex=1.5)
+next3d()
+shade3d(mult(V, sphere))
+next3d()
+text3d(0,0,0, "V", cex=1.5)
+```
+
