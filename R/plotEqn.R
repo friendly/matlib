@@ -28,7 +28,7 @@
 #' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
 #' @importFrom graphics abline lines plot text points
 #' @export
-#' @seealso \code{\link{showEqn}}
+#' @seealso \code{\link{showEqn}}, \code{vignette("linear-equations", package="matlib")}
 
 #' @examples
 #' # consistent equations
