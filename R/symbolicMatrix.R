@@ -64,6 +64,8 @@
 #' \\right)
 #' }.
 #'
+#' You may need to use \code{extra_dependencies: ["amsmath"]} in your YAML header of a \code{Rmd} or \code{qmd} file.
+#'
 #' You can actually supply a numeric matrix as the \code{symbol}, but the result will not be pretty
 #' unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
 #' \code{\link{matrix2latex}}.

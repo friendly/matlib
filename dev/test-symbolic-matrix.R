@@ -91,15 +91,11 @@ symbolicMatrix(prefix="", suffix="^{1/2}")
 mm <- matrix(1:4, 2,2)
 symbolicMatrix(sqrt(mm))
 
-# what about a vector?
+# what about a vector? -- now trapped & documented
 symbolicMatrix(1:4)
 # Error in rep(" ", nchar(symbol) + nchar(prefix) + nchar(suffix) - 1) :
 #   invalid 'times' argument
 
-symbolicMatrix(LETTERS[1:4])
-# Error in rep(" ", nchar(symbol) + nchar(prefix) + nchar(suffix) - 1) :
-#   invalid 'times' argument
+symbolicMatrix(matrix(letters[1:4], nrow=1))
 
-obj <- 1:4
-is.vector(obj) && is.atomic(obj)
 

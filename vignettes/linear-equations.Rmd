@@ -17,10 +17,15 @@ knitr::opts_chunk$set(
 options(digits=4)
 par(mar=c(5,4,1,1)+.1)
 ```
+
 ```{r setuprgl, echo=FALSE}
 library(rgl)
 library(knitr)
 knit_hooks$set(webgl = hook_webgl)
+```
+
+```{r include=FALSE}
+library(matlib)   # use the package
 ```
 
 
@@ -31,6 +36,16 @@ where
 - $\mathbf{x}$ is an $n \times 1$ vector unknowns, $x_1, x_2, \dots x_n$
 - $\mathbf{b}$ is an $m \times 1$ vector of constants, the "right-hand sides" of the equations
 
+or, spelled out,
+
+```{r symbMat, results='asis', echo=FALSE}
+symbolicMatrix("a", nrow = "m", ncol="n", matrix="bmatrix")
+symbolicMatrix("x", nrow = "n", ncol=1)
+cat("\\quad=\\quad")
+symbolicMatrix("b", nrow = "m", ncol=1)
+```
+
+## Conditions for a solution
 The general conditions for solutions are:
 
 - the equations are *consistent* (solutions exist) if $r( \mathbf{A} | \mathbf{b}) = r( \mathbf{A})$
@@ -54,10 +69,15 @@ have a unique solution if all lines intersect in a point.
 A <- matrix(c(1, 2, -1, 2), 2, 2)
 b <- c(2,1)
 showEqn(A, b)
+```
+
+Check whether they are consistent:
+```{r check-consistent}
 c( R(A), R(cbind(A,b)) )          # show ranks
 all.equal( R(A), R(cbind(A,b)) )  # consistent?
-
 ```
+
+
 Plot the equations:
 ```{r, plotEqn1,echo=2}
 #| fig.alt: Plot of two consistent equations which plot as lines intersecting in a point

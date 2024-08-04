@@ -198,7 +198,8 @@ $$
 <dd><p>name for matrix elements, character string. For LaTeX symbols,
 the backslash must be doubled because it is an escape character in R.
 That is, you must use  <code>symbol = "\\beta"</code> to get \(\beta\). Alternatively, this can be an
-R matrix object, containing LaTeX code for the elements.</p></dd>
+R matrix object, containing LaTeX code for the elements. For a row or column vector, use
+<code>matrix(..., nrow=1)</code> or <code>matrix(..., ncol=1)</code></p></dd>
 
 
 <dt id="arg-nrow">nrow<a class="anchor" aria-label="anchor" href="#arg-nrow"></a></dt>
@@ -290,6 +291,7 @@ with the generated matrix on the right-hand side.</p></dd>
   \end{array}
 \right)
 </code></pre></div><p>.</p>
+<p>You may need to use <code>extra_dependencies: ["amsmath"]</code> in your YAML header of a <code>Rmd</code> or <code>qmd</code> file.</p>
 <p>You can actually supply a numeric matrix as the <code>symbol</code>, but the result will not be pretty
 unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
 <code><a href="matrix2latex.html">matrix2latex</a></code>.</p>
@@ -400,6 +402,19 @@ unless the elements are integers or are rounded. For a LaTeX representation of g
 <span class="r-out co"><span class="r-pr">#&gt;</span>   \beta_{n,1} &amp; \beta_{n,2} &amp; \cdots &amp; \beta_{n,m} \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}^{{-1^\top}}</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># for a row/column vector, wrap in matrix()</span></span></span>
+<span class="r-in"><span><span class="fu">symbolicMatrix</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, nrow<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A &amp; B &amp; C &amp; D \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
+<span class="r-in"><span><span class="fu">symbolicMatrix</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># represent the SVD, X = U D V'  symbolically</span></span></span>
 <span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu">symbolicMatrix</span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"n"</span>, <span class="st">"p"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
@@ -497,7 +512,7 @@ unless the elements are integers or are rounded. For a LaTeX representation of g
 <span class="r-out co"><span class="r-pr">#&gt;</span>   \vdots        &amp; \vdots        &amp;        &amp; \vdots        \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   \sqrt{x_{n1}} &amp; \sqrt{x_{n2}} &amp; \cdots &amp; \sqrt{x_{nm}} \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
-<span class="r-in"><span><span class="fu">symbolicMatrix</span><span class="op">(</span>prefix<span class="op">=</span><span class="st">""</span>, suffix<span class="op">=</span><span class="st">"^{1/2}"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">symbolicMatrix</span><span class="op">(</span>suffix<span class="op">=</span><span class="st">"^{1/2}"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x_{11}^{1/2} &amp; x_{12}^{1/2} &amp; \cdots &amp; x_{1m}^{1/2} \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x_{21}^{1/2} &amp; x_{22}^{1/2} &amp; \cdots &amp; x_{2m}^{1/2} \\ </span>
