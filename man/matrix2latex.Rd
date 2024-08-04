@@ -14,7 +14,8 @@ matrix2latex(
 )
 }
 \arguments{
-\item{x}{a matrix}
+\item{x}{a numeric or character matrix. If the latter a numeric-based arguments will
+be ignored}
 
 \item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
 function; if you require greater accuracy, you can set the \code{cycles} (default 10)
@@ -54,6 +55,12 @@ matrix2latex(cbind(A,b), digits = 0)
 matrix2latex(cbind(A/2,b), fractions = TRUE)
 
 matrix2latex(A, digits=0, brackets="p", show.size = TRUE)
+
+# character matrices
+A <- matrix(paste0('a_', 1:9), 3, 3)
+matrix2latex(cbind(A,b))
+b <- paste0("\\\\beta_", 1:3)
+matrix2latex(cbind(A,b))
 
 }
 \author{
