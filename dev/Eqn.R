@@ -25,5 +25,5 @@ Eqn <- function(..., number = TRUE, label = NULL) {
   if(!is.null(label))
     cat(sprintf('\\label{%s}\n', label))
   eval(...)
-  cat(sprintf("\n\\end{%s}\n", wrap))
+  cat(sprintf("\\end{%s}\n", wrap))
 }
