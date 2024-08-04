@@ -1,5 +1,5 @@
-# JF version of 8 Aug 24, w/ prefix, suffix
-# TODO: Trap the case of a vector symbol, e.g, symbolicMatrix(1:4)
+# JF version of 4 Aug 24, w/ prefix, suffix
+# trap/document case of row/col vector
 
 #' Create a Symbolic Matrix for LaTeX
 #'
@@ -78,7 +78,8 @@
 #' @param symbol name for matrix elements, character string. For LaTeX symbols,
 #'        the backslash must be doubled because it is an escape character in R.
 #'        That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}. Alternatively, this can be an
-#'        R matrix object, containing LaTeX code for the elements.
+#'        R matrix object, containing LaTeX code for the elements. For a row or column vector, use
+#'        \code{matrix(..., nrow=1)} or \code{matrix(..., ncol=1)}
 #' @param nrow   Number of rows, a single character representing rows symbolically, or an integer, generating
 #'               that many rows.
 #' @param ncol   Number of columns, a single character representing columns symbolically, or an integer, generating
@@ -145,6 +146,10 @@
 #' symbolicMatrix("\\beta", comma=TRUE, transpose=TRUE)
 #' symbolicMatrix("\\beta", comma=TRUE, exponent="-1", transpose=TRUE)
 #'
+#' # for a row/column vector, wrap in matrix()
+#' symbolicMatrix(matrix(LETTERS[1:4], nrow=1))
+#' symbolicMatrix(matrix(LETTERS[1:4], ncol=1))
+#'
 #' # represent the SVD, X = U D V'  symbolically
 #' X <- symbolicMatrix("x", "n", "p")
 #' U <- symbolicMatrix("u", "n", "k")
@@ -185,7 +190,7 @@ symbolicMatrix <- function(
     suffix="",
     lhs,
     print=TRUE){
-  
+
   # Args:
   #   symbol: for matrix elements, character string; alternative a matrix
   #   nrow: number of rows, can be a character
@@ -201,16 +206,16 @@ symbolicMatrix <- function(
   #   lhs: optional LaTeX expression, e.g, "\\boldsymbol{\\Lamda}", for
   #        left-hand side of an equation with the matrix on the right-hand side.
   #   print: print the LaTeX code for the matrix on the console
-  
+
   if (isTRUE(transpose)) transpose <- "\\top"
   if (!missing(exponent) && !isFALSE(transpose)){
     exponent <- paste0("{", exponent, "^", transpose, "}")
     transpose <- FALSE
   }
-  
+
   result <- paste0(if (!missing(lhs)) paste0(lhs, " = \n"),
                    "\\begin{", matrix, "} \n")
-  
+
   if (is.matrix(symbol)){
     mat <- matrix(as.character(symbol), nrow(symbol), ncol(symbol))
     width <- apply(nchar <- nchar(mat), 2, max)
@@ -224,31 +229,31 @@ symbolicMatrix <- function(
         result <- paste0(result, mat[i, j], if (j == nc) " \\\\ \n" else " & " )
       }
     }
-    
+
   } else {
-    
-    if (!(is.character(symbol) && is.vector(symbol) 
+
+    if (!(is.character(symbol) && is.vector(symbol)
           && length(symbol) == 1))
-      stop("symbol must be a single character string or a matrix")
-    
+      stop("'symbol' must be a single character string or a matrix. Hint: wrap a vector in matrix(), with nrow=1 or ncol=1.")
+
     if (is.numeric(nrow)){
       if (round(nrow) != nrow || nrow <= 0)
         stop("nrow is not a positive whole number")
     }
-    
+
     if (is.numeric(ncol)){
       if (round(ncol) != ncol || ncol <= 0)
         stop("ncol is not a positive whole number")
     }
-    
+
     comma <- if (comma) "," else ""
-    
+
     row.elements <- c(symbol, symbol, "\\cdots", symbol)
     col.subscripts <- c("1", "2", "", ncol)
     left.sub <- c("_{", "_{", "", "_{")
     right.sub <- c("}", "}", "", "}")
     post.element <- c(" & ", " & ", " & ", " \\\\ \n")
-    
+
     if (diag){
       zero <- paste0("0", paste(rep(" ",
                                     nchar(symbol) + 3 + nchar(prefix) + nchar(suffix)),
@@ -283,16 +288,16 @@ symbolicMatrix <- function(
                            if (j == nrow) " \\\\ \n" else " & ")
         }
       }
-      
+
     } else if (is.character(nrow)){
-      
+
       vdots <- paste0("\\vdots",
                       paste0(paste(rep(" ",
                                        nchar(symbol) + nchar(prefix) + nchar(suffix) - 1),
                                    collapse = ""),
                              if (comma == ",") " "))
       row.subscripts <- c("1", "2", "", nrow)
-      
+
       if (is.character(ncol)){
         vdots <- paste0(vdots, " & ", vdots, " & ",
                         if (nrow != ncol) "       & " else "\\ddots & ",
@@ -329,7 +334,7 @@ symbolicMatrix <- function(
           }
         }
       }
-      
+
     } else if (is.character(ncol)){
       for (i in 1:nrow){
         result <- paste0(result, "  ")
@@ -342,7 +347,7 @@ symbolicMatrix <- function(
                            post.element[j])
         }
       }
-      
+
     } else {
       for (i in 1:nrow){
         result <- paste0(result, "  ")
@@ -355,7 +360,7 @@ symbolicMatrix <- function(
       }
     }
   }
-  
+
   result <- paste0(result, "\\end{", matrix, "}",
                    if (!missing(exponent)) paste0("^{", exponent, "}"),
                    if (!isFALSE(transpose)) paste0("^", transpose),
