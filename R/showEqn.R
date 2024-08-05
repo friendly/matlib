@@ -4,10 +4,12 @@
 
 #' Show Matrices (A, b) as Linear Equations
 #'
-#' Shows what matrices \eqn{A, b} look like as the system of linear equations, \eqn{A x = b}, but written out
+#' Shows what matrices \eqn{\mathbf{A}, \mathbf{b}} look like as the system of linear equations,
+#' \eqn{\mathbf{A x} = \mathbf{b}}, but written out
 #' as a set of equations.
 #'
 #' @param A either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}.
+#'   The matrix can be numeric or character.
 #'   Alternatively, can be of class \code{'lm'} to print the equations for the design matrix in a linear
 #'   regression model
 #' @param b if supplied, the vector of constants on the right hand side of the equations. When omitted
@@ -17,7 +19,7 @@
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param simplify logical; try to simplify the equations?
 #' @param reduce logical; only show the unique linear equations
-#' @param fractions logical; express numbers as rational fractions, using the \code{\link[MASS]{fractions}} 
+#' @param fractions logical; express numbers as rational fractions, using the \code{\link[MASS]{fractions}}
 #'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
 #'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
 #'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
@@ -26,7 +28,7 @@
 #' @author Michael Friendly, John Fox, and Phil Chalmers
 #' @references Fox, J. and Friendly, M. (2016). "Visualizing Simultaneous Linear Equations, Geometric Vectors, and
 #' Least-Squares Regression with the matlib Package for R". \emph{useR Conference}, Stanford, CA, June 27 - June 30, 2016.
-#' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}
+#' @seealso \code{\link{plotEqn}}, \code{\link{plotEqn3d}}, \code{\link{symbolicMatrix}}
 #' @export
 #' @importFrom methods is
 #' @examples
@@ -42,7 +44,8 @@
 #'   showEqn(A, b, simplify=TRUE)
 #'   showEqn(A, b, latex=TRUE)
 #'
-#'   # lower triangle of equation with zeros omitted (for back solving)
+#'
+#'  # lower triangle of equation with zeros omitted (for back solving)
 #'   A <- matrix(c(2, 1, 2,
 #'                -3, -1, 2,
 #'                -2,  1, 2), 3, 3, byrow=TRUE)
@@ -50,8 +53,8 @@
 #'   showEqn(U, simplify=TRUE, fractions=TRUE)
 #'   showEqn(U, b, simplify=TRUE, fractions=TRUE)
 #'
-#'   ####################
-#'   # Linear models Design Matricies
+#'  ####################
+#'  # Linear models Design Matricies
 #'   data(mtcars)
 #'   ancova <- lm(mpg ~ wt + vs, mtcars)
 #'   summary(ancova)

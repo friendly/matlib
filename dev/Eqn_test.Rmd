@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r include=FALSE}
 library(matlib)
 
-source("Eqn.R")
+source(here::here("dev","Eqn.R"))
 ```
 
 ```{r results='asis', echo=FALSE}

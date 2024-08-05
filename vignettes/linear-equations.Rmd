@@ -28,11 +28,11 @@ knit_hooks$set(webgl = hook_webgl)
 library(matlib)   # use the package
 ```
 
-Test `symbolicMatrix()`:
+<!-- Test `symbolicMatrix()`: -->
 
-```{r symbMat0, results='asis', echo=FALSE}
-symbolicMatrix("b", nrow = "m", ncol=1, lhs="A")
-```
+<!-- ```{r symbMat0, results='asis', echo=FALSE} -->
+<!-- symbolicMatrix("b", nrow = "m", ncol=1, lhs="A") -->
+<!-- ``` -->
 
 
 This vignette illustrates the ideas behind solving systems of linear equations of the form $\mathbf{A x = b}$
@@ -44,12 +44,44 @@ where
 
 or, spelled out,
 
-```{r symbMat, results='asis', echo=FALSE}
-symbolicMatrix("a", nrow = "m", ncol="n", matrix="bmatrix")
-symbolicMatrix("x", nrow = "n", ncol=1)
-cat("\\quad=\\quad")
-symbolicMatrix("b", nrow = "m", ncol=1)
+<!-- ```{r symbMat, results='asis', echo=FALSE} -->
+<!-- symbolicMatrix("a", nrow = "m", ncol="n", matrix="bmatrix") -->
+<!-- symbolicMatrix("x", nrow = "n", ncol=1) -->
+<!-- cat("\\quad=\\quad") -->
+<!-- symbolicMatrix("b", nrow = "m", ncol=1) -->
+<!-- ``` -->
+
+$$
+\begin{bmatrix} 
+  a_{11} & a_{12} & \cdots & a_{1n} \\ 
+  a_{21} & a_{22} & \cdots & a_{2n} \\ 
+  \vdots & \vdots &        & \vdots \\ 
+  a_{m1} & a_{m2} & \cdots & a_{mn} \\ 
+\end{bmatrix}
+\begin{pmatrix} 
+  x_{1} \\ 
+  x_{2} \\ 
+  \vdots \\ 
+  x_{n} \\ 
+\end{pmatrix}
+\quad=\quad
+\begin{pmatrix} 
+  b_{1} \\ 
+  b_{2} \\ 
+  \vdots \\ 
+  b_{m} \\ 
+\end{pmatrix}
+$$
+For three equations in three unknowns, the equations look like this:
+
+```{r showEqn0, results='asis'}
+A <- matrix(paste0("a_{", outer(1:3, 1:3, FUN  = paste0), "}"), 
+            nrow=3) 
+b <- paste0("b_", 1:3)
+x <- paste0("x", 1:3)
+showEqn(A, b, vars = x, latex=TRUE)
 ```
+
 
 ## Conditions for a solution
 The general conditions for solutions are:
