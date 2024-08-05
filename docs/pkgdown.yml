@@ -2,6 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
+  3d-demo: 3d-demo.html
   data-beta: data-beta.html
   det-ex1: det-ex1.html
   det-ex2: det-ex2.html
@@ -12,7 +13,7 @@ articles:
   inv-ex1: inv-ex1.html
   inv-ex2: inv-ex2.html
   linear-equations: linear-equations.html
-last_built: 2024-08-04T17:32Z
+last_built: 2024-08-05T19:41Z
 urls:
   reference: http://friendly.github.io/matlib/reference
   article: http://friendly.github.io/matlib/articles
