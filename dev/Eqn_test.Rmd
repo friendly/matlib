@@ -17,7 +17,7 @@ source("Eqn.R")
 ```
 
 ```{r results='asis', echo=FALSE}
-Eqn("X=U \\lambda V", label='eqn:svd')
+Eqn(cat("X=U \\lambda V"), label='eqn:svd')
 Eqn({
     symbolicMatrix("u", "n", "k", lhs = '')
     symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
