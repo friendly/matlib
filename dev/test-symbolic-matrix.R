@@ -98,4 +98,16 @@ symbolicMatrix(1:4)
 
 symbolicMatrix(matrix(letters[1:4], nrow=1))
 
+# using Eqn()
+
+source(here::here("dev","Eqn.R"))
+Eqn({
+    cat("X&=U \\lambda V \\\\ \n")
+    symbolicMatrix("u", "n", "k", lhs = '&')
+    symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
+    symbolicMatrix("v", "k", "p", transpose = TRUE)
+   }, align=TRUE)
+
+
+
 

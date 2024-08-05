@@ -59,7 +59,7 @@ matrix2latex <- function(x,
 
   if( is.numeric(x) && is.null(digits) && all(trunc(x) == x) ) digits <- 0
   ret <- if (fractions) xtable::xtableMatharray(as.character(Fractions(x)), digits=digits, ...)
-    else xtable::xtableMatharray(x, digits=digits, ...)
+         else           xtable::xtableMatharray(x, digits=digits, ...)
   if (is.logical(brackets)) {
     brack = if (isTRUE(brackets)) c("[", "]") else NULL
   }
