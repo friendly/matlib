@@ -7,7 +7,7 @@
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})
 #' @export
 #' @examples
-#' Eqn(cat('e=mc^2'))   # equivalent
+#' Eqn(cat('e=mc^2'))
 #' Eqn(cat('e=mc^2'), number = FALSE)
 #' Eqn(cat('e=mc^2'), label = 'eqn:einstein')
 #'
@@ -19,6 +19,13 @@
 #'     symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
 #'     symbolicMatrix("v", "k", "p", transpose = TRUE)
 #' })
+#'
+#' A <- matrix(c(2, 1, -1,
+#'               -3, -1, 2,
+#'               -2,  1, 2), 3, 3, byrow=TRUE)
+#' b <- c(8, -11, -3)
+#'
+#' matrix2latex(cbind(A,b)) |> Eqn()
 #'
 Eqn <- function(expr, number = TRUE, label = NULL) {
   wrap <- if(number) "equation" else "equation*"
