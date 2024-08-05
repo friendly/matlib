@@ -85,6 +85,10 @@ matrix2latex <- function(x,
       print(ret, sanitize.text.function = function(x){x})), collapse='\n')
   ret <- c(begin, output, end, size)
 
-  if(print) cat(ret)
-  invisible(ret)
+  if (print) {
+      cat(ret)
+      return(invisible(NULL))
+  } else {
+      return(ret)
+  }
 }
