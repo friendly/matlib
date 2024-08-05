@@ -28,6 +28,12 @@ knit_hooks$set(webgl = hook_webgl)
 library(matlib)   # use the package
 ```
 
+Test `symbolicMatrix()`:
+
+```{r symbMat0, results='asis', echo=FALSE}
+symbolicMatrix("b", nrow = "m", ncol=1, lhs="A")
+```
+
 
 This vignette illustrates the ideas behind solving systems of linear equations of the form $\mathbf{A x = b}$
 where 

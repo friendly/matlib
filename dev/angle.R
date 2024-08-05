@@ -2,17 +2,37 @@
 # and we want to calculate the angles between the columns of X, Y.
 # Or, angle(X), and want to calculate the angles between the columns of X
 
+rad2deg <- function(rad) (rad * 180) / pi
+
 angle <- function(x, y, degree = TRUE) {
   if(missing(y)) y <- x
   if(is.vector(x) && is.atomic(x)) {
     theta <- acos(x %*% y / (len(x) * len(y)))
+
+    if(degree) theta <- rad2deg(theta)
+    return(theta)
   }
   else {
-    theta <- acos(t(x) %*% y / outer(len(x), len(y)))
-  }
-  if(degree) theta <- r2d(theta)
-  theta
+    outer(
+      asplit(x, 2),
+      asplit(y, 2),
+      Vectorize(\(x, y) angle(c(x), c(y), FALSE))
+    )  }
 }
+
+
+
+# angle <- function(x, y, degree = TRUE) {
+#   if(missing(y)) y <- x
+#   if(is.vector(x) && is.atomic(x)) {
+#     theta <- acos(x %*% y / (len(x) * len(y)))
+#   }
+#   else {
+#     theta <- acos(t(x) %*% y / outer(len(x), len(y)))
+#   }
+#   if(degree) theta <- r2d(theta)
+#   theta
+# }
 
 if(FALSE) {
 # one or two vectors
