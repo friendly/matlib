@@ -1,8 +1,37 @@
 ---
-title: "3D demonstrations of linear transformations and matrix inverse"
+title: "Linear transformations and matrix inverse in 3D"
 author: "Michael Friendly"
-date: "30 Sep 2016"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Linear transformations and matrix inverse in 3D}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  echo = TRUE,
+  collapse = TRUE,
+  fig.height = 5,
+  fig.width = 5
+)
+options(digits=4)
+par(mar=c(4,4,1,1)+.1)
+```
+```{r setuprgl, echo=FALSE}
+library(rgl)
+library(knitr)
+knit_hooks$set(webgl = hook_webgl)
+```
+
+```{r}
+library(matlib)   # use the package
+library(rgl)      # also using rgl
+```
+
 Start with a unit cube, representing the identity matrix. Show its transformation
 by a matrix $A$ as the corresponding transformation of the cube.
 
