@@ -13,22 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r include=FALSE}
 library(matlib)
 
-#' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})
-#' @param 
-#' @examples 
-#' Eqn(cat('y=mc^2'))
-#' Eqn(cat('y=mc^2'), number = FALSE)
-#' Eqn(cat('y=mc^2'), label = 'eqn:einstein')
-
-
-Eqn <- function(..., number = TRUE, label = NULL) {
-    wrap <- if(number) "equation" else "equation*"
-    cat(sprintf("\n\\begin{%s}\n", wrap))
-    if(!is.null(label)) 
-        cat(sprintf('\\label{%s}\n', label))
-    eval(...)
-    cat(sprintf("\\end{%s}\n", wrap))
-}
+source("Eqn.R")
 ```
 
 ```{r results='asis', echo=FALSE}

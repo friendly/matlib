@@ -16,7 +16,7 @@ angle <- function(x, y, degree = TRUE) {
     outer(
       asplit(x, 2),
       asplit(y, 2),
-      Vectorize(\(x, y) angle(c(x), c(y), FALSE))
+      Vectorize(\(x, y) angle(c(x), c(y), degree=degree))
     )  }
 }
 
@@ -50,11 +50,25 @@ X <- matrix(
       byrow = TRUE)
 
 Y <- matrix(
-      c(1, 1, -1, -1),
+      c(1, 1, -1, -1, 0, 1),
       ncol = 2,
       byrow = TRUE)
 
 angle(X, Y)
 angle(X)
+
+outer(
+  asplit(X, 2),
+  asplit(Y, 2),
+  Vectorize(\(x, y) angle(c(x), c(y), TRUE))
+)
+
+outer(
+  asplit(X, 2),
+  asplit(X, 2),
+  Vectorize(\(x, y) angle(c(x), c(y), TRUE))
+)
+
+
 
 }
