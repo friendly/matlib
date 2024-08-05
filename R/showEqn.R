@@ -170,7 +170,10 @@ showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
   for (i in 1:length(res)){
       cat(res[i], "\n")
   }
-  if(latex) cat('\\end{array}')
+  if(latex){
+      cat('\\end{array}')
+      return(NULL)
+  }
   invisible(res)
 }
 
