@@ -23,23 +23,19 @@ Both of these equations are numbered. (In this example, using `echo = TRUE` give
 intersperses the code with the equation output for some reason.)
 
 ```{r eval=FALSE}
-Eqn(cat("X=U \\lambda V"), label='eqn:svd')
-Eqn({
-    symbolicMatrix("u", "n", "k", lhs = '')
-    symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
-    symbolicMatrix("v", "k", "p", transpose = TRUE)
-})
+Eqn("X=U \\lambda V", label='eqn:svd')
+Eqn(symbolicMatrix("u", "n", "k", lhs = ''),
+    symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
+    symbolicMatrix("v", "k", "p", transpose = TRUE))
 ```
 
 produces:
 
 ```{r results='asis', echo=FALSE}
-Eqn(cat("X=U \\lambda V"), label='eqn:svd')
-Eqn({
-    symbolicMatrix("u", "n", "k", lhs = '')
-    symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
-    symbolicMatrix("v", "k", "p", transpose = TRUE)
-})
+Eqn("X=U \\lambda V", label='eqn:svd')
+Eqn(symbolicMatrix("u", "n", "k", lhs = ''),
+    symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
+    symbolicMatrix("v", "k", "p", transpose = TRUE))
 ```
 
 This can be referenced:  As seen in Equation \ref{eqn:svd} \ldots
@@ -49,12 +45,12 @@ This can be referenced:  As seen in Equation \ref{eqn:svd} \ldots
 You can also align the equations. Note the locations of the `&` for alignment.
 
 ```{r results='asis'}
-Eqn({
-    cat("X & =U \\lambda V \\\\ \n")
-    symbolicMatrix("u", "n", "k", lhs = '&')
-    symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
-    symbolicMatrix("v", "k", "p", transpose = TRUE)
- }, align=TRUE)
+Eqn("X & =U \\lambda V",
+    Eqn_newline(),
+    symbolicMatrix("u", "n", "k", lhs = '&'),
+    symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
+    symbolicMatrix("v", "k", "p", transpose = TRUE),
+    align=TRUE)
 ```
 
 ## matrix2latex
@@ -78,11 +74,14 @@ inside `$$ ... $$` to be evaluated in a chunk, so this chunk is not evaluated (i
 
 Perhaps look at `showEqn.R` to see if this can be fixed.
 
-```{r showEqn0, eval=FALSE}
+```{r}
 A <- matrix(paste0("a_{", outer(1:3, 1:3, FUN  = paste0), "}"), 
             nrow=3) 
 b <- paste0("b_", 1:3)
 x <- paste0("x", 1:3)
+```
+
+```{r showEqn0, eval=FALSE}
 showEqn(A, b, vars = x, latex=TRUE)
 ```
 
@@ -94,5 +93,11 @@ a_{11} \cdot x_1 &+& a_{12} \cdot x_2 &+& a_{13} \cdot x_3  &=&  b_1 \\
 a_{21} \cdot x_1 &+& a_{22} \cdot x_2 &+& a_{23} \cdot x_3  &=&  b_2 \\ 
 a_{31} \cdot x_1 &+& a_{32} \cdot x_2 &+& a_{33} \cdot x_3  &=&  b_3 \\ 
 \end{array}
+```
+
+Evaluating the above code in an unnumbered \LaTeX\ math environment via `Eqn()`:
+
+```{r results='asis'}
+showEqn(A, b, vars = x, latex=TRUE) |> Eqn(number=FALSE)
 ```
 
