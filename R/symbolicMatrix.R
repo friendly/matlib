@@ -110,9 +110,11 @@
 #' @param lhs    character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand
 #'               side of an equation
 #'               with the generated matrix on the right-hand side.
-#' @param print  logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}
+#' @param print  logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE};
+#'               if \code{FALSE}, the generated LaTeX expression is returned as a character string.
 #'
-#' @returns Returns invisibly the LaTeX representation of the matrix as a character string.
+#' @returns If \code{\code{print = FALSE}}, returns the LaTeX representation of the matrix as a character string;
+#'        otherwise returns \code{NULL} invisibly.
 #'        If you assign to a variable, you can use \code{\link[clipr]{write_clip}} to copy it to the clipboard.
 #'
 #'        As a side-effect, by default (unless \code{print = FALSE}) the function uses
@@ -367,7 +369,12 @@ symbolicMatrix <- function(
                    if (!missing(exponent)) paste0("^{", exponent, "}"),
                    if (!isFALSE(transpose)) paste0("^", transpose),
                    "\n")
-  if (print) cat(result)
-  invisible(result)
+  if (print) {
+    cat(result)
+    return(invisible(NULL))
+  } else {
+    return(result)
+  }
+  
 }
 

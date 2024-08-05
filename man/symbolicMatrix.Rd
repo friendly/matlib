@@ -63,10 +63,12 @@ on each element}
 side of an equation
 with the generated matrix on the right-hand side.}
 
-\item{print}{logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE}}
+\item{print}{logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE};
+if \code{FALSE}, the generated LaTeX expression is returned as a character string.}
 }
 \value{
-Returns invisibly the LaTeX representation of the matrix as a character string.
+If \code{\code{print = FALSE}}, returns the LaTeX representation of the matrix as a character string;
+       otherwise returns \code{NULL} invisibly.
        If you assign to a variable, you can use \code{\link[clipr]{write_clip}} to copy it to the clipboard.
 
        As a side-effect, by default (unless \code{print = FALSE}) the function uses
