@@ -2,7 +2,7 @@
 % Please edit documentation in R/rowops.R
 \name{rowadd}
 \alias{rowadd}
-\title{Add multiples of rows to other rows}
+\title{Elementary Row Operations}
 \usage{
 rowadd(x, from, to, mult)
 }
@@ -44,6 +44,13 @@ Ab <- cbind(A, b)
 
 # Could continue to reduce above diagonal to zero
 echelon(A, b, verbose=TRUE, fractions=TRUE)
+
+# convenient use of pipes
+I <- diag( 3 )
+AA <- I |>
+  rowadd(3, 1, 1) |>   # add 1 x row 3 to row 1
+  rowadd(1, 3, 1) |>   # add 1 x row 1 to row 3
+  rowmult(2, 2)        # multiply row 2 by 2
 
 }
 \seealso{
