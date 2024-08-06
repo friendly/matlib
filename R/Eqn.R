@@ -16,7 +16,6 @@
 #' @param number logical; include equation number? Default: {TRUE}
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})
 #' @param align logical; use the \code{align} environment with explicit \code{&}. Default: {FALSE}
-#'   aligners?
 #' @returns NULL
 #' @author Phil Chalmers
 #' @seealso \code{\link{symbolicMatrix}}, \code{\link{matrix2latex}}
@@ -32,14 +31,12 @@
 #' Eqn("X=U \\lambda V", label='eqn:svd')
 #'
 #' # expressions that use cat() within their calls
-#' Eqn("X=U \\lambda V",
-#'     Eqn_newline(),
-#'     symbolicMatrix("u", "n", "k", lhs = 'SVD'),
+#' Eqn(symbolicMatrix("u", "n", "k", lhs = 'SVD'),
 #'     symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
 #'     symbolicMatrix("v", "k", "p", transpose = TRUE),
 #'     label='eqn:svd')
 #'
-#' # align equations at =
+#' # align equations using & operator
 #' Eqn("X &= U \\lambda V",
 #'     Eqn_newline(),
 #'     symbolicMatrix("u", "n", "k", lhs = '&'),

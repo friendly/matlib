@@ -19,8 +19,7 @@ expression inside a call to \code{\link{cat}}}
 
 \item{label}{character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})}
 
-\item{align}{logical; use the \code{align} environment with explicit \code{&}. Default: {FALSE}
-aligners?}
+\item{align}{logical; use the \code{align} environment with explicit \code{&}. Default: {FALSE}}
 }
 \description{
 This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
@@ -41,14 +40,12 @@ Eqn('e=mc^2', label = 'eqn:einstein')
 Eqn("X=U \\\\lambda V", label='eqn:svd')
 
 # expressions that use cat() within their calls
-Eqn("X=U \\\\lambda V",
-    Eqn_newline(),
-    symbolicMatrix("u", "n", "k", lhs = 'SVD'),
+Eqn(symbolicMatrix("u", "n", "k", lhs = 'SVD'),
     symbolicMatrix("\\\\lambda", "k", "k", diag=TRUE),
     symbolicMatrix("v", "k", "p", transpose = TRUE),
     label='eqn:svd')
 
-# align equations at =
+# align equations using & operator
 Eqn("X &= U \\\\lambda V",
     Eqn_newline(),
     symbolicMatrix("u", "n", "k", lhs = '&'),
