@@ -1,5 +1,5 @@
 ---
-title: "symbolicMatrix, Eqn and matrix2latex"
+title: "LaTeX Equations with symbolicMatrix, Eqn and matrix2latex"
 output: 
     pdf_document:
         extra_dependencies: ["amsmath"]
@@ -44,8 +44,11 @@ This can be referenced:  As seen in Equation \ref{eqn:svd} \ldots
 
 You can also align the equations. Note the locations of the `&` for alignment.
 
+Show the singular value decomposition:
+
+
 ```{r results='asis'}
-Eqn("X & =U \\lambda V",
+Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}",
     Eqn_newline(),
     symbolicMatrix("u", "n", "k", lhs = '&'),
     symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
@@ -55,14 +58,17 @@ Eqn("X & =U \\lambda V",
 
 ## matrix2latex
 
-`matrix2latex()` can also generate symbolic equations.
+`matrix2latex()` can also generate symbolic equations from numeric or character matrices.
 
+Create character matrix:
 ```{r}
 A <- matrix(paste0('a_', 1:9), 3, 3)
 b <- paste0("\\beta_", 1:3)
 ```
 
-```{r results='asis', echo=FALSE}
+Show $[\mathbf{A} | \mathbf{b}]$:
+
+```{r results='asis'}
 matrix2latex(cbind(A,b)) |> Eqn(number=FALSE)
 ```
 
