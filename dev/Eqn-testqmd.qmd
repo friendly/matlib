@@ -1,0 +1,95 @@
+---
+title: "test"
+author: "Me"
+format: pdf
+editor: visual
+---
+
+```{r include=FALSE}
+library(matlib)
+```
+
+Write out the SVD using `Eqn()` and `symbolicMatrix()`. In Rmd, `Eqn()` can be given an equation label. Both of these equations are numbered. (In this example, using `echo = TRUE` gives output that intersperses the code with the equation output for some reason.)
+
+```{r eval=FALSE}
+Eqn("X=U \\lambda V", label='eqn:svd')
+Eqn(symbolicMatrix("u", "n", "k", lhs = ''),
+    symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
+    symbolicMatrix("v", "k", "p", transpose = TRUE))
+```
+
+produces:
+
+```{r results='asis', echo=FALSE}
+Eqn("X=U \\lambda V", label='eqn:svd')
+Eqn(symbolicMatrix("u", "n", "k", lhs = ''),
+    symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
+    symbolicMatrix("v", "k", "p", transpose = TRUE))
+```
+
+This can be referenced: As seen in Equation \ref{eqn:svd} \ldots
+
+## aligned
+
+You can also align the equations. Note the locations of the `&` for alignment.
+
+Show the singular value decomposition:
+
+```{r results='asis'}
+Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}",
+    Eqn_newline(),
+    symbolicMatrix("u", "n", "k", lhs = '&'),
+    symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
+    symbolicMatrix("v", "k", "p", transpose = TRUE),
+    align=TRUE)
+```
+
+## matrix2latex
+
+`matrix2latex()` can also generate symbolic equations from numeric or character matrices.
+
+Create character matrix:
+
+```{r}
+A <- matrix(paste0('a_', 1:9), 3, 3)
+b <- paste0("\\beta_", 1:3)
+```
+
+Show $[\mathbf{A} | \mathbf{b}]$:
+
+```{r results='asis'}
+matrix2latex(cbind(A,b)) |> Eqn(number=FALSE)
+```
+
+## showEqn
+
+`showEqn()` can also write \LaTeX, but writes out the equations. However, but the `array` environment needs to be included inside `$$ ... $$` to be evaluated in a chunk, so this chunk is not evaluated (it causes a LaTeX error).
+
+Perhaps look at `showEqn.R` to see if this can be fixed.
+
+```{r}
+A <- matrix(paste0("a_{", outer(1:3, 1:3, FUN  = paste0), "}"), 
+            nrow=3) 
+b <- paste0("b_", 1:3)
+x <- paste0("x", 1:3)
+```
+
+```{r showEqn0, eval=FALSE}
+showEqn(A, b, vars = x, latex=TRUE)
+```
+
+It would produce:
+
+```         
+\begin{array}{lllllll}
+a_{11} \cdot x_1 &+& a_{12} \cdot x_2 &+& a_{13} \cdot x_3  &=&  b_1 \\ 
+a_{21} \cdot x_1 &+& a_{22} \cdot x_2 &+& a_{23} \cdot x_3  &=&  b_2 \\ 
+a_{31} \cdot x_1 &+& a_{32} \cdot x_2 &+& a_{33} \cdot x_3  &=&  b_3 \\ 
+\end{array}
+```
+
+Evaluating the above code in an unnumbered \LaTeX math environment via `Eqn()`:
+
+```{r results='asis'}
+showEqn(A, b, vars = x, latex=TRUE) |> Eqn(number=FALSE)
+```

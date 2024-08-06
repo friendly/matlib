@@ -4,8 +4,8 @@
 
 #' Show Matrices (A, b) as Linear Equations
 #'
-#' Shows what matrices \eqn{\mathbf{A}, \mathbf{b}} look like as the system of linear equations,
-#' \eqn{\mathbf{A x} = \mathbf{b}}, but written out
+#' Shows what matrices \eqn{\\mathbf{A}, \\mathbf{b}} look like as the system of linear equations,
+#' \eqn{\\mathbf{A x} = \\mathbf{b}}, but written out
 #' as a set of equations.
 #'
 #' @param A either the matrix of coefficients of a system of linear equations, or the matrix \code{cbind(A,b)}.

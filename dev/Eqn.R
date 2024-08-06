@@ -74,7 +74,7 @@ Eqn <- function(...,
       if(is_char[i]) cat(chartmp[i])
       else eval(parse(text = chartmp[i]))
   }
-  cat(sprintf("\\end{%s}\n", wrap))
+  cat(sprintf("\n\\end{%s}\n", wrap))
   invisible(NULL)
 }
 
