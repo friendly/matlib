@@ -68,7 +68,7 @@ matrix2latex(cbind(A,b)) |> Eqn(number=FALSE)
 
 ## showEqn
 
-`showEqn()` can also write LaTeX, but writes out the equations.
+`showEqn()` can also write \LaTeX\, but writes out the equations.
 However, but the `array` environment needs to be included
 inside `$$ ... $$` to be evaluated in a chunk, so this chunk is not evaluated (it causes a LaTeX error).
 
