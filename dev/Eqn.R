@@ -17,7 +17,7 @@
 #' Eqn('e=mc^2', label = 'eqn:einstein')
 #' Eqn("X=U \\lambda V", label='eqn:svd')
 #'
-#' # expressions that use cat() within their calls (excluding first argument)
+#' # expressions that use cat() within their calls
 #' Eqn("X=U \\lambda V",
 #'     Eqn_newline(),
 #'     symbolicMatrix("u", "n", "k", lhs = 'SVD'),
@@ -41,6 +41,9 @@
 #'
 #' matrix2latex(cbind(A,b)) |> Eqn()
 #'
+#' # with showEqn()
+#' showEqn(A, b, latex=TRUE) |> Eqn()
+#'
 Eqn <- function(..., number = TRUE, label = NULL, align = FALSE) {
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
@@ -58,4 +61,6 @@ Eqn <- function(..., number = TRUE, label = NULL, align = FALSE) {
   invisible(NULL)
 }
 
-Eqn_newline <- function(form = ' \\\\ \n') cat(form)
+#' @rdname Eqn
+#' @export
+Eqn_newline <- function() cat(' \\\\ \n')
