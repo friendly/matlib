@@ -42,8 +42,8 @@ and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a 
 a one-column character matrix, one row for each equation
 }
 \description{
-Shows what matrices \eqn{\mathbf{A}, \mathbf{b}} look like as the system of linear equations,
-\eqn{\mathbf{A x} = \mathbf{b}}, but written out
+Shows what matrices \eqn{\\mathbf{A}, \\mathbf{b}} look like as the system of linear equations,
+\eqn{\\mathbf{A x} = \\mathbf{b}}, but written out
 as a set of equations.
 }
 \examples{
