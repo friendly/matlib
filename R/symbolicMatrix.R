@@ -117,15 +117,12 @@
 #' @param lhs    character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand
 #'               side of an equation
 #'               with the generated matrix on the right-hand side.
-#' @param print  logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE};
-#'               if \code{FALSE}, the generated LaTeX expression is returned as a character string.
-#'
-#' @returns If \code{\code{print = FALSE}}, returns the LaTeX representation of the matrix as a character string;
-#'        otherwise returns \code{NULL} invisibly.
-#'        If you assign to a variable, you can use \code{\link[clipr]{write_clip}} to copy it to the clipboard.
-#'
-#'        As a side-effect, by default (unless \code{print = FALSE}) the function uses
-#'        \code{cat()} to display the result at the console.
+#' @param onConsole if \code{TRUE}, the default, print the LaTeX code for
+#'                  the matrix on the R console.
+#'               
+#' @returns \code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}
+#'          which is the LaTeX representation of the matrix as a character string,
+#'          and which is normally printed.
 #'
 #' @author John Fox
 #' @seealso \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
@@ -134,7 +131,7 @@
 #' symbolicMatrix()
 #'
 #' # return value
-#' mat <- symbolicMatrix(print = FALSE)
+#' mat <- symbolicMatrix()
 #' str(mat)
 #' cat(mat)
 #' # copy to clipboard
@@ -211,8 +208,7 @@ symbolicMatrix <- function(
     fractions=FALSE,
     prefix="",
     suffix="",
-    lhs,
-    print=TRUE
+    lhs
     ){
   
   latexFraction <- function(x){
@@ -397,12 +393,13 @@ symbolicMatrix <- function(
                    if (!missing(exponent)) paste0("^{", exponent, "}"),
                    if (!isFALSE(transpose)) paste0("^", transpose),
                    "\n")
-  if (print) {
-    cat(result)
-    return(invisible(NULL))
-  } else {
-    return(result)
-  }
-
+  class(result) <- "symbolicMatrix"
+  result
 }
 
+#' @rdname symbolicMatrix
+#' @export
+print.symbolicMatrix <- function(x, onConsole=TRUE,  ...){
+  if (onConsole) cat(x)
+  invisible(x)
+}

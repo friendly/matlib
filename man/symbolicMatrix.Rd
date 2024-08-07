@@ -2,6 +2,7 @@
 % Please edit documentation in R/symbolicMatrix.R
 \name{symbolicMatrix}
 \alias{symbolicMatrix}
+\alias{print.symbolicMatrix}
 \title{Create a Symbolic Matrix for LaTeX}
 \usage{
 symbolicMatrix(
@@ -18,9 +19,10 @@ symbolicMatrix(
   fractions = FALSE,
   prefix = "",
   suffix = "",
-  lhs,
-  print = TRUE
+  lhs
 )
+
+\method{print}{symbolicMatrix}(x, onConsole = TRUE, ...)
 }
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
@@ -73,16 +75,13 @@ on each element}
 side of an equation
 with the generated matrix on the right-hand side.}
 
-\item{print}{logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE};
-if \code{FALSE}, the generated LaTeX expression is returned as a character string.}
+\item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
+the matrix on the R console.}
 }
 \value{
-If \code{\code{print = FALSE}}, returns the LaTeX representation of the matrix as a character string;
-       otherwise returns \code{NULL} invisibly.
-       If you assign to a variable, you can use \code{\link[clipr]{write_clip}} to copy it to the clipboard.
-
-       As a side-effect, by default (unless \code{print = FALSE}) the function uses
-       \code{cat()} to display the result at the console.
+\code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}
+         which is the LaTeX representation of the matrix as a character string,
+         and which is normally printed.
 }
 \description{
 Constructs the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
@@ -162,7 +161,7 @@ unless the elements are integers or are rounded. For a LaTeX representation of g
 symbolicMatrix()
 
 # return value
-mat <- symbolicMatrix(print = FALSE)
+mat <- symbolicMatrix()
 str(mat)
 cat(mat)
 # copy to clipboard
