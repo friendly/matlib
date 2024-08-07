@@ -401,8 +401,8 @@ symbolicMatrix <- function(
   result
 }
 
-#' @param x a \code{symbolicMatrix} object
-#' @param ... other argument for compatibility, ignored
+#' @param x a \code{"symbolicMatrix"} object
+#' @param ...  for compatibility with the \code{print()} generic function, ignored
 #' @rdname symbolicMatrix
 #' @export
 print.symbolicMatrix <- function(x, onConsole=TRUE,  ...){
