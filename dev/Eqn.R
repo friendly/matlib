@@ -12,7 +12,7 @@
 #' @param ... expressions using \code{\link{cat}} and
 #'   return a \code{NULL} object to be wrapped in a LaTeX math
 #'   environment. Supplying a character vector will automatically wrap the
-#'   expression inside a call to \code{\link{cat}}
+#'   expression inside a call to \code{\link{cat}} with a line break
 #' @param number logical; include equation number? Default: {TRUE}
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})
 #' @param align logical; use the \code{align} environment with explicit \code{&}. Default: {FALSE}
@@ -23,7 +23,7 @@
 #' @examples
 #'
 #' Eqn('e=mc^2')
-#' Eqn(cat('e=mc^2')) # equivalent, but unnecessary
+#' Eqn(cat('e=mc^2 \n')) # equivalent, but unnecessary
 #'
 #' # Equation numbers & labels
 #' Eqn('e=mc^2', number = FALSE)
@@ -70,7 +70,7 @@ Eqn <- function(...,
   is_char <- sapply(tmp, is.character)[-1L]
   chartmp <- as.character(tmp)[-1L]
   for(i in 1L:length(chartmp)){
-      if(is_char[i]) cat(chartmp[i])
+      if(is_char[i]) cat(chartmp[i], " \n")
       else eval(parse(text = chartmp[i]))
   }
   cat(sprintf("\n\\end{%s}\n", wrap))

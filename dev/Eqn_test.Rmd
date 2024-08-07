@@ -129,7 +129,7 @@ of the second equation.
 
 
 ```{r results='asis'}
-Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}\\top",
+Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
     Eqn_newline(),
     symbolicMatrix("u", "n", "k", lhs = '&'),
     symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
