@@ -10,10 +10,11 @@ Eqn(..., number = TRUE, label = NULL, align = FALSE)
 Eqn_newline()
 }
 \arguments{
-\item{...}{expressions using \code{\link{cat}} and
-return a \code{NULL} object to be wrapped in a LaTeX math
-environment. Supplying a character vector will automatically wrap the
-expression inside a call to \code{\link{cat}}}
+\item{...}{expressions that provide a) a \code{\link{cat}} call and
+returns a \code{NULL} object to be wrapped in a LaTeX math
+environment, b) a character vector, which will be automatically wrapped the
+expression inside a call to \code{\link{cat}}, or c) an object of class
+\code{\link{symbolicMatrix}}}
 
 \item{number}{logical; include equation number? Default: {TRUE}}
 
