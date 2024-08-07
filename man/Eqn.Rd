@@ -39,6 +39,9 @@ Eqn('e=mc^2', number = FALSE)
 Eqn('e=mc^2', label = 'eqn:einstein')
 Eqn("X=U \\\\lambda V", label='eqn:svd')
 
+# Multiple expressions
+Eqn("e=mc^2", "X=U \\\\lambda V", label='eqn:svd')
+
 # expressions that use cat() within their calls
 Eqn(symbolicMatrix("u", "n", "k", lhs = 'SVD'),
     symbolicMatrix("\\\\lambda", "k", "k", diag=TRUE),

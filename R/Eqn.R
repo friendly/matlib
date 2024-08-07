@@ -23,12 +23,15 @@
 #' @examples
 #'
 #' Eqn('e=mc^2')
-#' Eqn(cat('e=mc^2')) # equivalent, but unnecessary
+#' Eqn(cat('e=mc^2 \n')) # equivalent, but unnecessary
 #'
 #' # Equation numbers & labels
 #' Eqn('e=mc^2', number = FALSE)
 #' Eqn('e=mc^2', label = 'eqn:einstein')
 #' Eqn("X=U \\lambda V", label='eqn:svd')
+#'
+#' # Multiple expressions
+#' Eqn("e=mc^2", "X=U \\lambda V", label='eqn:svd')
 #'
 #' # expressions that use cat() within their calls
 #' Eqn(symbolicMatrix("u", "n", "k", lhs = 'SVD'),
@@ -68,8 +71,11 @@ Eqn <- function(...,
   is_char <- sapply(tmp, is.character)[-1L]
   chartmp <- as.character(tmp)[-1L]
   for(i in 1L:length(chartmp)){
-      if(is_char[i]) cat(chartmp[i])
-      else eval(parse(text = chartmp[i]))
+      if(is_char[i]){
+          if(i > 1L && is_char[i-1L]) cat("\n")
+          cat(chartmp[i])
+          if(i == length(chartmp)) cat("\n")
+      } else eval(parse(text = chartmp[i]))
   }
   cat(sprintf("\\end{%s}\n", wrap))
   invisible(NULL)
