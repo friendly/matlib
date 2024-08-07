@@ -42,6 +42,10 @@ In a `.Rmd` or `.qmd` document, use the chunk options: `results='asis', echo=FAL
 so that `knitr` just outputs the text of the equations to the document.
 The rendering of the equations is handled by [`pandoc`](https://pandoc.org/).
 
+**Note**: Some of these functions are still experimental. Their organization and arguments may change. They presently
+work well for PDF output, but there are limitations in HTML output.
+
+
 ## Using `symbolicMatrix()` and `Eqn()`
 
 `symbolicMatrix()` constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. For example, by default (with no arguments) it produces the expression for a matrix whose elements
