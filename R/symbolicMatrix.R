@@ -212,10 +212,13 @@ symbolicMatrix <- function(
     ){
   
   latexFraction <- function(x){
+    negative <- grepl("-", x)
+    if (negative) x <- sub("-", "", x)
     if (grepl("/", x)){
       x <- sub("/", "}{", x)
       x <- paste0("\\frac{", x, "}")
     }
+    x <- if (negative) paste0("-", x) else paste0(negatives, x)
     x
   }
 
@@ -235,6 +238,7 @@ symbolicMatrix <- function(
       if (is.null(digits) && all(trunc(symbol) == symbol) ) digits <- 0
       if (fractions) {
         symbol <- as.character(Fractions(symbol))
+        negatives <- if (any(grepl("-", symbol))) "\\phantom{-}" else ""
         for (i in 1:nrow(symbol)){
           for (j in 1:ncol(symbol)){
             symbol[i, j] <- latexFraction(symbol[i, j])
