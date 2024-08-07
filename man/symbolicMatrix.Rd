@@ -13,6 +13,9 @@ symbolicMatrix(
   comma = FALSE,
   exponent,
   transpose = FALSE,
+  show.size = FALSE,
+  digits = getOption("digits") - 2,
+  fractions = FALSE,
   prefix = "",
   suffix = "",
   lhs,
@@ -52,6 +55,13 @@ that many columns.}
 \item{transpose}{if TRUE, the transpose symbol "\\top" is appended to the matrix; this may
 also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"} are
 commonly used.}
+
+\item{show.size}{logical; if \code{TRUE} shows the order of the matrix as an appended subscript.}
+
+\item{digits}{for a numeric matrix, number of digits to display;}
+
+\item{fractions}{logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
+function.}
 
 \item{prefix}{optional character string to be pre-pended to each matrix element, e.g, to wrap each
 element in a function like \code{"\\sqrt"} (but add braces)}
@@ -204,6 +214,15 @@ symbolicMatrix(diag(3), lhs = "\\\\mathbf{I}_3")
 symbolicMatrix(prefix="\\\\sqrt{", suffix="}")
 symbolicMatrix(suffix="^{1/2}")
 
+# show size (order) of a matrix
+symbolicMatrix(show.size=TRUE)
+symbolicMatrix(nrow=3, ncol=4, show.size=TRUE)
+
+# handling fractions
+m <- matrix(3/(1:9), 3, 3)
+symbolicMatrix(m)
+symbolicMatrix(m, digits=2)
+symbolicMatrix(m, fractions=TRUE)
 }
 \seealso{
 \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
