@@ -9,10 +9,11 @@
 #'
 #' In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 #'
-#' @param ... expressions using \code{\link{cat}} and
-#'   return a \code{NULL} object to be wrapped in a LaTeX math
-#'   environment. Supplying a character vector will automatically wrap the
-#'   expression inside a call to \code{\link{cat}}
+#' @param ... expressions that provide a) a \code{\link{cat}} call and
+#'   returns a \code{NULL} object to be wrapped in a LaTeX math
+#'   environment, b) a character vector, which will be automatically wrapped the
+#'   expression inside a call to \code{\link{cat}}, or c) an object of class
+#'   \code{\link{symbolicMatrix}}
 #' @param number logical; include equation number? Default: {TRUE}
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})
 #' @param align logical; use the \code{align} environment with explicit \code{&}. Default: {FALSE}
@@ -70,12 +71,19 @@ Eqn <- function(...,
   tmp <- substitute(deparse(...))
   is_char <- sapply(tmp, is.character)[-1L]
   chartmp <- as.character(tmp)[-1L]
+  sink(tempfile())
+  dots <- list(...)
+  sink()
   for(i in 1L:length(chartmp)){
       if(is_char[i]){
           if(i > 1L && is_char[i-1L]) cat("\n")
           cat(chartmp[i])
           if(i == length(chartmp)) cat("\n")
-      } else eval(parse(text = chartmp[i]))
+      } else if(is(dots[[i]], 'symbolicMatrix')){
+          print(dots[[i]])
+      } else {
+          eval(parse(text = chartmp[i]))
+      }
   }
   cat(sprintf("\\end{%s}\n", wrap))
   invisible(NULL)

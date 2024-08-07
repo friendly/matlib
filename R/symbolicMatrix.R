@@ -103,6 +103,13 @@
 #' @param transpose if TRUE, the transpose symbol "\\top" is appended to the matrix; this may
 #'               also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"} are
 #'               commonly used.
+#' @param show.size logical; if \code{TRUE} shows the order of the matrix as an appended subscript.
+#' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
+#'                  function.
+#' @param digits for a numeric matrix, number of digits to display; 
+#                the default is taken from \code{getOption("digits") - 2};
+#                the function sets \code{digits = 0} if the elements of 
+#                \code{symbol} are all integers.
 #' @param prefix optional character string to be pre-pended to each matrix element, e.g, to wrap each
 #'               element in a function like \code{"\\sqrt"} (but add braces)
 #' @param suffix optional character string to be appended to each matrix element, e.g., for exponents
@@ -110,15 +117,12 @@
 #' @param lhs    character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand
 #'               side of an equation
 #'               with the generated matrix on the right-hand side.
-#' @param print  logical; print the LaTeX code for the matrix on the console?; default: \code{TRUE};
-#'               if \code{FALSE}, the generated LaTeX expression is returned as a character string.
-#'
-#' @returns If \code{\code{print = FALSE}}, returns the LaTeX representation of the matrix as a character string;
-#'        otherwise returns \code{NULL} invisibly.
-#'        If you assign to a variable, you can use \code{\link[clipr]{write_clip}} to copy it to the clipboard.
-#'
-#'        As a side-effect, by default (unless \code{print = FALSE}) the function uses
-#'        \code{cat()} to display the result at the console.
+#' @param onConsole if \code{TRUE}, the default, print the LaTeX code for
+#'                  the matrix on the R console.
+#'               
+#' @returns \code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}
+#'          which is the LaTeX representation of the matrix as a character string,
+#'          and which is normally printed.
 #'
 #' @author John Fox
 #' @seealso \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
@@ -127,7 +131,7 @@
 #' symbolicMatrix()
 #'
 #' # return value
-#' mat <- symbolicMatrix(print = FALSE)
+#' mat <- symbolicMatrix()
 #' str(mat)
 #' cat(mat)
 #' # copy to clipboard
@@ -178,7 +182,16 @@
 #' # prefix / suffix
 #' symbolicMatrix(prefix="\\sqrt{", suffix="}")
 #' symbolicMatrix(suffix="^{1/2}")
+#' 
+#' # show size (order) of a matrix
+#' symbolicMatrix(show.size=TRUE)
+#' symbolicMatrix(nrow=3, ncol=4, show.size=TRUE)
 #'
+#' # handling fractions
+#' m <- matrix(3/(1:9), 3, 3)
+#' symbolicMatrix(m)
+#' symbolicMatrix(m, digits=2)
+#' symbolicMatrix(m, fractions=TRUE)
 
 
 symbolicMatrix <- function(
@@ -190,26 +203,24 @@ symbolicMatrix <- function(
     comma=FALSE,
     exponent,
     transpose=FALSE,
+    show.size=FALSE,
+    digits=getOption("digits") - 2,
+    fractions=FALSE,
     prefix="",
     suffix="",
-    lhs,
-    print=TRUE){
-
-  # Args:
-  #   symbol: for matrix elements, character string; alternative a matrix
-  #   nrow: number of rows, can be a character
-  #   ncol: number of columns, can be a character
-  #   matrix: LaTeX matrix environment
-  #   diag: if TRUE, off-diagonal elements are all 0 (and nrow must == ncol)
-  #   comma: if TRUE, commas are inserted between row and column subscripts
-  #   exponent: if specified, e.g., "-1", the exponent is applied to the matrix
-  #   transpose: if TRUE, the transpose symbol "\\top" is appended to the
-  #              matrix; may also be a character, e.g., "T".
-  #   prefix: optional character string to be pre-pended to each matrix element
-  #   suffix: optional character string to be appended to each matrix element
-  #   lhs: optional LaTeX expression, e.g, "\\boldsymbol{\\Lamda}", for
-  #        left-hand side of an equation with the matrix on the right-hand side.
-  #   print: print the LaTeX code for the matrix on the console
+    lhs
+    ){
+  
+  latexFraction <- function(x){
+    negative <- grepl("-", x)
+    if (negative) x <- sub("-", "", x)
+    if (grepl("/", x)){
+      x <- sub("/", "}{", x)
+      x <- paste0("\\frac{", x, "}")
+    }
+    x <- if (negative) paste0("-", x) else paste0(negatives, x)
+    x
+  }
 
   if (isTRUE(transpose)) transpose <- "\\top"
   if (!missing(exponent) && !isFALSE(transpose)){
@@ -217,10 +228,26 @@ symbolicMatrix <- function(
     transpose <- FALSE
   }
 
-  result <- paste0(if (!missing(lhs)) paste0(lhs, " = \n"),
-                   "\\begin{", matrix, "} \n")
+  result <- paste0(if (fractions) "\\renewcommand*{\\arraystretch}{1.5} \n",
+                   if (!missing(lhs)) paste0(lhs, " = \n"),
+                   "\\begin{", matrix, "} \n"
+                   )
 
   if (is.matrix(symbol)){
+    if (is.numeric(symbol)){
+      if (is.null(digits) && all(trunc(symbol) == symbol) ) digits <- 0
+      if (fractions) {
+        symbol <- as.character(Fractions(symbol))
+        negatives <- if (any(grepl("-", symbol))) "\\phantom{-}" else ""
+        for (i in 1:nrow(symbol)){
+          for (j in 1:ncol(symbol)){
+            symbol[i, j] <- latexFraction(symbol[i, j])
+          }
+        }
+      } else {
+        symbol <- format(symbol, digits=digits)
+      }
+    }
     mat <- matrix(as.character(symbol), nrow(symbol), ncol(symbol))
     width <- apply(nchar <- nchar(mat), 2, max)
     nr <- nrow(mat)
@@ -364,17 +391,19 @@ symbolicMatrix <- function(
       }
     }
   }
-
+  
   result <- paste0(result, "\\end{", matrix, "}",
+                   if (show.size) paste0("_{(", nrow, " \\times ", ncol, ")}" ),
                    if (!missing(exponent)) paste0("^{", exponent, "}"),
                    if (!isFALSE(transpose)) paste0("^", transpose),
                    "\n")
-  if (print) {
-    cat(result)
-    return(invisible(NULL))
-  } else {
-    return(result)
-  }
-
+  class(result) <- "symbolicMatrix"
+  result
 }
 
+#' @rdname symbolicMatrix
+#' @export
+print.symbolicMatrix <- function(x, onConsole=TRUE,  ...){
+  if (onConsole) cat(x)
+  invisible(x)
+}
