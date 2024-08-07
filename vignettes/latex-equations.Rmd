@@ -2,7 +2,9 @@
 title: "LaTeX Equations with symbolicMatrix, Eqn and matrix2latex"
 author: Phil Chalmers, Michael Friendly
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{LaTeX Equations with symbolicMatrix, Eqn and matrix2latex}
   %\VignetteEngine{knitr::rmarkdown}
