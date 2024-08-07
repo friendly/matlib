@@ -7,3 +7,4 @@ vignettes/*.R
 vignettes/*.html
 vignettes/*.png
 .Rproj.user
+dev/*.pdf
