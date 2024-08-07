@@ -40,7 +40,8 @@ It also illustrates the determinant, $\det(\mathbf{A})$, as the volume of the tr
 cube, and the relationship between $\mathbf{A}$ and $\mathbf{A}^{-1}$.
 
 
-Start with a unit cube, representing the identity matrix. 
+## The unit cube
+Start with a unit cube, which represents the identity matrix $\mathbf{I}_{3 \times 3}$ = `diag(3)` in 3 dimensions.
 In `rgl` this is given by `cube3d()` which returns a `"mesh3d"` object containing the vertices from -1 to 1
 on each axis. I translate and scale this to make each vertex go from 0 to 1.
 These are represented in homogeneous coordinates to handle perspective and transformations.
@@ -67,7 +68,9 @@ I want to show the transformation of $\mathbf{I}$ by a matrix $\mathbf{A}$ as th
 
 ```{r matrix-A}
 # matrix A: 
-A <- matrix(c( 1, 0, 1, 0, 2, 0,  1, 0, 2), 3, 3) |> print()
+A <- matrix(c( 1, 0, 1, 
+               0, 2, 0,  
+               1, 0, 2), 3, 3) |> print()
 det(A)
 
 # A can be produced by elementary row operations on the identity matrix
@@ -94,7 +97,10 @@ Another function, `vlabels()` allows for labeling vertices.
 draw3d <- function(object, col=rep(rainbow(6), each=4), 
                    alpha=0.6,  
                    vertices=TRUE, 
-                   lines=TRUE, ...) {
+                   lines=TRUE, 
+                   reverse = FALSE,
+                   ...) {
+  if(reverse) col <- rev(col)
 	shade3d(object, col=col, alpha=alpha, ...)
 	vert <- t(object$vb)
 	indices <- object$ib

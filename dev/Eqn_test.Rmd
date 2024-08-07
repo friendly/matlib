@@ -19,17 +19,17 @@ library(matlib)
 
 
 \LaTeX\ is the de facto standard for communication and publication in scientific documents and it is very easy to typeset mathematical expressions
-like Pythagoras' theorem, $a^2 + b^2 = c^2$ (`a^2 + b^2 = c^2`) once you learn
+like Pythagoras' theorem, $a^2 + b^2 = c^2$ (using `a^2 + b^2 = c^2`) once you learn
 the notation. Writing equations with arrays, matrices and vectors is
-somewhat more challenging. Many people rely on interactive \LaTeX\
-editors like [Overleaf](https://www.overleaf.com/), [MathType](https://www.wiris.com/en/mathtype/), or online
+somewhat more challenging. Many people rely on interactive \LaTeX\ editors like [Overleaf](https://www.overleaf.com/), [MathType](https://www.wiris.com/en/mathtype/), or online
 versions that provide a menu-driven interface with fill-in templates for
 matrices.
 
-There are alrady some tools available in R for producing \LaTeX\ output for
+There are already some tools available in R for producing \LaTeX\ output for
 tables (`xtable::xtable()`), R objects (`Hmisc::latex()`)
-and statistical models (the [`equatiomatic`](https://cran.r-project.org/package=equatiomatic) package.)
-The `matlib` package extends these, providing a collection of functions that simplify using \LaTeX\ notation for matrices, vectors and equations in documentation and in writing.
+and statistical models (`equatiomatic::extract_eq()`).
+
+The `matlib` package extends these, providing a collection of functions that simplify using \LaTeX\ notation for matrices, vectors and equations in documentation and in writing:
 
 * `symbolicMatrix()`: Constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts.
 * `matrix2latex()`: Constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts
@@ -45,7 +45,7 @@ The rendering of the equations is handled by [`pandoc`](https://pandoc.org/).
 ## Using `symbolicMatrix()` and `Eqn()`
 
 `symbolicMatrix()` constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. For example, by default (with no arguments) it produces the expression for a matrix whose elements
-are $x_{ij}, i = 1, 2, \cdots, n; j = 1, 2, \cdots,m$ in a \LaTeX\ `\begin{pmatrix} ... \end{pmatrix}`
+are $x_{ij}$, for $i = 1, 2, \cdots, n; j = 1, 2, \cdots,m$ in a \LaTeX\ `\begin{pmatrix} ... \end{pmatrix}`
 environment that looks like this:
 
 ```
@@ -58,11 +58,15 @@ environment that looks like this:
 ```
 
 The code above appears in the console. To render this as a matrix in a document, this must
-be wrapped in a display math environment, which is provided by `Eqn()`.
+be wrapped in a display math environment, which is provided by `Eqn()` and used in a code
+chunk with the `results = 'asis'` option, giving:
 
 ```{r results='asis'}
 symbolicMatrix() |> Eqn(number = FALSE)
 ```
+
+For chunk output in a document, you will get a \LaTeX\ error, "missing $ inserted" if you forget
+to use `Eqn()` or otherwise fail to make a math environment.
 
 Some other examples:
 
@@ -144,7 +148,7 @@ You can also align separate equations relative to some symbol like an `=` sign t
 steps of re-expression, using the option `Eqn(..., align=TRUE)`.
 
 Show the singular value decomposition again, but now as two separate equations aligned after the `=`
-sign. Note the locations of the `&` for alignment, specified as the left-hand side (`lhs`)
+sign. Note the locations of the `&` operator for alignment, specified as the left-hand side (`lhs`)
 of the second equation.
 
 
@@ -164,18 +168,30 @@ Note that in this example, there are three calls to `symbolicMatrix()`, wrapped 
 ## matrix2latex
 
 The `matrix2latex()` function can also generate symbolic equations from numeric or character matrices.
+For numeric matrices, it can round the values or show results as fractions.
 
-Create character matrix and vector:
+```{r results='asis'}
+A <- matrix(1:12, nrow=3, ncol=4, byrow = TRUE) / 6
+matrix2latex(A, fractions = TRUE, brackets = "b") |> Eqn(number = FALSE)
+```
+
+
+Say we want to show the matrix $[\mathbf{A} | \mathbf{b}]$ involved in the system of equations
+$\mathbf{A} \mathbf{x} = \mathbf{b}$.
+Create these as a character matrix and vector:
+
 ```{r}
 A <- matrix(paste0('a_', 1:9), 3, 3, byrow = TRUE) |> print()
 b <- paste0("\\beta_", 1:3) |> print()
 ```
 
-Using `matrix2latex()` we can show the matrix $[\mathbf{A} | \mathbf{b}]$. Note that you can pipe the result of `matrix2latex()` to `Eqn()`:
+Then use `matrix2latex()` on `cbind(A,b)` and pipe the result of `matrix2latex()` to `Eqn()`:
 
 ```{r results='asis'}
 matrix2latex(cbind(A,b)) |> Eqn(number=FALSE)
 ```
+
+All the R tricks for creating and modifying matrices can be used in this way.
 
 ## showEqn
 
