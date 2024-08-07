@@ -17,7 +17,19 @@ library(matlib)
 #source(here::here("dev","Eqn.R"))
 ```
 
-The `matlib` package provides a collection of functions that simplify using \LaTeX\ notation for matrices, vectors and equations in documentation and in writing.
+
+\LaTeX\ is the de facto standard for communication and publication in scientific documents and it is very easy to typeset mathematical expressions
+like Pythagoras' theorem, $a^2 + b^2 = c^2$ (`a^2 + b^2 = c^2`) once you learn
+the notation. Writing equations with arrays, matrices and vectors is
+somewhat more challenging. Many people rely on interactive \LaTeX\
+editors like [Overleaf](https://www.overleaf.com/), [MathType](https://www.wiris.com/en/mathtype/), or online
+versions that provide a menu-driven interface with fill-in templates for
+matrices.
+
+There are alrady some tools available in R for producing \LaTeX\ output for
+tables (`xtable::xtable()`), R objects (`Hmisc::latex()`)
+and statistical models (the [`equatiomatic`](https://cran.r-project.org/package=equatiomatic) package.)
+The `matlib` package extends these, providing a collection of functions that simplify using \LaTeX\ notation for matrices, vectors and equations in documentation and in writing.
 
 * `symbolicMatrix()`: Constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts.
 * `matrix2latex()`: Constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts
@@ -34,7 +46,7 @@ The rendering of the equations is handled by [`pandoc`](https://pandoc.org/).
 
 `symbolicMatrix()` constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. For example, by default (with no arguments) it produces the expression for a matrix whose elements
 are $x_{ij}, i = 1, 2, \cdots, n; j = 1, 2, \cdots,m$ in a \LaTeX\ `\begin{pmatrix} ... \end{pmatrix}`
-environment.
+environment that looks like this:
 
 ```
 \begin{pmatrix} 
@@ -54,20 +66,26 @@ symbolicMatrix() |> Eqn(number = FALSE)
 
 Some other examples:
 
-* A $3 \times 3$ identity matrix with square brackets, specified as an equation with a left-hand side $\mathbf{I}_3$
+* A $3 \times 3$ identity matrix with square brackets, specified as an equation with a left-hand side $\mathbf{I}_3$. The first argument to
+`symbolicMatrix()` can be any numeric matrix.
 
 ```{r results='asis'}
-symbolicMatrix(diag(3), lhs = "\\mathbf{I}_3", matrix="bmatrix") |> 
+symbolicMatrix(diag(3), lhs = "\\mathbf{I}_3", 
+               matrix="bmatrix") |> 
   Eqn(number = FALSE)
 ```
 
-* A row or column vector; the first argument to `symbolicMatrix()` must be a **matrix**, so wrap an R vector in `matrix()`, supplying `nrow=1` (or `ncol = 1`).
+* A row or column vector; the first argument to `symbolicMatrix()` must be a **matrix**, so wrap an R vector in `matrix()`, supplying `nrow=1` (or `ncol = 1`):
 
 ```{r results='asis'}
 symbolicMatrix(matrix(LETTERS[1:4], nrow=1)) |> Eqn(number = FALSE)
 ```
 
+```{r results='asis'}
+symbolicMatrix(matrix(letters[1:3], ncol=1)) |> Eqn(number = FALSE)
+```
 
+### The SVD
 As a more complicated example,
 here we write out the \LaTeX\ equation for the singular value decomposition (SVD) of a 
 general $n \times p$ matrix $\mathbf{X}$
@@ -98,13 +116,15 @@ Eqn(symbolicMatrix("u", "n", "k", lhs = ''),
     symbolicMatrix("v", "k", "p", transpose = TRUE))
 ```
 
-The matrix names in the \ref{eqn:svd} are printed in a **boldface** math font, typically used for matrices
+The matrix names in Equation (\ref{eqn:svd}) are printed in a **boldface** math font, typically used for matrices
 and vectors. Note that when using
 \LaTeX\ code in R expressions each backslash (`\`) must be doubled (`\\`) in R because `\` is the
 escape character.
 
-Note that the first equation can be referenced because it was labeled:  "As seen in Equation \ref{eqn:svd} \ldots ".
+Note that the first equation can be referenced because it was labeled:  "As seen in Equation (\ref{eqn:svd}) \ldots ".
 (In Quarto, equation labels must be of the form `#eq-label` and equation references are of the form `@eq-label`)
+
+### Systems of equations
 
 As another example, the chunk below shows a system of equations $\mathbf{A} \mathbf{x} = \mathbf{b}$
 written out using symbolic matrices. Note the use of `cat()` to insert arbitrary \LaTeX\ into

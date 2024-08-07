@@ -199,7 +199,7 @@ symbolicMatrix <- function(
   #   symbol: for matrix elements, character string; alternative a matrix
   #   nrow: number of rows, can be a character
   #   ncol: number of columns, can be a character
-  #   matrix: LaTeX matix environment
+  #   matrix: LaTeX matrix environment
   #   diag: if TRUE, off-diagonal elements are all 0 (and nrow must == ncol)
   #   comma: if TRUE, commas are inserted between row and column subscripts
   #   exponent: if specified, e.g., "-1", the exponent is applied to the matrix
@@ -375,6 +375,6 @@ symbolicMatrix <- function(
   } else {
     return(result)
   }
-  
+
 }
 

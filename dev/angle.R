@@ -1,6 +1,8 @@
 # Generalize the angle function to allow angle(X, Y), where X, Y are matrices
 # and we want to calculate the angles between the columns of X, Y.
 # Or, angle(X), and want to calculate the angles between the columns of X
+# see: https://stackoverflow.com/questions/78827317/find-angles-between-columns-of-matrices-in-r
+
 
 rad2deg <- function(rad) (rad * 180) / pi
 
