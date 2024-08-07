@@ -75,8 +75,12 @@ on each element}
 side of an equation
 with the generated matrix on the right-hand side.}
 
+\item{x}{a \code{symbolicMatrix} object}
+
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
+
+\item{...}{other argument for compatibility, ignored}
 }
 \value{
 \code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}

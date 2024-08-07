@@ -14,9 +14,9 @@
 #'   environment, b) a character vector, which will be automatically wrapped the
 #'   expression inside a call to \code{\link{cat}}, or c) an object of class
 #'   \code{\link{symbolicMatrix}}
-#' @param number logical; include equation number? Default: {TRUE}
+#' @param number logical; include equation number? Default: \code{TRUE}
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})
-#' @param align logical; use the \code{align} environment with explicit \code{&}. Default: {FALSE}
+#' @param align logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}
 #' @returns NULL
 #' @author Phil Chalmers
 #' @seealso \code{\link{symbolicMatrix}}, \code{\link{matrix2latex}}

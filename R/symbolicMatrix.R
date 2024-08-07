@@ -106,9 +106,9 @@
 #' @param show.size logical; if \code{TRUE} shows the order of the matrix as an appended subscript.
 #' @param fractions logical; if \code{TRUE}, try to express non-integers as rational numbers, using the \code{\link[MASS]{fractions}}
 #'                  function.
-#' @param digits for a numeric matrix, number of digits to display; 
+#' @param digits for a numeric matrix, number of digits to display;
 #                the default is taken from \code{getOption("digits") - 2};
-#                the function sets \code{digits = 0} if the elements of 
+#                the function sets \code{digits = 0} if the elements of
 #                \code{symbol} are all integers.
 #' @param prefix optional character string to be pre-pended to each matrix element, e.g, to wrap each
 #'               element in a function like \code{"\\sqrt"} (but add braces)
@@ -119,7 +119,7 @@
 #'               with the generated matrix on the right-hand side.
 #' @param onConsole if \code{TRUE}, the default, print the LaTeX code for
 #'                  the matrix on the R console.
-#'               
+#'
 #' @returns \code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}
 #'          which is the LaTeX representation of the matrix as a character string,
 #'          and which is normally printed.
@@ -182,7 +182,7 @@
 #' # prefix / suffix
 #' symbolicMatrix(prefix="\\sqrt{", suffix="}")
 #' symbolicMatrix(suffix="^{1/2}")
-#' 
+#'
 #' # show size (order) of a matrix
 #' symbolicMatrix(show.size=TRUE)
 #' symbolicMatrix(nrow=3, ncol=4, show.size=TRUE)
@@ -210,7 +210,7 @@ symbolicMatrix <- function(
     suffix="",
     lhs
     ){
-  
+
   latexFraction <- function(x){
     negative <- grepl("-", x)
     if (negative) x <- sub("-", "", x)
@@ -391,7 +391,7 @@ symbolicMatrix <- function(
       }
     }
   }
-  
+
   result <- paste0(result, "\\end{", matrix, "}",
                    if (show.size) paste0("_{(", nrow, " \\times ", ncol, ")}" ),
                    if (!missing(exponent)) paste0("^{", exponent, "}"),
@@ -401,6 +401,8 @@ symbolicMatrix <- function(
   result
 }
 
+#' @param x a \code{symbolicMatrix} object
+#' @param ... other argument for compatibility, ignored
 #' @rdname symbolicMatrix
 #' @export
 print.symbolicMatrix <- function(x, onConsole=TRUE,  ...){

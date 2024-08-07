@@ -16,11 +16,11 @@ environment, b) a character vector, which will be automatically wrapped the
 expression inside a call to \code{\link{cat}}, or c) an object of class
 \code{\link{symbolicMatrix}}}
 
-\item{number}{logical; include equation number? Default: {TRUE}}
+\item{number}{logical; include equation number? Default: \code{TRUE}}
 
 \item{label}{character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})}
 
-\item{align}{logical; use the \code{align} environment with explicit \code{&}. Default: {FALSE}}
+\item{align}{logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}}
 }
 \description{
 This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
