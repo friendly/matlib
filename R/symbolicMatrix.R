@@ -245,7 +245,7 @@ symbolicMatrix <- function(
           }
         }
       } else {
-        symbol <- format(m, digits=digits)
+        symbol <- format(symbol, digits=digits)
       }
     }
     mat <- matrix(as.character(symbol), nrow(symbol), ncol(symbol))
