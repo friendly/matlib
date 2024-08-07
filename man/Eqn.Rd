@@ -32,7 +32,7 @@ In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 \examples{
 
 Eqn('e=mc^2')
-Eqn(cat('e=mc^2')) # equivalent, but unnecessary
+Eqn(cat('e=mc^2 \n')) # equivalent, but unnecessary
 
 # Equation numbers & labels
 Eqn('e=mc^2', number = FALSE)
