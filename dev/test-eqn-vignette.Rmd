@@ -1,0 +1,27 @@
+---
+title: "Can I Number Equations in a Vignette?"
+author: An Author
+date: "`r Sys.Date()`"
+output:
+  bookdown::html_document2:
+  base_format: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Can I Number Equations in a Vignette?}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+library(matlib)
+```
+
+
+```{r results='asis'}
+symbolicMatrix(lhs = "\\mathbf{X}") |> Eqn(label="eq:X")
+```
+
+Can I reference this as: See \ref{eq:X}
