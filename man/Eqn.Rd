@@ -5,7 +5,13 @@
 \alias{Eqn_newline}
 \title{Create a LaTeX Equation Wrapper}
 \usage{
-Eqn(..., number = TRUE, label = NULL, align = FALSE)
+Eqn(
+  ...,
+  number = TRUE,
+  label = NULL,
+  align = FALSE,
+  html_output = knitr::is_html_output()
+)
 
 Eqn_newline()
 }
@@ -18,9 +24,15 @@ expression inside a call to \code{\link{cat}}, or c) an object of class
 
 \item{number}{logical; include equation number? Default: \code{TRUE}}
 
-\item{label}{character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})}
+\item{label}{character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn}), which
+can be reference via \code{\ref{eqn:myeqn}}. For compiled documents, if an
+HTML output is detected (see \code{html_output}) then the equations will be labelled
+via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)}}
 
 \item{align}{logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}}
+
+\item{html_output}{logical; use labels for HTML outputs instead of the LaTeX? Automatically
+changed for compiled documents that support \code{knitr}}
 }
 \description{
 This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
@@ -39,6 +51,9 @@ Eqn(cat('e=mc^2 \n')) # equivalent, but unnecessary
 Eqn('e=mc^2', number = FALSE)
 Eqn('e=mc^2', label = 'eqn:einstein')
 Eqn("X=U \\\\lambda V", label='eqn:svd')
+
+# html output (auto detected for documents)
+Eqn('e=mc^2', label = 'eqn:einstein', html_output = TRUE)
 
 # Multiple expressions
 Eqn("e=mc^2", "X=U \\\\lambda V", label='eqn:svd')

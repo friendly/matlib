@@ -15,9 +15,15 @@
 #'   expression inside a call to \code{\link{cat}}, or c) an object of class
 #'   \code{\link{symbolicMatrix}}
 #' @param number logical; include equation number? Default: \code{TRUE}
-#' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn})
+#' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn}), which
+#'   can be reference via \code{\ref{eqn:myeqn}}. For compiled documents, if an
+#'   HTML output is detected (see \code{html_output}) then the equations will be labelled
+#'   via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)}
+#' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
+#'   changed for compiled documents that support \code{knitr}
 #' @param align logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}
 #' @returns NULL
+#' @importFrom knitr is_html_output
 #' @author Phil Chalmers
 #' @seealso \code{\link{symbolicMatrix}}, \code{\link{matrix2latex}}
 #' @export
@@ -30,6 +36,9 @@
 #' Eqn('e=mc^2', number = FALSE)
 #' Eqn('e=mc^2', label = 'eqn:einstein')
 #' Eqn("X=U \\lambda V", label='eqn:svd')
+#'
+#' # html output (auto detected for documents)
+#' Eqn('e=mc^2', label = 'eqn:einstein', html_output = TRUE)
 #'
 #' # Multiple expressions
 #' Eqn("e=mc^2", "X=U \\lambda V", label='eqn:svd')
@@ -62,12 +71,16 @@
 Eqn <- function(...,
                 number = TRUE,
                 label = NULL,
-                align = FALSE) {
+                align = FALSE,
+                html_output = knitr::is_html_output()) {
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
   cat(sprintf("\n\\begin{%s}\n", wrap))
-  if(!is.null(label))
-    cat(sprintf('\\label{%s}\n', label))
+  if(!is.null(label)){
+      if(html_output)
+          cat(sprintf('(\\#%s)\n', label))
+      else cat(sprintf('\\label{%s}\n', label))
+  }
   tmp <- substitute(deparse(...))
   is_char <- sapply(tmp, is.character)[-1L]
   chartmp <- as.character(tmp)[-1L]
