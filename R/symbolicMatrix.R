@@ -135,7 +135,7 @@
 #' str(mat)
 #' cat(mat)
 #' # copy to clipboard
-#' #clipr::write_clip(mat)    # this can't be done in non-interactive mode
+#' #clipr::write_clip(mat)  # this can't be done in non-interactive mode
 #'
 #' # can use a complex symbol
 #' symbolicMatrix("\\widehat{\\beta}", 2, 4)
@@ -397,7 +397,22 @@ symbolicMatrix <- function(
                    if (!missing(exponent)) paste0("^{", exponent, "}"),
                    if (!isFALSE(transpose)) paste0("^", transpose),
                    "\n")
-  class(result) <- "symbolicMatrix"
+
+  # this would have been easier if the matrix body was already built ...
+  output <- capture.output(cat(result))
+  pick <- c(1, length(output))
+  wrapper <- output[pick]
+  body <- output[-pick]
+  body <- gsub('\\\\\\\\', '', body)
+  body <- gsub(' ', '', body)
+  splt <- sapply(body, function(x) strsplit(x, '&'))
+  nrow <- length(splt)
+  ncol <- length(splt[[1L]])
+  body <- unname(do.call(rbind, splt))
+
+  attr(result, 'body') <- body
+  attr(result, 'wrapper') <- wrapper
+  class(result) <- 'symbolicMatrix'
   result
 }
 
