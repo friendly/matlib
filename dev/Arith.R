@@ -43,6 +43,7 @@ t.symbolicMatrix <- function(x){
   result
 }
 
+if(FALSE) {
 library(matlib)
 matrix(c(1,3,0,1),2,2) |> symbolicMatrix(matrix="bmatrix") -> A
 matrix(c(5,3,1,4),2,2) |> symbolicMatrix(matrix="bmatrix") -> B
@@ -54,10 +55,15 @@ A + C
 
 
 Eqn(A, " + ", B, " = ", A + B)
+# generates misplaced & when compiled
+
 Eqn(A, " + ", C, " = ", A + C)
+# generates misplaced & when compiled
+
 Eqn(A, " + ", D, " = ", A + D)
 Eqn(A, " + ", B, " = ", A + "foo")
 
 Z <- symbolicMatrix(matrix(1:6, 3, 2), matrix="bmatrix")
 Z
 t(Z)
+}
