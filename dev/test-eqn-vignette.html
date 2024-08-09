@@ -11,7 +11,7 @@
 
 <meta name="author" content="An Author" />
 
-<meta name="date" content="2024-08-08" />
+<meta name="date" content="2024-08-09" />
 
 <title>Can I Number Equations in a Vignette?</title>
 
@@ -339,14 +339,28 @@ display: none;
 
 <h1 class="title toc-ignore">Can I Number Equations in a Vignette?</h1>
 <h4 class="author">An Author</h4>
-<h4 class="date">2024-08-08</h4>
+<h4 class="date">2024-08-09</h4>
 
 </div>
 
 
+<p>HTML documents use a different notation for labels and equation references. This is the cannonical way.</p>
+<pre><code>\begin{equation} 
+(\#eq:binom)
+  f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
+\end{equation} 
+
+The equation \@ref(eq:binom) ...</code></pre>
+<p>which gives</p>
+<p><span class="math display" id="eq:binom">\[\begin{equation}
+\tag{1}
+  f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
+\end{equation}\]</span></p>
+<p>The equation <a href="#eq:binom">(1)</a> …</p>
+<p><code>Eqn()</code> now detects that an HTML document is being compiled and changes the labels to match. This means that <code>\@ref(eq:binom)</code> should be used instead of the LaTeX <code>\ref{eq:binom}</code> way.</p>
 <pre class="r"><code>symbolicMatrix(lhs = &quot;\\mathbf{X}&quot;) |&gt; Eqn(label=&quot;eq:X&quot;)</code></pre>
-<p><span class="math display">\[\begin{equation}
-\label{eq:X}
+<p><span class="math display" id="eq:X">\[\begin{equation}
+\tag{2}
 \mathbf{X} =
 \begin{pmatrix}
   x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1m} \\
@@ -355,7 +369,7 @@ display: none;
   x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nm} \\
 \end{pmatrix}
 \end{equation}\]</span></p>
-<p>Can I reference this as: See <span class="math inline">\(\ref{eq:X}\)</span></p>
+<p>Can I reference this as: See <a href="#eq:X">(2)</a></p>
 
 
 

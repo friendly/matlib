@@ -18,7 +18,7 @@
 #'   returned object
 #' @param number logical; include equation number? Default: \code{TRUE}
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn}), which
-#'   can be reference via \code{\ref{eqn:myeqn}}. For compiled documents, if an
+#'   can be reference via \code{\\ref{eqn:myeqn}}. For compiled documents, if an
 #'   HTML output is detected (see \code{html_output}) then the equations will be labelled
 #'   via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)}
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
