@@ -172,7 +172,7 @@ showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
   }
   if(latex){
       cat('\\end{array}')
-      return(NULL)
+      return(invisible(''))  # for Eqn()
   }
   invisible(res)
 }

@@ -16,11 +16,13 @@ Eqn(
 Eqn_newline()
 }
 \arguments{
-\item{...}{expressions that provide a) a \code{\link{cat}} call and
-returns a \code{NULL} object to be wrapped in a LaTeX math
-environment, b) a character vector, which will be automatically wrapped the
-expression inside a call to \code{\link{cat}}, or c) an object of class
-\code{\link{symbolicMatrix}}}
+\item{...}{expressions that provide are either a) a character vector,
+which will be automatically wrapped the
+expression inside a call to \code{\link{cat}}, or b) an object of class
+\code{\link{symbolicMatrix}}. Note that user defined functions
+that use \code{\link{cat}} within
+their body should return an empty character vector to avoid printing the
+returned object}
 
 \item{number}{logical; include equation number? Default: \code{TRUE}}
 
@@ -45,7 +47,6 @@ In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 \examples{
 
 Eqn('e=mc^2')
-Eqn(cat('e=mc^2 \n')) # equivalent, but unnecessary
 
 # Equation numbers & labels
 Eqn('e=mc^2', number = FALSE)
@@ -56,7 +57,9 @@ Eqn("X=U \\\\lambda V", label='eqn:svd')
 Eqn('e=mc^2', label = 'eqn:einstein', html_output = TRUE)
 
 # Multiple expressions
-Eqn("e=mc^2", "X=U \\\\lambda V", label='eqn:svd')
+Eqn("e=mc^2",
+    Eqn_newline(),
+    "X=U \\\\lambda V", label='eqn:svd')
 
 # expressions that use cat() within their calls
 Eqn(symbolicMatrix("u", "n", "k", lhs = 'SVD'),
@@ -72,13 +75,13 @@ Eqn("X &= U \\\\lambda V",
     symbolicMatrix("v", "k", "p", transpose = TRUE),
     align=TRUE)
 
-#  matrix2latex() example
+#  numeric matrix example
 A <- matrix(c(2, 1, -1,
               -3, -1, 2,
               -2,  1, 2), 3, 3, byrow=TRUE)
 b <- c(8, -11, -3)
 
-matrix2latex(cbind(A,b)) |> Eqn()
+symbolicMatrix(cbind(A,b)) |> Eqn()
 
 # with showEqn()
 showEqn(A, b, latex=TRUE) |> Eqn()

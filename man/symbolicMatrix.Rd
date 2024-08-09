@@ -169,7 +169,7 @@ mat <- symbolicMatrix()
 str(mat)
 cat(mat)
 # copy to clipboard
-#clipr::write_clip(mat)    # this can't be done in non-interactive mode
+#clipr::write_clip(mat)  # this can't be done in non-interactive mode
 
 # can use a complex symbol
 symbolicMatrix("\\\\widehat{\\\\beta}", 2, 4)
