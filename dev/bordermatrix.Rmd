@@ -1,0 +1,92 @@
+---
+title: "Bordermatrix"
+output: html_document
+date: "2024-08-09"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+It would be nice to add a feature to border matrices with row/col labels. Here it is done naively from scratch using nested
+matrix/pmatrix arrays, from https://github.com/mathjax/MathJax/issues/2031
+
+```
+$$
+\begin{matrix}
+  &  \begin{matrix} A & C & G & T    % row labels
+     \end{matrix} \\
+  \begin{matrix}                     % col labels
+      \alpha \\ 
+      \beta \\ 
+      \gamma \\ 
+      \epsilon
+  \end{matrix}  &  
+    \begin{pmatrix}                  % body
+    1 & 2 & 3 & 4\\
+    3 & 4 & 5 & 6\\
+    3 & 4 & 5 & 6\\
+    3 & 4 & 5 & 6
+  \end{pmatrix}\\
+\end{matrix}
+$$
+```
+This produces:
+
+![Bordered matrix](border-mat.png)
+
+A note there says: unfortunately, for some reason, the output works only when render()ing the *.Rmd to PDF (via LaTeX), not to HMTL (via Markdown). Not sure why, raised it here: http://stackoverflow.com/questions/30740613/how-do-i-get-latex-math-typeset-matrix-with-borders-in-html-output-from-rmd
+
+Answer: 
+FYI, MathJax currently does not support \bordermatrix because it does not (yet) support columspan/rowspan from the MathML spec (which is our internal format). See also https://github.com/mathjax/MathJax/issues/1127
+Peter Krautzberger
+Commented Jun 22, 2015 at 15:56
+
+
+
+## A function?
+Another SO discussion, https://stackoverflow.com/questions/20749444/converting-r-matrix-into-latex-matrix-in-the-math-or-equation-environment gives this function:
+
+```{r}
+borderMatrix <- function(matr) {
+    matr <- round(x = matr, digits = 2)  # sadly this is necessary because given this function, the options(digits = 2) does not work
+    matr2 <- data.frame(c("~",rownames(matr)))  # add rownames
+    for (r in colnames(matr)) {  # add col contents and colnames
+      matr2 <- cbind(matr2, c(r, matr[,r]))
+    }
+    printmrow <- function(x) {
+        ret <- paste(paste(x, collapse = " & "), "\\cr")
+        sprintf(ret)
+    }
+    out <- apply(matr2, 1, printmrow)
+    out2 <- paste("\\bordermatrix{", paste(out, collapse = ' '),"}")
+    return(out2)
+}
+```
+
+There is also this LateX macro
+
+```
+\newcommand\\bordermatrix[3]{%
+  \begin{matrix} & %
+    \begin{matrix}#1 %
+    \end{matrix} \\\\ %
+    \begin{matrix}#2 %
+    \end{matrix} %
+    \hspace{-1em} & #3 % 
+  \end{matrix}}
+```
+
+Used as:
+
+```
+\bordermatrix{A & C & G & T }{\alpha \\  \beta \\  \gamma \\ \epsilon}
+  {    \begin{pmatrix}                  % body
+    1 & 2 & 3 & 4\\
+    3 & 4 & 5 & 6\\
+    3 & 4 & 5 & 6\\
+    3 & 4 & 5 & 6
+  \end{pmatrix}\\
+}
+
+```
