@@ -4,7 +4,8 @@ symbolicMatrix <- function(
     ncol="m",
     matrix="pmatrix",
     diag=FALSE,
-    comma=FALSE,
+    zero.based=FALSE,
+    comma=zero.based,
     exponent,
     transpose=FALSE,
     show.size=FALSE,
@@ -84,7 +85,11 @@ symbolicMatrix <- function(
     comma <- if (comma) "," else ""
     
     row.elements <- c(symbol, symbol, "\\cdots", symbol)
-    col.subscripts <- c("1", "2", "", ncol)
+    col.subscripts <- if (!zero.based) {
+      c("1", "2", "", ncol)
+      } else {
+        c("0", "1", "", if (is.numeric(ncol)) ncol - 1 else paste0(ncol, " - 1"))
+      }
     left.sub <- c("_{", "_{", "", "_{")
     right.sub <- c("}", "}", "", "}")
     post.element <- c(" & ", " & ", " & ", " \\\\ \n")
@@ -96,7 +101,7 @@ symbolicMatrix <- function(
       if (nrow != ncol) stop("nrow and ncol must be the same if diag = TRUE")
       if (is.numeric(nrow)){
         mat <- matrix(zero, nrow, nrow)
-        diag(mat) <- paste0(prefix, symbol, "_{", 1:nrow, "}", suffix)
+        diag(mat) <- paste0(prefix, symbol, "_{", (!zero.based):(nrow - zero.based), "}", suffix)
       } else {
         mat <- matrix(zero, 4, 4)
         mat[3, ] <- paste0("\\vdots",
@@ -112,7 +117,12 @@ symbolicMatrix <- function(
                                          collapse = "")))
         mat[cbind(c(1, 2, 4), c(1, 2, 4))] <-
           paste0(prefix,
-                 symbol, c("_{1}", "_{2}", paste0("_{", nrow, "}")),
+                 symbol, 
+                 if (!zero.based){
+                   c("_{1}", "_{2}", paste0("_{", nrow, "}"))
+                   } else {
+                     c("_{0}", "_{1}", paste0("_{", nrow, " - 1", "}"))
+                   },
                  suffix)
       }
       if (is.character(nrow)) nrow <- 4
@@ -131,7 +141,11 @@ symbolicMatrix <- function(
                                        nchar(symbol) + nchar(prefix) + nchar(suffix) - 1),
                                    collapse = ""),
                              if (comma == ",") " "))
-      row.subscripts <- c("1", "2", "", nrow)
+      row.subscripts <- if (!zero.based){
+        c("1", "2", "", nrow)
+      } else {
+        c("0", "1", "", paste0(nrow, " - 1"))
+      }
       
       if (is.character(ncol)){
         vdots <- paste0(vdots, " & ", vdots, " & ",
@@ -162,7 +176,7 @@ symbolicMatrix <- function(
             result <- paste0(result,
                              paste0(prefix,
                                     symbol, "_{", row.subscripts[i],
-                                    if (ncol > 1) paste0(comma, j), "}",
+                                    if (ncol > 1) paste0(comma, j - zero.based), "}",
                                     suffix,
                                     if (j == ncol) " \\\\ \n" else " & ")
             )
@@ -176,7 +190,7 @@ symbolicMatrix <- function(
         for (j in 1:4){
           result <- paste0(result,if (j != 3) prefix,
                            row.elements[j], left.sub[j],
-                           if (j != 3) paste0(i, comma),
+                           if (j != 3) paste0(i - zero.based, comma),
                            col.subscripts[j],
                            right.sub[j],  if (j != 3) suffix,
                            post.element[j])
@@ -187,9 +201,9 @@ symbolicMatrix <- function(
       for (i in 1:nrow){
         result <- paste0(result, "  ")
         for (j in 1:ncol){
-          result <- paste0(result, prefix, symbol, "_{", if (nrow > 1) i,
+          result <- paste0(result, prefix, symbol, "_{", if (nrow > 1) i - zero.based,
                            if (nrow > 1 && ncol > 1) comma,
-                           if (ncol > 1) j, "}", suffix,
+                           if (ncol > 1) j - zero.based, "}", suffix,
                            if (j == ncol) " \\\\ \n" else " & ")
         }
       }
