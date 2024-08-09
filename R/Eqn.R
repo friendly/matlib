@@ -85,9 +85,6 @@ Eqn <- function(...,
           cat(sprintf('(\\#%s)\n', label))
       else cat(sprintf('\\label{%s}\n', label))
   }
-  tmp <- substitute(deparse(...))
-  is_char <- sapply(tmp, is.character)[-1L]
-  chartmp <- as.character(tmp)[-1L]
   dots <- list(...)
   for(i in 1L:length(dots)){
     if(is.character(dots[[i]])){
