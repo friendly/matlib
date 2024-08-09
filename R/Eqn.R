@@ -73,6 +73,16 @@ Eqn <- function(...,
                 label = NULL,
                 align = FALSE,
                 html_output = knitr::is_html_output()) {
+
+  sink.reset <- function(){
+      if(sink.number() > 1L){
+        for(i in seq_len(sink.number())){
+          sink(NULL)
+        }
+      }
+  }
+
+  on.exit(sink.reset())
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
   cat(sprintf("\n\\begin{%s}\n", wrap))
