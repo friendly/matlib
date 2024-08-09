@@ -9,11 +9,13 @@
 #'
 #' In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 #'
-#' @param ... expressions that provide a) a \code{\link{cat}} call and
-#'   returns a \code{NULL} object to be wrapped in a LaTeX math
-#'   environment, b) a character vector, which will be automatically wrapped the
-#'   expression inside a call to \code{\link{cat}}, or c) an object of class
-#'   \code{\link{symbolicMatrix}}
+#' @param ... expressions that provide are either a) a character vector,
+#'   which will be automatically wrapped the
+#'   expression inside a call to \code{\link{cat}}, or b) an object of class
+#'   \code{\link{symbolicMatrix}}. Note that user defined functions
+#'   that use \code{\link{cat}} within
+#'   their body should return an empty character vector to avoid printing the
+#'   returned object
 #' @param number logical; include equation number? Default: \code{TRUE}
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn}), which
 #'   can be reference via \code{\ref{eqn:myeqn}}. For compiled documents, if an
@@ -30,7 +32,6 @@
 #' @examples
 #'
 #' Eqn('e=mc^2')
-#' Eqn(cat('e=mc^2 \n')) # equivalent, but unnecessary
 #'
 #' # Equation numbers & labels
 #' Eqn('e=mc^2', number = FALSE)
@@ -41,7 +42,9 @@
 #' Eqn('e=mc^2', label = 'eqn:einstein', html_output = TRUE)
 #'
 #' # Multiple expressions
-#' Eqn("e=mc^2", "X=U \\lambda V", label='eqn:svd')
+#' Eqn("e=mc^2",
+#'     Eqn_newline(),
+#'     "X=U \\lambda V", label='eqn:svd')
 #'
 #' # expressions that use cat() within their calls
 #' Eqn(symbolicMatrix("u", "n", "k", lhs = 'SVD'),
@@ -57,13 +60,13 @@
 #'     symbolicMatrix("v", "k", "p", transpose = TRUE),
 #'     align=TRUE)
 #'
-#' #  matrix2latex() example
+#' #  numeric matrix example
 #' A <- matrix(c(2, 1, -1,
 #'               -3, -1, 2,
 #'               -2,  1, 2), 3, 3, byrow=TRUE)
 #' b <- c(8, -11, -3)
 #'
-#' matrix2latex(cbind(A,b)) |> Eqn()
+#' symbolicMatrix(cbind(A,b)) |> Eqn()
 #'
 #' # with showEqn()
 #' showEqn(A, b, latex=TRUE) |> Eqn()
@@ -74,15 +77,6 @@ Eqn <- function(...,
                 align = FALSE,
                 html_output = knitr::is_html_output()) {
 
-  sink.reset <- function(){
-      if(sink.number() > 1L){
-        for(i in seq_len(sink.number())){
-          sink(NULL)
-        }
-      }
-  }
-
-  on.exit(sink.reset())
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
   cat(sprintf("\n\\begin{%s}\n", wrap))
@@ -94,21 +88,13 @@ Eqn <- function(...,
   tmp <- substitute(deparse(...))
   is_char <- sapply(tmp, is.character)[-1L]
   chartmp <- as.character(tmp)[-1L]
-  sink(tempfile())
   dots <- list(...)
-  sink()
-  for(i in 1L:length(chartmp)){
-      if(is_char[i]){
-          if(i > 1L && is_char[i-1L]) cat("\n")
-          cat(chartmp[i])
-          if(i == length(chartmp)) cat("\n")
-      } else if(is(dots[[i]], 'symbolicMatrix')){
-          print(dots[[i]])
-      } else {
-          eval(parse(text = chartmp[i]))
-      }
+  for(i in 1L:length(dots)){
+    if(is.character(dots[[i]])){
+        cat(dots[[i]])
+    } else print(dots[[i]])
   }
-  cat(sprintf("\\end{%s}\n", wrap))
+  cat(sprintf("\n\\end{%s}\n", wrap))
   invisible(NULL)
 }
 
@@ -116,4 +102,4 @@ Eqn <- function(...,
 #'
 #' @rdname Eqn
 #' @export
-Eqn_newline <- function() cat(' \\\\ \n')
+Eqn_newline <- function() ' \\\\ \n'

@@ -395,8 +395,7 @@ symbolicMatrix <- function(
   result <- paste0(result, "\\end{", matrix, "}",
                    if (show.size) paste0("_{(", nrow, " \\times ", ncol, ")}" ),
                    if (!missing(exponent)) paste0("^{", exponent, "}"),
-                   if (!isFALSE(transpose)) paste0("^", transpose),
-                   "\n")
+                   if (!isFALSE(transpose)) paste0("^", transpose))
 
   # this would have been easier if the matrix body was already built ...
   output <- capture.output(cat(result))
