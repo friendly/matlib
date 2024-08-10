@@ -28,6 +28,13 @@ symbolicMatrix <- function(
     x
   }
   
+  if (is.numeric(nrow) && zero.based[1]){
+    stop("zero-based indexing not available for numeric 'nrow'")
+  }
+  if (is.numeric(ncol) && zero.based[2]){
+    stop("zero-based indexing not available for numeric 'ncol'")
+  }
+  
   if (isTRUE(transpose)) transpose <- "\\top"
   if (!missing(exponent) && !isFALSE(transpose)){
     exponent <- paste0("{", exponent, "^", transpose, "}")
@@ -220,7 +227,13 @@ symbolicMatrix <- function(
   }
   
   mat.result <- paste0(result, "\\end{", matrix, "}",
-                   if (show.size) paste0("_{(", nrow, " \\times ", ncol, ")}" ),
+                   if (show.size) paste0("_{(", 
+                                         nrow, 
+                                         if (zero.based[1] && !end.at.n.minus.1[1]) " + 1",
+                                         " \\times ", 
+                                         ncol, 
+                                         if (zero.based[2] && !end.at.n.minus.1[2]) " + 1",
+                                         ")}" ),
                    if (!missing(exponent)) paste0("^{", exponent, "}"),
                    if (!isFALSE(transpose)) paste0("^", transpose),
                    "\n")
