@@ -5,7 +5,7 @@ symbolicMatrix <- function(
     matrix="pmatrix",
     diag=FALSE,
     zero.based=c(FALSE, FALSE),
-    end.at.n.minus.1=c(TRUE, TRUE),
+    end.at=c("n - 1", "m - 1"),
     comma=any(zero.based),
     exponent,
     transpose=FALSE,
@@ -27,6 +27,8 @@ symbolicMatrix <- function(
     x <- if (negative) paste0("-", x) else paste0(negatives, x)
     x
   }
+  
+  end.at.n.minus.1 <- gsub(" ", "", end.at) == c("n-1", "m-1")
   
   if (is.numeric(nrow) && zero.based[1]){
     stop("zero-based indexing not available for numeric 'nrow'")
@@ -287,11 +289,11 @@ symbolicMatrix <- function(
 
 # accessor functions:
 
-getMatrix <- function(x, ...){
-  UseMethod("getMatrix")
+getLatex <- function(x, ...){
+  UseMethod("getLatex")
 }
 
-getMatrix.symbolicMatrix <- function(x, ...){
+getLatex.symbolicMatrix <- function(x, ...){
   x$matrix
 }
 
@@ -334,6 +336,6 @@ Ncol.symbolicMatrix <- function(x, ...){
 # print() method:
 
 print.symbolicMatrix <- function(x, onConsole=TRUE,  ...){
-  if (onConsole) cat(getMatrix(x))
+  if (onConsole) cat(getLatex(x))
   invisible(x)
 }

@@ -1,6 +1,3 @@
-# JF version of 4 Aug 24, w/ prefix, suffix
-# trap/document case of row/col vector
-
 #' Create a Symbolic Matrix for LaTeX
 #'
 #' @description
@@ -33,7 +30,7 @@
 #' As well, instead of a character for the matrix \code{symbol}, you can supply a \bold{matrix} of arbitrary character
 #' strings (in LaTeX notation), and these will be used as the elements of the matrix.
 #'
-#' The function prints the resulting code to the console (by default). When the result is assigned to variable,
+#' You can print the resulting LaTeX code to the console. When the result is assigned to a variable,
 #' you can send it to the clipboard using \code{\link[clipr]{write_clip}}. Perhaps most convenient of all,
 #' the function can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
 #'
@@ -76,6 +73,10 @@
 #' % \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
 #' % \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
 #' %}
+#' 
+#' The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
+#' \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
+#' components of the resturned object.
 #'
 #' @param symbol name for matrix elements, character string. For LaTeX symbols,
 #'        the backslash must be doubled because it is an escape character in R.
@@ -97,10 +98,16 @@
 #' }
 #'
 #' @param diag   logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})
+#' @param zero.based logical 2-vector; start the row and/or column indices at 0 rather than 1;
+#'   the default is \code{c(FALSE, FALSE)}; applies only if \code{nrow} is character-valued
+#' @param end.at if row or column indices start at 0, should they end at \code{n - 1} and
+#'   \code{m - 1} or at \code{n} and \code{m}? (where \code{n} and \code{m} represent the
+#'   characters used to denote the number of rows and columns, respectively); 
+#'   the default is \code{c("n - 1", "m - 1")}
 #' @param comma  logical; if \code{TRUE}, commas are inserted between row and column subscripts, as in
-#'               \code{x_{1,1}}.
-#' @param exponent if specified, e.g., "-1", or "1/2",  the exponent is applied to the matrix
-#' @param transpose if TRUE, the transpose symbol "\\top" is appended to the matrix; this may
+#'               \code{x_{1,1}}; the default is \code{FALSE} except for zero-based indices.
+#' @param exponent if specified, e.g., \code{"-1"}, or \code{"1/2"},  the exponent is applied to the matrix
+#' @param transpose if \code{TRUE}, the transpose symbol \code{"\\top"} is appended to the matrix; this may
 #'               also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"} are
 #'               commonly used.
 #' @param show.size logical; if \code{TRUE} shows the order of the matrix as an appended subscript.
@@ -121,8 +128,13 @@
 #'                  the matrix on the R console.
 #'
 #' @returns \code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}
-#'          which is the LaTeX representation of the matrix as a character string,
-#'          and which is normally printed.
+#'          which contains the LaTeX representation of the matrix as a character string, 
+#'          along with some other information. The slots
+#'          in the returned object are named \code{"matrix"} (the LaTeX representation of the
+#'          matrix); \code{"dim"} (\code{nrow} and \code{ncol}); \code{"body"} (a character
+#'          matrix of LaTeX expressions for the cells of the matrix);   
+#'          \code{"wrapper"}(the beginning and ending lines for the
+#'          LaTeX matrix environment).
 #'
 #' @author John Fox
 #' @seealso \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
@@ -133,7 +145,7 @@
 #' # return value
 #' mat <- symbolicMatrix()
 #' str(mat)
-#' cat(mat)
+#' cat(getLatex(mat))
 #' # copy to clipboard
 #' #clipr::write_clip(mat)  # this can't be done in non-interactive mode
 #'
@@ -163,7 +175,8 @@
 #' U <- symbolicMatrix("u", "n", "k")
 #' D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
 #' V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
-#' cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V)
+#' cat("\\mathrm{SVD:}\n", getLatex(X), "=\n", getLatex(U),
+#'     getLatex(D), getLatex(V))
 #'
 #' # specify left hand side
 #' symbolicMatrix("\\lambda", 3, 3, diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
@@ -192,6 +205,9 @@
 #' symbolicMatrix(m)
 #' symbolicMatrix(m, digits=2)
 #' symbolicMatrix(m, fractions=TRUE)
+#' 
+#' # zero-based indexing
+#' symbolicMatrix(zero.based=c(TRUE, TRUE))
 
 
 symbolicMatrix <- function(
@@ -200,7 +216,9 @@ symbolicMatrix <- function(
     ncol="m",
     matrix="pmatrix",
     diag=FALSE,
-    comma=FALSE,
+    zero.based=c(FALSE, FALSE),
+    end.at=c("n - 1", "m - 1"),
+    comma=any(zero.based),
     exponent,
     transpose=FALSE,
     show.size=FALSE,
@@ -209,8 +227,8 @@ symbolicMatrix <- function(
     prefix="",
     suffix="",
     lhs
-    ){
-
+){
+  
   latexFraction <- function(x){
     negative <- grepl("-", x)
     if (negative) x <- sub("-", "", x)
@@ -221,18 +239,31 @@ symbolicMatrix <- function(
     x <- if (negative) paste0("-", x) else paste0(negatives, x)
     x
   }
-
+  
+  end.at.n.minus.1 <- gsub(" ", "", end.at) == c("n-1", "m-1")
+  
+  if (is.numeric(nrow) && zero.based[1]){
+    stop("zero-based indexing not available for numeric 'nrow'")
+  }
+  if (is.numeric(ncol) && zero.based[2]){
+    stop("zero-based indexing not available for numeric 'ncol'")
+  }
+  
   if (isTRUE(transpose)) transpose <- "\\top"
   if (!missing(exponent) && !isFALSE(transpose)){
     exponent <- paste0("{", exponent, "^", transpose, "}")
     transpose <- FALSE
   }
-
+  
+  # start composing output string:
+  
   result <- paste0(if (fractions) "\\renewcommand*{\\arraystretch}{1.5} \n",
                    if (!missing(lhs)) paste0(lhs, " = \n"),
                    "\\begin{", matrix, "} \n"
-                   )
-
+  )
+  
+  # matrix input:
+  
   if (is.matrix(symbol)){
     if (is.numeric(symbol)){
       if (is.null(digits) && all(trunc(symbol) == symbol) ) digits <- 0
@@ -260,39 +291,53 @@ symbolicMatrix <- function(
         result <- paste0(result, mat[i, j], if (j == nc) " \\\\ \n" else " & " )
       }
     }
-
+    
   } else {
-
+    
+    # character symbol supplied to construct matrix elements:
+    
     if (!(is.character(symbol) && is.vector(symbol)
           && length(symbol) == 1))
       stop("'symbol' must be a single character string or a matrix. Hint: wrap a vector in matrix(), with nrow=1 or ncol=1.")
-
+    
     if (is.numeric(nrow)){
       if (round(nrow) != nrow || nrow <= 0)
         stop("nrow is not a positive whole number")
     }
-
+    
     if (is.numeric(ncol)){
       if (round(ncol) != ncol || ncol <= 0)
         stop("ncol is not a positive whole number")
     }
-
+    
     comma <- if (comma) "," else ""
-
-    row.elements <- c(symbol, symbol, "\\cdots", symbol)
-    col.subscripts <- c("1", "2", "", ncol)
-    left.sub <- c("_{", "_{", "", "_{")
-    right.sub <- c("}", "}", "", "}")
-    post.element <- c(" & ", " & ", " & ", " \\\\ \n")
-
+    
+    row.elements <- c(symbol, symbol, "\\cdots", symbol) # row without subscripts
+    
+    col.subscripts <- if (!zero.based[2]) { # subscripts for a column
+      c("1", "2", "", ncol)
+    } else {
+      c("0", "1", "", if (is.numeric(ncol)) ncol - 1
+        else paste0(ncol, if (end.at.n.minus.1[2]) " - 1" else ""))
+    }
+    
+    left.sub <- c("_{", "_{", "", "_{") # start of subscript
+    right.sub <- c("}", "}", "", "}") # end of subscript
+    post.element <- c(" & ", " & ", " & ", " \\\\ \n") # cell separator, end of row
+    
     if (diag){
+      
+      # diagonal matrix:
+      
       zero <- paste0("0", paste(rep(" ",
                                     nchar(symbol) + 3 + nchar(prefix) + nchar(suffix)),
                                 collapse=""))
       if (nrow != ncol) stop("nrow and ncol must be the same if diag = TRUE")
       if (is.numeric(nrow)){
         mat <- matrix(zero, nrow, nrow)
-        diag(mat) <- paste0(prefix, symbol, "_{", 1:nrow, "}", suffix)
+        diag(mat) <- paste0(prefix, symbol, "_{", 
+                            (!zero.based[1]):(nrow - zero.based[1]), 
+                            "}", suffix)
       } else {
         mat <- matrix(zero, 4, 4)
         mat[3, ] <- paste0("\\vdots",
@@ -308,7 +353,14 @@ symbolicMatrix <- function(
                                          collapse = "")))
         mat[cbind(c(1, 2, 4), c(1, 2, 4))] <-
           paste0(prefix,
-                 symbol, c("_{1}", "_{2}", paste0("_{", nrow, "}")),
+                 symbol, 
+                 if (!zero.based[1]){
+                   c("_{1}", "_{2}", paste0("_{", nrow, "}"))
+                 } else {
+                   c("_{0}", "_{1}", paste0("_{", nrow, 
+                                            if (end.at.n.minus.1[1]) " - 1" else "", 
+                                            "}"))
+                 },
                  suffix)
       }
       if (is.character(nrow)) nrow <- 4
@@ -319,17 +371,26 @@ symbolicMatrix <- function(
                            if (j == nrow) " \\\\ \n" else " & ")
         }
       }
-
+      
     } else if (is.character(nrow)){
-
+      
+      # non-numeric number of rows:
+      
       vdots <- paste0("\\vdots",
                       paste0(paste(rep(" ",
                                        nchar(symbol) + nchar(prefix) + nchar(suffix) - 1),
                                    collapse = ""),
                              if (comma == ",") " "))
-      row.subscripts <- c("1", "2", "", nrow)
-
+      row.subscripts <- if (!zero.based[1]){
+        c("1", "2", "", nrow)
+      } else {
+        c("0", "1", "", paste0(nrow, if (end.at.n.minus.1[1]) " - 1" else ""))
+      }
+      
       if (is.character(ncol)){
+        
+        # non-numeric number of rows, non-numeric number of columns:
+        
         vdots <- paste0(vdots, " & ", vdots, " & ",
                         if (nrow != ncol) "       & " else "\\ddots & ",
                         vdots, " \\\\ \n")
@@ -347,6 +408,9 @@ symbolicMatrix <- function(
           }
         }
       } else {
+        
+        # non-numeric number of rows, numeric number of columns:
+        
         vdots <- paste0(paste(rep(vdots, ncol), collapse = " & "), " \\\\ \n")
         for (i in 1:4){
           result <- paste0(result, "  ")
@@ -358,68 +422,164 @@ symbolicMatrix <- function(
             result <- paste0(result,
                              paste0(prefix,
                                     symbol, "_{", row.subscripts[i],
-                                    if (ncol > 1) paste0(comma, j), "}",
+                                    if (ncol > 1) paste0(comma, 
+                                                         j - zero.based[2]), "}",
                                     suffix,
                                     if (j == ncol) " \\\\ \n" else " & ")
             )
           }
         }
       }
-
+      
     } else if (is.character(ncol)){
+      
+      # numeric number of rows, non-numeric number of columns:
+      
       for (i in 1:nrow){
         result <- paste0(result, "  ")
         for (j in 1:4){
           result <- paste0(result,if (j != 3) prefix,
                            row.elements[j], left.sub[j],
-                           if (j != 3) paste0(i, comma),
+                           if (j != 3) paste0(i - zero.based[1], comma),
                            col.subscripts[j],
                            right.sub[j],  if (j != 3) suffix,
                            post.element[j])
         }
       }
-
+      
     } else {
+      
+      # numeric number of rows, numeric number of columns:
+      
       for (i in 1:nrow){
         result <- paste0(result, "  ")
         for (j in 1:ncol){
-          result <- paste0(result, prefix, symbol, "_{", if (nrow > 1) i,
+          result <- paste0(result, prefix, symbol, "_{", 
+                           if (nrow > 1) i - zero.based[1],
                            if (nrow > 1 && ncol > 1) comma,
-                           if (ncol > 1) j, "}", suffix,
+                           if (ncol > 1) j - zero.based[2], 
+                           "}", suffix,
                            if (j == ncol) " \\\\ \n" else " & ")
         }
       }
     }
   }
-
-  result <- paste0(result, "\\end{", matrix, "}",
-                   if (show.size) paste0("_{(", nrow, " \\times ", ncol, ")}" ),
-                   if (!missing(exponent)) paste0("^{", exponent, "}"),
-                   if (!isFALSE(transpose)) paste0("^", transpose))
-
-  # this would have been easier if the matrix body was already built ...
-  output <- capture.output(cat(result))
-  pick <- c(1, length(output))
-  wrapper <- output[pick]
-  body <- output[-pick]
+  
+  # complete output string, adding optional decorations:
+  
+  mat.result <- paste0(result, "\\end{", matrix, "}",
+                       if (show.size) paste0("_{(", 
+                                             nrow, 
+                                             if (zero.based[1] && !end.at.n.minus.1[1]) " + 1",
+                                             " \\times ", 
+                                             ncol, 
+                                             if (zero.based[2] && !end.at.n.minus.1[2]) " + 1",
+                                             ")}" ),
+                       if (!missing(exponent)) paste0("^{", exponent, "}"),
+                       if (!isFALSE(transpose)) paste0("^", transpose),
+                       "\n")
+  
+  x.mat <- strsplit(mat.result, "\\n")[[1]]
+  pick <- c(1, length(x.mat))
+  wrapper <- x.mat[pick] # LaTeX matrix environment
+  body <- x.mat[-pick]
   body <- gsub('\\\\\\\\', '', body)
   body <- gsub(' ', '', body)
-  splt <- sapply(body, function(x) strsplit(x, '&'))
-  nrow <- length(splt)
-  ncol <- length(splt[[1L]])
-  body <- unname(do.call(rbind, splt))
-
-  attr(result, 'body') <- body
-  attr(result, 'wrapper') <- wrapper
+  splt <- sapply(body, function(x.mat) strsplit(x.mat, '&'))
+  nrow.x <- length(splt)
+  body <- unname(do.call(rbind, splt)) # matrix of LaTeX cells
+  
+  # "symbolicMatrix" object:
+  
+  result <- list(matrix = mat.result,
+                 dim = c(nrow, ncol),
+                 body = body,
+                 wrapper = wrapper)
   class(result) <- 'symbolicMatrix'
   result
 }
 
+# accessor functions:
+
+#' @rdname symbolicMatrix
+#' @export
+getLatex <- function(x, ...){
+  UseMethod("getLatex")
+}
+
+#' @rdname symbolicMatrix
+#' @export
+getLatex.symbolicMatrix <- function(x, ...){
+  x$matrix
+}
+
+#' @rdname symbolicMatrix
+#' @export
+getBody <- function(x, ...){
+  UseMethod("getBody")
+}
+
+#' @rdname symbolicMatrix
+#' @export
+getBody.symbolicMatrix <- function(x, ...){
+  x$body
+}
+
+#' @rdname symbolicMatrix
+#' @export
+getWrapper <- function(x, ...){
+  UseMethod("getWrapper")
+}
+
+#' @rdname symbolicMatrix
+#' @export
+getWrapper.symbolicMatrix <- function(x, ...){
+  x$wrapper
+}
+
+#' @rdname symbolicMatrix
+#' @export
+Dim <- function(x, ...){
+  UseMethod("Dim")
+}
+
+#' @rdname symbolicMatrix
+#' @export
+Dim.symbolicMatrix <- function(x, ...){
+  x$dim
+}
+
+#' @rdname symbolicMatrix
+#' @export
+Nrow <- function(x, ...){
+  UseMethod("Nrow")
+}
+
+#' @rdname symbolicMatrix
+#' @export
+Nrow.symbolicMatrix <- function(x, ...){
+  (x$dim)[1L]
+}
+
+#' @rdname symbolicMatrix
+#' @export
+Ncol <- function(x, ...){
+  UseMethod("Ncol")
+}
+
+#' @rdname symbolicMatrix
+#' @export
+Ncol.symbolicMatrix <- function(x, ...){
+  (x$dim)[2L]
+}
+
 #' @param x a \code{"symbolicMatrix"} object
 #' @param ...  for compatibility with the \code{print()} generic function, ignored
+
+# print() method:
 #' @rdname symbolicMatrix
 #' @export
 print.symbolicMatrix <- function(x, onConsole=TRUE,  ...){
-  if (onConsole) cat(x)
+  if (onConsole) cat(getLatex(x))
   invisible(x)
 }

@@ -27,7 +27,7 @@
   wrapper <- getWrapper(e1)
   result <- matrix(paste(A, "+", B), dimA[1L], dimA[2L])
   result <- symbolicMatrix(result)
-  matrix <- sub("\\\\begin\\{pmatrix\\}", wrapper[1], getMatrix(result))
+  matrix <- sub("\\\\begin\\{pmatrix\\}", wrapper[1], getLatex(result))
   matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
   result$dim <- Dim(e1)
   result$matrix <- matrix
@@ -40,7 +40,7 @@ t.symbolicMatrix <- function(x){
   wrapper <- getWrapper(x)
   
   matrix <- sub("\\\\begin\\{pmatrix\\}", 
-                wrapper[1], getMatrix(result))
+                wrapper[1], getLatex(result))
   result$matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
   result$wrapper <- wrapper
   result$dim <- rev(Dim(x))
@@ -62,7 +62,7 @@ Ncol(D)
 Dim(D)
 getBody(A)
 getWrapper(A)
-getMatrix(A)
+getLatex(A)
 
 A + B
 A + C
@@ -70,9 +70,9 @@ A + C
 # extractors
 getBody(A + B)
 getWrapper(A + B)
-getMatrix(A + B)
+getLatex(A + B)
 
-getMatrix(A + B) |> cat()
+getLatex(A + B) |> cat()
 
 cat(getMatrix(A), " +\\large\n", getMatrix(B), "\\quad\\large=\\quad\n", getMatrix(A + B))
 
@@ -105,5 +105,5 @@ Dim(M)
 Dim(t(M))
 getBody(t(M))
 getWrapper(t(M))
-getMatrix(t(M))
+getLatex(t(M))
 }

@@ -2,6 +2,18 @@
 % Please edit documentation in R/symbolicMatrix.R
 \name{symbolicMatrix}
 \alias{symbolicMatrix}
+\alias{getLatex}
+\alias{getLatex.symbolicMatrix}
+\alias{getBody}
+\alias{getBody.symbolicMatrix}
+\alias{getWrapper}
+\alias{getWrapper.symbolicMatrix}
+\alias{Dim}
+\alias{Dim.symbolicMatrix}
+\alias{Nrow}
+\alias{Nrow.symbolicMatrix}
+\alias{Ncol}
+\alias{Ncol.symbolicMatrix}
 \alias{print.symbolicMatrix}
 \title{Create a Symbolic Matrix for LaTeX}
 \usage{
@@ -11,7 +23,9 @@ symbolicMatrix(
   ncol = "m",
   matrix = "pmatrix",
   diag = FALSE,
-  comma = FALSE,
+  zero.based = c(FALSE, FALSE),
+  end.at = c("n - 1", "m - 1"),
+  comma = any(zero.based),
   exponent,
   transpose = FALSE,
   show.size = FALSE,
@@ -21,6 +35,30 @@ symbolicMatrix(
   suffix = "",
   lhs
 )
+
+getLatex(x, ...)
+
+\method{getLatex}{symbolicMatrix}(x, ...)
+
+getBody(x, ...)
+
+\method{getBody}{symbolicMatrix}(x, ...)
+
+getWrapper(x, ...)
+
+\method{getWrapper}{symbolicMatrix}(x, ...)
+
+Dim(x, ...)
+
+\method{Dim}{symbolicMatrix}(x, ...)
+
+Nrow(x, ...)
+
+\method{Nrow}{symbolicMatrix}(x, ...)
+
+Ncol(x, ...)
+
+\method{Ncol}{symbolicMatrix}(x, ...)
 
 \method{print}{symbolicMatrix}(x, onConsole = TRUE, ...)
 }
@@ -49,12 +87,20 @@ that many columns.}
 
 \item{diag}{logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})}
 
+\item{zero.based}{logical 2-vector; start the row and/or column indices at 0 rather than 1;
+the default is \code{c(FALSE, FALSE)}; applies only if \code{nrow} is character-valued}
+
+\item{end.at}{if row or column indices start at 0, should they end at \code{n - 1} and
+\code{m - 1} or at \code{n} and \code{m}? (where \code{n} and \code{m} represent the
+characters used to denote the number of rows and columns, respectively); 
+the default is \code{c("n - 1", "m - 1")}}
+
 \item{comma}{logical; if \code{TRUE}, commas are inserted between row and column subscripts, as in
-\code{x_{1,1}}.}
+\code{x_{1,1}}; the default is \code{FALSE} except for zero-based indices.}
 
-\item{exponent}{if specified, e.g., "-1", or "1/2",  the exponent is applied to the matrix}
+\item{exponent}{if specified, e.g., \code{"-1"}, or \code{"1/2"},  the exponent is applied to the matrix}
 
-\item{transpose}{if TRUE, the transpose symbol "\\top" is appended to the matrix; this may
+\item{transpose}{if \code{TRUE}, the transpose symbol \code{"\\top"} is appended to the matrix; this may
 also be a character string, e.g., \code{"T"}, \code{"\\prime"}, \code{"\textsf{T}"} are
 commonly used.}
 
@@ -77,15 +123,20 @@ with the generated matrix on the right-hand side.}
 
 \item{x}{a \code{"symbolicMatrix"} object}
 
+\item{...}{for compatibility with the \code{print()} generic function, ignored}
+
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
-
-\item{...}{for compatibility with the \code{print()} generic function, ignored}
 }
 \value{
 \code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}
-         which is the LaTeX representation of the matrix as a character string,
-         and which is normally printed.
+         which contains the LaTeX representation of the matrix as a character string, 
+         along with some other information. The slots
+         in the returned object are named \code{"matrix"} (the LaTeX representation of the
+         matrix); \code{"dim"} (\code{nrow} and \code{ncol}); \code{"body"} (a character
+         matrix of LaTeX expressions for the cells of the matrix);   
+         \code{"wrapper"}(the beginning and ending lines for the
+         LaTeX matrix environment).
 }
 \description{
 Constructs the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
@@ -117,7 +168,7 @@ the number of rows and/or columns can be \bold{integers}, generating a matrix of
 As well, instead of a character for the matrix \code{symbol}, you can supply a \bold{matrix} of arbitrary character
 strings (in LaTeX notation), and these will be used as the elements of the matrix.
 
-The function prints the resulting code to the console (by default). When the result is assigned to variable,
+You can print the resulting LaTeX code to the console. When the result is assigned to a variable,
 you can send it to the clipboard using \code{\link[clipr]{write_clip}}. Perhaps most convenient of all,
 the function can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
 
@@ -160,6 +211,10 @@ unless the elements are integers or are rounded. For a LaTeX representation of g
 % \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
 % \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
 %}
+
+The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
+\code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
+components of the resturned object.
 }
 \examples{
 symbolicMatrix()
@@ -167,7 +222,7 @@ symbolicMatrix()
 # return value
 mat <- symbolicMatrix()
 str(mat)
-cat(mat)
+cat(getLatex(mat))
 # copy to clipboard
 #clipr::write_clip(mat)  # this can't be done in non-interactive mode
 
@@ -197,7 +252,8 @@ X <- symbolicMatrix("x", "n", "p")
 U <- symbolicMatrix("u", "n", "k")
 D <- symbolicMatrix("\\\\lambda", "k", "k", diag=TRUE)
 V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
-cat("\\\\mathrm{SVD:}\n", X, "=\n", U, D, V)
+cat("\\\\mathrm{SVD:}\n", getLatex(X), "=\n", getLatex(U),
+    getLatex(D), getLatex(V))
 
 # specify left hand side
 symbolicMatrix("\\\\lambda", 3, 3, diag=TRUE, lhs = "\\\\boldsymbol{\\\\Lambda}")
@@ -226,6 +282,9 @@ m <- matrix(3/(1:9), 3, 3)
 symbolicMatrix(m)
 symbolicMatrix(m, digits=2)
 symbolicMatrix(m, fractions=TRUE)
+
+# zero-based indexing
+symbolicMatrix(zero.based=c(TRUE, TRUE))
 }
 \seealso{
 \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
