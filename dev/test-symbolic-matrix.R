@@ -1,6 +1,9 @@
 # test symbolicMatrix(), Eqn()
 
-source(here::here("dev", "symbolicMatrix2.R"))
+# John's dev version
+source(here::here("dev", "symbolicMatrix.R"))
+source(here::here("dev", "Arith.R"))
+
 source(here::here("R","Eqn.R"))
 
 symbolicMatrix()
@@ -54,12 +57,12 @@ symbolicMatrix(nrow="n", ncol="n", diag=TRUE, comma=TRUE)
 symbolicMatrix(nrow=3.1, ncol=3)
 
 # SVD
+# this no longer works:
 
 X <- symbolicMatrix("x", "n", "p")
 U <- symbolicMatrix("u", "n", "k")
 D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
 V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
-# this no longer works:
 cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V)
 
 #cat("SVD:\n", X, "=\n", U, "\n", D, "\n", V)
@@ -163,5 +166,12 @@ getMatrix(A + B)
 
 getMatrix(A + B) |> cat()
 
+# SVD using new symbolicMatrix extractors
 
+X <- symbolicMatrix("x", "n", "p")
+U <- symbolicMatrix("u", "n", "k")
+D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
+V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
+cat("SVD:\n", getMatrix(X), "=\n", getMatrix(U),
+        "\n", getMatrix(D), "\n", getMatrix(V))
 

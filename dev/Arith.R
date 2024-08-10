@@ -74,17 +74,25 @@ getMatrix(A + B)
 
 getMatrix(A + B) |> cat()
 
+cat(getMatrix(A), " +\\large\n", getMatrix(B), "\\quad\\large=\\quad\n", getMatrix(A + B))
+
+# or keeping the numeric version
+A <-matrix(c(1,3,0,1),2,2)
+getMatrix(symbolicMatrix(A))
+B <- matrix(c(5,3,1,4),2,2)
+getMatrix(symbolicMatrix(B)) 
+getMatrix(symbolicMatrix(A + B))
+
 
 # Eqn(A, " + ", B, " = ", A + B)
 # # generates misplaced & when compiled
+# Eqn(A, " + ", D, " = ", A + D)
+# Eqn(A, " + ", B, " = ", A + "foo")
 # 
-# Eqn(A, " + ", C, " = ", A + C)
-# # generates misplaced & wh, A + "foo")
-# 
-# Z <- symbolicMatrix(matrix(1:6, 3, 2), matrix="bmaen compiled
+# Z <- symbolicMatrix(matrix(1:6, 3, 2), matrix="bmatrix")
 # 
 # Eqn(A, " + ", D, " = ", A + D)
-# Eqn(A, " + ", B, " = "trix")
+# Eqn(A, " + ", B, " = ", A + B)
 
 Z <- symbolicMatrix(matrix(1:6, 3, 2))
 Z
