@@ -67,9 +67,12 @@ getMatrix(A)
 A + B
 A + C
 
+# extractors
 getBody(A + B)
 getWrapper(A + B)
 getMatrix(A + B)
+
+getMatrix(A + B) |> cat()
 
 
 # Eqn(A, " + ", B, " = ", A + B)

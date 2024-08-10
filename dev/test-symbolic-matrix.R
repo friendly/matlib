@@ -1,6 +1,7 @@
-# test symbolicMatrix
+# test symbolicMatrix(), Eqn()
 
 source(here::here("dev", "symbolicMatrix2.R"))
+source(here::here("R","Eqn.R"))
 
 symbolicMatrix()
 # return value
@@ -28,10 +29,11 @@ symbolicMatrix(nrow=3, ncol=1)
 symbolicMatrix(nrow=3, ncol=3, diag=TRUE)
 symbolicMatrix(nrow="n", ncol="n", diag=TRUE)
 
-L <- symbolicMatrix("\lambda", nrow=3, ncol=3, diag=TRUE)
+L <- symbolicMatrix("\\lambda", nrow=3, ncol=3, diag=TRUE)
 L <- paste0("\\boldsymbol{\\Lambda} =\n", L)
 # or now:
-symbolicMatrix("\\lambda", nrow=3, ncol=3, diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
+symbolicMatrix("\\lambda", nrow=3, ncol=3, 
+               diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
 
 # John's new features
 symbolicMatrix(comma="TRUE")
@@ -53,13 +55,17 @@ symbolicMatrix(nrow=3.1, ncol=3)
 
 # SVD
 
-X <- symbolicMatrix("x", "n", "p", print=FALSE)
-U <- symbolicMatrix("u", "n", "k", print=FALSE)
-D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE, print=FALSE)
-V <- symbolicMatrix("v", "k", "p", transpose = TRUE, print=FALSE)
+X <- symbolicMatrix("x", "n", "p")
+U <- symbolicMatrix("u", "n", "k")
+D <- symbolicMatrix("\\lambda", "k", "k", diag=TRUE)
+V <- symbolicMatrix("v", "k", "p", transpose = TRUE)
+# this no longer works:
 cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V)
 
 #cat("SVD:\n", X, "=\n", U, "\n", D, "\n", V)
+# Error in cat("\\mathrm{SVD:}\n", X, "=\n", U, D, V) : 
+#   argument 2 (type 'list') cannot be handled by 'cat'
+
 
 # John's new version
 
@@ -93,14 +99,35 @@ symbolicMatrix(sqrt(mm))
 
 # what about a vector? -- now trapped & documented
 symbolicMatrix(1:4)
-# Error in rep(" ", nchar(symbol) + nchar(prefix) + nchar(suffix) - 1) :
-#   invalid 'times' argument
+# Error in symbolicMatrix(1:4) : 
+#   'symbol' must be a single character string or a matrix. Hint: wrap a vector in matrix(), with nrow=1 or ncol=1.
+# symbolicMatrix(matrix(letters[1:4], nrow=1))
 
-symbolicMatrix(matrix(letters[1:4], nrow=1))
+# testing zero.based
 
-# using Eqn()
+ymbolicMatrix(zero.based=TRUE)
+symbolicMatrix(nrow=3, ncol=4, zero.based=TRUE)
+symbolicMatrix(ncol=4, zero.based=TRUE)
+symbolicMatrix(nrow=3, zero.based=TRUE)
+symbolicMatrix(nrow="n", ncol="n", diag=TRUE, zero.based=TRUE)
+symbolicMatrix(nrow=3, ncol=3, diag=TRUE, zero.based=TRUE)
 
-source(here::here("dev","Eqn.R"))
+symbolicMatrix(zero.based=c(TRUE, FALSE))
+symbolicMatrix(zero.based=c(FALSE, TRUE))
+
+
+symbolicMatrix("\\mathbf{B}", nrow="q", ncol="p",
+               zero.based=c(TRUE, FALSE))
+
+symbolicMatrix("\\mathbf{B}", nrow="q", ncol="p",
+               zero.based=c(TRUE, FALSE),
+               end.at.n.minus.1=c(FALSE, TRUE))
+
+
+
+# using R/Eqn()
+
+
 Eqn({
     cat("X&=U \\lambda V \\\\ \n")
     symbolicMatrix("u", "n", "k", lhs = '&')
@@ -108,6 +135,33 @@ Eqn({
     symbolicMatrix("v", "k", "p", transpose = TRUE)
    }, align=TRUE)
 
+
+# testing Arith.R
+
+source(here::here("dev","Arith.R"))
+
+matrix(c(1,3,0,1),2,2) |> symbolicMatrix(matrix="bmatrix") -> A
+matrix(c(5,3,1,4),2,2) |> symbolicMatrix(matrix="bmatrix") -> B
+C <- symbolicMatrix(nrow=2, ncol=2)
+D <- symbolicMatrix()
+A
+B
+C
+D
+
+getBody(A)
+getWrapper(A)
+getMatrix(A)
+
+A + B
+A + C
+
+# extractors
+getBody(A + B)
+getWrapper(A + B)
+getMatrix(A + B)
+
+getMatrix(A + B) |> cat()
 
 
 
