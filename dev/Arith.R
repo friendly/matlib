@@ -27,8 +27,8 @@
   wrapper <- getWrapper(e1)
   result <- matrix(paste(A, "+", B), dimA[1L], dimA[2L])
   result <- symbolicMatrix(result)
-  matrix <- sub("\\\\begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-  matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
   result$dim <- Dim(e1)
   result$matrix <- matrix
   result$wrapper <- wrapper
@@ -50,8 +50,8 @@
   wrapper <- getWrapper(e1)
   result <- matrix(paste(A, "-", B), dimA[1L], dimA[2L])
   result <- symbolicMatrix(result)
-  matrix <- sub("\\\\begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-  matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
   result$dim <- Dim(e1)
   result$matrix <- matrix
   result$wrapper <- wrapper
@@ -62,12 +62,21 @@ t.symbolicMatrix <- function(x){
   result <- symbolicMatrix(t(getBody(x)))
   wrapper <- getWrapper(x)
   
-  matrix <- sub("\\\\begin\\{pmatrix\\}", 
+  matrix <- sub("begin\\{pmatrix\\}", 
                 wrapper[1], getLatex(result))
-  result$matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
+  result$matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
   result$wrapper <- wrapper
   result$dim <- rev(Dim(x))
   result
+}
+
+parenthesize <- function(element){ 
+  if (grepl("[ +-/^]", element)) {
+    paste0("(", element, ")")
+  } else {
+    element
+  }
+  
 }
 
 `%*%.symbolicMatrix` <- function(x, y){
@@ -88,15 +97,19 @@ t.symbolicMatrix <- function(x){
   for (i in 1:nrow(X)){
     for (j in 1:ncol(Y)){
       for (k in 1:ncol(X)){
-        Z[i, j] <- paste0(Z[i, j], if (k > 1) " + ", 
-                          "(", X[i, k], ")\\times(", Y[k, j], ")")
+        Z[i, j] <- paste0(Z[i, j], 
+                          if (k > 1) " + ", 
+                          parenthesize(X[i, k]), 
+                          " \\times ", 
+                          parenthesize(Y[k, j]))
       }
     }
   }
   result <- symbolicMatrix(Z)
-  matrix <- sub("\\\\begin\\{pmatrix\\}", 
-                wrapper[1], getLatex(result))
-  result$matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$dim <- dim(Z)
+  result$matrix <- matrix
   result$wrapper <- wrapper
   result
 }
@@ -166,6 +179,10 @@ Y <- symbolicMatrix(matrix(LETTERS[1:6], 3, 2))
 X
 Y
 X %*% Y
+
+W <- symbolicMatrix(matrix(letters[7:12], 2, 3))
+X + W
+(X + W) %*% Y
 
 X <- symbolicMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
 Y <- symbolicMatrix(matrix(10*(1:6), 3, 2), matrix="bmatrix")
