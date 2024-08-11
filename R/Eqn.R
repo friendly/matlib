@@ -9,11 +9,14 @@
 #'
 #' In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 #'
-#' @param ... expressions that provide are either a) a character vector,
+#' @param ... comma separated expressions that are either a) a character vector,
 #'   which will be automatically wrapped the
-#'   expression inside a call to \code{\link{cat}}, or b) an object of class
-#'   \code{\link{symbolicMatrix}}. Note that user defined functions
-#'   that use \code{\link{cat}} within
+#'   expression inside a call to \code{\link{cat}}, b) a \code{matrix} object
+#'   containing character or numeric information, which will be passed \code{\link{symbolicMatrix}},
+#'   or c) an object that was explicitly created via \code{\link{symbolicMatrix}}, which
+#'   provides greater specificity.
+#'
+#'   Note that user defined functions that use \code{\link{cat}} within
 #'   their body should return an empty character vector to avoid printing the
 #'   returned object
 #' @param number logical; include equation number? Default: \code{TRUE}
@@ -31,6 +34,7 @@
 #' @export
 #' @examples
 #'
+#' # character input
 #' Eqn('e=mc^2')
 #'
 #' # Equation numbers & labels
@@ -60,13 +64,14 @@
 #'     symbolicMatrix("v", "k", "p", transpose = TRUE),
 #'     align=TRUE)
 #'
-#' #  numeric matrix example
+#' #  numeric/character matrix example
 #' A <- matrix(c(2, 1, -1,
 #'               -3, -1, 2,
 #'               -2,  1, 2), 3, 3, byrow=TRUE)
 #' b <- c(8, -11, -3)
 #'
-#' symbolicMatrix(cbind(A,b)) |> Eqn()
+#' cbind(A,b) |> Eqn()
+#' cbind(A,'\\bigm|', b) |> Eqn()
 #'
 #' # with showEqn()
 #' showEqn(A, b, latex=TRUE) |> Eqn()
@@ -87,9 +92,13 @@ Eqn <- function(...,
   }
   dots <- list(...)
   for(i in 1L:length(dots)){
-    if(is.character(dots[[i]])){
+    if(is.matrix(dots[[i]])){
+        print(symbolicMatrix(dots[[i]]))
+    } else if(is.character(dots[[i]])){
         cat(dots[[i]])
-    } else print(dots[[i]])
+    } else {
+        print(dots[[i]])
+    }
   }
   cat(sprintf("\n\\end{%s}\n", wrap))
   invisible(NULL)
