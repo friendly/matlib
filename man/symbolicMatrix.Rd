@@ -92,7 +92,7 @@ the default is \code{c(FALSE, FALSE)}; applies only if \code{nrow} is character-
 
 \item{end.at}{if row or column indices start at 0, should they end at \code{n - 1} and
 \code{m - 1} or at \code{n} and \code{m}? (where \code{n} and \code{m} represent the
-characters used to denote the number of rows and columns, respectively); 
+characters used to denote the number of rows and columns, respectively);
 the default is \code{c("n - 1", "m - 1")}}
 
 \item{comma}{logical; if \code{TRUE}, commas are inserted between row and column subscripts, as in
@@ -130,11 +130,11 @@ the matrix on the R console.}
 }
 \value{
 \code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}
-         which contains the LaTeX representation of the matrix as a character string, 
+         which contains the LaTeX representation of the matrix as a character string,
          along with some other information. The slots
          in the returned object are named \code{"matrix"} (the LaTeX representation of the
          matrix); \code{"dim"} (\code{nrow} and \code{ncol}); \code{"body"} (a character
-         matrix of LaTeX expressions for the cells of the matrix);   
+         matrix of LaTeX expressions for the cells of the matrix);
          \code{"wrapper"}(the beginning and ending lines for the
          LaTeX matrix environment).
 }

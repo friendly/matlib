@@ -483,10 +483,11 @@ symbolicMatrix <- function(
   wrapper <- x.mat[pick] # LaTeX matrix environment
   body <- x.mat[-pick]
   body <- gsub('\\\\\\\\', '', body)
-  body <- gsub(' ', '', body)
+  # body <- gsub(' ', '', body)
   splt <- sapply(body, function(x.mat) strsplit(x.mat, '&'))
   nrow.x <- length(splt)
   body <- unname(do.call(rbind, splt)) # matrix of LaTeX cells
+  body <- sub(" *$", "", sub("^ *", "", body))
 
   # "symbolicMatrix" object:
 
