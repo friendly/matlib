@@ -194,6 +194,12 @@ Then use `symbolicMatrix()` on `cbind(A,b)` and pipe the result to `Eqn()`:
 symbolicMatrix(cbind(A,b)) |> Eqn(number=FALSE)
 ```
 
+To demonstrate that this is an augmented matrix the command `\bigm|` can be included.
+
+```{r results='asis'}
+symbolicMatrix(cbind(A, "\\bigm|", b)) |> Eqn(number=FALSE)
+```
+
 All the R tricks for creating and modifying matrices can be used in this way.
 
 ## showEqn
