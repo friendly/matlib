@@ -35,6 +35,29 @@
   result
 }
 
+`-.symbolicMatrix` <- function(e1, e2){
+  if (!inherits(e2, "symbolicMatrix")){
+    stop(deparse(substitute(e2)),
+         " is not of class 'symbolicMatrix'")
+  }
+  A <- getBody(e1)
+  B <- getBody(e2)
+  dimA <- dim(A)
+  dimB <- dim(B)
+  if(!all(dim(A) == dim(B))){
+    stop('matricies are not conformable for subtraction')
+  }
+  wrapper <- getWrapper(e1)
+  result <- matrix(paste(A, "-", B), dimA[1L], dimA[2L])
+  result <- symbolicMatrix(result)
+  matrix <- sub("\\\\begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
+  result$dim <- Dim(e1)
+  result$matrix <- matrix
+  result$wrapper <- wrapper
+  result
+}
+
 t.symbolicMatrix <- function(x){
   result <- symbolicMatrix(t(getBody(x)))
   wrapper <- getWrapper(x)
@@ -44,6 +67,37 @@ t.symbolicMatrix <- function(x){
   result$matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
   result$wrapper <- wrapper
   result$dim <- rev(Dim(x))
+  result
+}
+
+`%*%.symbolicMatrix` <- function(x, y){
+  if (!inherits(y, "symbolicMatrix")){
+    stop(deparse(substitute(y)),
+         " is not of class 'symbolicMatrix'")
+  }
+  X <- getBody(x)
+  Y <- getBody(y)
+  dimX <- dim(X)
+  dimY <- dim(Y)
+  if (dimX[2] != dimY[1]){
+    stop('matricies are not conformable for multiplication')
+  }
+  wrapper <- getWrapper(x)
+  
+  Z <- matrix("", nrow(X), ncol(Y))
+  for (i in 1:nrow(X)){
+    for (j in 1:ncol(Y)){
+      for (k in 1:ncol(X)){
+        Z[i, j] <- paste0(Z[i, j], if (k > 1) " + ", 
+                          "(", X[i, k], ")\\times(", Y[k, j], ")")
+      }
+    }
+  }
+  result <- symbolicMatrix(Z)
+  matrix <- sub("\\\\begin\\{pmatrix\\}", 
+                wrapper[1], getLatex(result))
+  result$matrix <- sub("\\\\end\\{pmatrix\\}", wrapper[2], matrix)
+  result$wrapper <- wrapper
   result
 }
 
@@ -74,14 +128,14 @@ getLatex(A + B)
 
 getLatex(A + B) |> cat()
 
-cat(getMatrix(A), " +\\large\n", getMatrix(B), "\\quad\\large=\\quad\n", getMatrix(A + B))
+cat(getLatex(A), " +\\large\n", getLatex(B), "\\quad\\large=\\quad\n", getLatex(A + B))
 
 # or keeping the numeric version
 A <-matrix(c(1,3,0,1),2,2)
-getMatrix(symbolicMatrix(A))
+getLatex(symbolicMatrix(A))
 B <- matrix(c(5,3,1,4),2,2)
-getMatrix(symbolicMatrix(B)) 
-getMatrix(symbolicMatrix(A + B))
+getLatex(symbolicMatrix(B)) 
+getLatex(symbolicMatrix(A + B))
 
 
 # Eqn(A, " + ", B, " = ", A + B)
@@ -106,4 +160,17 @@ Dim(t(M))
 getBody(t(M))
 getWrapper(t(M))
 getLatex(t(M))
+
+X <- symbolicMatrix(matrix(letters[1:6], 2, 3))
+Y <- symbolicMatrix(matrix(LETTERS[1:6], 3, 2))
+X
+Y
+X %*% Y
+
+X <- symbolicMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
+Y <- symbolicMatrix(matrix(10*(1:6), 3, 2), matrix="bmatrix")
+X
+Y
+X %*% Y
+
 }
