@@ -44,23 +44,6 @@ Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}",
     align=TRUE)
 ```
 
-## matrix2latex
-
-`matrix2latex()` can also generate symbolic equations from numeric or character matrices.
-
-Create character matrix:
-
-```{r}
-A <- matrix(paste0('a_', 1:9), 3, 3)
-b <- paste0("\\beta_", 1:3)
-```
-
-Show $[\mathbf{A} | \mathbf{b}]$:
-
-```{r results='asis'}
-matrix2latex(cbind(A,b)) |> Eqn(number=FALSE)
-```
-
 ## showEqn
 
 `showEqn()` can also write \LaTeX, but writes out the equations. However, but the `array` environment needs to be included inside `$$ ... $$` to be evaluated in a chunk, so this chunk is not evaluated (it causes a LaTeX error).
