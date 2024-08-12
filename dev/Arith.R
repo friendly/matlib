@@ -12,11 +12,24 @@
 #   return(list(body=body, wrapper=wrapper))
 # }
 
+numericDimensions <- function(x){
+  UseMethod("numericDimensions")
+}
+
+numericDimensions.symbolicMatrix <- function(x){
+  dim <- Dim(x)
+  if (!is.numeric(dim)) stop ("'", deparse(substitute(x)),
+                              "' does not have numeric dimensions")
+  return(NULL)
+}
+
 `+.symbolicMatrix` <- function(e1, e2){
   if (!inherits(e2, "symbolicMatrix")){
       stop(deparse(substitute(e2)),
            " is not of class 'symbolicMatrix'")
   }
+  numericDimensions(e1)
+  numericDimensions(e2)
   A <- getBody(e1)
   B <- getBody(e2)
   dimA <- dim(A)
@@ -40,6 +53,8 @@
     stop(deparse(substitute(e2)),
          " is not of class 'symbolicMatrix'")
   }
+  numericDimensions(e1)
+  numericDimensions(e2)
   A <- getBody(e1)
   B <- getBody(e2)
   dimA <- dim(A)
@@ -59,6 +74,7 @@
 }
 
 t.symbolicMatrix <- function(x){
+  numericDimensions(x)
   result <- symbolicMatrix(t(getBody(x)))
   wrapper <- getWrapper(x)
 
@@ -84,6 +100,8 @@ parenthesize <- function(element){
     stop(deparse(substitute(y)),
          " is not of class 'symbolicMatrix'")
   }
+  numericDimensions(x)
+  numericDimensions(y)
   X <- getBody(x)
   Y <- getBody(y)
   dimX <- dim(X)
@@ -139,6 +157,8 @@ determinant.symbolicMatrix <- function(x, logarithm, ...){
       res
     }
   }
+  
+  numericDimensions(x)
   
   sub("^[ +]*", "", DET(getBody(x)))
 }
@@ -255,4 +275,13 @@ as.numeric(F)
 (G <- symbolicMatrix(matrix(letters[1:4], 2, 2)))
 as.numeric(G)
 as.numeric(G, locals=list(a=1, b=2, c=3, d=4))
+
+A <- symbolicMatrix(nrow=2, ncol=3)
+B <- symbolicMatrix(nrow=2, ncol=3)
+A + B
+
+C <- symbolicMatrix()
+D <- symbolicMatrix()
+C + D
+
 }
