@@ -193,6 +193,8 @@ solve.symbolicMatrix <- function (a, b, simplify=FALSE, ...) {
   if (Nrow(a) != Ncol(a)) stop("matrix 'a' must be square")
   if (!missing(b)) warning("'b' argument to solve() ignored")
   
+  wrapper <- getWrapper(a)
+  
   det <- parenthesize(determinant(a))
   A <- getBody(a)
   n <- nrow(A)
@@ -213,11 +215,17 @@ solve.symbolicMatrix <- function (a, b, simplify=FALSE, ...) {
   }
   
   A_inv <- t(A_inv) # adjoint
+  result <- symbolicMatrix(A_inv)
+  matrix <- sub("begin\\{pmatrix\\}",
+                wrapper[1], getLatex(result))
+  result$matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$wrapper <- wrapper
   
-  if (!simplify) {return(symbolicMatrix(A_inv))
+  if (!simplify) {
+    return(result)
   } else {
     return(paste0("\\frac{1}{", det, "} \n", 
-                  getLatex(symbolicMatrix(A_inv))))
+                  getLatex(result)))
   }
 }
 
@@ -330,7 +338,8 @@ A
 solve(A)
 Eqn(solve(A, simplify=TRUE))
 
-B <- symbolicMatrix(matrix(letters[1:4], 2, 2, byrow=TRUE))
+B <- symbolicMatrix(matrix(letters[1:4], 2, 2, byrow=TRUE),
+                    matrix="\\bmatrix")
 B
 solve(B)
 Eqn(solve(B, simplify=TRUE))
