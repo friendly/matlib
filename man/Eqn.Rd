@@ -10,7 +10,8 @@ Eqn(
   number = TRUE,
   label = NULL,
   align = FALSE,
-  html_output = knitr::is_html_output()
+  html_output = knitr::is_html_output(),
+  matrix = list()
 )
 
 Eqn_newline()
@@ -38,6 +39,11 @@ via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)}}
 
 \item{html_output}{logical; use labels for HTML outputs instead of the LaTeX? Automatically
 changed for compiled documents that support \code{knitr}}
+
+\item{matrix}{list of arguments to be passed to \code{\link{symbolicMatrix}} to change the
+properties of the \code{matrix} input objects. Note that these inputs are used globally for all
+\code{matrix} objects specified. If further specificity is required specify inputs using
+\code{\link{symbolicMatrix}} directly}
 }
 \description{
 This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
@@ -87,6 +93,9 @@ b <- c(8, -11, -3)
 
 cbind(A,b) |> Eqn()
 cbind(A,'\\\\bigm|', b) |> Eqn()
+
+# change matrix brackets globally
+cbind(A,b) |> Eqn(matrix=list(matrix='bmatrix'))
 
 # with showEqn()
 showEqn(A, b, latex=TRUE) |> Eqn()
