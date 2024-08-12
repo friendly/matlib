@@ -6,6 +6,7 @@ output:
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
     number_sections: false
+    toc: true
 vignette: >
   %\VignetteIndexEntry{LaTeX Equations with symbolicMatrix, Eqn and matrix2latex}
   %\VignetteEngine{knitr::rmarkdown}
