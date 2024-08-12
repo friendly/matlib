@@ -1,5 +1,6 @@
-#' Convert matrix to LaTeX equation
+#' (Deprecated) Convert matrix to LaTeX equation
 #'
+#' (This function has been deprecated; see \code{\link{symbolicMatrix}} instead).
 #' This function provides a soft-wrapper to \code{xtable::xtableMatharray()} with additional support for
 #' \code{fractions} output and \code{brackets}.
 #'
@@ -56,7 +57,8 @@ matrix2latex <- function(x,
                          digits = NULL,
                          print = TRUE,
                          ...){
-
+  .Deprecated("matrix2latex",
+              msg="Function is deprecated. See symbolicMatrix() and Eqn() for more recent approaches")
   if( is.numeric(x) && is.null(digits) && all(trunc(x) == x) ) digits <- 0
   ret <- if (fractions) xtable::xtableMatharray(as.character(Fractions(x)), digits=digits, ...)
          else           xtable::xtableMatharray(x, digits=digits, ...)

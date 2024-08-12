@@ -2,7 +2,7 @@
 % Please edit documentation in R/matrix2latex.R
 \name{matrix2latex}
 \alias{matrix2latex}
-\title{Convert matrix to LaTeX equation}
+\title{(Deprecated) Convert matrix to LaTeX equation}
 \usage{
 matrix2latex(
   x,
@@ -40,6 +40,7 @@ around the matrix, \code{FALSE} produces no brackets. Otherwise
 \item{...}{additional arguments passed to \code{xtable::xtableMatharray()}}
 }
 \description{
+(This function has been deprecated; see \code{\link{symbolicMatrix}} instead).
 This function provides a soft-wrapper to \code{xtable::xtableMatharray()} with additional support for
 \code{fractions} output and \code{brackets}.
 }

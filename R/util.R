@@ -1,7 +1,7 @@
 # The parent flag is used to search in the parent envir for suitable definitions.
 # Set to TRUE if you want to only use the inputs provided
 
-#' Print a matrix, allowing fractions or LaTeX output
+#' (Deprecated) Print a matrix, allowing fractions or LaTeX output
 #'
 #' @param A       A numeric matrix
 #' @param parent  flag used to search in the parent envir for suitable definitions of other arguments.
@@ -24,6 +24,8 @@
 
 printMatrix <- function(A, parent = TRUE, fractions = FALSE, latex = FALSE,
 						tol = sqrt(.Machine$double.eps)){
+    .Deprecated("printMatrix",
+                msg="Function is deprecated. See symbolicMatrix() and Eqn() for more recent approaches")
 	if(parent){
 		envir <- as.environment(-1L)
 		if(!is.null(envir$fractions)) fractions <- envir$fractions

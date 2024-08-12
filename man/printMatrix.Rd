@@ -2,7 +2,7 @@
 % Please edit documentation in R/util.R
 \name{printMatrix}
 \alias{printMatrix}
-\title{Print a matrix, allowing fractions or LaTeX output}
+\title{(Deprecated) Print a matrix, allowing fractions or LaTeX output}
 \usage{
 printMatrix(
   A,
@@ -31,7 +31,7 @@ and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a 
 The formatted matrix
 }
 \description{
-Print a matrix, allowing fractions or LaTeX output
+(Deprecated) Print a matrix, allowing fractions or LaTeX output
 }
 \examples{
 A <- matrix(1:12, 3, 4) / 6
