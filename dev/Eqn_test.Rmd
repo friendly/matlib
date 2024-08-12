@@ -1,5 +1,5 @@
 ---
-title: "LaTeX Equations with symbolicMatrix, Eqn and matrix2latex"
+title: "LaTeX Equations with symbolicMatrix and Eqn"
 output: 
     pdf_document:
         extra_dependencies: ["amsmath"]
@@ -32,7 +32,6 @@ and statistical models (`equatiomatic::extract_eq()`).
 The `matlib` package extends these, providing a collection of functions that simplify using \LaTeX\ notation for matrices, vectors and equations in documentation and in writing:
 
 * `symbolicMatrix()`: Constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts.
-* `matrix2latex()`: Constructs the \LaTeX\ code for a symbolic matrix, whose elements are a symbol, with row and column subscripts
 * `showEqn()`: Shows what matrices $\mathbf{A}, \mathbf{b}$ look like as the system of linear equations, $\mathbf{A x} = \mathbf{b}$, but written out as a set of equations.
 * `Eqn()`: A wrapper to produce LaTeX expressions that can be copied/pasted into documents or
 used directly in `.Rmd` or `.qmd` documents to compile to equations.
@@ -75,7 +74,7 @@ to use `Eqn()` or otherwise fail to make a math environment.
 Some other examples:
 
 * A $3 \times 3$ identity matrix with square brackets, specified as an equation with a left-hand side $\mathbf{I}_3$. The first argument to
-`symbolicMatrix()` can be any numeric matrix.
+`symbolicMatrix()` can be any numeric or character matrix.
 
 ```{r results='asis'}
 symbolicMatrix(diag(3), lhs = "\\mathbf{I}_3", 
@@ -89,8 +88,9 @@ symbolicMatrix(diag(3), lhs = "\\mathbf{I}_3",
 symbolicMatrix(matrix(LETTERS[1:4], nrow=1)) |> Eqn(number = FALSE)
 ```
 
+or using `Eqn()` directly, which offers less specificity than `symbolicMatrix()`.
 ```{r results='asis'}
-symbolicMatrix(matrix(letters[1:3], ncol=1)) |> Eqn(number = FALSE)
+matrix(letters[1:3], ncol=1) |> Eqn(number = FALSE)
 ```
 
 ### The SVD
@@ -170,14 +170,20 @@ Note that in this example, there are three calls to `symbolicMatrix()`, wrapped 
 
 ## Numeric Matricies
 
-The `symbolicMatrix()` function can also generate symbolic equations from numeric or character matrices.
+The `symbolicMatrix()` and `Eqn()` functions can also generate symbolic equations from numeric or character matrices.
 For numeric matrices, it can round the values or show results as fractions.
 
 ```{r results='asis'}
 A <- matrix(1:12, nrow=3, ncol=4, byrow = TRUE) / 6
+Eqn(A, number = FALSE)
+```
+By default `Eqn()` will pass any numeric/character matrix to `symbolicMatrix()` using the default inputs. However, for greater specificity `symbolicMatrix()` can be called directly, which includes many other formatting options, such as the following reporting of fractions instead. 
+
+```{r results='asis'}
 symbolicMatrix(A, fractions = TRUE) |> Eqn(number = FALSE)
 ```
 
+## Character Matricies
 
 Say we want to show the matrix $[\mathbf{A} | \mathbf{b}]$ involved in the system of equations
 $\mathbf{A} \mathbf{x} = \mathbf{b}$.
@@ -188,16 +194,17 @@ A <- matrix(paste0('a_', 1:9), 3, 3, byrow = TRUE) |> print()
 b <- paste0("\\beta_", 1:3) |> print()
 ```
 
-Then use `symbolicMatrix()` on `cbind(A,b)` and pipe the result to `Eqn()`:
+Then use `cbind(A,b)` and pipe the result to `Eqn()`, which will automatically pass any input numeric/character matrix 
+to `symbolicMatrix()`:
 
 ```{r results='asis'}
-symbolicMatrix(cbind(A,b)) |> Eqn(number=FALSE)
+cbind(A,b) |> Eqn(number=FALSE)
 ```
 
 To demonstrate that this is an augmented matrix the command `\bigm|` can be included.
 
 ```{r results='asis'}
-symbolicMatrix(cbind(A, "\\bigm|", b)) |> Eqn(number=FALSE)
+cbind(A, "\\bigm|", b) |> Eqn(number=FALSE)
 ```
 
 All the R tricks for creating and modifying matrices can be used in this way.
