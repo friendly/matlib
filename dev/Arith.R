@@ -350,5 +350,9 @@ X
 solve(X)
 MASS::fractions(as.numeric(solve(X)))
 MASS::fractions(solve(as.numeric(X))) # check
+MASS::fractions(as.numeric(solve(A), 
+                           locals=list(a=3, d=2, g=0, 
+                                       b=1, e=1, h=1,
+                                       c=2, f=-2, i=1)))
 
 }
