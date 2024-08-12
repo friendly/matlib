@@ -165,7 +165,7 @@ Eqn(symbolicMatrix("a", nrow = "m", ncol="n", matrix="bmatrix"),
 ```
 
 
-## aligned environment
+## `aligned` environment
 
 You can also align separate equations relative to some symbol like an `=` sign to show separate
 steps of re-expression, using the option `Eqn(..., align=TRUE)`.
