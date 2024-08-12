@@ -338,6 +338,9 @@ A
 solve(A)
 Eqn(solve(A, simplify=TRUE))
 
+# check again Wolfram Alpha: www.wolframalpha.com
+# inverse of {{a, b, c}, {d, e, f}, {g, h, i}}
+
 B <- symbolicMatrix(matrix(letters[1:4], 2, 2, byrow=TRUE),
                     matrix="\\bmatrix")
 B
