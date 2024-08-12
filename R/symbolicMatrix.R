@@ -281,8 +281,8 @@ symbolicMatrix <- function(
     }
     mat <- matrix(as.character(symbol), nrow(symbol), ncol(symbol))
     width <- apply(nchar <- nchar(mat), 2, max)
-    nr <- nrow(mat)
-    nc <- ncol(mat)
+    nrow <- nr <- nrow(mat)
+    ncol <- nc <- ncol(mat)
     for (i in 1:nr){
       for (j in 1:nc){
         mat[i, j] <- paste0(prefix, mat[i, j], suffix,

@@ -61,8 +61,8 @@
 t.symbolicMatrix <- function(x){
   result <- symbolicMatrix(t(getBody(x)))
   wrapper <- getWrapper(x)
-  
-  matrix <- sub("begin\\{pmatrix\\}", 
+
+  matrix <- sub("begin\\{pmatrix\\}",
                 wrapper[1], getLatex(result))
   result$matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
   result$wrapper <- wrapper
@@ -70,13 +70,13 @@ t.symbolicMatrix <- function(x){
   result
 }
 
-parenthesize <- function(element){ 
+parenthesize <- function(element){
   if (grepl("[ +-/^]", element)) {
     paste0("(", element, ")")
   } else {
     element
   }
-  
+
 }
 
 `%*%.symbolicMatrix` <- function(x, y){
@@ -92,15 +92,15 @@ parenthesize <- function(element){
     stop('matricies are not conformable for multiplication')
   }
   wrapper <- getWrapper(x)
-  
+
   Z <- matrix("", nrow(X), ncol(Y))
   for (i in 1:nrow(X)){
     for (j in 1:ncol(Y)){
       for (k in 1:ncol(X)){
-        Z[i, j] <- paste0(Z[i, j], 
-                          if (k > 1) " + ", 
-                          parenthesize(X[i, k]), 
-                          " \\times ", 
+        Z[i, j] <- paste0(Z[i, j],
+                          if (k > 1) " + ",
+                          parenthesize(X[i, k]),
+                          " \\times ",
                           parenthesize(Y[k, j]))
       }
     }
@@ -130,6 +130,7 @@ Dim(D)
 getBody(A)
 getWrapper(A)
 getLatex(A)
+Dim(A)
 
 A + B
 A + C
@@ -147,7 +148,7 @@ cat(getLatex(A), " +\\large\n", getLatex(B), "\\quad\\large=\\quad\n", getLatex(
 A <-matrix(c(1,3,0,1),2,2)
 getLatex(symbolicMatrix(A))
 B <- matrix(c(5,3,1,4),2,2)
-getLatex(symbolicMatrix(B)) 
+getLatex(symbolicMatrix(B))
 getLatex(symbolicMatrix(A + B))
 
 
@@ -155,9 +156,9 @@ getLatex(symbolicMatrix(A + B))
 # # generates misplaced & when compiled
 # Eqn(A, " + ", D, " = ", A + D)
 # Eqn(A, " + ", B, " = ", A + "foo")
-# 
+#
 # Z <- symbolicMatrix(matrix(1:6, 3, 2), matrix="bmatrix")
-# 
+#
 # Eqn(A, " + ", D, " = ", A + D)
 # Eqn(A, " + ", B, " = ", A + B)
 
