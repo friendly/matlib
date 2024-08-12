@@ -190,6 +190,7 @@ solve.symbolicMatrix <- function (a, b, simplify=FALSE, ...) {
   # simplify: if TRUE return LaTeX expression with 1/det as multiplier
   
   numericDimensions(a)
+  if (Nrow(a) != Ncol(a)) stop("matrix 'a' must be square")
   if (!missing(b)) warning("'b' argument to solve() ignored")
   
   det <- parenthesize(determinant(a))
