@@ -164,12 +164,15 @@ determinant.symbolicMatrix <- function(x, logarithm, ...){
 }
 
 as.double.symbolicMatrix <- function(x, locals=list(), ...){
+  
+  numericDimensions(x)
+
   X <- getBody(x)
   nrow <- nrow(X)
   X <- gsub("\\\\cdot", "\\*", X)
   
   warn <- options(warn = 2)
-  on.exit(warn)
+  on.exit(options(warn))
   X <- try(sapply(X, function(x) eval(parse(text=x), envir=locals)), 
            silent=TRUE)
   if (inherits(X, "try-error")){
@@ -179,6 +182,43 @@ as.double.symbolicMatrix <- function(x, locals=list(), ...){
   matrix(X, nrow=nrow)
 }
 
+# symbolic matrix inverse:
+
+solve.symbolicMatrix <- function (a, b, simplify=FALSE, ...) {
+  
+  # b: ignored
+  # simplify: if TRUE return LaTeX expression with 1/det as multiplier
+  
+  numericDimensions(a)
+  if (!missing(b)) warning("'b' argument to solve() ignored")
+  
+  det <- parenthesize(determinant(a))
+  A <- getBody(a)
+  n <- nrow(A)
+  indices <- 1:n
+  A_inv <- matrix("", n, n)
+  
+  for (i in 1:n){
+    for (j in 1:n){
+      A_ij <- symbolicMatrix(A[indices[-i], indices[-j], drop=FALSE])
+      A_inv[i, j] <- if (Nrow(A_ij) == 1) { # cofactors
+        A[indices[-i], indices[-j]]
+      } else{
+        determinant(A_ij)
+      }
+      if (isOdd(i + j)) A_inv[i, j] <- paste0("-", parenthesize(A_inv[i, j]))
+      if (!simplify) A_inv[i, j] <- paste0(parenthesize(A_inv[i, j]), "/", det)
+    }
+  }
+  
+  A_inv <- t(A_inv) # adjoint
+  
+  if (!simplify) {return(symbolicMatrix(A_inv))
+  } else {
+    return(paste0("\\frac{1}{", det, "} \n", 
+                  getLatex(symbolicMatrix(A_inv))))
+  }
+}
 
 if(FALSE) {
 library(matlib)
@@ -283,5 +323,22 @@ A + B
 C <- symbolicMatrix()
 D <- symbolicMatrix()
 C + D
+
+A <- symbolicMatrix(matrix(letters[1:9], 3, 3, byrow=TRUE))
+A
+solve(A)
+Eqn(solve(A, simplify=TRUE))
+
+B <- symbolicMatrix(matrix(letters[1:4], 2, 2, byrow=TRUE))
+B
+solve(B)
+Eqn(solve(B, simplify=TRUE))
+
+# example from <https://www.vedantu.com/maths/inverse-of-a-matrix-using-minors-cofactors-and-adjugate>
+X <- symbolicMatrix(matrix(c(3,2,0,1,1,1,2,-2,1), 3, 3))
+X
+solve(X)
+MASS::fractions(as.numeric(solve(X)))
+MASS::fractions(solve(as.numeric(X))) # check
 
 }
