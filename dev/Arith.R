@@ -143,6 +143,22 @@ determinant.symbolicMatrix <- function(x, logarithm, ...){
   sub("^[ +]*", "", DET(getBody(x)))
 }
 
+as.double.symbolicMatrix <- function(x, locals=list(), ...){
+  X <- getBody(x)
+  nrow <- nrow(X)
+  X <- gsub("\\\\cdot", "\\*", X)
+  
+  warn <- options(warn = 2)
+  on.exit(warn)
+  X <- try(sapply(X, function(x) eval(parse(text=x), envir=locals)), 
+           silent=TRUE)
+  if (inherits(X, "try-error")){
+    stop("matrix cannot be coerced to 'double' ('numeric')")
+  }
+  
+  matrix(X, nrow=nrow)
+}
+
 
 if(FALSE) {
 library(matlib)
@@ -226,4 +242,17 @@ determinant(A)
 
 B <- symbolicMatrix(matrix(letters[1:9], 3, 3, byrow=TRUE))
 determinant(B)
+
+(C <- symbolicMatrix(matrix(1:9, nrow=3, ncol=3)))
+(D <- symbolicMatrix(matrix(11:19, nrow=3, ncol=3)))
+as.numeric(C)
+as.numeric(D)
+(E <- C + D)
+as.numeric(E)
+(F <- C %*% D)
+as.numeric(F)
+
+(G <- symbolicMatrix(matrix(letters[1:4], 2, 2)))
+as.numeric(G)
+as.numeric(G, locals=list(a=1, b=2, c=3, d=4))
 }
