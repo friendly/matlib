@@ -27,10 +27,10 @@
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
 #'   changed for compiled documents that support \code{knitr}
 #' @param align logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}
-#' @param matrix list of arguments to be passed to \code{\link{symbolicMatrix}} to change the
-#'   properties of the \code{matrix} input objects. Note that these inputs are used globally for all
-#'   \code{matrix} objects specified. If further specificity is required specify inputs using
-#'   \code{\link{symbolicMatrix}} directly
+#' @param mat_args list of arguments to be passed to \code{\link{symbolicMatrix}} to change the
+#'   properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
+#'   each \code{matrix} objects supplied. If further specificity is required create
+#'   \code{\link{symbolicMatrix}} objects directly
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @author Phil Chalmers
@@ -78,7 +78,7 @@
 #' cbind(A,'\\bigm|', b) |> Eqn()
 #'
 #' # change matrix brackets globally
-#' cbind(A,b) |> Eqn(matrix=list(matrix='bmatrix'))
+#' cbind(A,b) |> Eqn(mat_args=list(matrix='bmatrix'))
 #'
 #' # with showEqn()
 #' showEqn(A, b, latex=TRUE) |> Eqn()
@@ -88,7 +88,7 @@ Eqn <- function(...,
                 label = NULL,
                 align = FALSE,
                 html_output = knitr::is_html_output(),
-                matrix = list()) {
+                mat_args = list()) {
 
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
@@ -101,7 +101,7 @@ Eqn <- function(...,
   dots <- list(...)
   for(i in 1L:length(dots)){
     if(is.matrix(dots[[i]])){
-        print( do.call(symbolicMatrix, c(list(symbol=dots[[i]]), matrix)) )
+        print( do.call(symbolicMatrix, c(list(symbol=dots[[i]]), mat_args)) )
     } else if(is.character(dots[[i]])){
         cat(dots[[i]])
     } else {
