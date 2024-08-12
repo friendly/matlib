@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 output: 
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
+    number_sections: false
 vignette: >
   %\VignetteIndexEntry{LaTeX Equations with symbolicMatrix, Eqn and matrix2latex}
   %\VignetteEngine{knitr::rmarkdown}
@@ -141,12 +142,12 @@ Eqn(symbolicMatrix("u", "n", "k", lhs = ''),
     symbolicMatrix("v", "k", "p", transpose = TRUE))
 ```
 
-The matrix names in Equation (\ref{eqn:svd}) are printed in a **boldface** math font, typically used for matrices
+The matrix names in Equation (@\ref{eqn:svd}) are printed in a **boldface** math font, typically used for matrices
 and vectors. Note that when using
 LaTeX code in R expressions each backslash (`\`) must be doubled (`\\`) in R because `\` is the
 escape character.
 
-Note that the first equation can be referenced because it was labeled:  "As seen in Equation (\ref{eqn:svd}) \ldots ".
+Note that the first equation can be referenced because it was labeled:  "As seen in Equation (@\ref{eqn:svd}) \ldots ".
 (In Quarto, equation labels must be of the form `#eq-label` and equation references are of the form `@eq-label`)
 
 ### Systems of equations
