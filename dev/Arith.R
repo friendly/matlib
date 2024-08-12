@@ -100,7 +100,7 @@ parenthesize <- function(element){
         Z[i, j] <- paste0(Z[i, j],
                           if (k > 1) " + ",
                           parenthesize(X[i, k]),
-                          " \\times ",
+                          " \\cdot ",
                           parenthesize(Y[k, j]))
       }
     }
@@ -113,6 +113,36 @@ parenthesize <- function(element){
   result$wrapper <- wrapper
   result
 }
+
+isOdd <- function(x){
+  1 == x %% 2
+}
+
+determinant.symbolicMatrix <- function(x, logarithm, ...){
+  
+  # determinant by minors and cofactors
+  
+  # helper function for recursion:
+  DET <- function(X){
+    if (nrow(X) == 2){
+      paste0(X[1, 1], " \\cdot ", X[2, 2], " - ", 
+             X[1, 2], " \\cdot ", X[2, 1])
+    } else {
+      indices <- 1:ncol(X)
+      res <- ""
+      for (j in indices){
+        res <- paste0(res, if (isOdd(j)) " + " else " - ",
+                      X[1, j], " \\cdot ",
+                      parenthesize(DET(X[-1, indices != j]))
+        )
+      }
+      res
+    }
+  }
+  
+  sub("^[ +]*", "", DET(getBody(x)))
+}
+
 
 if(FALSE) {
 library(matlib)
@@ -191,4 +221,9 @@ X
 Y
 X %*% Y
 
+A <- symbolicMatrix(matrix(letters[1:4], 2, 2, byrow=TRUE))
+determinant(A)
+
+B <- symbolicMatrix(matrix(letters[1:9], 3, 3, byrow=TRUE))
+determinant(B)
 }
