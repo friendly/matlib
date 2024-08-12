@@ -451,14 +451,17 @@ symbolicMatrix <- function(
 
       # numeric number of rows, numeric number of columns:
 
+      is_scalar <- nrow == 1 && ncol == 1
+
       for (i in 1:nrow){
         result <- paste0(result, "  ")
         for (j in 1:ncol){
-          result <- paste0(result, prefix, symbol, "_{",
+          result <- paste0(result, prefix, symbol,
+                           if(!is_scalar) "_{",
                            if (nrow > 1) i - zero.based[1],
                            if (nrow > 1 && ncol > 1) comma,
                            if (ncol > 1) j - zero.based[2],
-                           "}", suffix,
+                           if(!is_scalar) "}", suffix,
                            if (j == ncol) " \\\\ \n" else " & ")
         }
       }
