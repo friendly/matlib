@@ -1,5 +1,7 @@
 source(here::here("dev", "Arith.R"))
 
+TEST <- FALSE
+
 Kronecker <- function(X, Y, ...){
     if (!inherits(X, "symbolicMatrix")){
         stop(deparse(substitute(x)),
@@ -60,10 +62,10 @@ Kronecker <- function(X, Y, ...){
     result
 }
 
-if(FALSE){
+if(TEST){
     X <- symbolicMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
     Y <- symbolicMatrix(matrix(10*(1:6), 3, 2), matrix="bmatrix")
-    a <- symbolicMatrix('a', nrow=1, ncol=1)
+    a <- symbolicMatrix('a', ncol=1, nrow=1)
     I3 <- symbolicMatrix(diag(3))
     X
     Y
@@ -78,5 +80,60 @@ if(FALSE){
 
     I3 %Ox% X
     a %Ox% I3
+}
 
+
+Hadamard <- function(A, B, operator = '\\cdot'){
+    if (!inherits(A, "symbolicMatrix")){
+        stop(deparse(substitute(A)),
+             " is not of class 'symbolicMatrix'")
+    }
+    if (!inherits(B, "symbolicMatrix")){
+        stop(deparse(substitute(B)),
+             " is not of class 'symbolicMatrix'")
+    }
+    numericDimensions(A)
+    numericDimensions(B)
+    wrapper <- getWrapper(A)
+    A <- getBody(A)
+    B <- getBody(B)
+    dimA <- dim(A)
+    dimB <- dim(B)
+    if(!all(dimA == dimB))
+        stop('matricies are not conformable')
+    result <- matrix(paste(A, operator, B), dimA[1L], dimA[2L])
+    result <- symbolicMatrix(result)
+    matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+    matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+    result$dim <- dimA
+    result$matrix <- matrix
+    result$wrapper <- wrapper
+    result
+}
+
+Vec <- function(X){
+    if (!inherits(X, "symbolicMatrix")){
+        stop(deparse(substitute(X)),
+             " is not of class 'symbolicMatrix'")
+    }
+    wrapper <- getWrapper(X)
+    mat <- matrix(as.vector(getBody(X)))
+    result <- symbolicMatrix(mat)
+    matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+    matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+    result$matrix <- matrix
+    result$wrapper <- wrapper
+    result
+}
+
+if(TEST){
+    X <- symbolicMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
+    Y <- symbolicMatrix(matrix(10*(1:6), 2, 3), matrix="bmatrix")
+    Z <- symbolicMatrix(matrix(10*(1:6), 3, 2), matrix="bmatrix")
+
+    Hadamard(X, Y)
+    Hadamard(X, Y, operator = '\\times')
+    testthat::expect_error(Hadamard(X, Z),
+                           "matricies are not conformable")
+    Vec(X)
 }
