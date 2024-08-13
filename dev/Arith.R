@@ -227,23 +227,25 @@ as.double.symbolicMatrix <- function(x, locals=list(), ...){
 
 # symbolic matrix inverse:
 
-solve.symbolicMatrix <- function (a, b, simplify=FALSE, ...) {
-
+solve.symbolicMatrix <- function (a, b, simplify=FALSE, 
+                                  frac="\\dfrac", ...) {
+  
   # b: ignored
   # simplify: if TRUE return LaTeX expression with 1/det as multiplier
-
+  # frac: for formatting fractions in matrix elements
+  
   numericDimensions(a)
   if (Nrow(a) != Ncol(a)) stop("matrix 'a' must be square")
   if (!missing(b)) warning("'b' argument to solve() ignored")
-
+  
   wrapper <- getWrapper(a)
-
-  det <- parenthesize(determinant(a))
+  
+  det <- determinant(a)
   A <- getBody(a)
   n <- nrow(A)
   indices <- 1:n
   A_inv <- matrix("", n, n)
-
+  
   for (i in 1:n){
     for (j in 1:n){
       A_ij <- symbolicMatrix(A[indices[-i], indices[-j], drop=FALSE])
@@ -253,17 +255,18 @@ solve.symbolicMatrix <- function (a, b, simplify=FALSE, ...) {
         determinant(A_ij)
       }
       if (isOdd(i + j)) A_inv[i, j] <- paste0("-", parenthesize(A_inv[i, j]))
-      if (!simplify) A_inv[i, j] <- paste0(parenthesize(A_inv[i, j]), "/", det)
+      if (!simplify) A_inv[i, j] <- paste0(frac, "{", A_inv[i, j], 
+                                           "}{", det, "}")
     }
   }
-
+  
   A_inv <- t(A_inv) # adjoint
   result <- symbolicMatrix(A_inv)
   matrix <- sub("begin\\{pmatrix\\}",
                 wrapper[1], getLatex(result))
   result$matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
   result$wrapper <- wrapper
-
+  
   if (!simplify) {
     return(result)
   } else {
@@ -271,6 +274,7 @@ solve.symbolicMatrix <- function (a, b, simplify=FALSE, ...) {
                   getLatex(result)))
   }
 }
+
 
 if(FALSE) {
 library(matlib)
