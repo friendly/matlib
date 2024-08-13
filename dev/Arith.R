@@ -132,47 +132,79 @@ parenthesize <- function(element){
   result
 }
 
-`*.symbolicMatrix` <- function(x, y){
-    if (!inherits(y, "symbolicMatrix")){
-        stop(deparse(substitute(y)),
-             " is not of class 'symbolicMatrix'")
-    }
-    numericDimensions(x)
-    numericDimensions(y)
-    X <- getBody(x)
-    Y <- getBody(y)
-    dimX <- dim(X)
-    dimY <- dim(Y)
-    if(is.numeric(dimX) && prod(dimX) == 1L){
-        tmp <- symbolicMatrix(X[1L,1L], nrow=dimY[1L], ncol=dimY[2L])
-        X <- getBody(tmp)
-        X <- gsub("_.*", "", X)
-        dimX <- dimY
-    }
-    if(is.numeric(dimY) && prod(dimY) == 1L){
-        tmp <- symbolicMatrix(Y[1L,1L], nrow=dimX[1L], ncol=dimX[2L])
-        Y <- getBody(tmp)
-        Y <- gsub("_.*", "", Y)
-        dimY <- dimX
-    }
-    if (!all(dimX == dimY)){
-        stop('matricies are not conformable for element-wise multiplication')
-    }
-    wrapper <- getWrapper(x)
-    Z <- matrix("", nrow(X), ncol(X))
-    for (i in 1:nrow(X)){
-        for (j in 1:ncol(Y)){
-            Z[i, j] <- paste0(parenthesize(X[i, j]),
-                              " \\cdot ", parenthesize(Y[i, j]))
-        }
-    }
-    result <- symbolicMatrix(Z)
-    matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-    matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
-    result$dim <- dim(Z)
-    result$matrix <- matrix
-    result$wrapper <- wrapper
-    result
+# `*.symbolicMatrix` <- function(x, y){
+#     if (!inherits(y, "symbolicMatrix")){
+#         stop(deparse(substitute(y)),
+#              " is not of class 'symbolicMatrix'")
+#     }
+#     numericDimensions(x)
+#     numericDimensions(y)
+#     X <- getBody(x)
+#     Y <- getBody(y)
+#     dimX <- dim(X)
+#     dimY <- dim(Y)
+#     if(is.numeric(dimX) && prod(dimX) == 1L){
+#         tmp <- symbolicMatrix(X[1L,1L], nrow=dimY[1L], ncol=dimY[2L])
+#         X <- getBody(tmp)
+#         X <- gsub("_.*", "", X)
+#         dimX <- dimY
+#     }
+#     if(is.numeric(dimY) && prod(dimY) == 1L){
+#         tmp <- symbolicMatrix(Y[1L,1L], nrow=dimX[1L], ncol=dimX[2L])
+#         Y <- getBody(tmp)
+#         Y <- gsub("_.*", "", Y)
+#         dimY <- dimX
+#     }
+#     if (!all(dimX == dimY)){
+#         stop('matricies are not conformable for element-wise multiplication')
+#     }
+#     wrapper <- getWrapper(x)
+#     Z <- matrix("", nrow(X), ncol(X))
+#     for (i in 1:nrow(X)){
+#         for (j in 1:ncol(Y)){
+#             Z[i, j] <- paste0(parenthesize(X[i, j]),
+#                               " \\cdot ", parenthesize(Y[i, j]))
+#         }
+#     }
+#     result <- symbolicMatrix(Z)
+#     matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+#     matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+#     result$dim <- dim(Z)
+#     result$matrix <- matrix
+#     result$wrapper <- wrapper
+#     result
+# }
+
+`*.symbolicMatrix` <- function (e1, e2) {
+  if (inherits(e1, "symbolicMatrix") && inherits(e2, "symbolicMatrix")) 
+    stop("both arguments of * cannot be 'symbolicMatrix' objects")
+  swapped <- if (inherits(e1, "symbolicMatrix")) {
+    swap <- e1
+    e1 <- e2
+    e2 <- swap
+    TRUE
+  } else {
+    FALSE
+  }
+  if (!is.vector(e1) || length(e1) != 1) 
+    stop("one argument to * must be a scalar")
+  numericDimensions(e2)
+  A <- getBody(e2)
+  dimA <- dim(A)
+  wrapper <- getWrapper(e2)
+  result <- matrix(if (swapped) {
+    paste(sapply(A, parenthesize), "\\cdot", e1)
+  } else{
+    paste(e1, "\\cdot", sapply(A, parenthesize))
+  },
+  dimA[1L], dimA[2L])
+  result <- symbolicMatrix(result)
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$dim <- Dim(e2)
+  result$matrix <- matrix
+  result$wrapper <- wrapper
+  result
 }
 
 isOdd <- function(x){
@@ -414,5 +446,13 @@ MASS::fractions(as.numeric(solve(A),
                            locals=list(a=3, d=2, g=0,
                                        b=1, e=1, h=1,
                                        c=2, f=-2, i=1)))
+
+W <- symbolicMatrix(nrow=2, ncol=3, matrix="\\bmatrix")
+W
+1*W
+W*"a"
+W*W
+letters*W
+"a"*(W + W)
 
 }
