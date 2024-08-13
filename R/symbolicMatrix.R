@@ -98,6 +98,7 @@
 #' }
 #'
 #' @param diag   logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})
+#' @param sparse logical; if \code{TRUE} replace 0's with empty characters to print a sparse matrix
 #' @param zero.based logical 2-vector; start the row and/or column indices at 0 rather than 1;
 #'   the default is \code{c(FALSE, FALSE)}; applies only if \code{nrow} is character-valued
 #' @param end.at if row or column indices start at 0, should they end at \code{n - 1} and
@@ -160,6 +161,7 @@
 #' # diagonal matrices
 #' symbolicMatrix(nrow=3, ncol=3, diag=TRUE)
 #' symbolicMatrix(nrow="n", ncol="n", diag=TRUE)
+#' symbolicMatrix(nrow="n", ncol="n", diag=TRUE, sparse=TRUE)
 #'
 #' # commas, exponents, transpose
 #' symbolicMatrix("\\beta", comma=TRUE, exponent="-1")
@@ -180,6 +182,8 @@
 #'
 #' # specify left hand side
 #' symbolicMatrix("\\lambda", 3, 3, diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
+#' symbolicMatrix("\\lambda", 3, 3, diag=TRUE, sparse=TRUE,
+#'   lhs = "\\boldsymbol{\\Lambda}")
 #'
 #' # supply a matrix for 'symbol'
 #' m <- matrix(c(
@@ -191,6 +195,7 @@
 #'
 #' # Identity matrix
 #' symbolicMatrix(diag(3), lhs = "\\mathbf{I}_3")
+#' symbolicMatrix(diag(3), lhs = "\\mathbf{I}_3", sparse=TRUE)
 #'
 #' # prefix / suffix
 #' symbolicMatrix(prefix="\\sqrt{", suffix="}")
@@ -216,6 +221,7 @@ symbolicMatrix <- function(
     ncol="m",
     matrix="pmatrix",
     diag=FALSE,
+    sparse=FALSE,
     zero.based=c(FALSE, FALSE),
     end.at=c("n - 1", "m - 1"),
     comma=any(zero.based),
@@ -491,6 +497,8 @@ symbolicMatrix <- function(
   nrow.x <- length(splt)
   body <- unname(do.call(rbind, splt)) # matrix of LaTeX cells
   body <- sub(" *$", "", sub("^ *", "", body))
+  if(sparse)
+      mat.result <- gsub('[[:space:]]+0[[:space:]]+', ' ', mat.result)
 
   # "symbolicMatrix" object:
 
