@@ -12,8 +12,8 @@
 #' @param ... comma separated expressions that are either a) a character vector,
 #'   which will be automatically wrapped the
 #'   expression inside a call to \code{\link{cat}}, b) a \code{matrix} object
-#'   containing character or numeric information, which will be passed \code{\link{symbolicMatrix}},
-#'   or c) an object that was explicitly created via \code{\link{symbolicMatrix}}, which
+#'   containing character or numeric information, which will be passed \code{\link{latexMatrix}},
+#'   or c) an object that was explicitly created via \code{\link{latexMatrix}}, which
 #'   provides greater specificity.
 #'
 #'   Note that user defined functions that use \code{\link{cat}} within
@@ -27,14 +27,14 @@
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
 #'   changed for compiled documents that support \code{knitr}
 #' @param align logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}
-#' @param mat_args list of arguments to be passed to \code{\link{symbolicMatrix}} to change the
+#' @param mat_args list of arguments to be passed to \code{\link{latexMatrix}} to change the
 #'   properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
 #'   each \code{matrix} objects supplied. If further specificity is required create
-#'   \code{\link{symbolicMatrix}} objects directly
+#'   \code{\link{latexMatrix}} objects directly
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @author Phil Chalmers
-#' @seealso \code{\link{symbolicMatrix}}, \code{\link{matrix2latex}}
+#' @seealso \code{\link{latexMatrix}}, \code{\link{matrix2latex}}
 #' @export
 #' @examples
 #'
@@ -55,17 +55,17 @@
 #'     "X=U \\lambda V", label='eqn:svd')
 #'
 #' # expressions that use cat() within their calls
-#' Eqn(symbolicMatrix("u", "n", "k", lhs = 'SVD'),
-#'     symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
-#'     symbolicMatrix("v", "k", "p", transpose = TRUE),
+#' Eqn(latexMatrix("u", "n", "k", lhs = 'SVD'),
+#'     latexMatrix("\\lambda", "k", "k", diag=TRUE),
+#'     latexMatrix("v", "k", "p", transpose = TRUE),
 #'     label='eqn:svd')
 #'
 #' # align equations using & operator
 #' Eqn("X &= U \\lambda V",
 #'     Eqn_newline(),
-#'     symbolicMatrix("u", "n", "k", lhs = '&'),
-#'     symbolicMatrix("\\lambda", "k", "k", diag=TRUE),
-#'     symbolicMatrix("v", "k", "p", transpose = TRUE),
+#'     latexMatrix("u", "n", "k", lhs = '&'),
+#'     latexMatrix("\\lambda", "k", "k", diag=TRUE),
+#'     latexMatrix("v", "k", "p", transpose = TRUE),
 #'     align=TRUE)
 #'
 #' #  numeric/character matrix example
@@ -101,7 +101,7 @@ Eqn <- function(...,
   dots <- list(...)
   for(i in 1L:length(dots)){
     if(is.matrix(dots[[i]])){
-        print( do.call(symbolicMatrix, c(list(symbol=dots[[i]]), mat_args)) )
+        print( do.call(latexMatrix, c(list(symbol=dots[[i]]), mat_args)) )
     } else if(is.character(dots[[i]])){
         cat(dots[[i]])
     } else {

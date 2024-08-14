@@ -1,7 +1,7 @@
 # matlib 0.9.9
 
-- added `symbolicMatrix()` to create a symbolic matrix
-- `symbolicMatrix()` made more general to handle much wider variety of cases, with LaTeX output [JF]
+- added `latexMatrix()` to create a symbolic matrix
+- `latexMatrix()` made more general to handle much wider variety of cases, with LaTeX output [JF]
 - this is fleshed out with an `Eqn()` wrapper to work with other LaTeX-generating code in the package [PC]
 - a document, `dev/Eqn_test.Rmd` describes all this, to be made a vignette
 - added a vignette, `inv-3d` illustrating linear transformations and matrix inverse in 3D using `rgl`
