@@ -15,6 +15,14 @@
 \alias{Ncol}
 \alias{Ncol.symbolicMatrix}
 \alias{print.symbolicMatrix}
+\alias{+.symbolicMatrix}
+\alias{-.symbolicMatrix}
+\alias{\%*\%.symbolicMatrix}
+\alias{*.symbolicMatrix}
+\alias{t.symbolicMatrix}
+\alias{determinant.symbolicMatrix}
+\alias{solve.symbolicMatrix}
+\alias{as.double.symbolicMatrix}
 \title{Create a Symbolic Matrix for LaTeX}
 \usage{
 symbolicMatrix(
@@ -62,6 +70,28 @@ Ncol(x, ...)
 \method{Ncol}{symbolicMatrix}(x, ...)
 
 \method{print}{symbolicMatrix}(x, onConsole = TRUE, ...)
+
+\method{+}{symbolicMatrix}(e1, e2)
+
+\method{-}{symbolicMatrix}(e1, e2)
+
+\method{\%*\%}{symbolicMatrix}(x, y)
+
+\method{*}{symbolicMatrix}(e1, e2)
+
+\method{t}{symbolicMatrix}(x)
+
+\method{determinant}{symbolicMatrix}(x, logarithm, ...)
+
+\method{solve}{symbolicMatrix}(
+  a,
+  b,
+  simplify = FALSE,
+  frac = c("\\\\dfrac", "\\\\frac", "\\\\tfrac", "\\\\cfrac"),
+  ...
+)
+
+\method{as.double}{symbolicMatrix}(x, locals = list(), ...)
 }
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
@@ -130,6 +160,30 @@ with the generated matrix on the right-hand side.}
 
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
+
+\item{e1}{a \code{"symbolicMatrix"} object (or, for \code{*} a scalar).}
+
+\item{e2}{a \code{"symbolicMatrix"} object (or, for \code{*} a scalar).}
+
+\item{y}{a \code{"symbolicMatrix"} object}
+
+\item{logarithm}{ignored; to match the \code{\link{determinant}} generic}
+
+\item{a}{a \code{"symbolicMatrix"} object representing a square matrix}
+
+\item{b}{ignored; to match the \code{\link{solve}} generic}
+
+\item{simplify}{if \code{TRUE} (the default is \code{FALSE}),
+return a LaTeX expression with the inverse of the determinant in
+front of the adjoint matrix rather than a \code{"symbolicMatrix"} object in which each
+element of the adjoint matrix is divided by the determinant.}
+
+\item{frac}{LaTeX command to use in forming fractions; the default
+is \code{"\\dfrac"}}
+
+\item{locals}{an optional list of variables to be given
+specific numeric values; e.g., 
+\code{locals = list(a = 1, b = 5, c = -1, d = 4)}}
 }
 \value{
 \code{symbolicMatrix()} returns an object of class \code{"symbolicMatrix"}
@@ -208,16 +262,18 @@ You can actually supply a numeric matrix as the \code{symbol}, but the result wi
 unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
 \code{\link{matrix2latex}}.
 
-% This function is \bold{experimental}. Other features may be added.  E.g., it would be nice to:
-
-%\itemize{
-% \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
-% \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
-%}
-
 The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
-components of the resturned object.
+components of the returned object.
+
+There are \code{"symbolicMatrix"} methods for several standard R arithmetic
+operators and function, including \code{+} (matrix addition), \code{-} 
+(matrix subtraction), \code{*} (product of a scalar and a matrix),
+\code{\%*\%} (matrix product), \code{t()} (transpose), \code{determinant()}, 
+\code{solve()} (matrix inverse),  and 
+\code{as.double()} (coercion to numeric, if possible).
+These operators and functions only apply to \code{"symbolicMatrix"} objects
+of definite (i.e., numeric) dimensions.
 }
 \examples{
 symbolicMatrix()
@@ -292,6 +348,28 @@ symbolicMatrix(m, fractions=TRUE)
 
 # zero-based indexing
 symbolicMatrix(zero.based=c(TRUE, TRUE))
+
+A <- symbolicMatrix(symbol="a", nrow=2, ncol=2)
+B <- symbolicMatrix(symbol="b", nrow=2, ncol=2)
+A
+B
+A + B
+A - B
+"a" * A
+C <- symbolicMatrix(symbol="c", nrow=2, ncol=3)
+A \%*\% C
+t(C)
+determinant(A)
+cat(solve(A, simplify=TRUE))
+D <- symbolicMatrix(matrix(letters[1:4], 2, 2))
+D
+as.numeric(D, locals=list(a=1, b=2, c=3, d=4))
+X <- symbolicMatrix(matrix(c(3, 2, 0, 1, 1, 1, 2,-2, 1), 3, 3))
+X
+as.numeric(X)
+MASS::fractions(as.numeric(solve(X)))
+(d <- determinant(X))
+eval(parse(text=(gsub("\\\\\\\\cdot", "*", d))))
 }
 \seealso{
 \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}

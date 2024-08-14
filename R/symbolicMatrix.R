@@ -67,16 +67,18 @@
 #' unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
 #' \code{\link{matrix2latex}}.
 #'
-#' % This function is \bold{experimental}. Other features may be added.  E.g., it would be nice to:
-#'
-#' %\itemize{
-#' % \item Specify exponents for the \bold{matrix elements}, e.g, a diagonal matrix of square roots of eigenvalues,
-#' % \code{\\lambda_i^{1/2}} giving \eqn{\lambda_i^{1/2}}
-#' %}
-#'
 #' The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 #' \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
-#' components of the resturned object.
+#' components of the returned object.
+#' 
+#' There are \code{"symbolicMatrix"} methods for several standard R arithmetic
+#' operators and function, including \code{+} (matrix addition), \code{-} 
+#' (matrix subtraction), \code{*} (product of a scalar and a matrix),
+#' \code{\%*\%} (matrix product), \code{t()} (transpose), \code{determinant()}, 
+#' \code{solve()} (matrix inverse),  and 
+#' \code{as.double()} (coercion to numeric, if possible).
+#' These operators and functions only apply to \code{"symbolicMatrix"} objects
+#' of definite (i.e., numeric) dimensions.
 #'
 #' @param symbol name for matrix elements, character string. For LaTeX symbols,
 #'        the backslash must be doubled because it is an escape character in R.
@@ -213,6 +215,28 @@
 #'
 #' # zero-based indexing
 #' symbolicMatrix(zero.based=c(TRUE, TRUE))
+#' 
+#' A <- symbolicMatrix(symbol="a", nrow=2, ncol=2)
+#' B <- symbolicMatrix(symbol="b", nrow=2, ncol=2)
+#' A
+#' B
+#' A + B
+#' A - B
+#' "a" * A
+#' C <- symbolicMatrix(symbol="c", nrow=2, ncol=3)
+#' A %*% C
+#' t(C)
+#' determinant(A)
+#' cat(solve(A, simplify=TRUE))
+#' D <- symbolicMatrix(matrix(letters[1:4], 2, 2))
+#' D
+#' as.numeric(D, locals=list(a=1, b=2, c=3, d=4))
+#' X <- symbolicMatrix(matrix(c(3, 2, 0, 1, 1, 1, 2,-2, 1), 3, 3))
+#' X
+#' as.numeric(X)
+#' MASS::fractions(as.numeric(solve(X)))
+#' (d <- determinant(X))
+#' eval(parse(text=(gsub("\\\\cdot", "*", d))))
 
 
 symbolicMatrix <- function(
@@ -593,4 +617,314 @@ Ncol.symbolicMatrix <- function(x, ...){
 print.symbolicMatrix <- function(x, onConsole=TRUE,  ...){
   if (onConsole) cat(getLatex(x))
   invisible(x)
+}
+
+
+# methods for arithmetic operators and functions:
+
+#' @param e1 a \code{"symbolicMatrix"} object (or, for \code{*} a scalar).
+#' @param e2 a \code{"symbolicMatrix"} object (or, for \code{*} a scalar).
+
+#' @rdname symbolicMatrix
+#' @export
+`+.symbolicMatrix` <- function(e1, e2){
+  if (!inherits(e2, "symbolicMatrix")){
+    stop(deparse(substitute(e2)),
+         " is not of class 'symbolicMatrix'")
+  }
+  numericDimensions(e1)
+  numericDimensions(e2)
+  A <- getBody(e1)
+  B <- getBody(e2)
+  dimA <- dim(A)
+  dimB <- dim(B)
+  if(!all(dim(A) == dim(B))){
+    stop('matricies are not conformable for addition')
+  }
+  wrapper <- getWrapper(e1)
+  result <- matrix(paste(sapply(A, parenthesize), "+", 
+                         sapply(B, parenthesize)), 
+                   dimA[1L], dimA[2L])
+  result <- symbolicMatrix(result)
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$dim <- Dim(e1)
+  result$matrix <- matrix
+  result$wrapper <- wrapper
+  result
+}
+
+#' @rdname symbolicMatrix
+#' @export
+`-.symbolicMatrix` <- function(e1, e2){
+  # unary -
+  if (missing(e2)){
+    numericDimensions(e1)
+    A <- getBody(e1)
+    wrapper <- getWrapper(e1)
+    dimA <- Dim(e1)
+    result <- matrix(paste("-", sapply(A, parenthesize)), dimA[1L], dimA[2L])
+    result <- symbolicMatrix(result)
+    matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+    matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+    result$dim <- dimA
+    result$matrix <- matrix
+    result$wrapper <- wrapper
+    return(result)
+  }
+  if (!inherits(e2, "symbolicMatrix")){
+    stop(deparse(substitute(e2)),
+         " is not of class 'symbolicMatrix'")
+  }
+  numericDimensions(e1)
+  numericDimensions(e2)
+  A <- getBody(e1)
+  B <- getBody(e2)
+  dimA <- dim(A)
+  dimB <- dim(B)
+  if(!all(dim(A) == dim(B))){
+    stop('matricies are not conformable for subtraction')
+  }
+  wrapper <- getWrapper(e1)
+  result <- matrix(paste(sapply(A, parenthesize), "-", 
+                         sapply(B, parenthesize)), 
+                   dimA[1L], dimA[2L])
+  result <- symbolicMatrix(result)
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$dim <- Dim(e1)
+  result$matrix <- matrix
+  result$wrapper <- wrapper
+  result
+}
+
+#' @param y a \code{"symbolicMatrix"} object
+
+#' @rdname symbolicMatrix
+#' @export
+`%*%.symbolicMatrix` <- function(x, y){
+  if (!inherits(y, "symbolicMatrix")){
+    stop(deparse(substitute(y)),
+         " is not of class 'symbolicMatrix'")
+  }
+  numericDimensions(x)
+  numericDimensions(y)
+  X <- getBody(x)
+  Y <- getBody(y)
+  dimX <- dim(X)
+  dimY <- dim(Y)
+  if (dimX[2] != dimY[1]){
+    stop('matricies are not conformable for multiplication')
+  }
+  wrapper <- getWrapper(x)
+  
+  Z <- matrix("", nrow(X), ncol(Y))
+  for (i in 1:nrow(X)){
+    for (j in 1:ncol(Y)){
+      for (k in 1:ncol(X)){
+        Z[i, j] <- paste0(Z[i, j],
+                          if (k > 1) " + ",
+                          parenthesize(X[i, k]),
+                          " \\cdot ",
+                          parenthesize(Y[k, j]))
+      }
+    }
+  }
+  result <- symbolicMatrix(Z)
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$dim <- dim(Z)
+  result$matrix <- matrix
+  result$wrapper <- wrapper
+  result
+}
+
+#' @rdname symbolicMatrix
+#' @export
+`*.symbolicMatrix` <- function (e1, e2) {
+  if (inherits(e1, "symbolicMatrix") && inherits(e2, "symbolicMatrix")) 
+    stop("both arguments of * cannot be 'symbolicMatrix' objects")
+  swapped <- if (inherits(e1, "symbolicMatrix")) {
+    swap <- e1
+    e1 <- e2
+    e2 <- swap
+    TRUE
+  } else {
+    FALSE
+  }
+  if (!is.vector(e1) || length(e1) != 1) 
+    stop("one argument to * must be a scalar")
+  numericDimensions(e2)
+  A <- getBody(e2)
+  dimA <- dim(A)
+  wrapper <- getWrapper(e2)
+  result <- matrix(if (swapped) {
+    paste(sapply(A, parenthesize), "\\cdot", e1)
+  } else{
+    paste(e1, "\\cdot", sapply(A, parenthesize))
+  },
+  dimA[1L], dimA[2L])
+  result <- symbolicMatrix(result)
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$dim <- Dim(e2)
+  result$matrix <- matrix
+  result$wrapper <- wrapper
+  result
+}
+
+#' @rdname symbolicMatrix
+#' @export
+t.symbolicMatrix <- function(x){
+  numericDimensions(x)
+  result <- symbolicMatrix(t(getBody(x)))
+  wrapper <- getWrapper(x)
+  
+  matrix <- sub("begin\\{pmatrix\\}",
+                wrapper[1], getLatex(result))
+  result$matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$wrapper <- wrapper
+  result$dim <- rev(Dim(x))
+  result
+}
+
+#' @param logarithm ignored; to match the \code{\link{determinant}} generic
+
+#' @rdname symbolicMatrix
+#' @export
+determinant.symbolicMatrix <- function(x, logarithm, ...){
+  
+  # determinant by cofactors
+  
+  # helper function for recursion:
+  DET <- function(X){
+    if (nrow(X) == 1) {
+      as.vector(X)
+    } else if (nrow(X) == 2){
+      paste0(X[1, 1], " \\cdot ", X[2, 2], " - ",
+             X[1, 2], " \\cdot ", X[2, 1])
+    } else {
+      indices <- 1:ncol(X)
+      res <- ""
+      for (j in indices){
+        res <- paste0(res, if (isOdd(j)) " + " else " - ",
+                      X[1, j], " \\cdot ",
+                      parenthesize(DET(X[-1, indices != j]))
+        )
+      }
+      res
+    }
+  }
+  
+  numericDimensions(x)
+  
+  sub("^[ +]*", "", DET(getBody(x)))
+}
+
+#' @param a a \code{"symbolicMatrix"} object representing a square matrix
+#' @param b ignored; to match the \code{\link{solve}} generic
+#' @param simplify if \code{TRUE} (the default is \code{FALSE}),
+#'   return a LaTeX expression with the inverse of the determinant in
+#'   front of the adjoint matrix rather than a \code{"symbolicMatrix"} object in which each
+#'   element of the adjoint matrix is divided by the determinant.
+#' @param frac LaTeX command to use in forming fractions; the default
+#'   is \code{"\\dfrac"}
+
+#' @rdname symbolicMatrix
+#' @export
+solve.symbolicMatrix <- function (a, b, simplify=FALSE, 
+                                  frac=c("\\dfrac", "\\frac", "\\tfrac", "\\cfrac"), 
+                                  ...) {
+  
+  # symbolic matrix inverse by adjoint matrix and determinant
+  
+  frac <- match.arg(frac)
+  
+  numericDimensions(a)
+  if (Nrow(a) != Ncol(a)) stop("matrix 'a' must be square")
+  if (!missing(b)) warning("'b' argument to solve() ignored")
+  
+  wrapper <- getWrapper(a)
+  
+  det <- determinant(a)
+  A <- getBody(a)
+  n <- nrow(A)
+  indices <- 1:n
+  A_inv <- matrix("", n, n)
+  
+  for (i in 1:n){
+    for (j in 1:n){
+      A_ij <- symbolicMatrix(A[indices[-i], indices[-j], drop=FALSE])
+      A_inv[i, j] <- if (Nrow(A_ij) == 1) { # cofactors
+        A[indices[-i], indices[-j]]
+      } else{
+        determinant(A_ij)
+      }
+      if (isOdd(i + j)) A_inv[i, j] <- paste0("-", parenthesize(A_inv[i, j]))
+      if (!simplify) A_inv[i, j] <- paste0(frac, "{", A_inv[i, j], 
+                                           "}{", det, "}")
+    }
+  }
+  
+  A_inv <- t(A_inv) # adjoint
+  result <- symbolicMatrix(A_inv)
+  matrix <- sub("begin\\{pmatrix\\}",
+                wrapper[1], getLatex(result))
+  result$matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$wrapper <- wrapper
+  
+  if (!simplify) {
+    return(result)
+  } else {
+    return(paste0("\\frac{1}{", det, "} \n",
+                  getLatex(result)))
+  }
+}
+
+#' @param locals an optional list of variables to be given
+#'   specific numeric values; e.g., 
+#'   \code{locals = list(a = 1, b = 5, c = -1, d = 4)}
+
+#' @rdname symbolicMatrix
+#' @export
+as.double.symbolicMatrix <- function(x, locals=list(), ...){
+  
+  numericDimensions(x)
+  
+  X <- getBody(x)
+  nrow <- nrow(X)
+  X <- gsub("\\\\cdot", "\\*", X)
+  X <- gsub("\\}", ")", 
+            gsub("\\}\\{", ")/(", 
+                 gsub("\\\\[cdt]?frac\\{", "(", X)))
+  warn <- options(warn = 2)
+  on.exit(options(warn))
+  X <- try(sapply(X, function(x) eval(parse(text=x), envir=locals)),
+           silent=TRUE)
+  if (inherits(X, "try-error")){
+    stop("matrix cannot be coerced to 'double' ('numeric')")
+  }
+  
+  matrix(X, nrow=nrow)
+}
+
+# unexported functions:
+
+numericDimensions <- function(x){
+  dim <- Dim(x)
+  if (!is.numeric(dim)) stop ("'", deparse(substitute(x)),
+                              "' does not have numeric dimensions")
+  return(NULL)
+}
+
+parenthesize <- function(element){
+  if (grepl("[ +-/^]", element)) {
+    paste0("(", element, ")")
+  } else {
+    element
+  }
+}
+
+isOdd <- function(x){
+  1 == x %% 2
 }
