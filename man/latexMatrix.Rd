@@ -349,6 +349,7 @@ latexMatrix(m, fractions=TRUE)
 # zero-based indexing
 latexMatrix(zero.based=c(TRUE, TRUE))
 
+# arithmetic operators and functions
 A <- latexMatrix(symbol="a", nrow=2, ncol=2)
 B <- latexMatrix(symbol="b", nrow=2, ncol=2)
 A

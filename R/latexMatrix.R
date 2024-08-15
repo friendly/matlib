@@ -216,6 +216,7 @@
 #' # zero-based indexing
 #' latexMatrix(zero.based=c(TRUE, TRUE))
 #' 
+#' # arithmetic operators and functions
 #' A <- latexMatrix(symbol="a", nrow=2, ncol=2)
 #' B <- latexMatrix(symbol="b", nrow=2, ncol=2)
 #' A
@@ -801,8 +802,8 @@ determinant.latexMatrix <- function(x, logarithm, ...){
     if (nrow(X) == 1) {
       as.vector(X)
     } else if (nrow(X) == 2){
-      paste0(X[1, 1], " \\cdot ", X[2, 2], " - ",
-             X[1, 2], " \\cdot ", X[2, 1])
+      paste0(parenthesize(X[1, 1]), " \\cdot ", parenthesize(X[2, 2]), " - ",
+             parenthesize(X[1, 2]), " \\cdot ", parenthesize(X[2, 1]))
     } else {
       indices <- 1:ncol(X)
       res <- ""
