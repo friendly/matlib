@@ -89,7 +89,7 @@ matrix2latex <- function(x,
 
   if (print) {
       cat(ret)
-      return(invisible(NULL))
+      return(invisible(""))
   } else {
       return(ret)
   }
