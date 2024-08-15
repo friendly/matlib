@@ -33,7 +33,7 @@ For example,
 * `showEqn(A, b)` shows the matrix equations $A x = b$ in text or LaTeX form, while
 `plotEqn(A, b)` and `plotEqn3d(A, b)` plots those equations in 2D or 3D space.
 
-* `matrix2latex()` and `symbolicMatrix()` facilitate writing matrix equations in LaTeX
+* `matrix2latex()` and `latexMatrix()` facilitate writing matrix equations in LaTeX
 
 * `vectors()`, `vectors3d()` plot geometric vector diagrams in 2D or 3D, with other functions to draw
 angles and arcs.
@@ -122,7 +122,7 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions()`.
 
 8. **Matrix equations** 
   - `matrix2latex()`: Convert matrix to LaTeX equation
-  - `symbolicMatrix()`: Create a symbolic matrix for LaTeX
+  - `latexMatrix()`: Create a symbolic matrix for LaTeX
 
 ### Vignettes and presentations
 

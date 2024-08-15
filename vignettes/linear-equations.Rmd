@@ -28,10 +28,10 @@ knit_hooks$set(webgl = hook_webgl)
 library(matlib)   # use the package
 ```
 
-<!-- Test `symbolicMatrix()`: -->
+<!-- Test `latexMatrix()`: -->
 
 <!-- ```{r symbMat0, results='asis', echo=FALSE} -->
-<!-- symbolicMatrix("b", nrow = "m", ncol=1, lhs="A") -->
+<!-- latexMatrix("b", nrow = "m", ncol=1, lhs="A") -->
 <!-- ``` -->
 
 
@@ -45,10 +45,10 @@ where
 or, spelled out,
 
 <!-- ```{r symbMat, results='asis', echo=FALSE} -->
-<!-- symbolicMatrix("a", nrow = "m", ncol="n", matrix="bmatrix") -->
-<!-- symbolicMatrix("x", nrow = "n", ncol=1) -->
+<!-- latexMatrix("a", nrow = "m", ncol="n", matrix="bmatrix") -->
+<!-- latexMatrix("x", nrow = "n", ncol=1) -->
 <!-- cat("\\quad=\\quad") -->
-<!-- symbolicMatrix("b", nrow = "m", ncol=1) -->
+<!-- latexMatrix("b", nrow = "m", ncol=1) -->
 <!-- ``` -->
 
 $$

@@ -25,7 +25,7 @@
 printMatrix <- function(A, parent = TRUE, fractions = FALSE, latex = FALSE,
 						tol = sqrt(.Machine$double.eps)){
     .Deprecated("printMatrix",
-                msg="Function is deprecated. See symbolicMatrix() and Eqn() for more recent approaches")
+                msg="Function is deprecated. See latexMatrix() and Eqn() for more recent approaches")
 	if(parent){
 		envir <- as.environment(-1L)
 		if(!is.null(envir$fractions)) fractions <- envir$fractions
