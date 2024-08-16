@@ -122,7 +122,7 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions()`.
 
 8. **Matrix equations** 
   - `matrix2latex()`: Convert matrix to LaTeX equation
-  - `latexMatrix()`: Create a symbolic matrix for LaTeX
+  - `latexMatrix()`: Create and manipulate LaTeX repesentations of matrices
 
 ### Vignettes and presentations
 
