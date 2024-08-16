@@ -154,13 +154,12 @@ Note that the first equation can be referenced because it was labeled:  "As seen
 ### Systems of equations
 
 As another example, the chunk below shows a system of equations $\mathbf{A} \mathbf{x} = \mathbf{b}$
-written out using symbolic matrices. Note the use of `cat()` to insert arbitrary LaTeX into
-the stream
+written out using symbolic matrices. 
 
 ```{r eqn-Axb,symbMat, results='asis'}
 Eqn(latexMatrix("a", nrow = "m", ncol="n", matrix="bmatrix"),
     latexMatrix("x", nrow = "n", ncol=1),
-    cat("\\quad=\\quad"),
+    "\\quad=\\quad",
     latexMatrix("b", nrow = "m", ncol=1))
 ```
 
