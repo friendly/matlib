@@ -189,15 +189,23 @@ Note that in this example, there are three calls to `latexMatrix()`, wrapped ins
 
 ### Computing with `"latexMatrix"` objects
 
-Objects returned by `latexMatrix()` that have definite (i.e., numeric) dimensions--- for example, a 3-by-2 matrix as opposed to an "n"-by-"m" matrix---may be employed in a variety of standard symbolic and numeric matrix computations. These computations include the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), and `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse). With the exception of `determinant()`, which returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed, typeset, or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by `is.numeric()` or `is.double()`. We illustrate these computations in this section.
+Objects returned by `latexMatrix()` that have definite (i.e., numeric) dimensions--- for example, a 3-by-2 matrix as opposed to an "n"-by-"m" matrix---may be employed in a variety of standard symbolic and numeric matrix computations. These computations include the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), and `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse). 
 
-Consider, first, basic matrix arithmetic:
+With the exception of `determinant()`, which returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed, typeset, or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by `is.numeric()` or `is.double()`. We illustrate these computations in this section.
+
+Consider, first, basic matrix arithmetic. Define some matrices: `A` and `B` are numeric,
+but `C` and `D` are symbolic, with elements $c_{i,j}, d_{i,j}$
 
 ```{r matrix-arithmetic}
 (A <- latexMatrix(matrix(c(1, -3, 0, 1), 2, 2)))
 (B <- latexMatrix(matrix(c(5, 3, -1, 4), 2, 2)))
 (C <- latexMatrix(symbol="c", 2, 3))
 (D <- latexMatrix(symbol="d", 2, 3))
+```
+
+The usual arithmetic operations work for these `"latexMatrix"` objects, and return
+LaTeX representations of the result:
+```{r matrix-arithmetic2}
 A + B
 A - B
 -A
@@ -220,7 +228,8 @@ If the elements of a matrix are valid R variable names, then it is also possible
 as.numeric(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
 ```
 
-The transpose and matrix product are similarly straightforward:
+The transpose, `t()`, and matrix product, `%*%` of `"latexMatrix"` objects are similarly straightforward:
+
 ```{r transpose}
 D
 t(D)
@@ -238,6 +247,9 @@ determinant(A)
 M
 determinant(M)
 ```
+
+The determinant of a matrix is a single number. `determinant()` returns the expression that computes it in LaTeX notation, using `\\cdot` to represent $\cdot$ for multiplication.
+
 Typesetting the output from the last command produces
 ```{r determinant-displayed, results='asis', echo=FALSE}
 Eqn(determinant(M), number=FALSE)
