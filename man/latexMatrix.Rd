@@ -188,12 +188,13 @@ specific numeric values; e.g.,
 \value{
 \code{latexMatrix()} returns an object of class \code{"latexMatrix"}
          which contains the LaTeX representation of the matrix as a character string,
-         along with some other information. The slots
-         in the returned object are named \code{"matrix"} (the LaTeX representation of the
-         matrix); \code{"dim"} (\code{nrow} and \code{ncol}); \code{"body"} (a character
-         matrix of LaTeX expressions for the cells of the matrix);
-         \code{"wrapper"}(the beginning and ending lines for the
-         LaTeX matrix environment).
+         in the returned object are named:
+         \itemize{
+         \item \code{"matrix"} (the LaTeX representation of the matrix); 
+         \item \code{"dim"} (\code{nrow} and \code{ncol}); 
+         \item \code{"body"} (a character matrix of LaTeX expressions for the cells of the matrix);
+         \item \code{"wrapper"}(the beginning and ending lines for the LaTeX matrix environment).
+         }
 }
 \description{
 The \code{latexMatrix()} function constructs the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
@@ -267,11 +268,16 @@ The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 components of the returned object.
 
 There are \code{"latexMatrix"} methods for several standard R arithmetic
-operators and function, including \code{+} (matrix addition), \code{-} 
+operators and functions of matrices, including: 
+\itemize{
+\item \code{+} (matrix addition), \code{-} 
 (matrix subtraction), \code{*} (product of a scalar and a matrix),
-\code{\%*\%} (matrix product), \code{t()} (transpose), \code{determinant()}, 
-\code{solve()} (matrix inverse),  and 
-\code{as.double()} (coercion to numeric, if possible).
+\item \code{\%*\%} (matrix product), 
+\item \code{t()} (transpose), \code{determinant()}, 
+\item \code{solve()} (matrix inverse),  and 
+\item \code{as.double()} (coercion to numeric, if possible).
+}
+
 These operators and functions only apply to \code{"latexMatrix"} objects
 of definite (i.e., numeric) dimensions.
 }
