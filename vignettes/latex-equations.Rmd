@@ -165,7 +165,7 @@ Eqn(latexMatrix("a", nrow = "m", ncol="n", matrix="bmatrix"),
 ```
 
 
-## `aligned` environment
+### `aligned` environment
 
 You can also align separate equations relative to some symbol like an `=` sign to show separate
 steps of re-expression, using the option `Eqn(..., align=TRUE)`.
@@ -186,6 +186,36 @@ Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
 
 Note that in this example, there are three calls to `latexMatrix()`, wrapped inside `Eqn()`.
 `Eqn_newline()` emits a newline (`\\`) between equations.
+
+
+### Computing with `"latexMatrix"` objects
+
+Objects returned by `latexMatrix()` that have definite (i.e., numeric) dimensions--- for example, a 3-by-2 matrix as opposed to an "n"-by-"m" matrix---may be employed in a variety of standard symbolic and numeric matrix computations. These computations include the standard-R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), and `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse). With the exception of `determinant()`, which returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by `is.numeric()` or `is.double()`. We illustrate these computations in this section.
+
+Consider, first, basic matrix arithmetic:
+
+```{r matrix-arithmetic}
+(A <- latexMatrix(matrix(c(1, -3, 0, 1), 2, 2)))
+(B <- latexMatrix(matrix(c(5, 3, -1, 4), 2, 2)))
+(C <- latexMatrix(symbol="c", 2, 3))
+(D <- latexMatrix(symbol="d", 2, 3))
+A + B
+A - B
+-A
+2*A
+C + D
+"\\pi" * C
+```
+Some of these operations produce numeric results and so can be coerced to numeric matrices; for example:
+```{r coerce-to-numeric}
+as.numeric(A + B)
+```
+If the elements of a matrix are valid R variable names, then it is also possible to give these elements numeric values, as in
+```{r coerce-to-numeric-with-locals}
+(M <- latexMatrix(matrix(letters[1:9], 3, 3)))
+as.numeric(-2*M, locals=list(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
+```
+
 
 
 ## matrix2latex
