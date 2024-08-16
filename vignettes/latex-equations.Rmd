@@ -190,7 +190,7 @@ Note that in this example, there are three calls to `latexMatrix()`, wrapped ins
 
 ### Computing with `"latexMatrix"` objects
 
-Objects returned by `latexMatrix()` that have definite (i.e., numeric) dimensions--- for example, a 3-by-2 matrix as opposed to an "n"-by-"m" matrix---may be employed in a variety of standard symbolic and numeric matrix computations. These computations include the standard-R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), and `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse). With the exception of `determinant()`, which returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by `is.numeric()` or `is.double()`. We illustrate these computations in this section.
+Objects returned by `latexMatrix()` that have definite (i.e., numeric) dimensions--- for example, a 3-by-2 matrix as opposed to an "n"-by-"m" matrix---may be employed in a variety of standard symbolic and numeric matrix computations. These computations include the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), and `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse). With the exception of `determinant()`, which returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed, typeset, or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by `is.numeric()` or `is.double()`. We illustrate these computations in this section.
 
 Consider, first, basic matrix arithmetic:
 
@@ -206,6 +206,11 @@ A - B
 C + D
 "\\pi" * C
 ```
+Typesetting the last result produces
+```{r scalar-product-displayed, results='asis', echo=FALSE}
+Eqn("\\pi" * C, number=FALSE)
+```
+
 Some of these operations produce numeric results and so can be coerced to numeric matrices; for example:
 ```{r coerce-to-numeric}
 as.numeric(A + B)
@@ -216,6 +221,46 @@ If the elements of a matrix are valid R variable names, then it is also possible
 as.numeric(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
 ```
 
+The transpose and matrix product are similarly straightforward:
+```{r transpose}
+D
+t(D)
+M %*% t(D)
+```
+The matrix product in the previous example typesets as
+```{r matrix-product-displayed, results='asis', echo=FALSE}
+Eqn(M %*% t(D), number=FALSE)
+```
+
+The determinant is computed recursively by finding the cofactors of the first row of the matrix. The method is applicable to a matrix of any order, although beyond an order-3 matrix, the resulting expression gets very long. A couple of examples:
+```{r determinant}
+A
+determinant(A)
+M
+determinant(M)
+```
+Typesetting the output from the last command produces
+```{r determinant-displayed, results='asis', echo=FALSE}
+Eqn(determinant(M), number=FALSE)
+```
+
+The inverse of a square matrix is computed from its determinant and adjoint matrix; for example:
+```{r inverse}
+solve(A)
+```
+Specifying the argument `simplify = TRUE` to `solve()` puts the inverse determinant before the adjoint matrix and returns a latex expression rather than a `"latexMatrix"` object; for example:
+```{r simplify-inverse}
+solve(M, simplify=TRUE)
+```
+which typesets as
+```{r inverse-displayed, results='asis', echo=FALSE}
+Eqn(solve(M, simplify=TRUE), number=FALSE)
+```
+We can also supply values for the elements of the matrix to obtain a numeric inverse:
+```{r numeric-inverse}
+MASS::fractions(as.numeric(solve(M), locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6)))
+MASS::fractions(det(as.numeric(M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))))
+```
 
 
 ## matrix2latex
