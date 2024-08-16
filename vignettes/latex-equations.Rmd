@@ -213,7 +213,7 @@ as.numeric(A + B)
 If the elements of a matrix are valid R variable names, then it is also possible to give these elements numeric values, as in
 ```{r coerce-to-numeric-with-locals}
 (M <- latexMatrix(matrix(letters[1:9], 3, 3)))
-as.numeric(-2*M, locals=list(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
+as.numeric(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
 ```
 
 

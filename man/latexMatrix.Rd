@@ -181,9 +181,10 @@ element of the adjoint matrix is divided by the determinant.}
 \item{frac}{LaTeX command to use in forming fractions; the default
 is \code{"\\dfrac"}}
 
-\item{locals}{an optional list of variables to be given
+\item{locals}{an optional list or named numeric vector of variables to be given
 specific numeric values; e.g., 
-\code{locals = list(a = 1, b = 5, c = -1, d = 4)}}
+\code{locals = list(a = 1, b = 5, c = -1, d = 4)} or 
+\code{locals = c(a = 1, b = 5, c = -1, d = 4)}}
 }
 \value{
 \code{latexMatrix()} returns an object of class \code{"latexMatrix"}

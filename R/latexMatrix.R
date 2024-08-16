@@ -888,15 +888,19 @@ solve.latexMatrix <- function (a, b, simplify=FALSE,
   }
 }
 
-#' @param locals an optional list of variables to be given
+#' @param locals an optional list or named numeric vector of variables to be given
 #'   specific numeric values; e.g., 
-#'   \code{locals = list(a = 1, b = 5, c = -1, d = 4)}
+#'   \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or 
+#'   \code{locals = c(a = 1, b = 5, c = -1, d = 4)}
 
 #' @rdname latexMatrix
 #' @export
 as.double.latexMatrix <- function(x, locals=list(), ...){
   
   numericDimensions(x)
+  
+  if (!is.list(locals) && is.vector(locals) && is.numeric(locals)
+      && !is.null(names(locals))) locals <- as.list(locals)
   
   X <- getBody(x)
   nrow <- nrow(X)
