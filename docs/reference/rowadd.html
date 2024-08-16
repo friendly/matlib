@@ -22,16 +22,17 @@ corresponds to adding equals to equals."><meta property="og:image" content="http
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/3d-demo.html">Linear transformations and matrix inverse in 3D</a></li>
-    <li><a class="dropdown-item" href="../articles/data-beta.html">Vector Spaces of Least Squares and Linear Equations</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/data-beta.html">Vector Spaces of Least Squares and Linear Equations</a></li>
     <li><a class="dropdown-item" href="../articles/det-ex1.html">Properties of determinants</a></li>
     <li><a class="dropdown-item" href="../articles/det-ex2.html">Evaluation of determinants</a></li>
     <li><a class="dropdown-item" href="../articles/eigen-ex1.html">Eigenvalues and Eigenvectors: Properties</a></li>
     <li><a class="dropdown-item" href="../articles/eigen-ex2.html">Eigenvalues: Spectral Decomposition</a></li>
     <li><a class="dropdown-item" href="../articles/ginv.html">Generalized inverse</a></li>
     <li><a class="dropdown-item" href="../articles/gramreg.html">Gram-Schmidt Orthogonalization and Regression</a></li>
+    <li><a class="dropdown-item" href="../articles/inv-3d.html">Linear transformations and matrix inverse in 3D</a></li>
     <li><a class="dropdown-item" href="../articles/inv-ex1.html">Inverse of a matrix</a></li>
     <li><a class="dropdown-item" href="../articles/inv-ex2.html">Matrix inversion by elementary row operations</a></li>
+    <li><a class="dropdown-item" href="../articles/latex-equations.html">LaTeX Equations with latexMatrix, Eqn and matrix2latex</a></li>
     <li><a class="dropdown-item" href="../articles/linear-equations.html">Solving Linear Equations</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -134,6 +135,7 @@ to row echelon form and Gaussian elimination. These functions are used for demon
 <span class="r-in"><span><span class="fu"><a href="echelon.html">echelon</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">b</span>, verbose<span class="op">=</span><span class="cn">TRUE</span>, fractions<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Initial matrix:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   2    1   -1    8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  -3   -1    2  -11 </span>
@@ -142,24 +144,28 @@ to row echelon form and Gaussian elimination. These functions are used for demon
 <span class="r-out co"><span class="r-pr">#&gt;</span> row: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  exchange rows 1 and 2 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  -3   -1    2  -11 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   2    1   -1    8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  -2    1    2   -3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 1 by -1/3 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1  1/3 -2/3 11/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    2    1   -1    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   -2    1    2   -3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 1 by 2 and subtract from row 2 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1  1/3 -2/3 11/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0  1/3  1/3  2/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   -2    1    2   -3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 1 by 2 and add to row 3 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1  1/3 -2/3 11/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0  1/3  1/3  2/3</span>
@@ -168,24 +174,28 @@ to row echelon form and Gaussian elimination. These functions are used for demon
 <span class="r-out co"><span class="r-pr">#&gt;</span> row: 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  exchange rows 2 and 3 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1  1/3 -2/3 11/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0  5/3  2/3 13/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0  1/3  1/3  2/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 2 by 3/5 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1  1/3 -2/3 11/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1  2/5 13/5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0  1/3  1/3  2/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 2 by 1/3 and subtract from row 1 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    0 -4/5 14/5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1  2/5 13/5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0  1/3  1/3  2/3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 2 by 1/3 and subtract from row 3 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    0 -4/5 14/5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1  2/5 13/5</span>
@@ -194,18 +204,21 @@ to row echelon form and Gaussian elimination. These functions are used for demon
 <span class="r-out co"><span class="r-pr">#&gt;</span> row: 3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 3 by 5 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    0 -4/5 14/5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1  2/5 13/5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0    0    1   -1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 3 by 4/5 and add to row 1 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    0    0    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1  2/5 13/5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0    0    1   -1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  multiply row 3 by 2/5 and subtract from row 2 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Function is deprecated. See latexMatrix() and Eqn() for more recent approaches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1    0    0    2  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0    1    0    3  </span>
