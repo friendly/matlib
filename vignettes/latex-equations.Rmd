@@ -1,6 +1,6 @@
 ---
 title: "LaTeX Equations with latexMatrix, Eqn and matrix2latex"
-author: Phil Chalmers, Michael Friendly
+author: Phil Chalmers, John Fox, Michael Friendly
 date: "`r Sys.Date()`"
 output: 
   bookdown::html_document2:

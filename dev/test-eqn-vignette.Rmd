@@ -42,7 +42,7 @@ The equation \@ref(eq:binom) ...
 `Eqn()` now detects that an HTML document is being compiled and changes the labels to match. This means that `\@ref(eq:binom)` should be used instead of the LaTeX `\ref{eq:binom}` way.
 
 ```{r results='asis'}
-symbolicMatrix(lhs = "\\mathbf{X}") |> Eqn(label="eq:X")
+latexMatrix(lhs = "\\mathbf{X}") |> Eqn(label="eq:X")
 ```
 
 Can I reference this as: See \@ref(eq:X)
