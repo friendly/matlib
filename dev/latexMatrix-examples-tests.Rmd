@@ -1,0 +1,279 @@
+---
+title: "latexMatrix-examples-tests"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r tex, results='asis'}
+library(matlib)
+library(testthat)
+formals(Eqn)$number <- FALSE
+
+latexMatrix()  |> Eqn()
+latexMatrix(prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix("\\beta")  |> Eqn()
+latexMatrix("\\beta", prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(nrow="n", ncol="n")  |> Eqn()
+latexMatrix(nrow="n", ncol="n", prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(ncol=3)  |> Eqn()
+latexMatrix(ncol=3, prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(nrow=4)  |> Eqn()
+latexMatrix(nrow=4, prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(nrow=4, ncol=4)  |> Eqn()
+latexMatrix(nrow=4, ncol=4,  prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(nrow=1)  |> Eqn()
+latexMatrix(nrow=1, prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(ncol=1)  |> Eqn()
+latexMatrix(ncol=1,  prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(nrow=1, ncol=4)  |> Eqn()
+latexMatrix(nrow=1, ncol=4, prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(nrow=3, ncol=1)  |> Eqn()
+latexMatrix(nrow=3, ncol=1, prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(nrow=3, ncol=3, diag=TRUE)  |> Eqn()
+latexMatrix(nrow=3, ncol=3, diag=TRUE, prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix(nrow="n", ncol="n", diag=TRUE)  |> Eqn()
+latexMatrix(nrow="n", ncol="n", diag=TRUE, prefix="\\sqrt{", suffix="}")  |> Eqn()
+
+latexMatrix(comma="TRUE")  |> Eqn()
+latexMatrix(comma="TRUE", prefix="\\sqrt{", suffix="}")  |> Eqn()
+latexMatrix("\\beta", comma=TRUE)  |> Eqn()
+latexMatrix(nrow="n", ncol="n", comma=TRUE)  |> Eqn()
+latexMatrix(ncol=3, comma=TRUE)  |> Eqn()
+latexMatrix(nrow=4, comma=TRUE)  |> Eqn()
+latexMatrix(nrow=4, ncol=4, comma=TRUE)  |> Eqn()
+latexMatrix("\\beta", nrow="k", ncol="k", comma=TRUE, exponent="-1")  |> Eqn()
+latexMatrix("\\beta", comma=TRUE, transpose=TRUE)  |> Eqn()
+latexMatrix("\\beta", nrow="k", ncol="k", comma=TRUE, exponent="-1", transpose=TRUE)  |> Eqn()
+latexMatrix(nrow=1, comma=TRUE)  |> Eqn()
+latexMatrix(ncol=1, comma=TRUE)  |> Eqn()
+latexMatrix(nrow=1, ncol=4, comma=TRUE)  |> Eqn()
+latexMatrix(nrow=3, ncol=1, comma=TRUE)  |> Eqn()
+latexMatrix(nrow=3, ncol=3, diag=TRUE, comma=TRUE)  |> Eqn()
+latexMatrix(nrow="n", ncol="n", diag=TRUE, comma=TRUE)  |> Eqn()
+latexMatrix(nrow=3.1, ncol=3)  |> expect_error()  # error (expected)
+
+latexMatrix("\\lambda", nrow="n", ncol="n", diag=TRUE, lhs="\\boldsymbol{\\Lambda}")  |> Eqn()
+
+X <- latexMatrix("x", "n", "p")
+U <- latexMatrix("u", "n", "k")
+D <- latexMatrix("\\lambda", "k", "k", diag=TRUE)
+V <- latexMatrix("v", "k", "p", transpose = TRUE)
+Eqn("SVD:\n", getLatex(X), "=\n", getLatex(U),
+    "\n", getLatex(D), "\n", getLatex(V))
+
+m <- matrix(c(
+  "\\alpha", "\\beta",
+  "\\gamma", "\\delta",
+  "\\epsilon", "\\pi",
+  0 , 0), 4, 2, byrow=TRUE)
+latexMatrix(m) |> Eqn()
+latexMatrix(m, transpose=TRUE) |> Eqn()
+latexMatrix(m, exponent="-1") |> Eqn()
+latexMatrix(m, transpose=TRUE, exponent="-1") |> Eqn()
+
+latexMatrix(m, prefix="\\sqrt{", suffix="}") |> Eqn()
+latexMatrix(m, prefix="{", suffix="}^{1/2}") |> Eqn()
+
+
+latexMatrix(diag(4)) |> Eqn()
+
+latexMatrix() |> Eqn()
+latexMatrix(prefix="\\sqrt{", suffix="}") |> Eqn()
+latexMatrix(prefix="{", suffix="^{1/2}}") |> Eqn()    ## fixed, cf latexMatrix-examples-tests.R
+
+latexMatrix(nrow=4) |> Eqn()
+latexMatrix(nrow=4, prefix="\\sqrt{", suffix="}") |> Eqn()
+latexMatrix(prefix="{", suffix="^{1/2}}") |> Eqn()
+
+latexMatrix(1:4) |> expect_error() # error (expected)
+latexMatrix(LETTERS[1:4]) |> expect_error() # error (expected)
+
+latexMatrix(show.size=TRUE) |> Eqn()
+latexMatrix(nrow=3, show.size=TRUE) |> Eqn()
+latexMatrix(ncol=3, show.size=TRUE) |> Eqn()
+latexMatrix(nrow=3, ncol=3, show.size=TRUE) |> Eqn()
+latexMatrix(show.size=TRUE, transpose=TRUE) |> Eqn()
+latexMatrix(show.size=TRUE, transpose=TRUE, exponent="-1") |> Eqn()
+
+m <- matrix(3/(1:9), 3, 3)
+latexMatrix(m) |> Eqn()
+latexMatrix(m, digits=2) |> Eqn()
+latexMatrix(m, fractions=TRUE) |> Eqn()
+m[1, 1] <- - m[1, 1]
+m[2, 2] <- - m[2, 2]
+m[3, 3] <- - m[3, 3]
+latexMatrix(m, fractions=TRUE) |> Eqn()
+
+latexMatrix(zero.based=c(TRUE, TRUE)) |> Eqn()
+latexMatrix(nrow=3, ncol=4, zero.based=c(TRUE, TRUE)) |> expect_error()  # error (expected)
+latexMatrix(ncol=4, zero.based=c(TRUE, FALSE)) |> Eqn()
+latexMatrix(nrow=3, zero.based=c(FALSE, TRUE)) |> Eqn()
+latexMatrix(nrow="n", ncol="n", diag=TRUE, zero.based=c(TRUE, TRUE)) |> Eqn()
+
+latexMatrix(zero.based=c(TRUE, FALSE)) |> Eqn()
+latexMatrix(zero.based=c(FALSE, TRUE)) |> Eqn()
+
+latexMatrix(nrow=3, ncol="m", zero.based=c(FALSE, TRUE),
+               end.at=c("n-1", "m")) |> Eqn()
+
+latexMatrix("\\mathbf{B}", nrow="q", ncol="p",
+               zero.based=c(TRUE, FALSE),
+               end.at=c("n-1", "m")) |> Eqn()
+
+latexMatrix(zero.based=c(TRUE, TRUE), end.at=c("n - 1", "m - 1")) |> Eqn()
+latexMatrix(zero.based=c(TRUE, TRUE), end.at=c("n", "m")) |> Eqn()
+latexMatrix(zero.based=c(TRUE, TRUE), end.at=c("n - 1", "m")) |> Eqn()
+latexMatrix(zero.based=c(TRUE, TRUE), end.at=c("n", "m - 1")) |> Eqn()
+latexMatrix(zero.based=c(TRUE, FALSE), end.at=c("n - 1", "m - 1")) |> Eqn()
+
+latexMatrix(zero.based=c(TRUE, TRUE), end.at=c('n - 1', "m - 1"),
+               show.size=TRUE) |> Eqn()
+latexMatrix(zero.based=c(TRUE, TRUE), end.at=c("n", "m"),
+               show.size=TRUE) |> Eqn()
+latexMatrix(zero.based=c(TRUE, TRUE), end.at=c("n - 1", "m"),
+               show.size=TRUE) |> Eqn()
+latexMatrix(zero.based=c(TRUE, TRUE), end.at=c("n", "m-1"),
+               show.size=TRUE) |> Eqn()
+latexMatrix(zero.based=c(TRUE, FALSE), end.at=c("n - 1", "m - 1"),
+               show.size=TRUE) |> Eqn()
+
+matrix(c(1,3,0,1),2,2) |> latexMatrix(matrix="bmatrix") -> A
+matrix(c(5,3,1,4),2,2) |> latexMatrix(matrix="bmatrix") -> B
+C <- latexMatrix(nrow=2, ncol=2)
+D <- latexMatrix()
+A |> Eqn()
+B |> Eqn()
+C |> Eqn()
+D |> Eqn()
+Nrow(D)
+Ncol(D)
+Dim(D)
+getBody(A)
+getWrapper(A) |> Eqn()
+getLatex(A) |> Eqn()
+Dim(A)
+
+(A + B) |> Eqn()
+(A + C) |> Eqn()
+
+# extractors
+getBody(A + B)
+getWrapper(A + B) |> Eqn()
+getLatex(A + B) |> Eqn()
+
+getLatex(A + B)  |> Eqn()
+
+Eqn(getLatex(A), " +\\large\n", getLatex(B), "\\quad\\large=\\quad\n", getLatex(A + B))
+
+# or keeping the numeric version
+A <- matrix(c(1,3,0,1),2,2)
+getLatex(latexMatrix(A)) |> Eqn()
+B <- matrix(c(5,3,1,4),2,2)
+getLatex(latexMatrix(B)) |> Eqn()
+getLatex(latexMatrix(A + B)) |> Eqn()
+
+Eqn(A, " + ", B, " = ", A + B)
+expect_error(A + D) # error (expected, message could be better)
+# expect_error(Eqn(A, " + ", D, " = ", A + D)) # error (expected, message could be better)
+expect_error(A + "foo")
+# expect_error(Eqn(A, " + ", B, " = ", A + "foo"))
+
+Z <- latexMatrix(matrix(1:6, 3, 2))
+Z |> Eqn()
+t(Z) |> Eqn()
+
+M <- latexMatrix(matrix="bmatrix")
+M |> Eqn()
+t(M) |> expect_error()  # error (expected)
+Dim(M)
+
+X <- latexMatrix(matrix(letters[1:6], 2, 3))
+Y <- latexMatrix(matrix(LETTERS[1:6], 3, 2))
+X |> Eqn()
+Y |> Eqn()
+(X %*% Y) |> Eqn()
+
+W <- latexMatrix(matrix(letters[7:12], 2, 3))
+(X + W) |> Eqn()
+((X + W) %*% Y) |> Eqn()
+
+X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
+Y <- latexMatrix(matrix(10*(1:6), 3, 2), matrix="bmatrix")
+X |> Eqn()
+t(Y) |> Eqn()
+(X %*% Y) |> Eqn()
+
+# element-wise multiplication
+tY <- t(Y)
+expect_error(X * tY) # error (expected)
+
+a <- latexMatrix('a', nrow=1, ncol=1)
+expect_error(a * X) # error (expected)
+
+A <- latexMatrix(matrix(letters[1:4], 2, 2, byrow=TRUE))
+determinant(A) |> Eqn()
+
+B <- latexMatrix(matrix(letters[1:9], 3, 3, byrow=TRUE))
+determinant(B) |> Eqn()
+
+(C <- latexMatrix(matrix(1:9, nrow=3, ncol=3))) |> Eqn()
+(D <- latexMatrix(matrix(11:19, nrow=3, ncol=3))) |> Eqn()
+as.numeric(C)
+as.numeric(D)
+(E <- C + D) |> Eqn()
+as.numeric(E)
+(F <- C %*% D) |> Eqn()
+as.numeric(F)
+
+(G <- latexMatrix(matrix(letters[1:4], 2, 2))) |> Eqn()
+as.numeric(G) |> expect_error() # error (expected)
+as.numeric(G, locals=list(a=1, b=2, c=3, d=4))
+
+A <- latexMatrix(nrow=2, ncol=3)
+B <- latexMatrix(nrow=2, ncol=3)
+(A + B) |> Eqn()
+
+C <- latexMatrix()
+D <- latexMatrix()
+expect_error(C + D) # error (expected)
+A <- latexMatrix(matrix(letters[1:9], 3, 3, byrow=TRUE))
+A |> Eqn()
+solve(A) |> Eqn()
+Eqn(solve(A, simplify=TRUE))
+
+# check again Wolfram Alpha: www.wolframalpha.com
+# inverse of {{a, b, c}, {d, e, f}, {g, h, i}}
+
+B <- latexMatrix(matrix(letters[1:4], 2, 2, byrow=TRUE),
+                    matrix="bmatrix")   ## fixed, cf latexMatrix-examples-tests.R
+B |> Eqn()
+Eqn(solve(B))
+Eqn(solve(B, simplify=TRUE))
+# 
+# # example from <https://www.vedantu.com/maths/inverse-of-a-matrix-using-minors-cofactors-and-adjugate>
+X <- latexMatrix(matrix(c(3,2,0,1,1,1,2,-2,1), 3, 3))
+X |> Eqn()
+solve(X) |> Eqn()
+MASS::fractions(as.numeric(solve(X)))
+MASS::fractions(solve(as.numeric(X))) # check
+MASS::fractions(as.numeric(solve(A),
+                           locals=list(a=3, d=2, g=0,
+                                       b=1, e=1, h=1,
+                                       c=2, f=-2, i=1)))
+
+W <- latexMatrix(nrow=2, ncol=3, matrix="bmatrix")
+W |> Eqn()
+(1*W) |> Eqn()
+(W*"a") |> Eqn()
+expect_error(W*W) # error (expected)
+expect_error(letters*W) # error (expected)
+("a"*(W + W)) |> Eqn()
+(-(W + W)) |> Eqn()
+
+```
+
+
