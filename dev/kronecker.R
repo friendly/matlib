@@ -75,6 +75,6 @@ if (FALSE){
   
   `%X%` <- function(x, y) kronecker(x, y)
   
-  X %xx% Y
+  X %X% Y
   
 }
