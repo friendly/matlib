@@ -7,10 +7,13 @@ output:
     base_format: rmarkdown::html_vignette
     number_sections: false
     toc: true
+  pdf_document:
+    toc: true
+    keep_tex: true
 vignette: >
   %\VignetteIndexEntry{LaTeX Equations with latexMatrix, Eqn and matrix2latex}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r nomessages, echo = FALSE}
