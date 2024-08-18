@@ -7,10 +7,13 @@ output:
     base_format: rmarkdown::html_vignette
     number_sections: false
     toc: true
+  pdf_document:
+    toc: true
+    keep_tex: true
 vignette: >
   %\VignetteIndexEntry{LaTeX Equations with latexMatrix, Eqn and matrix2latex}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r nomessages, echo = FALSE}
@@ -190,7 +193,7 @@ Note that in this example, there are three calls to `latexMatrix()`, wrapped ins
 `Eqn_newline()` emits a newline (`\\`) between equations.
 
 
-### Computing with `"latexMatrix"` objects
+## Computing with `"latexMatrix"` objects
 
 Objects returned by `latexMatrix()` that have definite (i.e., numeric) dimensions--- for example, a 3-by-2 matrix as opposed to an "n"-by-"m" matrix---may be employed in a variety of standard symbolic and numeric matrix computations. These computations include the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), and `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse). 
 
