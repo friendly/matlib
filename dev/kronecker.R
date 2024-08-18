@@ -14,6 +14,8 @@ setMethod("kronecker",
             
             Z <- .kronecker(Xmat, Ymat, 
                             function(x, y) {
+                              x <- trimws(x)
+                              y <- trimws(y)
                               zeros <- as.character(x) == "0" | 
                                 as.character(y) == "0"
                               x <- sapply(x, parenthesize)
