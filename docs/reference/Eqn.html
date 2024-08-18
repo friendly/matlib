@@ -3,11 +3,17 @@
 used directly in .Rmd or .qmd documents to compile to equations.
 It wraps the equations in either a \begin{equation} ...\end{equation} or
 \begin{align} ...\end{align} environment.
-In a code chunk, use the chunk options results='asis', echo=FALSE."><meta property="og:description" content="This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
+In a code chunk, use the chunk options results='asis', echo=FALSE.
+Depending on the output type this function will provide the correct
+inline wrapper for MathJax or LaTeX equations. This provides more
+consistent referencing when switching between HTML and PDF outputs."><meta property="og:description" content="This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
 used directly in .Rmd or .qmd documents to compile to equations.
 It wraps the equations in either a \begin{equation} ...\end{equation} or
 \begin{align} ...\end{align} environment.
-In a code chunk, use the chunk options results='asis', echo=FALSE."><meta property="og:image" content="http://friendly.github.io/matlib/logo.png"></head><body>
+In a code chunk, use the chunk options results='asis', echo=FALSE.
+Depending on the output type this function will provide the correct
+inline wrapper for MathJax or LaTeX equations. This provides more
+consistent referencing when switching between HTML and PDF outputs."><meta property="og:image" content="http://friendly.github.io/matlib/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -61,20 +67,25 @@ used directly in <code>.Rmd</code> or <code>.qmd</code> documents to compile to 
 It wraps the equations in either a <code>\begin{equation} ...\end{equation}</code> or
 <code>\begin{align} ...\end{align}</code> environment.</p>
 <p>In a code chunk, use the chunk options <code>results='asis', echo=FALSE</code>.</p>
+<p>Depending on the output type this function will provide the correct
+inline wrapper for MathJax or LaTeX equations. This provides more
+consistent referencing when switching between HTML and PDF outputs.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Eqn</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
-<span>  number <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  number <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  align <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  html_output <span class="op">=</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/output_type.html" class="external-link">is_html_output</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  mat_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">Eqn_newline</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">Eqn_newline</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ref</span><span class="op">(</span><span class="va">label</span>, html_output <span class="op">=</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/output_type.html" class="external-link">is_html_output</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -94,35 +105,36 @@ It wraps the equations in either a <code>\begin{equation} ...\end{equation}</cod
 
 
 <dt id="arg-number">number<a class="anchor" aria-label="anchor" href="#arg-number"></a></dt>
-<dd><p>logical; include equation number? Default: <code>TRUE</code></p></dd>
+<dd><p>logical; include equation number? Default: <code>FALSE</code></p></dd>
 
 
 <dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>
-<dd><p>character vector specifying the LaTeX label to use (e.g., <code>eqn:myeqn</code>), which
-can be reference via <code>\ref{eqn:myeqn}</code>. For compiled documents, if an
-HTML output is detected (see <code>html_output</code>) then the equations will be labelled
-via <code>(\#eqn:myeqn)</code> and references via <code>\@ref(eq:binom)</code></p></dd>
+<dd><p>the equation label used within <code>Eqn</code> or
+defined explicitly in the document</p></dd>
 
 
 <dt id="arg-align">align<a class="anchor" aria-label="anchor" href="#arg-align"></a></dt>
-<dd><p>logical; use the <code>align</code> environment with explicit <code>&amp;</code>. Default: <code>FALSE</code></p></dd>
+<dd><p>logical; use the <code>align</code> environment with explicit <code>&amp;</code> representing alignment
+points. Default: <code>FALSE</code></p></dd>
 
 
 <dt id="arg-html-output">html_output<a class="anchor" aria-label="anchor" href="#arg-html-output"></a></dt>
-<dd><p>logical; use labels for HTML outputs instead of the LaTeX? Automatically
-changed for compiled documents that support <code>knitr</code></p></dd>
+<dd><p>logical; use references for HTML outputs instead
+of the LaTeX? Automatically changed for compiled documents
+that support <code>knitr</code></p></dd>
 
 
 <dt id="arg-mat-args">mat_args<a class="anchor" aria-label="anchor" href="#arg-mat-args"></a></dt>
 <dd><p>list of arguments to be passed to <code><a href="latexMatrix.html">latexMatrix</a></code> to change the
 properties of the <code>matrix</code> input objects. Note that these inputs are used globally, and apply to
 each <code>matrix</code> objects supplied. If further specificity is required create
-<code><a href="latexMatrix.html">latexMatrix</a></code> objects directly</p></dd>
+<code><a href="latexMatrix.html">latexMatrix</a></code> objects directly.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="latexMatrix.html">latexMatrix</a></code>, <code><a href="matrix2latex.html">matrix2latex</a></code></p></div>
+    <div class="dont-index"><p><code><a href="latexMatrix.html">latexMatrix</a></code>, <code><a href="matrix2latex.html">matrix2latex</a></code></p>
+<p><code>Eqn</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -135,56 +147,56 @@ each <code>matrix</code> objects supplied. If further specificity is required cr
 <span class="r-in"><span><span class="co"># character input</span></span></span>
 <span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e=mc^2'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> e=mc^2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Equation numbers &amp; labels</span></span></span>
-<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e=mc^2'</span>, number <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> e=mc^2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
-<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e=mc^2'</span>, label <span class="op">=</span> <span class="st">'eqn:einstein'</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Equation numbers &amp; labels</span></span></span>
+<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e=mc^2'</span>, number <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eqn:einstein}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> e=mc^2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
-<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">"X=U \\lambda V"</span>, label<span class="op">=</span><span class="st">'eqn:svd'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e=mc^2'</span>, label <span class="op">=</span> <span class="st">'eq:einstein'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eqn:svd}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eq:einstein}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e=mc^2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
+<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">"X=U \\lambda V"</span>, label<span class="op">=</span><span class="st">'eq:svd'</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eq:svd}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X=U \lambda V</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># html output (auto detected for documents)</span></span></span>
-<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e=mc^2'</span>, label <span class="op">=</span> <span class="st">'eqn:einstein'</span>, html_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e=mc^2'</span>, label <span class="op">=</span> <span class="st">'eq:einstein'</span>, html_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (\#eqn:einstein)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (\#eq:einstein)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> e=mc^2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple expressions</span></span></span>
 <span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">"e=mc^2"</span>,</span></span>
 <span class="r-in"><span>    <span class="fu">Eqn_newline</span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"X=U \\lambda V"</span>, label<span class="op">=</span><span class="st">'eqn:svd'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="st">"X=U \\lambda V"</span>, label<span class="op">=</span><span class="st">'eq:svd'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eqn:svd}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eq:svd}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> e=mc^2 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X=U \lambda V</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># expressions that use cat() within their calls</span></span></span>
 <span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="fu"><a href="latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"n"</span>, <span class="st">"k"</span>, lhs <span class="op">=</span> <span class="st">'SVD'</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    <span class="fu"><a href="latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"\\lambda"</span>, <span class="st">"k"</span>, <span class="st">"k"</span>, diag<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    <span class="fu"><a href="latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"v"</span>, <span class="st">"k"</span>, <span class="st">"p"</span>, transpose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    label<span class="op">=</span><span class="st">'eqn:svd'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    label<span class="op">=</span><span class="st">'eq:svd'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eqn:svd}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eq:svd}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SVD = </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   u_{11} &amp; u_{12} &amp; \cdots &amp; u_{1k} \\ </span>
@@ -202,7 +214,7 @@ each <code>matrix</code> objects supplied. If further specificity is required cr
 <span class="r-out co"><span class="r-pr">#&gt;</span>   \vdots &amp; \vdots &amp;        &amp; \vdots \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   v_{k1} &amp; v_{k2} &amp; \cdots &amp; v_{kp} \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}^\top</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># align equations using &amp; operator</span></span></span>
 <span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">"X &amp;= U \\lambda V"</span>,</span></span>
@@ -212,7 +224,7 @@ each <code>matrix</code> objects supplied. If further specificity is required cr
 <span class="r-in"><span>    <span class="fu"><a href="latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"v"</span>, <span class="st">"k"</span>, <span class="st">"p"</span>, transpose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    align<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{align}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{align*}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X &amp;= U \lambda V \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &amp; = </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
@@ -231,7 +243,7 @@ each <code>matrix</code> objects supplied. If further specificity is required cr
 <span class="r-out co"><span class="r-pr">#&gt;</span>   \vdots &amp; \vdots &amp;        &amp; \vdots \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   v_{k1} &amp; v_{k2} &amp; \cdots &amp; v_{kp} \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}^\top</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{align}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{align*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#  numeric/character matrix example</span></span></span>
 <span class="r-in"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span>,</span></span>
@@ -241,44 +253,59 @@ each <code>matrix</code> objects supplied. If further specificity is required cr
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>,<span class="va">b</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2 &amp;   1 &amp;  -1 &amp;   8 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -3 &amp;  -1 &amp;   2 &amp; -11 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -2 &amp;   1 &amp;   2 &amp;  -3 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>,<span class="st">'\\bigm|'</span>, <span class="va">b</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  &amp; 1  &amp; -1 &amp; \bigm| &amp; 8   \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -3 &amp; -1 &amp; 2  &amp; \bigm| &amp; -11 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -2 &amp; 1  &amp; 2  &amp; \bigm| &amp; -3  \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># change matrix brackets globally</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>,<span class="va">b</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span>mat_args<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>matrix<span class="op">=</span><span class="st">'bmatrix'</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{bmatrix} </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2 &amp;   1 &amp;  -1 &amp;   8 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -3 &amp;  -1 &amp;   2 &amp; -11 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -2 &amp;   1 &amp;   2 &amp;  -3 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{bmatrix}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># with showEqn()</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="showEqn.html">showEqn</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">b</span>, latex<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{array}{lllllll}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2 \cdot x_1 &amp;+&amp; 1 \cdot x_2 &amp;-&amp; 1 \cdot x_3  &amp;=&amp;    8 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -3 \cdot x_1 &amp;-&amp; 1 \cdot x_2 &amp;+&amp; 2 \cdot x_3  &amp;=&amp;  -11 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -2 \cdot x_1 &amp;+&amp; 1 \cdot x_2 &amp;+&amp; 2 \cdot x_3  &amp;=&amp;   -3 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{array}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># used inside of Eqn()</span></span></span>
+<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e = mc^2'</span>, label<span class="op">=</span><span class="st">'eq:einstein'</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \label{eq:einstein}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e = mc^2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># use within inline block via ```r ref()```</span></span></span>
+<span class="r-in"><span><span class="fu">ref</span><span class="op">(</span><span class="st">'eq:einstein'</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\ref{eq:einstein}"</span>
+<span class="r-in"><span><span class="fu">ref</span><span class="op">(</span><span class="st">'eq:einstein'</span>, html_output<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\@ref(eq:einstein)"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

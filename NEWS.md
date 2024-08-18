@@ -5,6 +5,8 @@
 - this is fleshed out with an `Eqn()` wrapper to work with other LaTeX-generating code in the package [PC]
 - a document, `dev/Eqn_test.Rmd` describes all this, to be made a vignette
 - added a vignette, `inv-3d` illustrating linear transformations and matrix inverse in 3D using `rgl`
+- `latexMatrix()` gets operators for matrix arithmetic (`+,-, %*%`) and operators (`t()`)
+- added vignette, `latex-equations.Rmd`
 
 # matlib 0.9.8
 
