@@ -47,6 +47,7 @@ setMethod("kronecker",
             matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
             matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
             result$matrix <- matrix
+            resutl$wrapper <- wrapper
             result
           }
 )
