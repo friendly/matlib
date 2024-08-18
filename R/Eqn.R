@@ -94,9 +94,11 @@ Eqn <- function(...,
   if(!number) wrap <- paste0(wrap, '*')
   cat(sprintf("\n\\begin{%s}\n", wrap))
   if(!is.null(label)){
-      if(html_output)
+      if(html_output){
+          if(substring(label, 1, 2) != 'eq')
+              stop('HTML outputs require labels to start with \"eq\"')
           cat(sprintf('(\\#%s)\n', label))
-      else cat(sprintf('\\label{%s}\n', label))
+      } else cat(sprintf('\\label{%s}\n', label))
   }
   dots <- list(...)
   for(i in 1L:length(dots)){
@@ -117,3 +119,34 @@ Eqn <- function(...,
 #' @rdname Eqn
 #' @export
 Eqn_newline <- function() ' \\\\ \n'
+
+#' Provide inline reference of equations
+#'
+#' Depending on the output type this function will provide the correct
+#' inline wrapper for MathJax or LaTeX equations. This provides more
+#' consistent referencing when switching between HTML and PDF outputs.
+#'
+#' @param label the equation label used within \code{\link{Eqn}} or
+#' @param label the equation label used within \code{\link{Eqn}} or
+#'   defined explicitly in the document
+#' @param html_output logical; use references for HTML outputs instead
+#'   of the LaTeX? Automatically changed for compiled documents
+#'   that support \code{knitr}
+#'
+#' @export
+#' @examples
+#'
+#' # used inside of Eqn()
+#' Eqn('e = mc^2', label='eq:einstein')
+#'
+#' # use within inline block via ```r ref()```
+#' ref('eq:einstein')
+#' ref('eq:einstein', html_output=TRUE)
+#'
+ref <- function(label,
+                html_output = knitr::is_html_output()){
+    ret <- if(html_output)
+        sprintf('\\@ref(%s) ', label)
+    else sprintf('\\ref{%s} ', label)
+    ret
+}

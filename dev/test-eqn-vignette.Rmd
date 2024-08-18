@@ -48,3 +48,11 @@ latexMatrix(lhs = "\\mathbf{X}") |> Eqn(label="eq:X")
 Can I reference this as: See \@ref(eq:X)
 
 
+
+# Inline reference via R `ref()`
+
+Much like using `\label{eqn:lab}` for \LaTeX\ and `\(#eq:lab)` for HTML, switching between `\ref{.}` and `\@ref(.)` is a little annoying. Instead, you can use `ref('eq:label')` to create the correct reference form regardless of the output type.
+
+For example, reference the previous equation `"eq:X"` via the `r` inline mode with `ref("eq:X")` gives `r ref("eq:X")`.
+
+
