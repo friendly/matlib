@@ -210,15 +210,27 @@ The usual arithmetic operations work for these `"latexMatrix"` objects, and retu
 LaTeX representations of the result:
 ```{r matrix-arithmetic2}
 A + B
+```
+
+Some other examples:
+```{r matrix-arithmetic3}
 A - B
 -A
 2*A
 C + D
 "\\pi" * C
 ```
+
 Typesetting the last result produces
 ```{r scalar-product-displayed, results='asis', echo=FALSE}
 Eqn("\\pi" * C, number=FALSE)
+```
+
+Using these tools, it is easy to typeset complete matrix equations, giving multiple
+arguments to `Eqn()`:
+
+```{r matrix-arith-equation, results='asis'}
+Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B)
 ```
 
 Some of these operations produce numeric results and so can be coerced to numeric matrices; for example:

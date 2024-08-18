@@ -164,7 +164,8 @@ getLatex(latexMatrix(B))
 getLatex(latexMatrix(A + B))
 
 
-Eqn(A, " + ", B, " = ", A + B)
+
+Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B)
 Eqn(A, " + ", D, " = ", A + D) # error (expected, message could be better)
 Eqn(A, " + ", B, " = ", A + "foo")
 
