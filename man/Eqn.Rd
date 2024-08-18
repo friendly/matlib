@@ -31,12 +31,13 @@ ref(label, html_output = knitr::is_html_output())
   their body should return an empty character vector to avoid printing the
   returned object}
 
-\item{number}{logical; include equation number? Default: \code{TRUE}}
+\item{number}{logical; include equation number? Default: \code{FALSE}}
 
 \item{label}{the equation label used within \code{\link{Eqn}} or
 defined explicitly in the document}
 
-\item{align}{logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}}
+\item{align}{logical; use the \code{align} environment with explicit \code{&} representing alignment
+points. Default: \code{FALSE}}
 
 \item{html_output}{logical; use references for HTML outputs instead
 of the LaTeX? Automatically changed for compiled documents
@@ -45,7 +46,7 @@ that support \code{knitr}}
 \item{mat_args}{list of arguments to be passed to \code{\link{latexMatrix}} to change the
 properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
 each \code{matrix} objects supplied. If further specificity is required create
-\code{\link{latexMatrix}} objects directly}
+\code{\link{latexMatrix}} objects directly.}
 }
 \description{
 This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
@@ -66,22 +67,22 @@ Eqn('e=mc^2')
 
 # Equation numbers & labels
 Eqn('e=mc^2', number = TRUE)
-Eqn('e=mc^2', label = 'eqn:einstein')
-Eqn("X=U \\\\lambda V", label='eqn:svd')
+Eqn('e=mc^2', label = 'eq:einstein')
+Eqn("X=U \\\\lambda V", label='eq:svd')
 
 # html output (auto detected for documents)
-Eqn('e=mc^2', label = 'eqn:einstein', html_output = TRUE)
+Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 
 # Multiple expressions
 Eqn("e=mc^2",
     Eqn_newline(),
-    "X=U \\\\lambda V", label='eqn:svd')
+    "X=U \\\\lambda V", label='eq:svd')
 
 # expressions that use cat() within their calls
 Eqn(latexMatrix("u", "n", "k", lhs = 'SVD'),
     latexMatrix("\\\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE),
-    label='eqn:svd')
+    label='eq:svd')
 
 # align equations using & operator
 Eqn("X &= U \\\\lambda V",

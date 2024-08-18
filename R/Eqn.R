@@ -19,18 +19,19 @@
 #'   Note that user defined functions that use \code{\link{cat}} within
 #'   their body should return an empty character vector to avoid printing the
 #'   returned object
-#' @param number logical; include equation number? Default: \code{TRUE}
-#' @param label character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn}), which
-#'   can be reference via \code{\\ref{eqn:myeqn}}. For compiled documents, if an
+#' @param number logical; include equation number? Default: \code{FALSE}
+#' @param label character vector specifying the LaTeX label to use (e.g., \code{eq:myeqn}), which
+#'   can be reference via \code{\\ref{eq:myeqn}}. For compiled documents, if an
 #'   HTML output is detected (see \code{html_output}) then the equations will be labelled
 #'   via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)}
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
 #'   changed for compiled documents that support \code{knitr}
-#' @param align logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}
+#' @param align logical; use the \code{align} environment with explicit \code{&} representing alignment
+#'   points. Default: \code{FALSE}
 #' @param mat_args list of arguments to be passed to \code{\link{latexMatrix}} to change the
 #'   properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
 #'   each \code{matrix} objects supplied. If further specificity is required create
-#'   \code{\link{latexMatrix}} objects directly
+#'   \code{\link{latexMatrix}} objects directly.
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @author Phil Chalmers
@@ -43,22 +44,22 @@
 #'
 #' # Equation numbers & labels
 #' Eqn('e=mc^2', number = TRUE)
-#' Eqn('e=mc^2', label = 'eqn:einstein')
-#' Eqn("X=U \\lambda V", label='eqn:svd')
+#' Eqn('e=mc^2', label = 'eq:einstein')
+#' Eqn("X=U \\lambda V", label='eq:svd')
 #'
 #' # html output (auto detected for documents)
-#' Eqn('e=mc^2', label = 'eqn:einstein', html_output = TRUE)
+#' Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 #'
 #' # Multiple expressions
 #' Eqn("e=mc^2",
 #'     Eqn_newline(),
-#'     "X=U \\lambda V", label='eqn:svd')
+#'     "X=U \\lambda V", label='eq:svd')
 #'
 #' # expressions that use cat() within their calls
 #' Eqn(latexMatrix("u", "n", "k", lhs = 'SVD'),
 #'     latexMatrix("\\lambda", "k", "k", diag=TRUE),
 #'     latexMatrix("v", "k", "p", transpose = TRUE),
-#'     label='eqn:svd')
+#'     label='eq:svd')
 #'
 #' # align equations using & operator
 #' Eqn("X &= U \\lambda V",
