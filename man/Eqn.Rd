@@ -3,6 +3,7 @@
 \name{Eqn}
 \alias{Eqn}
 \alias{Eqn_newline}
+\alias{ref}
 \title{Create a LaTeX Equation Wrapper}
 \usage{
 Eqn(
@@ -15,6 +16,8 @@ Eqn(
 )
 
 Eqn_newline()
+
+ref(label, html_output = knitr::is_html_output())
 }
 \arguments{
 \item{...}{comma separated expressions that are either a) a character vector,
@@ -30,15 +33,14 @@ Eqn_newline()
 
 \item{number}{logical; include equation number? Default: \code{TRUE}}
 
-\item{label}{character vector specifying the LaTeX label to use (e.g., \code{eqn:myeqn}), which
-can be reference via \code{\\ref{eqn:myeqn}}. For compiled documents, if an
-HTML output is detected (see \code{html_output}) then the equations will be labelled
-via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)}}
+\item{label}{the equation label used within \code{\link{Eqn}} or
+defined explicitly in the document}
 
 \item{align}{logical; use the \code{align} environment with explicit \code{&}. Default: \code{FALSE}}
 
-\item{html_output}{logical; use labels for HTML outputs instead of the LaTeX? Automatically
-changed for compiled documents that support \code{knitr}}
+\item{html_output}{logical; use references for HTML outputs instead
+of the LaTeX? Automatically changed for compiled documents
+that support \code{knitr}}
 
 \item{mat_args}{list of arguments to be passed to \code{\link{latexMatrix}} to change the
 properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
@@ -52,6 +54,10 @@ It wraps the equations in either a \code{\\begin{equation} ...\\end{equation}} o
 \code{\\begin{align} ...\\end{align}} environment.
 
 In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
+
+Depending on the output type this function will provide the correct
+inline wrapper for MathJax or LaTeX equations. This provides more
+consistent referencing when switching between HTML and PDF outputs.
 }
 \examples{
 
@@ -100,9 +106,19 @@ cbind(A,b) |> Eqn(mat_args=list(matrix='bmatrix'))
 # with showEqn()
 showEqn(A, b, latex=TRUE) |> Eqn()
 
+
+# used inside of Eqn()
+Eqn('e = mc^2', label='eq:einstein')
+
+# use within inline block via ```r ref()```
+ref('eq:einstein')
+ref('eq:einstein', html_output=TRUE)
+
 }
 \seealso{
 \code{\link{latexMatrix}}, \code{\link{matrix2latex}}
+
+\code{\link{Eqn}}
 }
 \author{
 Phil Chalmers

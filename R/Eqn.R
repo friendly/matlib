@@ -133,6 +133,7 @@ Eqn_newline <- function() ' \\\\ \n'
 #'   that support \code{knitr}
 #'
 #' @export
+#' @rdname Eqn
 #' @seealso \code{\link{Eqn}}
 #'
 #' @examples

@@ -128,7 +128,7 @@ The two calls to `Eqn()` are rendered as separate equations, center aligned.
 <!-- intersperses the code with the equation output for some reason.) -->
 
 ```{r eval=FALSE}
-Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eqn:svd')
+Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
 Eqn(latexMatrix("u", "n", "k", lhs = ''),
     latexMatrix("\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE))
@@ -137,18 +137,18 @@ Eqn(latexMatrix("u", "n", "k", lhs = ''),
 This produces the two numbered equations:
 
 ```{r eqn-svd,results='asis', echo=FALSE}
-Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eqn:svd')
+Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
 Eqn(latexMatrix("u", "n", "k", lhs = ''),
     latexMatrix("\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE))
 ```
 
-The matrix names in Equation (@\ref{eqn:svd}) are printed in a **boldface** math font, typically used for matrices
+The matrix names in Equation (```r ref("eq:svd")```) are printed in a **boldface** math font, typically used for matrices
 and vectors. Note that when using
 LaTeX code in R expressions each backslash (`\`) must be doubled (`\\`) in R because `\` is the
 escape character.
 
-Note that the first equation can be referenced because it was labeled:  "As seen in Equation (@\ref{eqn:svd}) \ldots ".
+Note that the first equation can be referenced because it was labeled:  "As seen in Equation (```r ref("eq:svd")```) \ldots ".
 (In Quarto, equation labels must be of the form `#eq-label` and equation references are of the form `@eq-label`)
 
 ### Systems of equations
