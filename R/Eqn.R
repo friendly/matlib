@@ -132,6 +132,8 @@ Eqn_newline <- function() ' \\\\ \n'
 #' @param html_output logical; use references for HTML outputs instead
 #'   of the LaTeX? Automatically changed for compiled documents
 #'   that support \code{knitr}
+#' @param parentheses logical; include parentheses around the reference equation?
+#'   Only changes the behaviour for LaTeX referencing
 #'
 #' @export
 #' @rdname Eqn
@@ -147,9 +149,13 @@ Eqn_newline <- function() ' \\\\ \n'
 #' ref('eq:einstein', html_output=TRUE)
 #'
 ref <- function(label,
-                html_output = knitr::is_html_output()){
-    ret <- if(html_output)
+                html_output = knitr::is_html_output(),
+                parentheses = TRUE){
+    ret <- if(html_output){
         sprintf('\\@ref(%s)', label)
-    else sprintf('\\ref{%s}', label)
+    } else {
+        if(parentheses) sprintf('(\\ref{%s})', label)
+        else sprintf('\\ref{%s}', label)
+     }
     ret
 }
