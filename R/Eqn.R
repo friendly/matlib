@@ -146,7 +146,7 @@ Eqn_newline <- function() ' \\\\ \n'
 ref <- function(label,
                 html_output = knitr::is_html_output()){
     ret <- if(html_output)
-        sprintf('\\@ref(%s) ', label)
-    else sprintf('\\ref{%s} ', label)
+        sprintf('\\@ref(%s)', label)
+    else sprintf('\\ref{%s}', label)
     ret
 }
