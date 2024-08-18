@@ -14,7 +14,10 @@ setMethod("kronecker",
             
             Z <- .kronecker(Xmat, Ymat, 
                             function(x, y) {
-                              zeros <- as.character(x) == "0" | as.character(y) == "0"
+                              zeros <- as.character(x) == "0" | 
+                                as.character(y) == "0"
+                              x <- sapply(x, parenthesize)
+                              y <- sapply(y, parenthesize)
                               res <- paste0(x, " \\cdot ", y)
                               res[zeros] <- "0"
                               res
@@ -36,6 +39,7 @@ if (FALSE){
   library(matlib)
   
   numericDimensions <- matlib:::numericDimensions
+  parenthesize <- matlib:::parenthesize
   
   X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
   Y <- latexMatrix(matrix(10*(1:6), 3, 2), matrix="bmatrix")
@@ -52,7 +56,8 @@ if (FALSE){
   kronecker(I3, X)
   kronecker(I3, X, sparse = TRUE)
   
-  I3 %x% X # doesn't work
+  I3 %x% X # doesn't work because of conflicting definitions of
+           #   kronecker() in base and methods packages
   a %x% I3 # doesn't work
   
   `%X%` <- function(x, y) kronecker(x, y)
