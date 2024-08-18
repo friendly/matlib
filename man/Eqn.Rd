@@ -8,7 +8,7 @@
 \usage{
 Eqn(
   ...,
-  number = TRUE,
+  number = FALSE,
   label = NULL,
   align = FALSE,
   html_output = knitr::is_html_output(),
@@ -65,7 +65,7 @@ consistent referencing when switching between HTML and PDF outputs.
 Eqn('e=mc^2')
 
 # Equation numbers & labels
-Eqn('e=mc^2', number = FALSE)
+Eqn('e=mc^2', number = TRUE)
 Eqn('e=mc^2', label = 'eqn:einstein')
 Eqn("X=U \\\\lambda V", label='eqn:svd')
 

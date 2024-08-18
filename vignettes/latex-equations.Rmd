@@ -143,12 +143,12 @@ Eqn(latexMatrix("u", "n", "k", lhs = ''),
     latexMatrix("v", "k", "p", transpose = TRUE))
 ```
 
-The matrix names in Equation (```r ref("eq:svd")```) are printed in a **boldface** math font, typically used for matrices
+The matrix names in Equation `r ref("eq:svd")` are printed in a **boldface** math font, typically used for matrices
 and vectors. Note that when using
 LaTeX code in R expressions each backslash (`\`) must be doubled (`\\`) in R because `\` is the
 escape character.
 
-Note that the first equation can be referenced because it was labeled:  "As seen in Equation (```r ref("eq:svd")```) \ldots ".
+Note that the first equation can be referenced because it was labeled:  "As seen in Equation `r ref("eq:svd")` \ldots ".
 (In Quarto, equation labels must be of the form `#eq-label` and equation references are of the form `@eq-label`)
 
 ### Systems of equations
