@@ -29,3 +29,6 @@ ref('eq:einstein')
 ref('eq:einstein', html_output=TRUE)
 
 }
+\seealso{
+\code{\link{Eqn}}
+}

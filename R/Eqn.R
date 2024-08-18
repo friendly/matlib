@@ -127,13 +127,14 @@ Eqn_newline <- function() ' \\\\ \n'
 #' consistent referencing when switching between HTML and PDF outputs.
 #'
 #' @param label the equation label used within \code{\link{Eqn}} or
-#' @param label the equation label used within \code{\link{Eqn}} or
 #'   defined explicitly in the document
 #' @param html_output logical; use references for HTML outputs instead
 #'   of the LaTeX? Automatically changed for compiled documents
 #'   that support \code{knitr}
 #'
 #' @export
+#' @seealso \code{\link{Eqn}}
+#'
 #' @examples
 #'
 #' # used inside of Eqn()
