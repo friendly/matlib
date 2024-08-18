@@ -8,53 +8,34 @@ setMethod("kronecker",
             numericDimensions(X)
             numericDimensions(Y)
             
-            dimX <- Dim(X)
             Xmat <- getBody(X)
             wrapper <- getWrapper(X)
-            lst.row <- vector('list', dimX[1])
-            dimY <- Dim(Y)
-            zero.Y <- matrix('0', nrow = dimY[1], ncol = dimY[2])
             Ymat <- getBody(Y)
-            zero.Y.ind <- Ymat == '0'
             
-            for (i in seq_len(dimX[1])) {
-              lst <- vector('list', dimX[2])
-              for (j in seq_len(dimX[2])) {
-                e <- latexMatrix(Xmat[i, j], nrow = 1, ncol = 1)
-                e.body <- getBody(e)[1, 1]
-                e.convert <- type.convert(e.body, as.is = TRUE)
-                lst[[j]] <- if (is.numeric(e.convert) &&
-                                isTRUE(all.equal(e.convert, 0))) {
-                  zero.Y
-                } else {
-                  out <- matrix(paste0(e.body, ' \\cdot ', Ymat),
-                                nrow = dimY[1],
-                                ncol = dimY[2])
-                  out[zero.Y.ind] <- '0'
-                  out
-                }
-              }
-              mats <- lapply(lst, function(x)
-                if (is(x, 'latexMatrix'))
-                  getBody(x)
-                else
-                  x)
-              lst.row[[i]] <- do.call(cbind, mats)
-            }
+            Z <- .kronecker(Xmat, Ymat, 
+                            function(x, y) {
+                              zeros <- as.character(x) == "0" | as.character(y) == "0"
+                              res <- paste0(x, " \\cdot ", y)
+                              res[zeros] <- "0"
+                              res
+                            }
+            )
             
-            Z <- do.call(rbind, lst.row)
             result <- latexMatrix(Z, ...)
             matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
             matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
             result$matrix <- matrix
-            resutl$wrapper <- wrapper
+            result$wrapper <- wrapper
             result
           }
 )
 
+
 if (FALSE){
   
   library(matlib)
+  
+  numericDimensions <- matlib:::numericDimensions
   
   X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
   Y <- latexMatrix(matrix(10*(1:6), 3, 2), matrix="bmatrix")
