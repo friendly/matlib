@@ -3,6 +3,7 @@
 \name{Eqn}
 \alias{Eqn}
 \alias{Eqn_newline}
+\alias{Eqn_hspace}
 \alias{ref}
 \title{Create a LaTeX Equation Wrapper}
 \usage{
@@ -15,6 +16,8 @@ Eqn(
 )
 
 Eqn_newline()
+
+Eqn_hspace(lhs, mid = "", rhs = NULL, times = 1)
 
 ref(label, html_output = knitr::is_html_output(), parentheses = TRUE)
 }
@@ -45,6 +48,18 @@ properties of the \code{matrix} input objects. Note that these inputs are used g
 each \code{matrix} objects supplied. If further specificity is required create
 \code{\link{latexMatrix}} objects directly.}
 
+\item{lhs}{spacing size. Can be a number between -1 and 6. -1 provides negative
+spaces and 0 gives no spacing. Input can also be a character vector, which will be
+passed to \code{\hspace{}} (e.g., \code{'1cm'})}
+
+\item{mid}{character vector to place in the middle of the space specification. Most
+commonly this will be operators like \code{'='}}
+
+\item{rhs}{see lhs for details. If left as \code{NULL} and \code{mid} is specified
+the this will be set to \code{rhs} to create symmetric spaces around \code{mid}}
+
+\item{times}{number of times to repeat the spacings}
+
 \item{parentheses}{logical; include parentheses around the reference equation?
 Only changes the behaviour for LaTeX referencing}
 }
@@ -56,6 +71,10 @@ It wraps the equations in either a \code{\\begin{equation} ...\\end{equation}} o
 inline referencing.
 
 In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
+
+Used to create (symmetric) equation spaces. Input to lhs/rhs can be a
+numeric to increase the size of the space or a
+character vector to be passed to \code{\hspace{}}.
 
 Depending on the output type this function will provide the correct
 inline wrapper for MathJax or LaTeX equations. This provides more
@@ -106,6 +125,16 @@ cbind(A,b) |> Eqn(mat_args=list(matrix='bmatrix'))
 
 # with showEqn()
 showEqn(A, b, latex=TRUE) |> Eqn()
+
+
+Eqn_hspace(3)
+Eqn_hspace(5)
+Eqn_hspace(5, times=2)
+Eqn_hspace('1cm')
+
+# symmetric spacing around mid
+Eqn_hspace(5, mid='=')
+Eqn_hspace(5, mid='=', times=2)
 
 
 # used inside of Eqn() or manually defined labels in the document

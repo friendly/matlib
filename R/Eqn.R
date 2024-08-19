@@ -123,6 +123,68 @@ Eqn <- function(...,
 #' @export
 Eqn_newline <- function() ' \\\\ \n'
 
+#' Add horizontal spaces to equations
+#'
+#' Used to create (symmetric) equation spaces. Input to lhs/rhs can be a
+#' numeric to increase the size of the space or a
+#' character vector to be passed to \code{\hspace{}}.
+#'
+#' @param lhs spacing size. Can be a number between -1 and 6. -1 provides negative
+#'   spaces and 0 gives no spacing. Input can also be a character vector, which will be
+#'   passed to \code{\hspace{}} (e.g., \code{'1cm'})
+#'
+#' @param mid character vector to place in the middle of the space specification. Most
+#'   commonly this will be operators like \code{'='}
+#'
+#' @param rhs see lhs for details. If left as \code{NULL} and \code{mid} is specified
+#'   the this will be set to \code{rhs} to create symmetric spaces around \code{mid}
+#'
+#' @param times number of times to repeat the spacings
+#'
+#' @rdname Eqn
+#' @export
+#'
+#' @examples
+#'
+#' Eqn_hspace(3)
+#' Eqn_hspace(5)
+#' Eqn_hspace(5, times=2)
+#' Eqn_hspace('1cm')
+#'
+#' # symmetric spacing around mid
+#' Eqn_hspace(5, mid='=')
+#' Eqn_hspace(5, mid='=', times=2)
+#'
+Eqn_hspace <- function(lhs, mid='', rhs=NULL, times=1){
+
+    spacer <- function(inp){
+        space <- if(is.numeric(inp)){
+            stopifnot(inp > 6 || inp < -1)
+            switch(as.character(inp),
+                   "-1"='\\!',
+                   "0"='',
+                   "1"='\\,',
+                   "2"='\\:',
+                   "3"='\\;',
+                   "4"='\\ ',
+                   "5"='\\quad',
+                   "6"='\\qquad')
+        } else sprintf('\\hspace{%s}', inp)
+        space
+    }
+
+    stopifnot(is.character(lhs) || is.numeric(lhs))
+    if(!is.null(rhs))
+        stopifnot(is.character(rhs) || is.numeric(rhs))
+    if(mid != "" && is.null(rhs))
+        rhs <- lhs
+    if(is.null(rhs)) rhs <- 0
+    space.lhs <- paste0(rep(spacer(lhs), times=times), collapse='')
+    space.rhs <- paste0(rep(spacer(rhs), times=times), collapse='')
+    cat(paste0(space.lhs, mid, space.rhs), collapse='')
+    invisible("")
+}
+
 #' Provide inline reference of equations
 #'
 #' Depending on the output type this function will provide the correct
