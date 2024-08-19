@@ -17,7 +17,7 @@ Eqn(
 
 Eqn_newline()
 
-Eqn_hspace(lhs, mid = "", rhs = NULL, times = 1)
+Eqn_hspace(lhs = 5, mid = "", rhs = NULL, times = 1)
 
 ref(label, html_output = knitr::is_html_output(), parentheses = TRUE)
 }
@@ -50,7 +50,8 @@ each \code{matrix} objects supplied. If further specificity is required create
 
 \item{lhs}{spacing size. Can be a number between -1 and 6. -1 provides negative
 spaces and 0 gives no spacing. Input can also be a character vector, which will be
-passed to \code{\hspace{}} (e.g., \code{'1cm'})}
+passed to \code{\\hspace{}} (e.g., \code{'1cm'}).
+Default is 5, resulting in a \code{\\quad} space}
 
 \item{mid}{character vector to place in the middle of the space specification. Most
 commonly this will be operators like \code{'='}}
@@ -74,7 +75,7 @@ In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 
 Used to create (symmetric) equation spaces. Input to lhs/rhs can be a
 numeric to increase the size of the space or a
-character vector to be passed to \code{\hspace{}}.
+character vector to be passed to \code{\\hspace{}}.
 
 Depending on the output type this function will provide the correct
 inline wrapper for MathJax or LaTeX equations. This provides more
@@ -127,14 +128,14 @@ cbind(A,b) |> Eqn(mat_args=list(matrix='bmatrix'))
 showEqn(A, b, latex=TRUE) |> Eqn()
 
 
-Eqn_hspace(3)
-Eqn_hspace(5)
-Eqn_hspace(5, times=2)
+Eqn_hspace()
+Eqn_hspace(3) # smaller
+Eqn_hspace(3, times=2)
 Eqn_hspace('1cm')
 
 # symmetric spacing around mid
-Eqn_hspace(5, mid='=')
-Eqn_hspace(5, mid='=', times=2)
+Eqn_hspace(mid='=')
+Eqn_hspace(mid='=', times=2)
 
 
 # used inside of Eqn() or manually defined labels in the document

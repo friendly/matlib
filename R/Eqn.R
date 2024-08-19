@@ -127,11 +127,12 @@ Eqn_newline <- function() ' \\\\ \n'
 #'
 #' Used to create (symmetric) equation spaces. Input to lhs/rhs can be a
 #' numeric to increase the size of the space or a
-#' character vector to be passed to \code{\hspace{}}.
+#' character vector to be passed to \code{\\hspace{}}.
 #'
 #' @param lhs spacing size. Can be a number between -1 and 6. -1 provides negative
 #'   spaces and 0 gives no spacing. Input can also be a character vector, which will be
-#'   passed to \code{\hspace{}} (e.g., \code{'1cm'})
+#'   passed to \code{\\hspace{}} (e.g., \code{'1cm'}).
+#'   Default is 5, resulting in a \code{\\quad} space
 #'
 #' @param mid character vector to place in the middle of the space specification. Most
 #'   commonly this will be operators like \code{'='}
@@ -146,20 +147,20 @@ Eqn_newline <- function() ' \\\\ \n'
 #'
 #' @examples
 #'
-#' Eqn_hspace(3)
-#' Eqn_hspace(5)
-#' Eqn_hspace(5, times=2)
+#' Eqn_hspace()
+#' Eqn_hspace(3) # smaller
+#' Eqn_hspace(3, times=2)
 #' Eqn_hspace('1cm')
 #'
 #' # symmetric spacing around mid
-#' Eqn_hspace(5, mid='=')
-#' Eqn_hspace(5, mid='=', times=2)
+#' Eqn_hspace(mid='=')
+#' Eqn_hspace(mid='=', times=2)
 #'
-Eqn_hspace <- function(lhs, mid='', rhs=NULL, times=1){
+Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
 
     spacer <- function(inp){
         space <- if(is.numeric(inp)){
-            stopifnot(inp > 6 || inp < -1)
+            stopifnot(inp <= 6 && inp >= -1)
             switch(as.character(inp),
                    "-1"='\\!',
                    "0"='',

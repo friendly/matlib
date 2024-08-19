@@ -163,9 +163,11 @@ written out using symbolic matrices.
 ```{r eqn-Axb,symbMat, results='asis'}
 Eqn(latexMatrix("a", nrow = "m", ncol="n", matrix="bmatrix"),
     latexMatrix("x", nrow = "n", ncol=1),
-    "\\quad=\\quad",
+    Eqn_hspace(mid='='),
     latexMatrix("b", nrow = "m", ncol=1))
 ```
+
+Extra symmetric white space is added via `Eqn_hspace()`, which can also be used for standard spacing such as `\quad` (default size), `\,`, `'1cm'` for `\hspace{}`, etc.
 
 
 ### `aligned` environment
