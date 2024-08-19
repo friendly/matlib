@@ -93,6 +93,11 @@ Eqn <- function(...,
 
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
+  if(html_output){
+      if(number && is.null(label))
+          stop('Numbered HTML equations require a label')
+      if(!number) label <- NULL
+  }
   cat(sprintf("\n\\begin{%s}\n", wrap))
   if(!is.null(label)){
       if(html_output){
