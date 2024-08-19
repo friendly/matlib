@@ -9,7 +9,6 @@ setMethod("kronecker",
             numericDimensions(Y)
             
             Xmat <- getBody(X)
-            wrapper <- getWrapper(X)
             Ymat <- getBody(Y)
             
             Z <- .kronecker(Xmat, Ymat, 
@@ -27,10 +26,7 @@ setMethod("kronecker",
             )
             
             result <- latexMatrix(Z, ...)
-            matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-            matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
-            result$matrix <- matrix
-            result$wrapper <- wrapper
+            result <- updateWrapper(result, getWrapper(X))
             result
           }
 )
@@ -42,6 +38,7 @@ if (FALSE){
   
   numericDimensions <- matlib:::numericDimensions
   parenthesize <- matlib:::parenthesize
+  updateWrapper <- matlib:::updateWrapper
   
   X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
   Y <- latexMatrix(matrix(10*(1:6), 3, 2), matrix="bmatrix")
