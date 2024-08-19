@@ -182,8 +182,7 @@ Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
     if(is.null(rhs)) rhs <- 0
     space.lhs <- paste0(rep(spacer(lhs), times=times), collapse='')
     space.rhs <- paste0(rep(spacer(rhs), times=times), collapse='')
-    cat(paste0(space.lhs, mid, space.rhs), collapse='')
-    invisible("")
+    paste0(c(space.lhs, mid, space.rhs), collapse='')
 }
 
 #' Provide inline reference of equations
