@@ -52,7 +52,8 @@ Only changes the behaviour for LaTeX referencing}
 This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
 used directly in \code{.Rmd} or \code{.qmd} documents to compile to equations.
 It wraps the equations in either a \code{\\begin{equation} ...\\end{equation}} or
-\code{\\begin{align} ...\\end{align}} environment.
+\code{\\begin{align} ...\\end{align}} environment. See also \code{\link{ref}} for
+inline referencing.
 
 In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 
@@ -69,7 +70,7 @@ Eqn('e=mc^2')
 Eqn('e=mc^2', label = 'eq:einstein')
 Eqn("X=U \\\\lambda V", label='eq:svd')
 
-# html output (auto detected for documents)
+# html output (auto detected in compiled documents)
 Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 
 # Multiple expressions
@@ -107,16 +108,17 @@ cbind(A,b) |> Eqn(mat_args=list(matrix='bmatrix'))
 showEqn(A, b, latex=TRUE) |> Eqn()
 
 
-# used inside of Eqn()
+# used inside of Eqn() or manually defined labels in the document
 Eqn('e = mc^2', label='eq:einstein')
 
-# use within inline block via ```r ref()```
+# use within inline block via `r ref()`
 ref('eq:einstein')
+ref('eq:einstein', parentheses=FALSE)
 ref('eq:einstein', html_output=TRUE)
 
 }
 \seealso{
-\code{\link{latexMatrix}}, \code{\link{matrix2latex}}
+\code{\link{latexMatrix}}, \code{\link{matrix2latex}}, \code{\link{ref}}
 
 \code{\link{Eqn}}
 }

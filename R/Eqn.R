@@ -5,7 +5,8 @@
 #' This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
 #' used directly in \code{.Rmd} or \code{.qmd} documents to compile to equations.
 #' It wraps the equations in either a \code{\\begin{equation} ...\\end{equation}} or
-#' \code{\\begin{align} ...\\end{align}} environment.
+#' \code{\\begin{align} ...\\end{align}} environment. See also \code{\link{ref}} for
+#' inline referencing.
 #'
 #' In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 #'
@@ -20,10 +21,12 @@
 #'   their body should return an empty character vector to avoid printing the
 #'   returned object
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eq:myeqn}), which
-#'   can be reference via \code{\\ref{eq:myeqn}}. Including this option will
-#'   also include an equation number automatically. For compiled documents, if an
-#'   HTML output is detected (see \code{html_output}) then the equations will be labelled
-#'   via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)}
+#'   can be reference via \code{\\ref{eq:myeqn}} or via the inline function
+#'   \code{\link{ref}}. Including a label will also include an equation number automatically.
+#'
+#'   For compiled documents if an HTML output is detected (see \code{html_output})
+#'   then the equations will be labelled  via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)},
+#'   or again via \code{\link{ref}}
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
 #'   changed for compiled documents that support \code{knitr}
 #' @param align logical; use the \code{align} environment with explicit \code{&} representing alignment
@@ -35,7 +38,7 @@
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @author Phil Chalmers
-#' @seealso \code{\link{latexMatrix}}, \code{\link{matrix2latex}}
+#' @seealso \code{\link{latexMatrix}}, \code{\link{matrix2latex}}, \code{\link{ref}}
 #' @export
 #' @examples
 #'
@@ -46,7 +49,7 @@
 #' Eqn('e=mc^2', label = 'eq:einstein')
 #' Eqn("X=U \\lambda V", label='eq:svd')
 #'
-#' # html output (auto detected for documents)
+#' # html output (auto detected in compiled documents)
 #' Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 #'
 #' # Multiple expressions
@@ -89,7 +92,7 @@ Eqn <- function(...,
                 html_output = knitr::is_html_output(),
                 mat_args = list()) {
 
-  number <- ifelse(is.null(label), TRUE, FALSE)
+  number <- !is.null(label)
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
   cat(sprintf("\n\\begin{%s}\n", wrap))
@@ -140,11 +143,12 @@ Eqn_newline <- function() ' \\\\ \n'
 #'
 #' @examples
 #'
-#' # used inside of Eqn()
+#' # used inside of Eqn() or manually defined labels in the document
 #' Eqn('e = mc^2', label='eq:einstein')
 #'
-#' # use within inline block via ```r ref()```
+#' # use within inline block via `r ref()`
 #' ref('eq:einstein')
+#' ref('eq:einstein', parentheses=FALSE)
 #' ref('eq:einstein', html_output=TRUE)
 #'
 ref <- function(label,
