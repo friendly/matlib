@@ -123,6 +123,13 @@ Eqn <- function(...,
 #' @export
 Eqn_newline <- function() ' \\\\ \n'
 
+#' Include literal string in equations
+#'
+#' @param text argument to be used within \code{\\text{}}
+#' @rdname Eqn
+#' @export
+Eqn_text <- function(text) sprintf("\\text{%s}", text)
+
 #' Add horizontal spaces to equations
 #'
 #' Used to create (symmetric) equation spaces. Input to lhs/rhs can be a

@@ -648,16 +648,12 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if(!all(dim(A) == dim(B))){
     stop('matricies are not conformable for addition')
   }
-  wrapper <- getWrapper(e1)
   result <- matrix(paste(sapply(A, parenthesize), "+", 
                          sapply(B, parenthesize)), 
                    dimA[1L], dimA[2L])
   result <- latexMatrix(result)
-  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result <- updateWrapper(result, getWrapper(e1))
   result$dim <- Dim(e1)
-  result$matrix <- matrix
-  result$wrapper <- wrapper
   result
 }
 
@@ -668,15 +664,11 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if (missing(e2)){
     numericDimensions(e1)
     A <- getBody(e1)
-    wrapper <- getWrapper(e1)
     dimA <- Dim(e1)
     result <- matrix(paste("-", sapply(A, parenthesize)), dimA[1L], dimA[2L])
     result <- latexMatrix(result)
-    matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-    matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+    result <- updateWrapper(result, getWrapper(e1))
     result$dim <- dimA
-    result$matrix <- matrix
-    result$wrapper <- wrapper
     return(result)
   }
   if (!inherits(e2, "latexMatrix")){
@@ -692,16 +684,12 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if(!all(dim(A) == dim(B))){
     stop('matricies are not conformable for subtraction')
   }
-  wrapper <- getWrapper(e1)
   result <- matrix(paste(sapply(A, parenthesize), "-", 
                          sapply(B, parenthesize)), 
                    dimA[1L], dimA[2L])
   result <- latexMatrix(result)
-  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result <- updateWrapper(result, getWrapper(e1))
   result$dim <- Dim(e1)
-  result$matrix <- matrix
-  result$wrapper <- wrapper
   result
 }
 
@@ -723,8 +711,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if (dimX[2] != dimY[1]){
     stop('matricies are not conformable for multiplication')
   }
-  wrapper <- getWrapper(x)
-  
+
   Z <- matrix("", nrow(X), ncol(Y))
   for (i in 1:nrow(X)){
     for (j in 1:ncol(Y)){
@@ -738,11 +725,8 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
     }
   }
   result <- latexMatrix(Z)
-  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result <- updateWrapper(result, getWrapper(x))
   result$dim <- dim(Z)
-  result$matrix <- matrix
-  result$wrapper <- wrapper
   result
 }
 
@@ -772,11 +756,8 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   },
   dimA[1L], dimA[2L])
   result <- latexMatrix(result)
-  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result <- updateWrapper(result, getWrapper(e2))
   result$dim <- Dim(e2)
-  result$matrix <- matrix
-  result$wrapper <- wrapper
   result
 }
 
@@ -785,12 +766,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
 t.latexMatrix <- function(x){
   numericDimensions(x)
   result <- latexMatrix(t(getBody(x)))
-  wrapper <- getWrapper(x)
-  
-  matrix <- sub("begin\\{pmatrix\\}",
-                wrapper[1], getLatex(result))
-  result$matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
-  result$wrapper <- wrapper
+  result <- updateWrapper(result, getWrapper(x))
   result$dim <- rev(Dim(x))
   result
 }
@@ -851,8 +827,6 @@ solve.latexMatrix <- function (a, b, simplify=FALSE,
   if (Nrow(a) != Ncol(a)) stop("matrix 'a' must be square")
   if (!missing(b)) warning("'b' argument to solve() ignored")
   
-  wrapper <- getWrapper(a)
-  
   det <- determinant(a)
   A <- getBody(a)
   n <- nrow(A)
@@ -875,10 +849,7 @@ solve.latexMatrix <- function (a, b, simplify=FALSE,
   
   A_inv <- t(A_inv) # adjoint
   result <- latexMatrix(A_inv)
-  matrix <- sub("begin\\{pmatrix\\}",
-                wrapper[1], getLatex(result))
-  result$matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
-  result$wrapper <- wrapper
+  result <- updateWrapper(result, getWrapper(a))
   
   if (!simplify) {
     return(result)
@@ -928,14 +899,35 @@ numericDimensions <- function(x){
   return(NULL)
 }
 
+# parenthesize <- function(element){
+#   if (grepl("[ +-/^]", element)) {
+#     paste0("(", element, ")")
+#   } else {
+#     element
+#   }
+# }
+
 parenthesize <- function(element){
-  if (grepl("[ +-/^]", element)) {
+  element <- if (grepl("[ +-/^]", element)) {
     paste0("(", element, ")")
   } else {
     element
   }
+  element <- gsub("\\([+[:space:]]*", "\\(", element)
+  element <- gsub("[[:space:]]*\\)", "\\)", element)
+  element <- gsub("[[:space:]]{2,}", " ", element)
+  element
 }
 
 isOdd <- function(x){
   1 == x %% 2
 }
+
+updateWrapper <- function(result, wrapper){
+  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
+  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  result$matrix <- matrix
+  result$wrapper <- wrapper
+  result
+}
+
