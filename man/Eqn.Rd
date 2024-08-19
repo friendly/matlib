@@ -3,6 +3,7 @@
 \name{Eqn}
 \alias{Eqn}
 \alias{Eqn_newline}
+\alias{Eqn_text}
 \alias{Eqn_hspace}
 \alias{ref}
 \title{Create a LaTeX Equation Wrapper}
@@ -16,6 +17,8 @@ Eqn(
 )
 
 Eqn_newline()
+
+Eqn_text(text)
 
 Eqn_hspace(lhs = 5, mid = "", rhs = NULL, times = 1)
 
@@ -47,6 +50,8 @@ that support \code{knitr}}
 properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
 each \code{matrix} objects supplied. If further specificity is required create
 \code{\link{latexMatrix}} objects directly.}
+
+\item{text}{argument to be used within \code{\\text{}}}
 
 \item{lhs}{spacing size. Can be a number between -1 and 6. -1 provides negative
 spaces and 0 gives no spacing. Input can also be a character vector, which will be
