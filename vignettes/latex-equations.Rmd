@@ -223,22 +223,23 @@ C + D
 "\\pi" * C
 ```
 
-Typesetting the last result produces
+Typesetting the last result produces:
 ```{r scalar-product-displayed, results='asis', echo=FALSE}
 Eqn("\\pi" * C)
-```
-
-Using these tools, it is easy to typeset complete matrix equations, giving multiple
-arguments to `Eqn()`:
-
-```{r matrix-arith-equation, results='asis'}
-Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B)
 ```
 
 Some of these operations produce numeric results and so can be coerced to numeric matrices; for example:
 ```{r coerce-to-numeric}
 as.numeric(A + B)
 ```
+
+Using these tools, it is easy to typeset complete matrix equations, giving multiple
+arguments to `Eqn()`:
+
+```{r matrix-arith-equation, results='asis'}
+Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B, " = ", as.numeric(A + B))
+```
+
 If the elements of a matrix are valid R variable names, then it is also possible to give these elements numeric values, as in
 ```{r coerce-to-numeric-with-locals}
 (M <- latexMatrix(matrix(letters[1:9], 3, 3)))
