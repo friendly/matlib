@@ -101,8 +101,7 @@ Some other examples:
 
 ```{r eqn2,results='asis'}
 latexMatrix(diag(3), lhs = "\\mathbf{I}_3", 
-               matrix="bmatrix") |> 
-  Eqn()
+               matrix="bmatrix") |> Eqn()
 ```
 
 * A row or column vector; the first argument to `latexMatrix()` must be a **matrix**, so wrap an R vector in `matrix()`, supplying `nrow=1` (or `ncol = 1`):
@@ -120,12 +119,12 @@ As a more complicated example,
 here we write out the LaTeX equation for the singular value decomposition (SVD) of a 
 general $n \times p$ matrix $\mathbf{X}$
 using `Eqn()` and `latexMatrix()`. In Rmd markup, `Eqn()` can be given an equation 
-label (using the `label` argument) and equations can be numbered (using `number=TRUE`).
+label (using the `label` argument), which will both label and number the equations.
 
 Two calls to `Eqn()` produce separate equations in the output.
 Both of these equations are numbered.
 (`Eqn()` uses the LaTeX `equation` environment, `\begin{equation} ... \end{equation}`,
-or `equation*` if the equation is not numbered (`number = FALSE`)).
+or `equation*` if the equation does not include a `label`).
 The two calls to `Eqn()` are rendered as separate equations, center aligned.
 
 <!-- (In this example, using `echo = TRUE` gives output that -->
@@ -135,7 +134,7 @@ The two calls to `Eqn()` are rendered as separate equations, center aligned.
 Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
 Eqn(latexMatrix("u", "n", "k", lhs = ''),
     latexMatrix("\\lambda", "k", "k", diag=TRUE),
-    latexMatrix("v", "k", "p", transpose = TRUE), number = TRUE)
+    latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
 ```
 
 This produces the two numbered equations:
@@ -144,7 +143,7 @@ This produces the two numbered equations:
 Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
 Eqn(latexMatrix("u", "n", "k", lhs = ''),
     latexMatrix("\\lambda", "k", "k", diag=TRUE),
-    latexMatrix("v", "k", "p", transpose = TRUE), number = TRUE)
+    latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
 ```
 
 The matrix names in Equation `r ref("eq:svd")` are printed in a **boldface** math font, typically used for matrices
@@ -153,7 +152,7 @@ LaTeX code in R expressions each backslash (`\`) must be doubled (`\\`) in R bec
 escape character.
 
 Note that the first equation can be referenced because it was labeled:  "As seen in Equation `r ref("eq:svd")` \ldots ". References to equations can entered in text using an inline call to
-`ref()`, e.g, `ref("eq:svd")`.
+`ref()`, e.g, `` `r knitr::inline_expr('ref("eq:svd")')` ``
 (In Quarto, equation labels must be of the form `#eq-label` and equation references are of the form `@eq-label`)
 
 ### Systems of equations
@@ -226,7 +225,7 @@ C + D
 
 Typesetting the last result produces
 ```{r scalar-product-displayed, results='asis', echo=FALSE}
-Eqn("\\pi" * C, number=FALSE)
+Eqn("\\pi" * C)
 ```
 
 Using these tools, it is easy to typeset complete matrix equations, giving multiple
@@ -255,7 +254,7 @@ M %*% t(D)
 ```
 The matrix product in the previous example typesets as
 ```{r matrix-product-displayed, results='asis', echo=FALSE}
-Eqn(M %*% t(D), number=FALSE)
+Eqn(M %*% t(D))
 ```
 
 The determinant is computed recursively by finding the cofactors of the first row of the matrix. The method is applicable to a matrix of any order, although beyond an order-3 matrix, the resulting expression gets very long. A couple of examples:
@@ -270,7 +269,7 @@ The determinant of a matrix is a single number. `determinant()` returns the expr
 
 Typesetting the output from the last command produces
 ```{r determinant-displayed, results='asis', echo=FALSE}
-Eqn(determinant(M), number=FALSE)
+Eqn(determinant(M))
 ```
 
 The inverse of a square matrix is computed from its determinant and adjoint matrix; for example:
@@ -283,7 +282,7 @@ solve(M, simplify=TRUE)
 ```
 which typesets as
 ```{r inverse-displayed, results='asis', echo=FALSE}
-Eqn(solve(M, simplify=TRUE), number=FALSE)
+Eqn(solve(M, simplify=TRUE))
 ```
 We can also supply values for the elements of the matrix to obtain a numeric inverse:
 ```{r numeric-inverse}
@@ -299,7 +298,7 @@ For numeric matrices, it can round the values or show results as fractions.
 
 ```{r results='asis'}
 A <- matrix(1:12, nrow=3, ncol=4, byrow = TRUE) / 6
-matrix2latex(A, fractions = TRUE, brackets = "b") |> Eqn(number = FALSE)
+matrix2latex(A, fractions = TRUE, brackets = "b") |> Eqn()
 ```
 
 
@@ -315,7 +314,7 @@ b <- paste0("\\beta_", 1:3) |> print()
 Then use `matrix2latex()` on `cbind(A,b)` and pipe the result of `matrix2latex()` to `Eqn()`:
 
 ```{r results='asis'}
-matrix2latex(cbind(A,b)) |> Eqn(number=FALSE)
+matrix2latex(cbind(A,b)) |> Eqn()
 ```
 
 All the R tricks for creating and modifying matrices can be used in this way.
@@ -360,6 +359,6 @@ Evaluating the above code in an unnumbered LaTeX math environment via `Eqn()` gi
 desired result:
 
 ```{r results='asis'}
-showEqn(A, b, vars = x, latex=TRUE) |> Eqn(number=FALSE)
+showEqn(A, b, vars = x, latex=TRUE) |> Eqn()
 ```
 
