@@ -108,19 +108,21 @@ latexMatrix(diag(3), lhs = "\\mathbf{I}_3",
 * A row or column vector; the first argument to `latexMatrix()` must be a **matrix**, so wrap an R vector in `matrix()`, supplying `nrow=1` (or `ncol = 1`):
 
 ```{r eqn3,results='asis'}
-latexMatrix(matrix(LETTERS[1:4], nrow=1)) |> Eqn()
+latexMatrix(matrix(LETTERS[1:4], nrow=1, matrix="Bmatrix")) |> Eqn()
 ```
 
 ```{r eqn4,results='asis'}
-latexMatrix(matrix(letters[1:3], ncol=1)) |> Eqn()
+latexMatrix(matrix(letters[1:3], ncol=1, matrix = "vmatrix")) |> Eqn()
 ```
+
+As the above examples illustrate, the matrix delimeters can be varied using the `matrix` argument.
 
 ### The SVD
 As a more complicated example,
-here we write out the LaTeX equation for the singular value decomposition (SVD) of a 
+here we write out the LaTeX equation for the [singular value decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) (SVD) of a 
 general $n \times p$ matrix $\mathbf{X}$
 using `Eqn()` and `latexMatrix()`. In Rmd markup, `Eqn()` can be given an equation 
-label (using the `label` argument), which will both label and number the equations.
+**label** (using the `label` argument), which will both label and number the equations.
 
 Two calls to `Eqn()` produce separate equations in the output.
 Both of these equations are numbered.
@@ -147,7 +149,8 @@ Eqn(latexMatrix("u", "n", "k", lhs = ''),
     latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
 ```
 
-The matrix names in Equation `r ref("eq:svd")` are printed in a **boldface** math font, typically used for matrices
+The matrix names in Equation `r ref("eq:svd")` are printed in a **boldface** math font
+(`\mathbf{}`), typically used for matrices
 and vectors. Note that when using
 LaTeX code in R expressions each backslash (`\`) must be doubled (`\\`) in R because `\` is the
 escape character.
@@ -256,10 +259,10 @@ If the elements of a matrix are valid R variable names, then it is also possible
 as.numeric(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
 ```
 
-### Transpose and matrix prodyucts
+### Transpose and matrix products
 
 The transpose, `t()`, and matrix product, `%*%` of `"latexMatrix"` objects are similarly straightforward. This directly transposes the matrix, as opposed to superscript notation,
-$\mathbf{D}^\top$ or $\mathbf{D}^\prime$.
+$\mathbf{D}^\top$ or $\mathbf{D}^\prime$ which is implicit.
 
 ```{r transpose}
 D
