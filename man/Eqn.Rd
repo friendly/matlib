@@ -8,7 +8,6 @@
 \usage{
 Eqn(
   ...,
-  number = FALSE,
   label = NULL,
   align = FALSE,
   html_output = knitr::is_html_output(),
@@ -17,7 +16,7 @@ Eqn(
 
 Eqn_newline()
 
-ref(label, html_output = knitr::is_html_output())
+ref(label, html_output = knitr::is_html_output(), parentheses = TRUE)
 }
 \arguments{
 \item{...}{comma separated expressions that are either a) a character vector,
@@ -30,8 +29,6 @@ ref(label, html_output = knitr::is_html_output())
   Note that user defined functions that use \code{\link{cat}} within
   their body should return an empty character vector to avoid printing the
   returned object}
-
-\item{number}{logical; include equation number? Default: \code{FALSE}}
 
 \item{label}{the equation label used within \code{\link{Eqn}} or
 defined explicitly in the document}
@@ -47,6 +44,9 @@ that support \code{knitr}}
 properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
 each \code{matrix} objects supplied. If further specificity is required create
 \code{\link{latexMatrix}} objects directly.}
+
+\item{parentheses}{logical; include parentheses around the reference equation?
+Only changes the behaviour for LaTeX referencing}
 }
 \description{
 This function is designed to produce LaTeX expressions that can be copied/pasted into documents or
@@ -66,7 +66,6 @@ consistent referencing when switching between HTML and PDF outputs.
 Eqn('e=mc^2')
 
 # Equation numbers & labels
-Eqn('e=mc^2', number = TRUE)
 Eqn('e=mc^2', label = 'eq:einstein')
 Eqn("X=U \\\\lambda V", label='eq:svd')
 

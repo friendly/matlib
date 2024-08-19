@@ -19,9 +19,9 @@
 #'   Note that user defined functions that use \code{\link{cat}} within
 #'   their body should return an empty character vector to avoid printing the
 #'   returned object
-#' @param number logical; include equation number? Default: \code{FALSE}
 #' @param label character vector specifying the LaTeX label to use (e.g., \code{eq:myeqn}), which
-#'   can be reference via \code{\\ref{eq:myeqn}}. For compiled documents, if an
+#'   can be reference via \code{\\ref{eq:myeqn}}. Including this option will
+#'   also include an equation number automatically. For compiled documents, if an
 #'   HTML output is detected (see \code{html_output}) then the equations will be labelled
 #'   via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)}
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
@@ -43,7 +43,6 @@
 #' Eqn('e=mc^2')
 #'
 #' # Equation numbers & labels
-#' Eqn('e=mc^2', number = TRUE)
 #' Eqn('e=mc^2', label = 'eq:einstein')
 #' Eqn("X=U \\lambda V", label='eq:svd')
 #'
@@ -85,19 +84,14 @@
 #' showEqn(A, b, latex=TRUE) |> Eqn()
 #'
 Eqn <- function(...,
-                number = FALSE,
                 label = NULL,
                 align = FALSE,
                 html_output = knitr::is_html_output(),
                 mat_args = list()) {
 
+  number <- ifelse(is.null(label), TRUE, FALSE)
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
-  if(html_output){
-      if(number && is.null(label))
-          stop('Numbered HTML equations require a label')
-      if(!number) label <- NULL
-  }
   cat(sprintf("\n\\begin{%s}\n", wrap))
   if(!is.null(label)){
       if(html_output){
