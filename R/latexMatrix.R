@@ -899,12 +899,24 @@ numericDimensions <- function(x){
   return(NULL)
 }
 
+# parenthesize <- function(element){
+#   if (grepl("[ +-/^]", element)) {
+#     paste0("(", element, ")")
+#   } else {
+#     element
+#   }
+# }
+
 parenthesize <- function(element){
-  if (grepl("[ +-/^]", element)) {
+  element <- if (grepl("[ +-/^]", element)) {
     paste0("(", element, ")")
   } else {
     element
   }
+  element <- gsub("\\([+[:space:]]*", "\\(", element)
+  element <- gsub("[[:space:]]*\\)", "\\)", element)
+  element <- gsub("[[:space:]]{2,}", " ", element)
+  element
 }
 
 isOdd <- function(x){
