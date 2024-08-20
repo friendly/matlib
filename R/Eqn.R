@@ -58,15 +58,15 @@
 #'     "X=U \\lambda V", label='eq:svd')
 #'
 #' # expressions that use cat() within their calls
-#' Eqn(latexMatrix("u", "n", "k", lhs = 'SVD'),
+#' Eqn('SVD = ',
+#'     latexMatrix("u", "n", "k"),
 #'     latexMatrix("\\lambda", "k", "k", diag=TRUE),
 #'     latexMatrix("v", "k", "p", transpose = TRUE),
 #'     label='eq:svd')
 #'
 #' # align equations using & operator
-#' Eqn("X &= U \\lambda V",
-#'     Eqn_newline(),
-#'     latexMatrix("u", "n", "k", lhs = '&'),
+#' Eqn("X &= U \\lambda V", Eqn_newline(),
+#'     "& = ", latexMatrix("u", "n", "k"),
 #'     latexMatrix("\\lambda", "k", "k", diag=TRUE),
 #'     latexMatrix("v", "k", "p", transpose = TRUE),
 #'     align=TRUE)

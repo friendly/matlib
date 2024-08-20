@@ -55,7 +55,8 @@ latexMatrix(nrow=3, ncol=3, diag=TRUE, comma=TRUE)  |> Eqn()
 latexMatrix(nrow="n", ncol="n", diag=TRUE, comma=TRUE)  |> Eqn()
 latexMatrix(nrow=3.1, ncol=3)  |> expect_error()  # error (expected)
 
-latexMatrix("\\lambda", nrow="n", ncol="n", diag=TRUE, lhs="\\boldsymbol{\\Lambda}")  |> Eqn()
+Eqn("\\boldsymbol{\\Lambda} = ", 
+    latexMatrix("\\lambda", nrow="n", ncol="n", diag=TRUE))
 
 X <- latexMatrix("x", "n", "p")
 U <- latexMatrix("u", "n", "k")
