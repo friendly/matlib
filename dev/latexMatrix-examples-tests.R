@@ -260,3 +260,14 @@ W*W # error (expected)
 letters*W # error (expected)
 "a"*(W + W)
 -(W + W)
+
+
+# linear hypotheses
+
+Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
+    latexMatrix(matrix(c(0,1,1,0), nrow=1)),
+    latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'),
+    Eqn_newline(), Eqn_newline(), 
+    latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_', lhs = '&' ),
+    "= \\mathbf{0}_{(2 \\times 3)}", 
+    align=TRUE)

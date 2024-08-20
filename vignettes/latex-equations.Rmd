@@ -108,11 +108,11 @@ latexMatrix(diag(3), lhs = "\\mathbf{I}_3",
 * A row or column vector; the first argument to `latexMatrix()` must be a **matrix**, so wrap an R vector in `matrix()`, supplying `nrow=1` (or `ncol = 1`):
 
 ```{r eqn3,results='asis'}
-latexMatrix(matrix(LETTERS[1:4], nrow=1, matrix="Bmatrix")) |> Eqn()
+latexMatrix(matrix(LETTERS[1:4], nrow=1), matrix="Bmatrix") |> Eqn()
 ```
 
 ```{r eqn4,results='asis'}
-latexMatrix(matrix(letters[1:3], ncol=1, matrix = "vmatrix")) |> Eqn()
+latexMatrix(matrix(letters[1:3], ncol=1), matrix = "vmatrix") |> Eqn()
 ```
 
 As the above examples illustrate, the matrix delimeters can be varied using the `matrix` argument.
@@ -312,6 +312,42 @@ We can also supply values for the elements of the matrix to obtain a numeric inv
 ```{r numeric-inverse}
 MASS::fractions(as.numeric(solve(M), locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6)))
 MASS::fractions(det(as.numeric(M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))))
+```
+
+### Linear hypotheses
+
+As an example of the more general use of these functions, consider the general linear hypothesis used to test hypotheses and contrasts in linear models ...
+
+For example, with for a multivariate regression model 
+$\mathbf{Y} = \mathbf{X} \mathbf{B} + \mathbf{E}$
+with
+three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by
+
+```{r linhyp-beta, results='asis'}
+latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_')
+```
+
+
+We can test the hypothesis
+that neither $x_2$ nor $x_3$ contribute at all to the predicting the $y$s in terms of the hypothesis that
+the coefficients for the corresponding rows of $\mathbf{B}$ are zero using a 1-row $\mathbf{C}$ matrix that
+simply selects those rows:
+
+```{r}
+latexMatrix(matrix(c(0,1,1,0), nrow=1))
+```
+
+Then, ...
+
+```{r linear-hypotheses, results='asis'}
+Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
+    latexMatrix(matrix(c(0,1,1,0), nrow=1)),
+    latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'),
+    Eqn_newline(), Eqn_newline(), 
+    latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_', lhs = '&' ),
+    "= \\mathbf{0}_{(2 \\times 3)}", 
+    align=TRUE)
+
 ```
 
 
