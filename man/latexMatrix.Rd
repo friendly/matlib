@@ -41,6 +41,8 @@ latexMatrix(
   digits = getOption("digits") - 2,
   fractions = FALSE,
   prefix = "",
+  prefix.row = "",
+  prefix.col = "",
   suffix = "",
   lhs
 )
@@ -147,6 +149,10 @@ function.}
 \item{prefix}{optional character string to be pre-pended to each matrix element, e.g, to wrap each
 element in a function like \code{"\\sqrt"} (but add braces)}
 
+\item{prefix.row}{optional character string to be pre-pended to each matrix row index}
+
+\item{prefix.col}{optional character string to be pre-pended to each matrix col index}
+
 \item{suffix}{optional character string to be appended to each matrix element, e.g., for exponents
 on each element}
 
@@ -182,8 +188,8 @@ element of the adjoint matrix is divided by the determinant.}
 is \code{"\\dfrac"}}
 
 \item{locals}{an optional list or named numeric vector of variables to be given
-specific numeric values; e.g., 
-\code{locals = list(a = 1, b = 5, c = -1, d = 4)} or 
+specific numeric values; e.g.,
+\code{locals = list(a = 1, b = 5, c = -1, d = 4)} or
 \code{locals = c(a = 1, b = 5, c = -1, d = 4)}}
 }
 \value{

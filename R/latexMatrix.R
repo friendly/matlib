@@ -127,6 +127,8 @@
 #                \code{symbol} are all integers.
 #' @param prefix optional character string to be pre-pended to each matrix element, e.g, to wrap each
 #'               element in a function like \code{"\\sqrt"} (but add braces)
+#' @param prefix.row optional character string to be pre-pended to each matrix row index
+#' @param prefix.col optional character string to be pre-pended to each matrix col index
 #' @param suffix optional character string to be appended to each matrix element, e.g., for exponents
 #'               on each element
 #' @param lhs    character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand
@@ -262,6 +264,8 @@ latexMatrix <- function(
     digits=getOption("digits") - 2,
     fractions=FALSE,
     prefix="",
+    prefix.row="",
+    prefix.col="",
     suffix="",
     lhs
 ){
@@ -495,9 +499,13 @@ latexMatrix <- function(
         for (j in 1:ncol){
           result <- paste0(result, prefix, symbol,
                            if(!is_scalar) "_{",
-                           if (nrow > 1) i - zero.based[1],
+                           if (nrow > 1)
+                               if(prefix.row != '') paste0(prefix.row, '{', i - zero.based[1], '}')
+                               else i - zero.based[1],
                            if (nrow > 1 && ncol > 1) comma,
-                           if (ncol > 1) j - zero.based[2],
+                           if (ncol > 1)
+                               if(prefix.col != '') paste0(prefix.col, '{', j - zero.based[2], '}')
+                               else j - zero.based[2],
                            if(!is_scalar) "}", suffix,
                            if (j == ncol) " \\\\ \n" else " & ")
         }
@@ -778,7 +786,7 @@ t.latexMatrix <- function(x){
 determinant.latexMatrix <- function(x, logarithm, ...){
   
   # determinant by cofactors
-  
+
   # helper function for recursion:
   DET <- function(X){
     if (nrow(X) == 1) {
@@ -798,9 +806,9 @@ determinant.latexMatrix <- function(x, logarithm, ...){
       res
     }
   }
-  
+
   numericDimensions(x)
-  
+
   sub("^[ +]*", "", DET(getBody(x)))
 }
 
@@ -815,24 +823,24 @@ determinant.latexMatrix <- function(x, logarithm, ...){
 
 #' @rdname latexMatrix
 #' @export
-solve.latexMatrix <- function (a, b, simplify=FALSE, 
-                                  frac=c("\\dfrac", "\\frac", "\\tfrac", "\\cfrac"), 
+solve.latexMatrix <- function (a, b, simplify=FALSE,
+                                  frac=c("\\dfrac", "\\frac", "\\tfrac", "\\cfrac"),
                                   ...) {
-  
+
   # symbolic matrix inverse by adjoint matrix and determinant
-  
+
   frac <- match.arg(frac)
-  
+
   numericDimensions(a)
   if (Nrow(a) != Ncol(a)) stop("matrix 'a' must be square")
   if (!missing(b)) warning("'b' argument to solve() ignored")
-  
+
   det <- determinant(a)
   A <- getBody(a)
   n <- nrow(A)
   indices <- 1:n
   A_inv <- matrix("", n, n)
-  
+
   for (i in 1:n){
     for (j in 1:n){
       A_ij <- latexMatrix(A[indices[-i], indices[-j], drop=FALSE])
@@ -842,15 +850,15 @@ solve.latexMatrix <- function (a, b, simplify=FALSE,
         determinant(A_ij)
       }
       if (isOdd(i + j)) A_inv[i, j] <- paste0("-", parenthesize(A_inv[i, j]))
-      if (!simplify) A_inv[i, j] <- paste0(frac, "{", A_inv[i, j], 
+      if (!simplify) A_inv[i, j] <- paste0(frac, "{", A_inv[i, j],
                                            "}{", det, "}")
     }
   }
-  
+
   A_inv <- t(A_inv) # adjoint
   result <- latexMatrix(A_inv)
   result <- updateWrapper(result, getWrapper(a))
-  
+
   if (!simplify) {
     return(result)
   } else {
@@ -860,24 +868,24 @@ solve.latexMatrix <- function (a, b, simplify=FALSE,
 }
 
 #' @param locals an optional list or named numeric vector of variables to be given
-#'   specific numeric values; e.g., 
-#'   \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or 
+#'   specific numeric values; e.g.,
+#'   \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or
 #'   \code{locals = c(a = 1, b = 5, c = -1, d = 4)}
 
 #' @rdname latexMatrix
 #' @export
 as.double.latexMatrix <- function(x, locals=list(), ...){
-  
+
   numericDimensions(x)
-  
+
   if (!is.list(locals) && is.vector(locals) && is.numeric(locals)
       && !is.null(names(locals))) locals <- as.list(locals)
-  
+
   X <- getBody(x)
   nrow <- nrow(X)
   X <- gsub("\\\\cdot", "\\*", X)
-  X <- gsub("\\}", ")", 
-            gsub("\\}\\{", ")/(", 
+  X <- gsub("\\}", ")",
+            gsub("\\}\\{", ")/(",
                  gsub("\\\\[cdt]?frac\\{", "(", X)))
   warn <- options(warn = 2)
   on.exit(options(warn))
@@ -886,7 +894,7 @@ as.double.latexMatrix <- function(x, locals=list(), ...){
   if (inherits(X, "try-error")){
     stop("matrix cannot be coerced to 'double' ('numeric')")
   }
-  
+
   matrix(X, nrow=nrow)
 }
 
