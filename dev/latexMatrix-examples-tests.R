@@ -271,3 +271,25 @@ Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_', lhs = '&' ),
     "= \\mathbf{0}_{(2 \\times 3)}", 
     align=TRUE)
+
+# simplify
+C <- latexMatrix(matrix(c(0,1,1,0), nrow=1), matrix = "bmatrix")
+B <- latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_')
+# result of C %*% B should be:
+B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_')
+
+
+C %*% B
+# this isn't correct
+# \begin{bmatrix}  
+# 0 \cdot (\beta_{1,y_{1}}) + 1 \cdot (\beta_{2,y_{1}}) + 1 \cdot (\beta_{3,y_{1}}) + 0 \cdot (\beta_{4,y_{1}}) & 0 \cdot (\beta_{1,y_{2}}) + 1 \cdot (\beta_{2,y_{2}}) + 1 \cdot (\beta_{3,y_{2}}) + 0 \cdot (\beta_{4,y_{2}}) & 0 \cdot (\beta_{1,y_{3}}) + 1 \cdot (\beta_{2,y_{3}}) + 1 \cdot (\beta_{3,y_{3}}) + 0 \cdot (\beta_{4,y_{3}}) \\ 
+# \end{bmatrix}
+
+Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
+    C, B,
+    Eqn_newline(), Eqn_newline(), 
+    '&\n',
+    B0,
+    "= \\mathbf{0}_{(2 \\times 3)}", 
+    align=TRUE)
+

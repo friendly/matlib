@@ -316,15 +316,31 @@ MASS::fractions(det(as.numeric(M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0,
 
 ### Linear hypotheses
 
-As an example of the more general use of these functions, consider the general linear hypothesis used to test hypotheses and contrasts in linear models ...
+As an example of the more general use of these functions, consider the general linear hypothesis used to test hypotheses and contrasts in linear models.
+We consider a multivariate regression model 
+$\mathbf{Y} = \mathbf{X} \mathbf{B} + \mathbf{E}$ with $q$ predictors,
+$\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_q$ and 
+$p$ responses,
+$\mathbf{y}_1, \mathbf{y}_2, \dots, \mathbf{y}_p$.
 
-For example, with for a multivariate regression model 
-$\mathbf{Y} = \mathbf{X} \mathbf{B} + \mathbf{E}$
+[**Intercept* ignored here. Fix notation or description]
+
+Suppose we want to test the hypothesis that a subset of rows (predictors)
+and/or columns (responses) simultaneously have null effects.
+This can be expressed in the general linear test,
+$$
+\mathcal{H}_0 : \mathbf{C}_{h \times q} \, \mathbf{B}_{q \times p} = \mathbf{0}_{h \times p} \: ,
+$$
+where $\mathbf{C}$ is a  full rank $h \le q$ hypothesis matrix of constants, that selects 
+subsets or linear combinations (contrasts) of the coefficients in $\mathbf{B}$ to be tested
+in a $h$ degree-of-freedom hypothesis.
+
+For example, for a multivariate regression model 
 with
 three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by
 
 ```{r linhyp-beta, results='asis'}
-latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_')
+(B <- latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'))
 ```
 
 
@@ -333,21 +349,21 @@ that neither $x_2$ nor $x_3$ contribute at all to the predicting the $y$s in ter
 the coefficients for the corresponding rows of $\mathbf{B}$ are zero using a 1-row $\mathbf{C}$ matrix that
 simply selects those rows:
 
-```{r}
-latexMatrix(matrix(c(0,1,1,0), nrow=1))
+```{r linhyp-C}
+(C <- latexMatrix(matrix(c(0,1,1,0), nrow=1)))
 ```
 
-Then, ...
+Then, the hypothesis to be tested can be expressed as:
 
 ```{r linear-hypotheses, results='asis'}
+B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_')
 Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
-    latexMatrix(matrix(c(0,1,1,0), nrow=1)),
-    latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'),
+    C, B,
     Eqn_newline(), Eqn_newline(), 
-    latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_', lhs = '&' ),
+    '&\n',
+    B0,
     "= \\mathbf{0}_{(2 \\times 3)}", 
     align=TRUE)
-
 ```
 
 
