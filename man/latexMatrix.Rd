@@ -41,10 +41,9 @@ latexMatrix(
   digits = getOption("digits") - 2,
   fractions = FALSE,
   prefix = "",
-  prefix.row = "",
-  prefix.col = "",
   suffix = "",
-  lhs
+  prefix.row = "",
+  prefix.col = ""
 )
 
 getLatex(x, ...)
@@ -123,12 +122,13 @@ that many columns.}
 \item{sparse}{logical; if \code{TRUE} replace 0's with empty characters to print a sparse matrix}
 
 \item{zero.based}{logical 2-vector; start the row and/or column indices at 0 rather than 1;
-the default is \code{c(FALSE, FALSE)}; applies only if \code{nrow} is character-valued}
+the default is \code{c(FALSE, FALSE)}}
 
 \item{end.at}{if row or column indices start at 0, should they end at \code{n - 1} and
 \code{m - 1} or at \code{n} and \code{m}? (where \code{n} and \code{m} represent the
 characters used to denote the number of rows and columns, respectively);
-the default is \code{c("n - 1", "m - 1")}}
+the default is \code{c("n - 1", "m - 1")}; applies only when \code{nrow}
+or \code{ncol} are characters}
 
 \item{comma}{logical; if \code{TRUE}, commas are inserted between row and column subscripts, as in
 \code{x_{1,1}}; the default is \code{FALSE} except for zero-based indices.}
@@ -149,16 +149,12 @@ function.}
 \item{prefix}{optional character string to be pre-pended to each matrix element, e.g, to wrap each
 element in a function like \code{"\\sqrt"} (but add braces)}
 
-\item{prefix.row}{optional character string to be pre-pended to each matrix row index}
-
-\item{prefix.col}{optional character string to be pre-pended to each matrix col index}
-
 \item{suffix}{optional character string to be appended to each matrix element, e.g., for exponents
 on each element}
 
-\item{lhs}{character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand
-side of an equation
-with the generated matrix on the right-hand side.}
+\item{prefix.row}{optional character string to be pre-pended to each matrix row index}
+
+\item{prefix.col}{optional character string to be pre-pended to each matrix col index}
 
 \item{x}{a \code{"latexMatrix"} object}
 
@@ -240,14 +236,13 @@ the function can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} 
 \preformatted{
 ```{r results = "asis"}
 latexMatrix("\\lambda", nrow=2, ncol=2,
-               diag=TRUE,
-               lhs = "\\boldsymbol{\\Lambda}")
+               diag=TRUE)
 ```
 }
 
 This generates
 \deqn{
- \boldsymbol{\Lambda} = \begin{pmatrix}
+ \begin{pmatrix}
  \lambda_{1} & 0           \\
  0           & \lambda_{2} \\
  \end{pmatrix}
@@ -328,11 +323,6 @@ V <- latexMatrix("v", "k", "p", transpose = TRUE)
 cat("\\\\mathrm{SVD:}\n", getLatex(X), "=\n", getLatex(U),
     getLatex(D), getLatex(V))
 
-# specify left hand side
-latexMatrix("\\\\lambda", 3, 3, diag=TRUE, lhs = "\\\\boldsymbol{\\\\Lambda}")
-latexMatrix("\\\\lambda", 3, 3, diag=TRUE, sparse=TRUE,
-  lhs = "\\\\boldsymbol{\\\\Lambda}")
-
 # supply a matrix for 'symbol'
 m <- matrix(c(
   "\\\\alpha", "\\\\beta",
@@ -342,8 +332,8 @@ m <- matrix(c(
 latexMatrix(m)
 
 # Identity matrix
-latexMatrix(diag(3), lhs = "\\\\mathbf{I}_3")
-latexMatrix(diag(3), lhs = "\\\\mathbf{I}_3", sparse=TRUE)
+latexMatrix(diag(3))
+latexMatrix(diag(3), sparse=TRUE)
 
 # prefix / suffix
 latexMatrix(prefix="\\\\sqrt{", suffix="}")

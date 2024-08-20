@@ -43,7 +43,7 @@ latexMatrix(nrow=3, ncol=3, diag=TRUE, comma=TRUE)
 latexMatrix(nrow="n", ncol="n", diag=TRUE, comma=TRUE)
 latexMatrix(nrow=3.1, ncol=3) # error (expected)
 
-latexMatrix("\\lambda", nrow="n", ncol="n", diag=TRUE, lhs="\\boldsymbol{\\Lambda}")
+latexMatrix("\\lambda", nrow="n", ncol="n", diag=TRUE)
 
 X <- latexMatrix("x", "n", "p")
 U <- latexMatrix("u", "n", "k")
@@ -268,8 +268,7 @@ Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     latexMatrix(matrix(c(0,1,1,0), nrow=1)),
     latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'),
     Eqn_newline(), Eqn_newline(), 
-    latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_', lhs = '&' ),
-    "= \\mathbf{0}_{(2 \\times 3)}", 
+    latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_'), 
     align=TRUE)
 
 # simplify
@@ -280,7 +279,7 @@ B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_')
 
 
 C %*% B
-# this isn't correct
+# this isn't correct [the matrix product looks correct to me given C and B JF]
 # \begin{bmatrix}  
 # 0 \cdot (\beta_{1,y_{1}}) + 1 \cdot (\beta_{2,y_{1}}) + 1 \cdot (\beta_{3,y_{1}}) + 0 \cdot (\beta_{4,y_{1}}) & 0 \cdot (\beta_{1,y_{2}}) + 1 \cdot (\beta_{2,y_{2}}) + 1 \cdot (\beta_{3,y_{2}}) + 0 \cdot (\beta_{4,y_{2}}) & 0 \cdot (\beta_{1,y_{3}}) + 1 \cdot (\beta_{2,y_{3}}) + 1 \cdot (\beta_{3,y_{3}}) + 0 \cdot (\beta_{4,y_{3}}) \\ 
 # \end{bmatrix}

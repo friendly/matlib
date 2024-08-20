@@ -37,14 +37,13 @@
 #' \preformatted{
 #' ```{r results = "asis"}
 #' latexMatrix("\\lambda", nrow=2, ncol=2,
-#'                diag=TRUE,
-#'                lhs = "\\boldsymbol{\\Lambda}")
+#'                diag=TRUE)
 #' ```
 #' }
 #'
 #' This generates
 #' \deqn{
-#'  \boldsymbol{\Lambda} = \begin{pmatrix}
+#'  \begin{pmatrix}
 #'  \lambda_{1} & 0           \\
 #'  0           & \lambda_{2} \\
 #'  \end{pmatrix}
@@ -107,11 +106,12 @@
 #' @param diag   logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})
 #' @param sparse logical; if \code{TRUE} replace 0's with empty characters to print a sparse matrix
 #' @param zero.based logical 2-vector; start the row and/or column indices at 0 rather than 1;
-#'   the default is \code{c(FALSE, FALSE)}; applies only if \code{nrow} is character-valued
+#'   the default is \code{c(FALSE, FALSE)}
 #' @param end.at if row or column indices start at 0, should they end at \code{n - 1} and
 #'   \code{m - 1} or at \code{n} and \code{m}? (where \code{n} and \code{m} represent the
 #'   characters used to denote the number of rows and columns, respectively);
-#'   the default is \code{c("n - 1", "m - 1")}
+#'   the default is \code{c("n - 1", "m - 1")}; applies only when \code{nrow}
+#'   or \code{ncol} are characters
 #' @param comma  logical; if \code{TRUE}, commas are inserted between row and column subscripts, as in
 #'               \code{x_{1,1}}; the default is \code{FALSE} except for zero-based indices.
 #' @param exponent if specified, e.g., \code{"-1"}, or \code{"1/2"},  the exponent is applied to the matrix
@@ -127,13 +127,10 @@
 #                \code{symbol} are all integers.
 #' @param prefix optional character string to be pre-pended to each matrix element, e.g, to wrap each
 #'               element in a function like \code{"\\sqrt"} (but add braces)
-#' @param prefix.row optional character string to be pre-pended to each matrix row index
-#' @param prefix.col optional character string to be pre-pended to each matrix col index
 #' @param suffix optional character string to be appended to each matrix element, e.g., for exponents
 #'               on each element
-#' @param lhs    character; an optional LaTeX expression, e.g, "\code{\\boldsymbol{\\Lamda}}", for left-hand
-#'               side of an equation
-#'               with the generated matrix on the right-hand side.
+#' @param prefix.row optional character string to be pre-pended to each matrix row index
+#' @param prefix.col optional character string to be pre-pended to each matrix col index
 #' @param onConsole if \code{TRUE}, the default, print the LaTeX code for
 #'                  the matrix on the R console.
 #'
@@ -190,11 +187,6 @@
 #' cat("\\mathrm{SVD:}\n", getLatex(X), "=\n", getLatex(U),
 #'     getLatex(D), getLatex(V))
 #'
-#' # specify left hand side
-#' latexMatrix("\\lambda", 3, 3, diag=TRUE, lhs = "\\boldsymbol{\\Lambda}")
-#' latexMatrix("\\lambda", 3, 3, diag=TRUE, sparse=TRUE,
-#'   lhs = "\\boldsymbol{\\Lambda}")
-#'
 #' # supply a matrix for 'symbol'
 #' m <- matrix(c(
 #'   "\\alpha", "\\beta",
@@ -204,8 +196,8 @@
 #' latexMatrix(m)
 #'
 #' # Identity matrix
-#' latexMatrix(diag(3), lhs = "\\mathbf{I}_3")
-#' latexMatrix(diag(3), lhs = "\\mathbf{I}_3", sparse=TRUE)
+#' latexMatrix(diag(3))
+#' latexMatrix(diag(3), sparse=TRUE)
 #'
 #' # prefix / suffix
 #' latexMatrix(prefix="\\sqrt{", suffix="}")
@@ -264,11 +256,10 @@ latexMatrix <- function(
     digits=getOption("digits") - 2,
     fractions=FALSE,
     prefix="",
-    prefix.row="",
-    prefix.col="",
     suffix="",
-    lhs
-){
+    prefix.row="",
+    prefix.col=""
+    ){
 
   latexFraction <- function(x){
     negative <- grepl("-", x)
@@ -283,12 +274,12 @@ latexMatrix <- function(
 
   end.at.n.minus.1 <- gsub(" ", "", end.at) == c("n-1", "m-1")
 
-  if (is.numeric(nrow) && zero.based[1]){
-    stop("zero-based indexing not available for numeric 'nrow'")
-  }
-  if (is.numeric(ncol) && zero.based[2]){
-    stop("zero-based indexing not available for numeric 'ncol'")
-  }
+  # if (is.numeric(nrow) && zero.based[1]){
+  #   stop("zero-based indexing not available for numeric 'nrow'")
+  # }
+  # if (is.numeric(ncol) && zero.based[2]){
+  #   stop("zero-based indexing not available for numeric 'ncol'")
+  # }
 
   if (isTRUE(transpose)) transpose <- "\\top"
   if (!missing(exponent) && !isFALSE(transpose)){
@@ -299,7 +290,7 @@ latexMatrix <- function(
   # start composing output string:
 
   result <- paste0(if (fractions) "\\renewcommand*{\\arraystretch}{1.5} \n",
-                   if (!missing(lhs)) paste0(lhs, " = \n"),
+                   # if (!missing(lhs)) paste0(lhs, " = \n"),
                    "\\begin{", matrix, "} \n"
   )
 
@@ -916,7 +907,7 @@ numericDimensions <- function(x){
 # }
 
 parenthesize <- function(element){
-  element <- if (grepl("[ +-/^]", element)) {
+  element <- if (grepl("[ +/^-]", element)) {
     paste0("(", element, ")")
   } else {
     element
