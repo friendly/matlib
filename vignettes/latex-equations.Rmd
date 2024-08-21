@@ -101,7 +101,7 @@ Some other examples:
 `latexMatrix()` can be any numeric matrix.
 
 ```{r eqn2,results='asis'}
-Eqn("\\mathbf{I}_3 =\n", latexMatrix(diag(3), matrix="bmatrix"))
+Eqn("\\mathbf{I}_3 =", latexMatrix(diag(3), matrix="bmatrix"))
 ```
 
 * A row or column vector; the first argument to `latexMatrix()` must be a **matrix**, so wrap an R vector in `matrix()`, supplying `nrow=1` (or `ncol = 1`):
@@ -188,7 +188,7 @@ of the second equation.
 ```{r eqn-align,results='asis'}
 Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
     Eqn_newline(),
-    ' & =\n',
+    ' & =',
     latexMatrix("u", "n", "k"),
     latexMatrix("\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE),
@@ -363,8 +363,8 @@ Then, the hypothesis to be tested can be expressed as:
 B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_')
 Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     C, B,
-    Eqn_newline(), Eqn_newline(), 
-    '&\n',
+    Eqn_newline(), 
+    '& =',
     B0,
     "= \\mathbf{0}_{(2 \\times 3)}", 
     align=TRUE)
