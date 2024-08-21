@@ -318,12 +318,14 @@ MASS::fractions(det(as.numeric(M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0,
 
 As an example of the more general use of these functions, consider the general linear hypothesis used to test hypotheses and contrasts in linear models.
 We consider a multivariate regression model 
-$\mathbf{Y} = \mathbf{X} \mathbf{B} + \mathbf{E}$ with $q$ predictors,
-$\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_q$ and 
+$\mathbf{Y} = \mathbf{X} \mathbf{B} + \mathbf{E}$ with $q$ regressors
+$\mathbf{x}_0, \mathbf{x}_1, \dots, \mathbf{x}_q$ (including the constant
+$\mathbf{x}_0$ for the intercept)
+and 
 $p$ responses,
 $\mathbf{y}_1, \mathbf{y}_2, \dots, \mathbf{y}_p$.
 
-[**Intercept* ignored here. Fix notation or description]
+<!-- [**Intercept* ignored here. Fix notation or description] -->
 
 Suppose we want to test the hypothesis that a subset of rows (predictors)
 and/or columns (responses) simultaneously have null effects.
@@ -337,7 +339,7 @@ in a $h$ degree-of-freedom hypothesis.
 
 For example, for a multivariate regression model 
 with
-three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by
+three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by the `latexMatrix()` expression:
 
 ```{r linhyp-beta, results='asis'}
 (B <- latexMatrix('\\beta', ncol = 3, nrow=4, 
@@ -348,16 +350,18 @@ three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coeffi
 
 We can test the hypothesis
 that neither $x_2$ nor $x_3$ contribute at all to the predicting the $y$s in terms of the hypothesis that
-the coefficients for the corresponding rows of $\mathbf{B}$ are zero using a 2-row $\mathbf{C}$ matrix that
+the coefficients for the corresponding rows of $\mathbf{B}$ are zero.
+To do this, we specify a 2-row $\mathbf{C}$ matrix that
 simply selects those rows:
 
-```{r linhyp-C}
+```{r linhyp-C, results='asis'}
 (C <- latexMatrix(matrix(c(0, 1, 0, 0,
-                          0, 0, 1, 0), nrow=2, byrow=TRUE), 
+                           0, 0, 1, 0), nrow=2, byrow=TRUE), 
                  matrix = "bmatrix"))
 ```
 
-Then, the hypothesis to be tested can be expressed as:
+Then, the hypothesis to be tested can be expressed as follows,
+using `Eqn()` to wrap a set of LaTeX expressions and calls to `matlib` functions. 
 
 ```{r linear-hypotheses, results='asis'}
 B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_')
@@ -370,6 +374,9 @@ Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     align=TRUE)
 ```
 
+In this example, note that the R objects `C`, `B` and `B0` are the results
+of `latexMatrix()` calls, which are character strings containing LaTeX
+expressions.
 
 ## matrix2latex {#matrix2latex}
 
