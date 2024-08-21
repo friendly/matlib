@@ -192,6 +192,49 @@ Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
     paste0(c(space.lhs, mid, space.rhs), collapse='')
 }
 
+#' Change size of LaTeX text
+#'
+#' Used to increase of decrease the size of LaTeX text and equations. Can be applied
+#' to a specific string or applied to all subsequent text until overwritten.
+#'
+#' @param string a string that should have its text size modified. If missing
+#'   the size modifier is returned, which applied the size modifier
+#'   for the remainder of the text until reset with \code{Eqn_size()}
+#' @param size numeric size of LaTeX text modifier,
+#'   ranging from -3 (\code{\\tiny}) to 5 (\code{\\HUGE}), with 0 defining the
+#'   normal test size (\code{\\normalsize}; default)
+#'
+#' @rdname Eqn
+#' @export
+#'
+#' @examples
+#'
+#' # set size globally
+#' Eqn_size(size=3)
+#' Eqn_size() # reset
+#'
+#' # locally for defined string
+#' string <- 'e = mc^2'
+#' Eqn_size(string, size=1)
+#'
+#'
+Eqn_size <- function(string, size = 0){
+    stopifnot(size <= 5 && size >= -3)
+    size <- switch(as.character(size),
+           "-3"='\\tiny ',
+           "-2"='\\scriptsize ',
+           "-1"='\\footnotesize ',
+           "0"='\\normalsize ',
+           "1"='\\large ',
+           "2"='\\Large ',
+           "3"='\\LARGE ',
+           "4"='\\huge ',
+           "5"='\\Huge ')
+    ret <- if(missing(string)) gsub(' ', '', size)
+    else paste0('{', size, string, '}')
+    ret
+}
+
 #' Provide inline reference of equations
 #'
 #' Depending on the output type this function will provide the correct

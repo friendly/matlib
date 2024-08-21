@@ -5,6 +5,7 @@
 \alias{Eqn_newline}
 \alias{Eqn_text}
 \alias{Eqn_hspace}
+\alias{Eqn_size}
 \alias{ref}
 \title{Create a LaTeX Equation Wrapper}
 \usage{
@@ -21,6 +22,8 @@ Eqn_newline()
 Eqn_text(text)
 
 Eqn_hspace(lhs = 5, mid = "", rhs = NULL, times = 1)
+
+Eqn_size(string, size = 0)
 
 ref(label, html_output = knitr::is_html_output(), parentheses = TRUE)
 }
@@ -66,6 +69,14 @@ the this will be set to \code{rhs} to create symmetric spaces around \code{mid}}
 
 \item{times}{number of times to repeat the spacings}
 
+\item{string}{a string that should have its text size modified. If missing
+the size modifier is returned, which applied the size modifier
+for the remainder of the text until reset with \code{Eqn_size()}}
+
+\item{size}{numeric size of LaTeX text modifier,
+ranging from -3 (\code{\\tiny}) to 5 (\code{\\HUGE}), with 0 defining the
+normal test size (\code{\\normalsize}; default)}
+
 \item{parentheses}{logical; include parentheses around the reference equation?
 Only changes the behaviour for LaTeX referencing}
 }
@@ -81,6 +92,9 @@ In a code chunk, use the chunk options \code{results='asis', echo=FALSE}.
 Used to create (symmetric) equation spaces. Input to lhs/rhs can be a
 numeric to increase the size of the space or a
 character vector to be passed to \code{\\hspace{}}.
+
+Used to increase of decrease the size of LaTeX text and equations. Can be applied
+to a specific string or applied to all subsequent text until overwritten.
 
 Depending on the output type this function will provide the correct
 inline wrapper for MathJax or LaTeX equations. This provides more
@@ -104,15 +118,15 @@ Eqn("e=mc^2",
     "X=U \\\\lambda V", label='eq:svd')
 
 # expressions that use cat() within their calls
-Eqn(latexMatrix("u", "n", "k", lhs = 'SVD'),
+Eqn('SVD = ',
+    latexMatrix("u", "n", "k"),
     latexMatrix("\\\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE),
     label='eq:svd')
 
 # align equations using & operator
-Eqn("X &= U \\\\lambda V",
-    Eqn_newline(),
-    latexMatrix("u", "n", "k", lhs = '&'),
+Eqn("X &= U \\\\lambda V", Eqn_newline(),
+    "& = ", latexMatrix("u", "n", "k"),
     latexMatrix("\\\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE),
     align=TRUE)
@@ -141,6 +155,16 @@ Eqn_hspace('1cm')
 # symmetric spacing around mid
 Eqn_hspace(mid='=')
 Eqn_hspace(mid='=', times=2)
+
+
+# set size globally
+Eqn_size(size=3)
+Eqn_size() # reset
+
+# locally for defined string
+string <- 'e = mc^2'
+Eqn_size(string, size=1)
+
 
 
 # used inside of Eqn() or manually defined labels in the document
