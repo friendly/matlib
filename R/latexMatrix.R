@@ -76,8 +76,10 @@
 #' \item \code{+} (matrix addition), \code{-} 
 #' (matrix subtraction), \code{*} (product of a scalar and a matrix),
 #' \item \code{\%*\%} (matrix product), 
-#' \item \code{t()} (transpose), \code{determinant()}, 
-#' \item \code{solve()} (matrix inverse),  and 
+#' \item \code{t()} (transpose), 
+#' \item \code{determinant()}, 
+#' \item \code{solve()} (matrix inverse),  
+#' \item \code{kronecker()} and the operator \code{\%O\%} (the Kronecker product), and
 #' \item \code{as.double()} (coercion to numeric, if possible).
 #' }
 #' 
@@ -238,6 +240,10 @@
 #' MASS::fractions(as.numeric(solve(X)))
 #' (d <- determinant(X))
 #' eval(parse(text=(gsub("\\\\cdot", "*", d))))
+#' X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
+#' I3 <- latexMatrix(diag(3))
+#' I3 %X% X
+#' kronecker(I3, X, sparse=TRUE)
 
 
 latexMatrix <- function(
@@ -528,7 +534,7 @@ latexMatrix <- function(
   body <- unname(do.call(rbind, splt)) # matrix of LaTeX cells
   body <- sub(" *$", "", sub("^ *", "", body))
   if(sparse)
-      mat.result <- gsub('[[:space:]]+0[[:space:]]+', ' ', mat.result)
+      mat.result <- gsub('[[:blank:]]+0[[:blank:]]+', ' ', mat.result)
 
   # "latexMatrix" object:
 
@@ -615,7 +621,7 @@ Ncol.latexMatrix <- function(x, ...){
 }
 
 #' @param x a \code{"latexMatrix"} object
-#' @param ...  for compatibility with the \code{print()} generic function, ignored
+#' @param ...  for compatibility with generic functions, may be ignored
 
 # print() method:
 #' @rdname latexMatrix
@@ -889,6 +895,49 @@ as.double.latexMatrix <- function(x, locals=list(), ...){
   matrix(X, nrow=nrow)
 }
 
+setOldClass("latexMatrix")
+
+#' @rdname latexMatrix
+#' @export
+#' @param X a \code{"latexMatrix"} object
+#' @param Y a \code{"latexMatrix"} object
+#' @param FUN to match the \code{\link{kronecker}} generic, ignored
+#' @param make.dimnames to match the \code{\link{kronecker}} generic, ignored
+setMethod("kronecker", 
+          signature(X = "latexMatrix", 
+                    Y = "latexMatrix"), 
+          function(X, Y, FUN, make.dimnames, ...) {
+            
+            numericDimensions(X)
+            numericDimensions(Y)
+            
+            Xmat <- getBody(X)
+            Ymat <- getBody(Y)
+            
+            Z <- .kronecker(Xmat, Ymat, 
+                            function(x, y) {
+                              x <- trimws(x)
+                              y <- trimws(y)
+                              zeros <- as.character(x) == "0" | 
+                                as.character(y) == "0"
+                              x <- sapply(x, parenthesize)
+                              y <- sapply(y, parenthesize)
+                              res <- paste0(x, " \\cdot ", y)
+                              res[zeros] <- "0"
+                              res
+                            }
+            )
+            
+            result <- latexMatrix(Z, ...)
+            result <- updateWrapper(result, getWrapper(X))
+            result
+          }
+)
+
+#' @rdname latexMatrix
+#' @export
+`%X%` <- function(x, y) methods::kronecker(x, y)
+
 # unexported functions:
 
 numericDimensions <- function(x){
@@ -912,9 +961,9 @@ parenthesize <- function(element){
   } else {
     element
   }
-  element <- gsub("\\([+[:space:]]*", "\\(", element)
-  element <- gsub("[[:space:]]*\\)", "\\)", element)
-  element <- gsub("[[:space:]]{2,}", " ", element)
+  element <- gsub("\\([+[:blank:]]*", "\\(", element)
+  element <- gsub("[[:blank:]]*\\)", "\\)", element)
+  element <- gsub("[[:blank:]]{2,}", " ", element)
   element
 }
 
@@ -929,4 +978,3 @@ updateWrapper <- function(result, wrapper){
   result$wrapper <- wrapper
   result
 }
-

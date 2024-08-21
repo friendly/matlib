@@ -23,6 +23,8 @@
 \alias{determinant.latexMatrix}
 \alias{solve.latexMatrix}
 \alias{as.double.latexMatrix}
+\alias{kronecker,latexMatrix,latexMatrix-method}
+\alias{\%X\%}
 \title{Create and Manipulate LaTeX Repesentations of Matrices}
 \usage{
 latexMatrix(
@@ -93,6 +95,10 @@ Ncol(x, ...)
 )
 
 \method{as.double}{latexMatrix}(x, locals = list(), ...)
+
+\S4method{kronecker}{latexMatrix,latexMatrix}(X, Y, FUN = "*", make.dimnames = FALSE, ...)
+
+x \%X\% y
 }
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
@@ -158,7 +164,7 @@ on each element}
 
 \item{x}{a \code{"latexMatrix"} object}
 
-\item{...}{for compatibility with the \code{print()} generic function, ignored}
+\item{...}{for compatibility with generic functions, may be ignored}
 
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
@@ -187,6 +193,14 @@ is \code{"\\dfrac"}}
 specific numeric values; e.g.,
 \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or
 \code{locals = c(a = 1, b = 5, c = -1, d = 4)}}
+
+\item{X}{a \code{"latexMatrix"} object}
+
+\item{Y}{a \code{"latexMatrix"} object}
+
+\item{FUN}{to match the \code{\link{kronecker}} generic, ignored}
+
+\item{make.dimnames}{to match the \code{\link{kronecker}} generic, ignored}
 }
 \value{
 \code{latexMatrix()} returns an object of class \code{"latexMatrix"}
@@ -275,8 +289,10 @@ operators and functions of matrices, including:
 \item \code{+} (matrix addition), \code{-} 
 (matrix subtraction), \code{*} (product of a scalar and a matrix),
 \item \code{\%*\%} (matrix product), 
-\item \code{t()} (transpose), \code{determinant()}, 
-\item \code{solve()} (matrix inverse),  and 
+\item \code{t()} (transpose), 
+\item \code{determinant()}, 
+\item \code{solve()} (matrix inverse),  
+\item \code{kronecker()} and the operator \code{\%O\%} (the Kronecker product), and
 \item \code{as.double()} (coercion to numeric, if possible).
 }
 
@@ -374,6 +390,10 @@ as.numeric(X)
 MASS::fractions(as.numeric(solve(X)))
 (d <- determinant(X))
 eval(parse(text=(gsub("\\\\\\\\cdot", "*", d))))
+X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
+I3 <- latexMatrix(diag(3))
+I3 \%X\% X
+kronecker(I3, X, sparse=TRUE)
 }
 \seealso{
 \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
