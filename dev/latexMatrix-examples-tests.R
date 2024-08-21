@@ -265,24 +265,26 @@ letters*W # error (expected)
 # linear hypotheses
 
 Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
-    latexMatrix(matrix(c(0,1,1,0), nrow=1)),
+    latexMatrix(latexMatrix(matrix(c(0, 1, 0, 0,
+                                     0, 0, 1, 0), nrow=2, byrow=TRUE), 
+                            matrix = "bmatrix")),
     latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'),
     Eqn_newline(), Eqn_newline(), 
     latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_'), 
     align=TRUE)
 
 # simplify
-C <- latexMatrix(matrix(c(0,1,1,0), nrow=1), matrix = "bmatrix")
-B <- latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_')
+C <- latexMatrix(matrix(c(0, 1, 0, 0,
+                          0, 0, 1, 0), nrow=2, byrow=TRUE), 
+                 matrix = "bmatrix")
+B <- latexMatrix('\\beta', ncol = 3, nrow=4, 
+                 comma=TRUE, prefix.col = 'y_',
+                 zero.based=c(TRUE, FALSE))
 # result of C %*% B should be:
 B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_')
 
 
 C %*% B
-# this isn't correct [the matrix product looks correct to me given C and B JF]
-# \begin{bmatrix}  
-# 0 \cdot (\beta_{1,y_{1}}) + 1 \cdot (\beta_{2,y_{1}}) + 1 \cdot (\beta_{3,y_{1}}) + 0 \cdot (\beta_{4,y_{1}}) & 0 \cdot (\beta_{1,y_{2}}) + 1 \cdot (\beta_{2,y_{2}}) + 1 \cdot (\beta_{3,y_{2}}) + 0 \cdot (\beta_{4,y_{2}}) & 0 \cdot (\beta_{1,y_{3}}) + 1 \cdot (\beta_{2,y_{3}}) + 1 \cdot (\beta_{3,y_{3}}) + 0 \cdot (\beta_{4,y_{3}}) \\ 
-# \end{bmatrix}
 
 Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     C, B,

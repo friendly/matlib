@@ -101,8 +101,7 @@ Some other examples:
 `latexMatrix()` can be any numeric matrix.
 
 ```{r eqn2,results='asis'}
-latexMatrix(diag(3), lhs = "\\mathbf{I}_3", 
-               matrix="bmatrix") |> Eqn()
+Eqn("\\mathbf{I}_3 =\n", latexMatrix(diag(3), matrix="bmatrix"))
 ```
 
 * A row or column vector; the first argument to `latexMatrix()` must be a **matrix**, so wrap an R vector in `matrix()`, supplying `nrow=1` (or `ncol = 1`):
@@ -144,7 +143,7 @@ This produces the two numbered equations:
 
 ```{r eqn-svd,results='asis', echo=FALSE}
 Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
-Eqn(latexMatrix("u", "n", "k", lhs = ''),
+Eqn(latexMatrix("u", "n", "k"),
     latexMatrix("\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
 ```
@@ -189,7 +188,8 @@ of the second equation.
 ```{r eqn-align,results='asis'}
 Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
     Eqn_newline(),
-    latexMatrix("u", "n", "k", lhs = '&'),
+    ' & =\n',
+    latexMatrix("u", "n", "k"),
     latexMatrix("\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE),
     align=TRUE)
@@ -340,17 +340,21 @@ with
 three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by
 
 ```{r linhyp-beta, results='asis'}
-(B <- latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'))
+(B <- latexMatrix('\\beta', ncol = 3, nrow=4, 
+                 comma=TRUE, prefix.col = 'y_',
+                 zero.based=c(TRUE, FALSE)))
 ```
 
 
 We can test the hypothesis
 that neither $x_2$ nor $x_3$ contribute at all to the predicting the $y$s in terms of the hypothesis that
-the coefficients for the corresponding rows of $\mathbf{B}$ are zero using a 1-row $\mathbf{C}$ matrix that
+the coefficients for the corresponding rows of $\mathbf{B}$ are zero using a 2-row $\mathbf{C}$ matrix that
 simply selects those rows:
 
 ```{r linhyp-C}
-(C <- latexMatrix(matrix(c(0,1,1,0), nrow=1)))
+(C <- latexMatrix(matrix(c(0, 1, 0, 0,
+                          0, 0, 1, 0), nrow=2, byrow=TRUE), 
+                 matrix = "bmatrix"))
 ```
 
 Then, the hypothesis to be tested can be expressed as:
