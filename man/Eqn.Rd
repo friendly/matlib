@@ -95,7 +95,7 @@ the result of compiling the LaTeX expressions.
 
 \code{Eqn_newline()} emits a newline in an equation
 
-\code{Eqn_hspace()} is used to create (symmetric) equation spaces, most typically around 
+\code{Eqn_hspace()} is used to create (symmetric) equation spaces, most typically around
 \code{=} signs
 Input to \code{lhs}, \code{rhs} can be a
 numeric to increase the size of the space or a
@@ -186,7 +186,7 @@ ref('eq:einstein', html_output=TRUE)
 
 }
 \seealso{
-\code{\link{latexMatrix}}, \code{\link{matrix2latex}}
+\code{\link{latexMatrix}}, \code{\link{matrix2latex}}, \code{\link{ref}}
 }
 \author{
 Phil Chalmers

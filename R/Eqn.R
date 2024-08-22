@@ -29,8 +29,8 @@
 #'   \code{\link{ref}}. Including a label will also include an equation number automatically.
 #'
 #'   For compiled documents if an HTML output is detected (see \code{html_output})
-#'   then the equations will be labelled  via \code{(\#eqn:myeqn)} and references via \code{\@ref(eq:binom)},
-#'   or again via \code{\link{ref}}
+#'   then the equations will be labelled  via \code{(\#eq:myeqn)} and references via \code{\@ref(eq:myeqn)},
+#'   or again via \code{\link{ref}} for convenience
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
 #'   changed for compiled documents that support \code{knitr}
 #' @param align logical; use the \code{align} environment with explicit \code{&} representing alignment
@@ -42,7 +42,7 @@
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @author Phil Chalmers
-#' @seealso \code{\link{latexMatrix}}, \code{\link{matrix2latex}}
+#' @seealso \code{\link{latexMatrix}}, \code{\link{matrix2latex}}, \code{\link{ref}}
 #' @export
 #' @examples
 #'
@@ -122,7 +122,7 @@ Eqn <- function(...,
 }
 
 #' Emit a newline in an equation
-#' 
+#'
 #' \code{Eqn_newline()} emits a newline in an equation
 #'
 #' @rdname Eqn
@@ -138,7 +138,7 @@ Eqn_text <- function(text) sprintf("\\text{%s}", text)
 
 #' Add horizontal spaces to equations
 #'
-#' \code{Eqn_hspace()} is used to create (symmetric) equation spaces, most typically around 
+#' \code{Eqn_hspace()} is used to create (symmetric) equation spaces, most typically around
 #' \code{=} signs
 #' Input to \code{lhs}, \code{rhs} can be a
 #' numeric to increase the size of the space or a
