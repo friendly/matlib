@@ -9,6 +9,14 @@ eqn_parser <- function(string,
     if(grepl('%n', string))
         string <- gsub('%n', "\\\\ \n", string, fixed=TRUE)
 
+    # %.%
+    if(grepl('\\%', string)){
+        loc <- gregexpr("\\%", string)[[1L]]
+        for(i in loc[seq(length(loc), 2, by=-2)])
+            substring(string, i, i+1L) <- '}'
+        string <- gsub('\\%', replacement = sprintf("\\\\%s{", `%`), string)
+    }
+
     # **.**
     if(grepl('\\*\\*', string)){
         loc <- gregexpr("\\*\\*", string)[[1L]]
@@ -25,14 +33,6 @@ eqn_parser <- function(string,
         for(i in loc[seq(length(loc), 2, by=-2)])
             substring(string, i, i+1L) <- '}'
         string <- gsub('\\*', replacement = sprintf("\\\\%s{", `*`), string)
-    }
-
-    # %.%
-    if(grepl('\\%', string)){
-        loc <- gregexpr("\\%", string)[[1L]]
-        for(i in loc[seq(length(loc), 2, by=-2)])
-            substring(string, i, i+1L) <- '}'
-        string <- gsub('\\%', replacement = sprintf("\\\\%s{", `%`), string)
     }
 
     string
