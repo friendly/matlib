@@ -69,4 +69,12 @@ B <- latexMatrix('\\beta', ncol = 3, nrow=4,
                  zero.based=c(TRUE, FALSE))
 C %*% B
 simplify(C %*% B)
+
+simplify(latexMatrix(diag(3)), sparse=TRUE)
+
+D <- diag(4)
+D[3, 3] <- 0
+D <- latexMatrix(D)
+D %*% B
+simplify(D %*% B)
 }
