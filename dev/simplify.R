@@ -45,6 +45,24 @@ simplify.latexMatrix <- function(object, simplify0s=TRUE, simplify1s=TRUE,
   X
 }
 
+matmult <- function(X, ...){
+  UseMethod("matmult")
+}
+
+matmult.latexMatrix <- function(X, ..., simplify1s=TRUE, 
+                                simplify0s=TRUE, sparse=FALSE){
+  matrices <- list(...)
+  for (i in seq_along(matrices)){
+    X <- X %*% matrices[[i]]
+  }
+  if (any(simplify1s, simplify0s, sparse)) {
+    simplify(X, simplify1s=simplify1s, simplify0s=simplify0s,
+             sparse=sparse)
+  } else {
+    X
+  }
+}
+
 if (FALSE){
   
 cell <- "0 \\cdot \\beta_{0,y_{1}} + 1 \\cdot \\beta_{1,y_{1}} + 0 \\cdot \\beta_{2,y_{1}} + 0 \\cdot \\beta_{3,y_{1}}"
@@ -77,4 +95,15 @@ D[3, 3] <- 0
 D <- latexMatrix(D)
 D %*% B
 simplify(D %*% B)
+
+R <- latexMatrix("r", nrow=2, ncol=2)
+S <- latexMatrix("s", nrow=2, ncol=2)
+T <- latexMatrix("t", nrow=2, ncol=2)
+
+matmult(R)
+matmult(R, S)
+matmult(R, S, T)
+
+matmult(D, B)
+matmult(D, B, simplify1s=FALSE, simplify0s=FALSE)
 }
