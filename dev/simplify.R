@@ -36,8 +36,8 @@ simplify.latexMatrix <- function(object, simplify0s=TRUE, simplify1s=TRUE,
                              sparse=FALSE, ...){
   X <- getBody(object)
   dim <- dim(X)
-  X <- sapply(X, simplify, simplify0s=simplify0s, 
-              simplify1s=simplify1s, sparse=sparse)
+  X <- simplify(X, simplify0s=simplify0s, 
+                simplify1s=simplify1s, sparse=sparse)
   X <- matrix(X, dim[1], dim[2])
   X <- latexMatrix(X)
   X <- matlib:::updateWrapper(X, getWrapper(object))
