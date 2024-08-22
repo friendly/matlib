@@ -209,7 +209,9 @@ These computations include:
 * the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), and 
 * `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse). 
 
-With the exception of `determinant()`, which (because it is a scalar quantity)  returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed, typeset, or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by `as.numeric()` or `as.double()`. We illustrate these computations in this section.
+With the exception of `determinant()`, which (because it is a scalar quantity)  returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed, typeset, or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by 
+<!-- `as.numeric()` or  -->
+`as.double()`. We illustrate these computations in this section.
 
 Consider, first, basic matrix arithmetic. Define some matrices: `A` and `B` are numeric,
 but `C` and `D` are symbolic, with elements $c_{ij}$ and $d_{ij}$
@@ -250,13 +252,13 @@ Using these tools, it is easy to typeset complete matrix equations, giving multi
 arguments to `Eqn()`:
 
 ```{r matrix-arith-equation, results='asis'}
-Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B, " = ", as.numeric(A + B))
+Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B, " = ", as.double(A + B))
 ```
 
 If the elements of a matrix are valid R variable names, then it is also possible to give these elements numeric values, as in
 ```{r coerce-to-numeric-with-locals}
 (M <- latexMatrix(matrix(letters[1:9], 3, 3)))
-as.numeric(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
+as.double(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
 ```
 
 ### Transpose and matrix products
@@ -310,8 +312,10 @@ Eqn(solve(M, simplify=TRUE))
 ```
 We can also supply values for the elements of the matrix to obtain a numeric inverse:
 ```{r numeric-inverse}
-MASS::fractions(as.numeric(solve(M), locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6)))
-MASS::fractions(det(as.numeric(M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))))
+MASS::fractions(as.double(solve(M), 
+                          locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6)))
+MASS::fractions(det(as.double(M, 
+                              locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))))
 ```
 
 ### Linear hypotheses
