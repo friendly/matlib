@@ -3,6 +3,26 @@
 
 #' Dot Product of Latex Vectors, Simplifying 0s & 1s
 #' 
+#' The result of matrix multiplication, \eqn{\mathbf{C} = \mathbf{A} \: \mathbf{B}}
+#' is composed of the vector dot products of each row of \eqn{\mathbf{A}} with
+#' each column of \eqn{\mathbf{B}},
+#' \deqn{c_{ij} = \mathbf{a}_i^top \mathbf{b}_j}
+#' This function computes this symbolically in LaTeX notation for
+#' \code{"latexMatrix} objects
+#' 
+#' @param x A numeric or character vector
+#' @param y A numeric or character vector. The lengths of \code{x} and \code{y} must
+#'          be equal
+#' @export
+#' @examples
+#' num <- 0:2
+#' chr <- letters[1:3]
+#' 
+#' dot(num, num)
+#' dot(num, chr)
+#' dot(chr, num)
+#' dot(chr, chr)
+
 dot <- function(x, y) {
   if (length(x) != length(y)) stop("Vectors must have the same length")
   
@@ -20,6 +40,7 @@ dot <- function(x, y) {
                   times,
                   parenthesize(yi))
   }
+  if (res == "") res <- "0"
   res
 }
 
