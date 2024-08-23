@@ -718,8 +718,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
     stop('matricies are not conformable for multiplication')
   }
   
-  latexMultSymbol <- getOption("latexMultSymbol")
-  if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
+  latexMultSymbol <- getLatexMultSymbol()
 
   Z <- matrix("", nrow(X), ncol(Y))
   for (i in 1:nrow(X)){
@@ -756,8 +755,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
     stop("one argument to * must be a scalar")
   numericDimensions(e2)
   
-  latexMultSymbol <- getOption("latexMultSymbol")
-  if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
+  latexMultSymbol <- getLatexMultSymbol()
   
   A <- getBody(e2)
   dimA <- dim(A)
@@ -792,9 +790,8 @@ determinant.latexMatrix <- function(x, logarithm, ...){
   
   # determinant by cofactors
 
-  latexMultSymbol <- getOption("latexMultSymbol")
-  if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
-
+  latexMultSymbol <- getLatexMultSymbol()
+  
   # helper function for recursion:
   DET <- function(X){
     if (nrow(X) == 1) {
@@ -922,8 +919,7 @@ setMethod("kronecker",
             numericDimensions(X)
             numericDimensions(Y)
             
-            latexMultSymbol <- getOption("latexMultSymbol")
-            if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
+            latexMultSymbol <- getLatexMultSymbol()
             
             Xmat <- getBody(X)
             Ymat <- getBody(Y)
@@ -991,4 +987,10 @@ updateWrapper <- function(result, wrapper){
   result$matrix <- matrix
   result$wrapper <- wrapper
   result
+}
+
+getLatexMultSymbol <- function(){
+  latexMultSymbol <- getOption("latexMultSymbol")
+  if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
+  latexMultSymbol
 }
