@@ -12,6 +12,14 @@ simplify.default <- function(object, simplify0s=TRUE, simplify1s=TRUE,
     # removing trailing 1
     object <- gsub(" *\\\\cdot *1 {1,}", " ", 
                    paste0(object, " ")) 
+    # remove leading -1
+    object <- gsub(" *\\(*-[^0-9]*1\\)* *\\\\cdot *", " -", 
+                   paste0(" ", object))
+    # removing trailing -1
+    trailNeg1 <- grepl(" *\\\\cdot \\(*-1*\\)* {1,}", object)
+    object <- gsub(" *\\\\cdot \\(*-1*\\)* {1,}", " ", 
+                   object) 
+    if (any(trailNeg1)) object <- paste0("-", sapply(object, parenthesize))
   }
   if (simplify0s){
     # remove items with leading 0
@@ -106,4 +114,17 @@ matmult(R, S, T)
 
 matmult(D, B)
 matmult(D, B, simplify1s=FALSE, simplify0s=FALSE)
+
+E <- latexMatrix(matrix(c(-1, 0, 1, 1, 0, -1, 0, 1, 0), 3, 3))
+E
+
+matmult(B, E)
+
+B %*% E
+
+F <- latexMatrix(matrix(c(-1, 0, 1, 0, 0, -1, 0, 1), ncol=4))
+F
+
+matmult(F, B)
+
 }
