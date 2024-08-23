@@ -717,6 +717,9 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if (dimX[2] != dimY[1]){
     stop('matricies are not conformable for multiplication')
   }
+  
+  latexMultSymbol <- getOption("latexMultSymbol")
+  if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
 
   Z <- matrix("", nrow(X), ncol(Y))
   for (i in 1:nrow(X)){
@@ -725,7 +728,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
         Z[i, j] <- paste0(Z[i, j],
                           if (k > 1) " + ",
                           parenthesize(X[i, k]),
-                          " \\cdot ",
+                          paste0(" ", latexMultSymbol, " "),
                           parenthesize(Y[k, j]))
       }
     }
@@ -752,13 +755,17 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if (!is.vector(e1) || length(e1) != 1) 
     stop("one argument to * must be a scalar")
   numericDimensions(e2)
+  
+  latexMultSymbol <- getOption("latexMultSymbol")
+  if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
+  
   A <- getBody(e2)
   dimA <- dim(A)
   wrapper <- getWrapper(e2)
   result <- matrix(if (swapped) {
-    paste(sapply(A, parenthesize), "\\cdot", e1)
+    paste(sapply(A, parenthesize), latexMultSymbol, e1)
   } else{
-    paste(e1, "\\cdot", sapply(A, parenthesize))
+    paste(e1, latexMultSymbol, sapply(A, parenthesize))
   },
   dimA[1L], dimA[2L])
   result <- latexMatrix(result)
@@ -785,19 +792,22 @@ determinant.latexMatrix <- function(x, logarithm, ...){
   
   # determinant by cofactors
 
+  latexMultSymbol <- getOption("latexMultSymbol")
+  if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
+
   # helper function for recursion:
   DET <- function(X){
     if (nrow(X) == 1) {
       as.vector(X)
     } else if (nrow(X) == 2){
-      paste0(parenthesize(X[1, 1]), " \\cdot ", parenthesize(X[2, 2]), " - ",
-             parenthesize(X[1, 2]), " \\cdot ", parenthesize(X[2, 1]))
+      paste0(parenthesize(X[1, 1]), paste0(" ", latexMultSymbol, " "), parenthesize(X[2, 2]), " - ",
+             parenthesize(X[1, 2]), paste0(" ", latexMultSymbol, " "), parenthesize(X[2, 1]))
     } else {
       indices <- 1:ncol(X)
       res <- ""
       for (j in indices){
         res <- paste0(res, if (isOdd(j)) " + " else " - ",
-                      X[1, j], " \\cdot ",
+                      X[1, j], paste0(" ", latexMultSymbol, " "),
                       parenthesize(DET(X[-1, indices != j]))
         )
       }
@@ -912,6 +922,9 @@ setMethod("kronecker",
             numericDimensions(X)
             numericDimensions(Y)
             
+            latexMultSymbol <- getOption("latexMultSymbol")
+            if (is.null(latexMultSymbol)) latexMultSymbol <- "\\cdot"
+            
             Xmat <- getBody(X)
             Ymat <- getBody(Y)
             
@@ -923,7 +936,7 @@ setMethod("kronecker",
                                 as.character(y) == "0"
                               x <- sapply(x, parenthesize)
                               y <- sapply(y, parenthesize)
-                              res <- paste0(x, " \\cdot ", y)
+                              res <- paste0(x, paste0(" ", latexMultSymbol, " "), y)
                               res[zeros] <- "0"
                               res
                             }
