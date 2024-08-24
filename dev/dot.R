@@ -67,6 +67,8 @@ if (FALSE){
   num <- -1:2
   chr <- letters[1:4]
   
+  options(latexMultSymbol = "\\cdot")
+  
   dot(num, num)  # OK
   dot(num, chr)  # OK
   dot(chr, num)  # OK
