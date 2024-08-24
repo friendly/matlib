@@ -261,9 +261,33 @@ If the elements of a matrix are valid R variable names, then it is also possible
 as.double(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
 ```
 
-### Transpose and matrix products
+### Matrix products and transpose
 
-The transpose, `t()`, and matrix product, `%*%` of `"latexMatrix"` objects are similarly straightforward. This directly transposes the matrix, as opposed to superscript notation,
+The product of two matrices is given by `%*%` for `"latexMatrix"` objects.
+
+
+```{r product1, results='asis'}
+A %*% B
+```
+
+To get the numeric result evaluated, use `as.double()` and perform ordinary
+matrix multiplication:
+
+```{r product2, results='asis'}
+as.double(A) %*% as.double(B) |> latexMatrix()
+```
+
+The LaTeX symbol for multiplication is a centered dot, `\\cdot` ($\cdot$), by default.
+This can be changed by changing `options(latexMultSymbol)`,
+e.g, to use the $\times$ symbol instead, use:
+
+```{r multSymbol, eval=FALSE}
+options(latexMultSymbol = "\\times")
+```
+
+
+The transpose, `t()` of `"latexMatrix"` 
+objects is similarly straightforward. This directly transposes the matrix, as opposed to superscript notation,
 $\mathbf{D}^\top$ or $\mathbf{D}^\prime$ which is implicit.
 
 ```{r transpose}
