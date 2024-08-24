@@ -139,7 +139,10 @@ Eqn(latexMatrix("u", "n", "k", lhs = ''),
     latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
 ```
 
-This produces the two numbered equations:
+This produces the two numbered equations:[^eqn-pkgdown]
+
+[^eqn-pkgdown]: At present equation numbers don't work in vignettes rendered as
+articles by `pkgdown`.
 
 ```{r eqn-svd,results='asis', echo=FALSE}
 Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
