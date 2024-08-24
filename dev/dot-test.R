@@ -3,6 +3,7 @@
 numericDimensions <- matlib:::numericDimensions
 updateWrapper <- matlib:::updateWrapper
 parenthesize <- matlib:::parenthesize
+getLatexMultSymbol <- matlib:::getLatexMultSymbol
 
 `%*%.latexMatrix` <- function(x, y){
   if (!inherits(y, "latexMatrix")){
@@ -34,21 +35,26 @@ parenthesize <- matlib:::parenthesize
 }
 
 if(FALSE) {
-  (A <- latexMatrix(matrix(c(1, -3, 0, 1), 2, 2)))
-  (B <- latexMatrix(matrix(c(5, 3, -1, 4), 2, 2)))
-  (C <- latexMatrix(symbol="c", 2, 2))
-  (D <- latexMatrix(symbol="d", 2, 2))
+(A <- latexMatrix(matrix(c(1, -3, 0, 1), 2, 2)))
+(B <- latexMatrix(matrix(c(5, 3, -1, 4), 2, 2)))
+(C <- latexMatrix(symbol="c", 2, 2))
+(D <- latexMatrix(symbol="d", 2, 2))
 
-  A %*% B
-  
-  as.double(A)
-  as.double(B)
-  as.double(A) %*% as.double(B)
-  
-  A %*% C
-  A %*% (B - C)
-  A %*% -B
-  (A - 2*D) %*% B
-  
-  A %*% solve(B)
+A %*% B
+
+as.double(A)
+as.double(B)
+as.double(A) %*% as.double(B)
+
+A %*% C
+A %*% (B - C)
+A %*% -B
+(A - 2*D) %*% B
+
+A %*% solve(B)
+A %*% solve(B, simplify=TRUE)
+# Error in `%*%.latexMatrix`(A, solve(B, simplify = TRUE)) : 
+#   solve(B, simplify = TRUE) is not of class 'latexMatrix'
+solve(B, simplify = TRUE) |> Eqn()
+
 }

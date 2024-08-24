@@ -59,6 +59,7 @@ dot <- function(x, y, simplify = TRUE) {
     }
   }
   if (res == "") res <- "0"
+  if (res == "-") res <- "-1"
   res
 }
 
