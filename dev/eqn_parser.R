@@ -5,10 +5,6 @@ eqn_parser <- function(string,
     if(grepl('`*`', string))
         string <- gsub('`*`', "\\times ", string, fixed=TRUE)
 
-    # %n -> \\\\ \n
-    if(grepl('%n', string))
-        string <- gsub('%n', "\\\\ ", string, fixed=TRUE)
-
     # **.**
     if(grepl('\\*\\*', string)){
         loc <- gregexpr("\\*\\*", string)[[1L]]
@@ -36,7 +32,7 @@ if(FALSE){
     s3 <- "\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = "
     s4 <- "*H*_0 : *C B* & = "
     s5 <- "*H*_0 : *C* *B* & = "
-    s6 <- "*H*_0 : %n *C* *B* & = "
+    # s6 <- "*H*_0 : %n *C* *B* & = "
     s7 <- "*H*_0 : *C* `*` *B*  = "
     s8 <- "*H*_0 : **C** **B** & = "
 
@@ -46,7 +42,7 @@ if(FALSE){
     identical(eqn_parser(s3), s3)
     eqn_parser(s4)
     eqn_parser(s5)
-    eqn_parser(s6)
+    # eqn_parser(s6)
     eqn_parser(s7)
     identical(eqn_parser(s8, `**` = 'mathbf'), s3)
 }
@@ -61,7 +57,7 @@ sprintEqn <- function(string, mats, ...){
     matched <- intersect(names(forms), names(dots))
     forms[matched] <- dots[matched]
     string <- do.call(eqn_parser, c(string, forms))
-    bodies <- lapply(mats, getLatex)
+    bodies <- lapply(mats, \(x) if(inherits(x, 'latexMatrix')) getLatex(x) else x)
     bodies <- lapply(bodies, \(x) gsub("\\", "\\\\", x, fixed=TRUE))
     nms <- names(bodies)
     for(i in seq_len(length(nms)))
@@ -81,8 +77,9 @@ if(FALSE){
         align=TRUE)
 
     sprintEqn("**X** & = **U \\Lambda V**^\\top %n
-                     & =  %U    %L    %V",
-              list(U=latexMatrix("u", "n", "ks"),
+                     & =  %U    %L    %V",        ## output structure
+              list(n=Eqn_newline(),               ## % macro elements
+                   U=latexMatrix("u", "n", "ks"),
                    V=latexMatrix("v", "k", "p", transpose = TRUE),
                    L=latexMatrix("\\lambda", "k", "k", diag=TRUE)),
               align=TRUE, label='eq:svd', `**`='mathbf')
@@ -97,6 +94,8 @@ if(FALSE){
 
     sprintEqn("**A** + **B** = %A + %B = %AB = %C",
               list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))))
+    sprintEqn("**A** + **B** = %A + %B = %AB = %C",
+              list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))), `**`="mathbf")
 
     # last
     (C <- latexMatrix(matrix(c(0, 1, 0, 0,
@@ -112,7 +111,7 @@ if(FALSE){
         align=TRUE)
 
     sprintEqn("*H*_0 : **C B** & = %C %B \\\\
-                               & = %B0 = **0**_{(2 \\times 3)} ",
+                               & = %B0 = **0**_{(2 `*` 3)}",
               list(C=C, B=B, B0=B0), `**`='mathbf', align=TRUE)
 
 }
