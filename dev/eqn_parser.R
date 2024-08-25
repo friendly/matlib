@@ -47,17 +47,33 @@ if(FALSE){
     identical(eqn_parser(s8, `**` = 'mathbf'), s3)
 }
 
-
-
-
-sprintEqn <- function(string, mats, ...){
+#' String formatting for LaTeX Equations
+#'
+#' @param string character vector indicating the structure of the
+#'   LaTeX output equation. Substitutions are specified using the
+#'   \code{%} character followed by the name of the object
+#'   (e.g., \code{"X = %A"} substitutes the information in the object
+#'   \code{A})
+#' @param subs a named \code{list} containing the information for the
+#'   \code{%} indicators in \code{string}. Can be either a
+#'   \code{character} vector or a \code{latexMatrix}
+#' @param ... additional arguments to be passed to \code{\link{Eqn}}
+#'
+sprintEqn <- function(string, subs = list(), ...){
     string <- paste0(string, ' ')
     dots <- list(...)
     forms <- formals(eqn_parser)
     matched <- intersect(names(forms), names(dots))
     forms[matched] <- dots[matched]
     string <- do.call(eqn_parser, c(string, forms))
-    bodies <- lapply(mats, \(x) if(inherits(x, 'latexMatrix')) getLatex(x) else x)
+    penv <- parent.frame()
+    sapply(names(penv), \(x, sub_names){
+        if(isTRUE(grepl(paste0('%', x), string)) &&
+                  !(x %in% sub_names)){
+            subs[[x]] <<- penv[[x]]
+        }
+    }, sub_names=names(subs))
+    bodies <- lapply(subs, \(x) if(inherits(x, 'latexMatrix')) getLatex(x) else x)
     bodies <- lapply(bodies, \(x) gsub("\\", "\\\\", x, fixed=TRUE))
     nms <- names(bodies)
     for(i in seq_len(length(nms)))
@@ -96,6 +112,11 @@ if(FALSE){
               list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))))
     sprintEqn("**A** + **B** = %A + %B = %AB = %C",
               list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))), `**`="mathbf")
+
+    # search in parent envir if not listed
+    AB <- A + B
+    C <- latexMatrix(as.double(A+B))
+    sprintEqn("**A** + **B** = %A + %B = %AB = %C")
 
     # last
     (C <- latexMatrix(matrix(c(0, 1, 0, 0,
