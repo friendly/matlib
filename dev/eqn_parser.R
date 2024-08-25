@@ -56,8 +56,9 @@ if(FALSE){
 #'   \code{A})
 #' @param subs a named \code{list} containing the information for the
 #'   \code{%} indicators in \code{string}. Can be either a
-#'   \code{character} vector or a \code{latexMatrix}
-#' @param ... additional arguments to be passed to \code{\link{Eqn}}
+#'   \code{character} vector, a \code{matrix}, or a \code{latexMatrix}
+#' @param ... additional arguments to be passed to \code{\link{Eqn}} and
+#'   \code{eqn_parser}
 #'
 sprintEqn <- function(string, subs = list(), ...){
     string <- paste0(string, ' ')
@@ -73,7 +74,13 @@ sprintEqn <- function(string, subs = list(), ...){
             subs[[x]] <<- penv[[x]]
         }
     }, sub_names=names(subs))
-    bodies <- lapply(subs, \(x) if(inherits(x, 'latexMatrix')) getLatex(x) else x)
+    bodies <- lapply(subs, \(x) if(inherits(x, 'latexMatrix')){
+        getLatex(x)
+    } else if(is.matrix(x)){
+        getLatex(latexMatrix(x))
+    } else {
+        x
+    })
     bodies <- lapply(bodies, \(x) gsub("\\", "\\\\", x, fixed=TRUE))
     nms <- names(bodies)
     for(i in seq_len(length(nms)))
@@ -101,8 +108,8 @@ if(FALSE){
               align=TRUE, label='eq:svd', `**`='mathbf')
 
     # next
-    A <- latexMatrix(matrix(c(1, -3, 0, 1), 2, 2))
-    B <- latexMatrix(matrix(c(5, 3, -1, 4), 2, 2))
+    A <- latexMatrix(aa <- matrix(c(1, -3, 0, 1), 2, 2))
+    B <- latexMatrix(bb <- matrix(c(5, 3, -1, 4), 2, 2))
     C <- latexMatrix(symbol="c", 2, 3)
     D <- latexMatrix(symbol="d", 2, 3)
 
@@ -115,7 +122,7 @@ if(FALSE){
 
     # search in parent envir if not listed
     AB <- A + B
-    C <- latexMatrix(as.double(A+B))
+    C <- aa + bb
     sprintEqn("**A** + **B** = %A + %B = %AB = %C")
 
     # last
