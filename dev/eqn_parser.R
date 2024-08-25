@@ -66,7 +66,7 @@ sprintEqn <- function(string, mats, ...){
     nms <- names(bodies)
     for(i in seq_len(length(nms)))
         string <- gsub(paste0('%', nms[i], " "), bodies[[i]], string)
-    Eqn(string, ...)
+    do.call(Eqn, c(string=string, dots[setdiff(names(dots), names(forms))]))
 }
 
 if(FALSE){
@@ -113,6 +113,6 @@ if(FALSE){
 
     sprintEqn("*H*_0 : **C B** & = %C %B \\\\
                                & = %B0 = **0**_{(2 \\times 3)} ",
-              list(C=C, B=B, B0=B0))
+              list(C=C, B=B, B0=B0), `**`='mathbf', align=TRUE)
 
 }
