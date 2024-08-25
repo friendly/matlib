@@ -38,6 +38,7 @@ if(FALSE){
     s5 <- "*H*_0 : *C* *B* & = "
     s6 <- "*H*_0 : %n *C* *B* & = "
     s7 <- "*H*_0 : *C* `*` *B*  = "
+    s8 <- "*H*_0 : **C** **B** & = "
 
     identical(eqn_parser(s1), s1)
     eqn_parser(s2)
@@ -47,6 +48,7 @@ if(FALSE){
     eqn_parser(s5)
     eqn_parser(s6)
     eqn_parser(s7)
+    identical(eqn_parser(s8, `**` = 'mathbf'), s3)
 }
 
 
@@ -54,7 +56,11 @@ if(FALSE){
 
 sprintEqn <- function(string, mats, ...){
     string <- paste0(string, ' ')
-    string <- eqn_parser(string)
+    dots <- list(...)
+    forms <- formals(eqn_parser)
+    matched <- intersect(names(forms), names(dots))
+    forms[matched] <- dots[matched]
+    string <- do.call(eqn_parser, c(string, forms))
     bodies <- lapply(mats, getLatex)
     bodies <- lapply(bodies, \(x) gsub("\\", "\\\\", x, fixed=TRUE))
     nms <- names(bodies)
@@ -79,7 +85,7 @@ if(FALSE){
               list(U=latexMatrix("u", "n", "ks"),
                    V=latexMatrix("v", "k", "p", transpose = TRUE),
                    L=latexMatrix("\\lambda", "k", "k", diag=TRUE)),
-              align=TRUE, label='eq:svd')
+              align=TRUE, label='eq:svd', `**`='mathbf')
 
     # next
     A <- latexMatrix(matrix(c(1, -3, 0, 1), 2, 2))
@@ -88,8 +94,9 @@ if(FALSE){
     D <- latexMatrix(symbol="d", 2, 3)
 
     Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B, " = ", as.double(A + B))
-    sprintEqn("**A** + **B** = %A + %B = %C = %D",
-              list(A=A, B=B, C=A + B, D=latexMatrix(as.double(A+B))))
+
+    sprintEqn("**A** + **B** = %A + %B = %AB = %C",
+              list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))))
 
     # last
     (C <- latexMatrix(matrix(c(0, 1, 0, 0,
@@ -105,13 +112,7 @@ if(FALSE){
         align=TRUE)
 
     sprintEqn("*H*_0 : **C B** & = %C %B \\\\
-                               & = %D = **0**_{(2 \\times 3)} ",
-              list(C=C, B=B, D=B0))
-
-    # TODO, allow matching of % elements with more than one character, such as
-    # %A + %B = %AB
-    # vs current
-    # %A + %B = %C
-
+                               & = %B0 = **0**_{(2 \\times 3)} ",
+              list(C=C, B=B, B0=B0))
 
 }
