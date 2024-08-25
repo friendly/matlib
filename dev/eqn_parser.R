@@ -54,19 +54,37 @@ if(FALSE){
 #'   \code{%} character followed by the name of the object
 #'   (e.g., \code{"X = %A"} substitutes the information in the object
 #'   \code{A})
+#'
+#'   Additionally, \code{markdown = TRUE}
+#'   markdown syntax for bold fonts (\code{**}) and
+#'   italicizes (\code{*}) can be used for wrapping text elements with
+#'   \code{boldsymbol} and \code{mathcal} blocks, respectively.
+#'   These wrappers can be overwritten by matching the operator specification
+#'   in \code{...}; for example, using \code{mathbf} for bold text requires
+#'   passing \code{`**` = 'mathbf'}
 #' @param subs a named \code{list} containing the information for the
 #'   \code{%} indicators in \code{string}. Can be either a
 #'   \code{character} vector, a \code{matrix}, or a \code{latexMatrix}
+#' @param mat_args list of arguments to be passed to \code{\link{latexMatrix}} to change the
+#'   properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
+#'   each \code{matrix} objects supplied. If further specificity is required create
+#'   \code{\link{latexMatrix}} objects directly.
+#' @param markdown logical; use asterisk wrappers in a
+#'  way similar to markdown text? Note that use of this option disables
+#'  the standard use of the asterisk, though it can be included via \code{`*`}
 #' @param ... additional arguments to be passed to \code{\link{Eqn}} and
 #'   \code{eqn_parser}
 #'
-sprintEqn <- function(string, subs = list(), ...){
-    string <- paste0(string, ' ')
+sprintEqn <- function(string, subs = list(), mat_args = list(),
+                      markdown = TRUE, ...){
     dots <- list(...)
-    forms <- formals(eqn_parser)
-    matched <- intersect(names(forms), names(dots))
-    forms[matched] <- dots[matched]
-    string <- do.call(eqn_parser, c(string, forms))
+    if(markdown){
+        string <- paste0(string, ' ')
+        forms <- formals(eqn_parser)
+        matched <- intersect(names(forms), names(dots))
+        forms[matched] <- dots[matched]
+        string <- do.call(eqn_parser, c(string, forms))
+    }
     penv <- parent.frame()
     sapply(names(penv), \(x, sub_names){
         if(isTRUE(grepl(paste0('%', x), string)) &&
@@ -77,7 +95,7 @@ sprintEqn <- function(string, subs = list(), ...){
     bodies <- lapply(subs, \(x) if(inherits(x, 'latexMatrix')){
         getLatex(x)
     } else if(is.matrix(x)){
-        getLatex(latexMatrix(x))
+        getLatex(do.call(latexMatrix, c(list(symbol=x), mat_args)) )
     } else {
         x
     })
@@ -124,6 +142,10 @@ if(FALSE){
     AB <- A + B
     C <- aa + bb
     sprintEqn("**A** + **B** = %A + %B = %AB = %C")
+
+    # pass global constructor args for matricies to be built
+    sprintEqn("**A** + **B** = %A + %B = %AB = %C",
+              mat_args = list(matrix='bmatrix'))
 
     # last
     (C <- latexMatrix(matrix(c(0, 1, 0, 0,
