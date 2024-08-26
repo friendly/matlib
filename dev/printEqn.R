@@ -78,15 +78,12 @@ if(FALSE){
 #' @examples
 #'
 #' # no formatting; equivalent to Eqn()
-#' printEqn("e = mc^2")
-#' printEqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ")
+#' printEqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B}")
 #'
 #' # markdown-style formatting
-#' printEqn("**e** = **mc**^2")
-#' printEqn("*H*_0 : **C** **B** & = ")
+#' printEqn("*H*_0 : **C** **B**")
 #'
-#'
-#' # more complicated expression with % substitutions
+#' # expressions with % substitutions
 #' c <- matrix(c(0, 1, 0, 0,
 #'               0, 0, 1, 0), nrow=2, byrow=TRUE)
 #' C <- latexMatrix(c, matrix = "bmatrix")
@@ -96,7 +93,7 @@ if(FALSE){
 #' B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE,
 #'                   prefix.col = 'y_')
 #'
-#' # matrix operations
+#' # specify how complete LaTeX equation should appear
 #' printEqn("**C** + **C** = %C + %C = %CC = %D",
 #'          list(C=C, CC = C + C, D = c + c))
 #'
@@ -106,11 +103,16 @@ if(FALSE){
 #'          list(C=C, B=B, B0=B0), align=TRUE)
 #'
 #' # If not specified in list will search in parent environment
-#' #   Note: ** changed to LaTeX "mathbf" instead
 #' printEqn("*H*_0 : **C B** & = %C %B \\\\
 #'                           & = %B0 = **0**_{(2 `*` 3)}",
-#'          `**`='mathbf', align=TRUE)
+#'          align=TRUE)
 #'
+#' # Change ** use LaTeX "mathbf" instead of "boldsymbol" and
+#' #  use %n to indicate newline
+#' printEqn("*H*_0 : **C B** & = %C %B %n
+#'                           & = %B0 = **0**_{(2 `*` 3)}",
+#'          list(n="\\\\", C=C, B=B, B0=B0),
+#'          `**`='mathbf', align=TRUE)
 #'
 printEqn <- function(string, subs = list(), mat_args = list(),
                       markdown = TRUE, ...){
