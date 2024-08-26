@@ -73,9 +73,46 @@ if(FALSE){
 #'  way similar to markdown text? Note that use of this option disables
 #'  the standard use of the asterisk, though it can be included via \code{`*`}
 #' @param ... additional arguments to be passed to \code{\link{Eqn}} and
-#'   \code{eqn_parser}
+#'   the internal equation parser if \code{markdown = TRUE}
 #'
-sprintEqn <- function(string, subs = list(), mat_args = list(),
+#' @examples
+#'
+#' # no formatting; equivalent to Eqn()
+#' printEqn("e = mc^2")
+#' printEqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ")
+#'
+#' # markdown-style formatting
+#' printEqn("**e** = **mc**^2")
+#' printEqn("*H*_0 : **C** **B** & = ")
+#'
+#'
+#' # more complicated expression with % substitutions
+#' c <- matrix(c(0, 1, 0, 0,
+#'               0, 0, 1, 0), nrow=2, byrow=TRUE)
+#' C <- latexMatrix(c, matrix = "bmatrix")
+#' B <- latexMatrix('\\beta', ncol = 3, nrow=4,
+#'                  comma=TRUE, prefix.col = 'y_',
+#'                  zero.based=c(TRUE, FALSE))
+#' B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE,
+#'                   prefix.col = 'y_')
+#'
+#' # matrix operations
+#' printEqn("**C** + **C** = %C + %C = %CC = %D",
+#'          list(C=C, CC = C + C, D = c + c))
+#'
+#' # align with &
+#' printEqn("*H*_0 : **C B** & = %C %B \\\\
+#'                           & = %B0 = **0**_{(2 `*` 3)}",
+#'          list(C=C, B=B, B0=B0), align=TRUE)
+#'
+#' # If not specified in list will search in parent environment
+#' #   Note: ** changed to LaTeX "mathbf" instead
+#' printEqn("*H*_0 : **C B** & = %C %B \\\\
+#'                           & = %B0 = **0**_{(2 `*` 3)}",
+#'          `**`='mathbf', align=TRUE)
+#'
+#'
+printEqn <- function(string, subs = list(), mat_args = list(),
                       markdown = TRUE, ...){
     dots <- list(...)
     if(markdown){
@@ -117,7 +154,7 @@ if(FALSE){
         latexMatrix("v", "k", "p", transpose = TRUE),
         align=TRUE)
 
-    sprintEqn("**X** & = **U \\Lambda V**^\\top %n
+    printEqn("**X** & = **U \\Lambda V**^\\top %n
                      & =  %U    %L    %V",        ## output structure
               list(n=Eqn_newline(),               ## % macro elements
                    U=latexMatrix("u", "n", "ks"),
@@ -133,18 +170,18 @@ if(FALSE){
 
     Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B, " = ", as.double(A + B))
 
-    sprintEqn("**A** + **B** = %A + %B = %AB = %C",
+    printEqn("**A** + **B** = %A + %B = %AB = %C",
               list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))))
-    sprintEqn("**A** + **B** = %A + %B = %AB = %C",
+    printEqn("**A** + **B** = %A + %B = %AB = %C",
               list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))), `**`="mathbf")
 
     # search in parent envir if not listed
     AB <- A + B
     C <- aa + bb
-    sprintEqn("**A** + **B** = %A + %B = %AB = %C")
+    printEqn("**A** + **B** = %A + %B = %AB = %C")
 
     # pass global constructor args for matricies to be built
-    sprintEqn("**A** + **B** = %A + %B = %AB = %C",
+    printEqn("**A** + **B** = %A + %B = %AB = %C",
               mat_args = list(matrix='bmatrix'))
 
     # last
@@ -160,7 +197,7 @@ if(FALSE){
         "= \\mathbf{0}_{(2 \\times 3)}",
         align=TRUE)
 
-    sprintEqn("*H*_0 : **C B** & = %C %B \\\\
+    printEqn("*H*_0 : **C B** & = %C %B \\\\
                                & = %B0 = **0**_{(2 `*` 3)}",
               list(C=C, B=B, B0=B0), `**`='mathbf', align=TRUE)
 
