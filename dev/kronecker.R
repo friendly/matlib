@@ -63,4 +63,13 @@ if (FALSE){
   
   X %X% Y
   
+  A <- latexMatrix("a", 2, 2)
+  B <- latexMatrix("b", 2, 2)
+  kronecker(A, B)
+  
+  # How could I generate the 'definition' of Kronecker product,
+  A <- latexMatrix('a', nrow=2, ncol=2)
+  B <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
+  kronecker(A, B)
+  
 }
