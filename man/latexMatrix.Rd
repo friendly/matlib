@@ -15,16 +15,7 @@
 \alias{Ncol}
 \alias{Ncol.latexMatrix}
 \alias{print.latexMatrix}
-\alias{+.latexMatrix}
-\alias{-.latexMatrix}
-\alias{\%*\%.latexMatrix}
-\alias{*.latexMatrix}
-\alias{t.latexMatrix}
-\alias{determinant.latexMatrix}
-\alias{solve.latexMatrix}
 \alias{as.double.latexMatrix}
-\alias{kronecker,latexMatrix,latexMatrix-method}
-\alias{\%X\%}
 \title{Create and Manipulate LaTeX Repesentations of Matrices}
 \usage{
 latexMatrix(
@@ -74,31 +65,7 @@ Ncol(x, ...)
 
 \method{print}{latexMatrix}(x, onConsole = TRUE, ...)
 
-\method{+}{latexMatrix}(e1, e2)
-
-\method{-}{latexMatrix}(e1, e2)
-
-\method{\%*\%}{latexMatrix}(x, y)
-
-\method{*}{latexMatrix}(e1, e2)
-
-\method{t}{latexMatrix}(x)
-
-\method{determinant}{latexMatrix}(x, logarithm, ...)
-
-\method{solve}{latexMatrix}(
-  a,
-  b,
-  simplify = FALSE,
-  frac = c("\\\\dfrac", "\\\\frac", "\\\\tfrac", "\\\\cfrac"),
-  ...
-)
-
 \method{as.double}{latexMatrix}(x, locals = list(), ...)
-
-\S4method{kronecker}{latexMatrix,latexMatrix}(X, Y, FUN = "*", make.dimnames = FALSE, ...)
-
-x \%X\% y
 }
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
@@ -169,38 +136,10 @@ on each element}
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
 
-\item{e1}{a \code{"latexMatrix"} object (or, for \code{*} a scalar).}
-
-\item{e2}{a \code{"latexMatrix"} object (or, for \code{*} a scalar).}
-
-\item{y}{a \code{"latexMatrix"} object}
-
-\item{logarithm}{ignored; to match the \code{\link{determinant}} generic}
-
-\item{a}{a \code{"latexMatrix"} object representing a square matrix}
-
-\item{b}{ignored; to match the \code{\link{solve}} generic}
-
-\item{simplify}{if \code{TRUE} (the default is \code{FALSE}),
-return a LaTeX expression with the inverse of the determinant in
-front of the adjoint matrix rather than a \code{"latexMatrix"} object in which each
-element of the adjoint matrix is divided by the determinant.}
-
-\item{frac}{LaTeX command to use in forming fractions; the default
-is \code{"\\dfrac"}}
-
 \item{locals}{an optional list or named numeric vector of variables to be given
 specific numeric values; e.g.,
 \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or
 \code{locals = c(a = 1, b = 5, c = -1, d = 4)}}
-
-\item{X}{a \code{"latexMatrix"} object}
-
-\item{Y}{a \code{"latexMatrix"} object}
-
-\item{FUN}{to match the \code{\link{kronecker}} generic, ignored}
-
-\item{make.dimnames}{to match the \code{\link{kronecker}} generic, ignored}
 }
 \value{
 \code{latexMatrix()} returns an object of class \code{"latexMatrix"}
@@ -275,7 +214,7 @@ This implementation assumes that the LaTeX \code{amsmath} package will be availa
 
 You may need to use \code{extra_dependencies: ["amsmath"]} in your YAML header of a \code{Rmd} or \code{qmd} file.
 
-You can actually supply a numeric matrix as the \code{symbol}, but the result will not be pretty
+You can supply a numeric matrix as the \code{symbol}, but the result will not be pretty
 unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
 \code{\link{matrix2latex}}.
 
@@ -283,21 +222,8 @@ The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
 components of the returned object.
 
-There are \code{"latexMatrix"} methods for several standard R arithmetic
-operators and functions of matrices, including: 
-\itemize{
-\item \code{+} (matrix addition), \code{-} 
-(matrix subtraction), \code{*} (product of a scalar and a matrix),
-\item \code{\%*\%} (matrix product), 
-\item \code{t()} (transpose), 
-\item \code{determinant()}, 
-\item \code{solve()} (matrix inverse),  
-\item \code{kronecker()} and the operator \code{\%O\%} (the Kronecker product), and
-\item \code{as.double()} (coercion to numeric, if possible).
-}
-
-These operators and functions only apply to \code{"latexMatrix"} objects
-of definite (i.e., numeric) dimensions.
+Various functions and operators for \code{"latexMatrix"} objects are
+documents separately; see, e.g., \code{\link{matsum}}
 }
 \examples{
 latexMatrix()
@@ -367,36 +293,10 @@ latexMatrix(m, fractions=TRUE)
 
 # zero-based indexing
 latexMatrix(zero.based=c(TRUE, TRUE))
-
-# arithmetic operators and functions
-A <- latexMatrix(symbol="a", nrow=2, ncol=2)
-B <- latexMatrix(symbol="b", nrow=2, ncol=2)
-A
-B
-A + B
-A - B
-"a" * A
-C <- latexMatrix(symbol="c", nrow=2, ncol=3)
-A \%*\% C
-t(C)
-determinant(A)
-cat(solve(A, simplify=TRUE))
-D <- latexMatrix(matrix(letters[1:4], 2, 2))
-D
-as.numeric(D, locals=list(a=1, b=2, c=3, d=4))
-X <- latexMatrix(matrix(c(3, 2, 0, 1, 1, 1, 2,-2, 1), 3, 3))
-X
-as.numeric(X)
-MASS::fractions(as.numeric(solve(X)))
-(d <- determinant(X))
-eval(parse(text=(gsub("\\\\\\\\cdot", "*", d))))
-X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
-I3 <- latexMatrix(diag(3))
-I3 \%X\% X
-kronecker(I3, X, sparse=TRUE)
 }
 \seealso{
-\code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
+\code{\link{matsum}}, \code{\link{matrix2latex}},
+ \code{\link[clipr]{write_clip}}
 }
 \author{
 John Fox

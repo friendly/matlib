@@ -62,7 +62,7 @@
 #'
 #' You may need to use \code{extra_dependencies: ["amsmath"]} in your YAML header of a \code{Rmd} or \code{qmd} file.
 #'
-#' You can actually supply a numeric matrix as the \code{symbol}, but the result will not be pretty
+#' You can supply a numeric matrix as the \code{symbol}, but the result will not be pretty
 #' unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
 #' \code{\link{matrix2latex}}.
 #'
@@ -70,21 +70,8 @@
 #' \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
 #' components of the returned object.
 #' 
-#' There are \code{"latexMatrix"} methods for several standard R arithmetic
-#' operators and functions of matrices, including: 
-#' \itemize{
-#' \item \code{+} (matrix addition), \code{-} 
-#' (matrix subtraction), \code{*} (product of a scalar and a matrix),
-#' \item \code{\%*\%} (matrix product), 
-#' \item \code{t()} (transpose), 
-#' \item \code{determinant()}, 
-#' \item \code{solve()} (matrix inverse),  
-#' \item \code{kronecker()} and the operator \code{\%O\%} (the Kronecker product), and
-#' \item \code{as.double()} (coercion to numeric, if possible).
-#' }
-#' 
-#' These operators and functions only apply to \code{"latexMatrix"} objects
-#' of definite (i.e., numeric) dimensions.
+#' Various functions and operators for \code{"latexMatrix"} objects are
+#' documents separately; see, e.g., \code{\link{matsum}}
 #'
 #' @param symbol name for matrix elements, character string. For LaTeX symbols,
 #'        the backslash must be doubled because it is an escape character in R.
@@ -147,7 +134,8 @@
 #'          }
 #'
 #' @author John Fox
-#' @seealso \code{\link{matrix2latex}}, \code{\link[clipr]{write_clip}}
+#' @seealso \code{\link{matsum}}, \code{\link{matrix2latex}},
+#'  \code{\link[clipr]{write_clip}}
 #' @export
 #' @examples
 #' latexMatrix()
@@ -217,33 +205,6 @@
 #'
 #' # zero-based indexing
 #' latexMatrix(zero.based=c(TRUE, TRUE))
-#' 
-#' # arithmetic operators and functions
-#' A <- latexMatrix(symbol="a", nrow=2, ncol=2)
-#' B <- latexMatrix(symbol="b", nrow=2, ncol=2)
-#' A
-#' B
-#' A + B
-#' A - B
-#' "a" * A
-#' C <- latexMatrix(symbol="c", nrow=2, ncol=3)
-#' A %*% C
-#' t(C)
-#' determinant(A)
-#' cat(solve(A, simplify=TRUE))
-#' D <- latexMatrix(matrix(letters[1:4], 2, 2))
-#' D
-#' as.numeric(D, locals=list(a=1, b=2, c=3, d=4))
-#' X <- latexMatrix(matrix(c(3, 2, 0, 1, 1, 1, 2,-2, 1), 3, 3))
-#' X
-#' as.numeric(X)
-#' MASS::fractions(as.numeric(solve(X)))
-#' (d <- determinant(X))
-#' eval(parse(text=(gsub("\\\\cdot", "*", d))))
-#' X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
-#' I3 <- latexMatrix(diag(3))
-#' I3 %X% X
-#' kronecker(I3, X, sparse=TRUE)
 
 
 latexMatrix <- function(
@@ -632,246 +593,6 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   invisible(x)
 }
 
-
-# methods for arithmetic operators and functions:
-
-#' @param e1 a \code{"latexMatrix"} object (or, for \code{*} a scalar).
-#' @param e2 a \code{"latexMatrix"} object (or, for \code{*} a scalar).
-
-#' @rdname latexMatrix
-#' @export
-`+.latexMatrix` <- function(e1, e2){
-  if (!inherits(e2, "latexMatrix")){
-    stop(deparse(substitute(e2)),
-         " is not of class 'latexMatrix'")
-  }
-  numericDimensions(e1)
-  numericDimensions(e2)
-  A <- getBody(e1)
-  B <- getBody(e2)
-  dimA <- dim(A)
-  dimB <- dim(B)
-  if(!all(dim(A) == dim(B))){
-    stop('matricies are not conformable for addition')
-  }
-  result <- matrix(paste(sapply(A, parenthesize), "+", 
-                         sapply(B, parenthesize)), 
-                   dimA[1L], dimA[2L])
-  result <- latexMatrix(result)
-  result <- updateWrapper(result, getWrapper(e1))
-  result$dim <- Dim(e1)
-  result
-}
-
-#' @rdname latexMatrix
-#' @export
-`-.latexMatrix` <- function(e1, e2){
-  # unary -
-  if (missing(e2)){
-    numericDimensions(e1)
-    A <- getBody(e1)
-    dimA <- Dim(e1)
-    result <- matrix(paste("-", sapply(A, parenthesize)), dimA[1L], dimA[2L])
-    result <- latexMatrix(result)
-    result <- updateWrapper(result, getWrapper(e1))
-    result$dim <- dimA
-    return(result)
-  }
-  if (!inherits(e2, "latexMatrix")){
-    stop(deparse(substitute(e2)),
-         " is not of class 'latexMatrix'")
-  }
-  numericDimensions(e1)
-  numericDimensions(e2)
-  A <- getBody(e1)
-  B <- getBody(e2)
-  dimA <- dim(A)
-  dimB <- dim(B)
-  if(!all(dim(A) == dim(B))){
-    stop('matricies are not conformable for subtraction')
-  }
-  result <- matrix(paste(sapply(A, parenthesize), "-", 
-                         sapply(B, parenthesize)), 
-                   dimA[1L], dimA[2L])
-  result <- latexMatrix(result)
-  result <- updateWrapper(result, getWrapper(e1))
-  result$dim <- Dim(e1)
-  result
-}
-
-#' @param y a \code{"latexMatrix"} object
-
-#' @rdname latexMatrix
-#' @export
-`%*%.latexMatrix` <- function(x, y){
-  if (!inherits(y, "latexMatrix")){
-    stop(deparse(substitute(y)),
-         " is not of class 'latexMatrix'")
-  }
-  numericDimensions(x)
-  numericDimensions(y)
-  X <- getBody(x)
-  Y <- getBody(y)
-  dimX <- dim(X)
-  dimY <- dim(Y)
-  if (dimX[2] != dimY[1]){
-    stop('matricies are not conformable for multiplication')
-  }
-  
-  latexMultSymbol <- getLatexMultSymbol()
-
-  Z <- matrix("", nrow(X), ncol(Y))
-  for (i in 1:nrow(X)){
-    for (j in 1:ncol(Y)){
-      for (k in 1:ncol(X)){
-        Z[i, j] <- paste0(Z[i, j],
-                          if (k > 1) " + ",
-                          parenthesize(X[i, k]),
-                          paste0(" ", latexMultSymbol, " "),
-                          parenthesize(Y[k, j]))
-      }
-    }
-  }
-  result <- latexMatrix(Z)
-  result <- updateWrapper(result, getWrapper(x))
-  result$dim <- dim(Z)
-  result
-}
-
-#' @rdname latexMatrix
-#' @export
-`*.latexMatrix` <- function (e1, e2) {
-  if (inherits(e1, "latexMatrix") && inherits(e2, "latexMatrix")) 
-    stop("both arguments of * cannot be 'latexMatrix' objects")
-  swapped <- if (inherits(e1, "latexMatrix")) {
-    swap <- e1
-    e1 <- e2
-    e2 <- swap
-    TRUE
-  } else {
-    FALSE
-  }
-  if (!is.vector(e1) || length(e1) != 1) 
-    stop("one argument to * must be a scalar")
-  numericDimensions(e2)
-  
-  latexMultSymbol <- getLatexMultSymbol()
-  
-  A <- getBody(e2)
-  dimA <- dim(A)
-  wrapper <- getWrapper(e2)
-  result <- matrix(if (swapped) {
-    paste(sapply(A, parenthesize), latexMultSymbol, e1)
-  } else{
-    paste(e1, latexMultSymbol, sapply(A, parenthesize))
-  },
-  dimA[1L], dimA[2L])
-  result <- latexMatrix(result)
-  result <- updateWrapper(result, getWrapper(e2))
-  result$dim <- Dim(e2)
-  result
-}
-
-#' @rdname latexMatrix
-#' @export
-t.latexMatrix <- function(x){
-  numericDimensions(x)
-  result <- latexMatrix(t(getBody(x)))
-  result <- updateWrapper(result, getWrapper(x))
-  result$dim <- rev(Dim(x))
-  result
-}
-
-#' @param logarithm ignored; to match the \code{\link{determinant}} generic
-
-#' @rdname latexMatrix
-#' @export
-determinant.latexMatrix <- function(x, logarithm, ...){
-  
-  # determinant by cofactors
-
-  latexMultSymbol <- getLatexMultSymbol()
-  
-  # helper function for recursion:
-  DET <- function(X){
-    if (nrow(X) == 1) {
-      as.vector(X)
-    } else if (nrow(X) == 2){
-      paste0(parenthesize(X[1, 1]), paste0(" ", latexMultSymbol, " "), parenthesize(X[2, 2]), " - ",
-             parenthesize(X[1, 2]), paste0(" ", latexMultSymbol, " "), parenthesize(X[2, 1]))
-    } else {
-      indices <- 1:ncol(X)
-      res <- ""
-      for (j in indices){
-        res <- paste0(res, if (isOdd(j)) " + " else " - ",
-                      X[1, j], paste0(" ", latexMultSymbol, " "),
-                      parenthesize(DET(X[-1, indices != j]))
-        )
-      }
-      res
-    }
-  }
-
-  numericDimensions(x)
-
-  sub("^[ +]*", "", DET(getBody(x)))
-}
-
-#' @param a a \code{"latexMatrix"} object representing a square matrix
-#' @param b ignored; to match the \code{\link{solve}} generic
-#' @param simplify if \code{TRUE} (the default is \code{FALSE}),
-#'   return a LaTeX expression with the inverse of the determinant in
-#'   front of the adjoint matrix rather than a \code{"latexMatrix"} object in which each
-#'   element of the adjoint matrix is divided by the determinant.
-#' @param frac LaTeX command to use in forming fractions; the default
-#'   is \code{"\\dfrac"}
-
-#' @rdname latexMatrix
-#' @export
-solve.latexMatrix <- function (a, b, simplify=FALSE,
-                                  frac=c("\\dfrac", "\\frac", "\\tfrac", "\\cfrac"),
-                                  ...) {
-
-  # symbolic matrix inverse by adjoint matrix and determinant
-
-  frac <- match.arg(frac)
-
-  numericDimensions(a)
-  if (Nrow(a) != Ncol(a)) stop("matrix 'a' must be square")
-  if (!missing(b)) warning("'b' argument to solve() ignored")
-
-  det <- determinant(a)
-  A <- getBody(a)
-  n <- nrow(A)
-  indices <- 1:n
-  A_inv <- matrix("", n, n)
-
-  for (i in 1:n){
-    for (j in 1:n){
-      A_ij <- latexMatrix(A[indices[-i], indices[-j], drop=FALSE])
-      A_inv[i, j] <- if (Nrow(A_ij) == 1) { # cofactors
-        A[indices[-i], indices[-j]]
-      } else{
-        determinant(A_ij)
-      }
-      if (isOdd(i + j)) A_inv[i, j] <- paste0("-", parenthesize(A_inv[i, j]))
-      if (!simplify) A_inv[i, j] <- paste0(frac, "{", A_inv[i, j],
-                                           "}{", det, "}")
-    }
-  }
-
-  A_inv <- t(A_inv) # adjoint
-  result <- latexMatrix(A_inv)
-  result <- updateWrapper(result, getWrapper(a))
-
-  if (!simplify) {
-    return(result)
-  } else {
-    return(paste0("\\frac{1}{", det, "} \n",
-                  getLatex(result)))
-  }
-}
-
 #' @param locals an optional list or named numeric vector of variables to be given
 #'   specific numeric values; e.g.,
 #'   \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or
@@ -903,51 +624,6 @@ as.double.latexMatrix <- function(x, locals=list(), ...){
   matrix(X, nrow=nrow)
 }
 
-setOldClass("latexMatrix")
-
-#' @rdname latexMatrix
-#' @export
-#' @param X a \code{"latexMatrix"} object
-#' @param Y a \code{"latexMatrix"} object
-#' @param FUN to match the \code{\link{kronecker}} generic, ignored
-#' @param make.dimnames to match the \code{\link{kronecker}} generic, ignored
-setMethod("kronecker", 
-          signature(X = "latexMatrix", 
-                    Y = "latexMatrix"), 
-          function(X, Y, FUN, make.dimnames, ...) {
-            
-            numericDimensions(X)
-            numericDimensions(Y)
-            
-            latexMultSymbol <- getLatexMultSymbol()
-            
-            Xmat <- getBody(X)
-            Ymat <- getBody(Y)
-            
-            Z <- .kronecker(Xmat, Ymat, 
-                            function(x, y) {
-                              x <- trimws(x)
-                              y <- trimws(y)
-                              zeros <- as.character(x) == "0" | 
-                                as.character(y) == "0"
-                              x <- sapply(x, parenthesize)
-                              y <- sapply(y, parenthesize)
-                              res <- paste0(x, paste0(" ", latexMultSymbol, " "), y)
-                              res[zeros] <- "0"
-                              res
-                            }
-            )
-            
-            result <- latexMatrix(Z, ...)
-            result <- updateWrapper(result, getWrapper(X))
-            result
-          }
-)
-
-#' @rdname latexMatrix
-#' @export
-`%X%` <- function(x, y) methods::kronecker(x, y)
-
 # unexported functions:
 
 numericDimensions <- function(x){
@@ -956,14 +632,6 @@ numericDimensions <- function(x){
                               "' does not have numeric dimensions")
   return(NULL)
 }
-
-# parenthesize <- function(element){
-#   if (grepl("[ +-/^]", element)) {
-#     paste0("(", element, ")")
-#   } else {
-#     element
-#   }
-# }
 
 parenthesize <- function(element){
   element <- if (grepl("[ +/^-]", element)) {
