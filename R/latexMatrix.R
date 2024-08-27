@@ -71,7 +71,7 @@
 #' components of the returned object.
 #' 
 #' Various functions and operators for \code{"latexMatrix"} objects are
-#' documents separately; see, e.g., \code{\link{matsum}}
+#' documents separately; see, \code{\link{latexMatrixOperations}}.
 #'
 #' @param symbol name for matrix elements, character string. For LaTeX symbols,
 #'        the backslash must be doubled because it is an escape character in R.
@@ -134,7 +134,7 @@
 #'          }
 #'
 #' @author John Fox
-#' @seealso \code{\link{matsum}}, \code{\link{matrix2latex}},
+#' @seealso \code{\link{latexMatrixOperations}}, \code{\link{matrix2latex}},
 #'  \code{\link[clipr]{write_clip}}
 #' @export
 #' @examples

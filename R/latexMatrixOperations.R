@@ -15,6 +15,7 @@
 #' \item \code{determinant()} of a square matrix;
 #' \item \code{kronecker()} and \code{\%O\%} (the Kronecker product), and
 #' }
+#' @name latexMatrixOperations
 #' 
 #' @details
 #' These operators and functions only apply to \code{"latexMatrix"} objects
@@ -106,13 +107,13 @@
 #' @returns All of these functions return \code{"latexMatrix"} objects, 
 #' except for \code{Dot()}, which returns a LaTeX expression as a character string.
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 matsum <- function(A, ...){
   UseMethod("matsum")
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 matsum.latexMatrix <- function(A, ..., as.numeric=TRUE){
   
@@ -153,19 +154,19 @@ matsum.latexMatrix <- function(A, ..., as.numeric=TRUE){
   A
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 `+.latexMatrix` <- function(e1, e2){
   matsum(e1, e2)
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 matdiff <- function(A, B, ...){
   UseMethod("matdiff")
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
   
@@ -212,14 +213,14 @@ matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
   A
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 `-.latexMatrix` <- function(e1, e2){
   if (missing(e2)) e2 <- NULL
   matdiff(e1, e2)
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 `*.latexMatrix` <- function (e1, e2) {
   if (inherits(e1, "latexMatrix") && inherits(e2, "latexMatrix")) 
@@ -253,7 +254,7 @@ matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
   result
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 Dot <- function(x, y, simplify = TRUE) {
   if (length(x) != length(y)) stop("Vectors must have the same length")
@@ -295,13 +296,13 @@ Dot <- function(x, y, simplify = TRUE) {
   res
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 matmult <- function(X, ...){
   UseMethod("matmult")
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 matmult.latexMatrix <- function(X, ..., simplify=TRUE, 
                                 as.numeric=TRUE){
@@ -352,19 +353,19 @@ matmult.latexMatrix <- function(X, ..., simplify=TRUE,
   
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 `%*%.latexMatrix` <- function(x, y){
   matmult(x, y)
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 matpower <- function(X, power, ...){
   UseMethod("matpower")
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 matpower.latexMatrix <- function(X, power, simplify=TRUE, 
                                  as.numeric=TRUE, ...){
@@ -410,26 +411,26 @@ matpower.latexMatrix <- function(X, power, simplify=TRUE,
   return(Xp)
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 `^.latexMatrix` <- function(e1, e2){
   matpower(e1, e2)
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 inverse <- function(X, ...){
   UseMethod("inverse")
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 inverse.latexMatrix <- function(X, ..., as.numeric=TRUE, 
                                 simplify=TRUE){
   matpower(X, -1, as.numeric=as.numeric, simplify=simplify)
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 t.latexMatrix <- function(x){
   numericDimensions(x)
@@ -439,7 +440,7 @@ t.latexMatrix <- function(x){
   result
 }
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 determinant.latexMatrix <- function(x, logarithm, ...){
   
@@ -473,7 +474,7 @@ determinant.latexMatrix <- function(x, logarithm, ...){
 }
 
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 solve.latexMatrix <- function (a, b, simplify=FALSE,
                                frac=c("\\dfrac", "\\frac", "\\tfrac", "\\cfrac"),
@@ -554,11 +555,11 @@ setMethod("kronecker",
           }
 )
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 `%X%` <- function(x, y) methods::kronecker(x, y)
 
-#' @rdname matsum
+#' @rdname latexMatrixOperations
 #' @export
 is.numeric.latexMatrix <- function(x){
   x <- getBody(x)

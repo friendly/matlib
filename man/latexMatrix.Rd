@@ -223,7 +223,7 @@ The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 components of the returned object.
 
 Various functions and operators for \code{"latexMatrix"} objects are
-documents separately; see, e.g., \code{\link{matsum}}
+documents separately; see, \code{\link{latexMatrixOperations}}.
 }
 \examples{
 latexMatrix()
@@ -295,7 +295,7 @@ latexMatrix(m, fractions=TRUE)
 latexMatrix(zero.based=c(TRUE, TRUE))
 }
 \seealso{
-\code{\link{matsum}}, \code{\link{matrix2latex}},
+\code{\link{latexMatrixOperations}}, \code{\link{matrix2latex}},
  \code{\link[clipr]{write_clip}}
 }
 \author{
