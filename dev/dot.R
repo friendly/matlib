@@ -5,11 +5,11 @@
 #' The result of matrix multiplication, \eqn{\mathbf{C} = \mathbf{A} \: \mathbf{B}}
 #' is composed of the vector dot products of each \emph{row} of \eqn{\mathbf{A}} with
 #' each \emph{column} of \eqn{\mathbf{B}},
-#' \deqn{c_{ij} = \mathbf{a}_i^top \mathbf{b}_j 
+#' \deqn{c_{ij} = \mathbf{a}_i^\top \; \mathbf{b}_j 
 #'              = \Sigma_k a_{ik} \cdot b_{kj}}
 #' 
 #' This function computes this product symbolically in LaTeX notation for
-#' numeric and character vectors, simplifying the result if \code{simplify = TRUE.}
+#' numeric and character vectors, simplifying the result if \code{simplify = TRUE}.
 
 #' The LaTeX symbol for multiplication (\code{"\\cdot"} by default)
 #' can be changed by changing \code{options(latexMultSymbol)},
@@ -22,7 +22,24 @@
 #'          \code{-1, 0, 1} are simplified
 #' @returns A character string containing the LaTeX expression
 #' @export
-
+#' @examples
+#' num <- -1:2
+#' chr <- letters[1:4]
+#' 
+#' dot(num, num)
+#' dot(num, chr)
+#' dot(chr, num)
+#' dot(chr, chr)
+#'
+#' dot(num, num, simplify = FALSE) 
+#' dot(num, chr, simplify = FALSE) 
+#' dot(chr, num, simplify = FALSE) 
+#' dot(chr, chr, simplify = FALSE)
+#' 
+#' # change the multpliicatin symbol
+#' opt <- options(latexMultSymbol = "\\times")
+#' dot(num, chr)
+#' dot(chr, chr)
 
 dot <- function(x, y, simplify = TRUE) {
   if (length(x) != length(y)) stop("Vectors must have the same length")

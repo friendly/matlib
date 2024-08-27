@@ -609,7 +609,7 @@ as.double.latexMatrix <- function(x, locals=list(), ...){
 
   X <- getBody(x)
   nrow <- nrow(X)
-  X <- gsub("\\\\cdot", "\\*", X)
+  X <- gsub(paste0("\\\\", getLatexMultSymbol()), "*", X)
   X <- gsub("\\}", ")",
             gsub("\\}\\{", ")/(",
                  gsub("\\\\[cdt]?frac\\{", "(", X)))

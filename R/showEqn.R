@@ -160,7 +160,7 @@ showEqn <- function(A, b, vars, simplify=FALSE, reduce = FALSE,
   }
   if(latex){
     res <- gsub('x', 'x_', res)
-    res <- gsub('\\*', ' \\\\cdot ', res)
+    res <- gsub('\\*', paste0(' \\\\', getLatexMultSymbol(), ' '), res)
     res <- gsub(' \\+ ', ' &+& ', res)
     res <- gsub(' \\- ', ' &-& ', res)
     res <- gsub(' \\= ', ' &=& ', res)

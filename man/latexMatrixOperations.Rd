@@ -174,11 +174,9 @@ as.numeric(D, locals=list(a=1, b=2, c=3, d=4))
 X <- latexMatrix(matrix(c(3, 2, 0, 1, 1, 1, 2,-2, 1), 3, 3))
 X
 as.numeric(X)
-\dontrun{
 MASS::fractions(as.numeric(inverse(X)))
 (d <- determinant(X))
 eval(parse(text=(gsub("\\\\\\\\cdot", "*", d))))
-}
 X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
 I3 <- latexMatrix(diag(3))
 I3 \%X\% X
