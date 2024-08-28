@@ -1,7 +1,13 @@
-#' Various Functions and Operators for latexMatrix Object
+#' Various Functions and Operators for latexMatrix Objects
 #'
 #' @description
-#' Operators and function provideds:
+#' 
+#' These operators and functions provide for LaTeX representations of
+#' symbolic and numeric matrix arithmetic and computations.
+#' They provide reasonable means to compose meaningful matrix equations
+#' in LaTeX far easier than doing this manually matrix by matrix.
+#' 
+#' The following operators and functions are documented here:
 #' \itemize{
 #' \item \code{matsum()} and \code{+}, matrix addition;
 #' \item \code{matdiff()} and \code{-}, matrix subtraction and negation;
@@ -9,20 +15,26 @@
 #' \item \code{Dot()}, inner product of two vectors;
 #' \item \code{matprod()} and \code{\%*\%}, matrix product;
 #' \item \code{matpower()} and \code{^}, powers (including inverse) of 
-#' a square matrix;
+#'        a square matrix;
 #' \item \code{solve()} and \code{inverse()}, matrix inverse of a square matrix;
 #' \item \code{t()}, transpose;
 #' \item \code{determinant()} of a square matrix;
-#' \item \code{kronecker()} and \code{\%O\%} (the Kronecker product), and
+#' \item \code{kronecker()} and \code{\%O\%} (the Kronecker product).
 #' }
 #' @name latexMatrixOperations
 #' 
 #' @details
 #' These operators and functions only apply to \code{"latexMatrix"} objects
-#' of definite (i.e., numeric) dimensions. When there are both a funcion and an
-#' operator (e.g., \code{matmult()} and \code{\%*\%}), the former is more
+#' of definite (i.e., numeric) dimensions. 
+#' 
+#' When there are both a \emph{function} and an
+#' \emph{operator} (e.g., \code{matmult()} and \code{\%*\%}), the former is more
 #' flexible via optional arguments and the latter calls the former with default 
-#' arguments.
+#' arguments. For example, using the operator \code{A \%*\% B} multiplies 
+#' the two matrices \code{A} and \code{B}, returning a symbolic result.
+#' The function \code{matmult()} multiplies two \emph{or more} matrices, and
+#' can simplify the result and/or produced the numeric representation of the
+#' product.
 #' 
 #' The result of matrix multiplication, \eqn{\mathbf{C} = \mathbf{A} \: \mathbf{B}}
 #' is composed of the vector inner (dot) products of each \emph{row} of \eqn{\mathbf{A}} with
@@ -34,7 +46,8 @@
 #' numeric and character vectors, simplifying the result if \code{simplify = TRUE.}
 #' The LaTeX symbol for multiplication (\code{"\\cdot"} by default)
 #' can be changed by changing \code{options(latexMultSymbol)},
-#' e.g, \code{options(latexMultSymbol = "\\times")}.
+#' e.g, \code{options(latexMultSymbol = "\\times")}. 
+#' \code{matmult()} uses \code{Dot()} to multiply matrices.
 #' 
 
 #' @author John Fox
@@ -48,29 +61,29 @@
 
 #' @param e1 a \code{"latexMatrix"} object; or for \code{*} a scalar;
 #' @param e2 a \code{"latexMatrix"} object; or for \code{*} a scalar;
-#' for \code{^} an integer power \code{>= -1} to raise a square matrix 
+#'           for \code{^} an integer power \code{>= -1} to raise a square matrix 
 #' @param A a \code{"latexMatrix"} object
 #' @param B a \code{"latexMatrix"} object
 #' @param X a \code{"latexMatrix"} object
 #' @param x for \code{Dot} a numeric or character vector; 
-#' otherwise a \code{"latexMatrix"} object
+#'          otherwise a \code{"latexMatrix"} object
 #' @param y for \code{Dot} a numeric or character vector; 
-#' otherwise a \code{"latexMatrix"} object
+#'          otherwise a \code{"latexMatrix"} object
 #' @param simplify if \code{TRUE} (the default), an attempt is made
-#' to simplify the result slightly; for \code{solve()}, 
-#' return a LaTeX expression with the inverse of the determinant in
-#' front of the adjoint matrix rather than a \code{"latexMatrix"} object in which each
-#' element of the adjoint matrix is divided by the determinant
+#'          to simplify the result slightly; for \code{solve()}, 
+#'          return a LaTeX expression with the inverse of the determinant in
+#'          front of the adjoint matrix rather than a \code{"latexMatrix"} object in which each
+#'          element of the adjoint matrix is divided by the determinant
 #' @param as.numeric if \code{TRUE} (the default) and the matrices to be multiplied can be
-#' coerced to numeric, matrix multiplication is performed numerically;
-#' supercedes \code{simplify}
+#'          coerced to numeric, matrix multiplication is performed numerically;
+#'          supercedes \code{simplify}
 #' @param power to raise a square matrix, an integer \code{>= -1}. 
 #' @param ... for \code{matmult()} and \code{sum()} zero or more 
-#' \code{"latexMatrix"} objects; otherwise arguments to be passed down
+#'          \code{"latexMatrix"} objects; otherwise arguments to be passed down
 #' @param a a \code{"latexMatrix"} object representing a square matrix
 #' @param b ignored; to match the \code{\link{solve}()} generic
 #' @param frac LaTeX command to use in forming fractions; the default
-#' is \code{"\\dfrac"}
+#'          is \code{"\\dfrac"}
 #' @param logarithm to match the generic \code{\link{determinant}()} function,
 #' ignored
 #'   

@@ -67,9 +67,15 @@ if (FALSE){
   B <- latexMatrix("b", 2, 2)
   kronecker(A, B)
   
-  # How could I generate the 'definition' of Kronecker product,
-  A <- latexMatrix('a', nrow=2, ncol=2)
-  B <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
-  kronecker(A, B)
+  # Generate the 'definition' of Kronecker product,
+  Bmat <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
+  kronecker(A, Bmat)
+  
+  Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
+      kronecker(A, Bmat),
+      "\\\\[1.5ex]\n= & ",
+      kronecker(A, B),
+      align = TRUE)
+  
   
 }
