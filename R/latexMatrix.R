@@ -214,6 +214,16 @@
 #'
 #' # zero-based indexing
 #' latexMatrix(zero.based=c(TRUE, TRUE))
+#' 
+#' # binding rows and columns; indexing
+#' X <- latexMatrix("x", nrow=4, ncol=2)
+#' Y <- latexMatrix("y", nrow=4, ncol=1)
+#' Z <- latexMatrix(matrix(1:8, 4, 2))
+#' cbind(X, Y, Z)
+#' rbind(X, Z)
+#' X[1:2, ]
+#' X[-(1:2), ]
+#' X[1:2, 2]
 
 
 latexMatrix <- function(
@@ -585,7 +595,10 @@ Ncol.latexMatrix <- function(x, ...){
 }
 
 #' @param x a \code{"latexMatrix"} object
-#' @param ...  for compatibility with generic functions, may be ignored
+#' @param ...  for \code{rbind()} and \code{cbind()}, one or more 
+#' \code{"latexMatrix"} objects with, respectively, the same number of
+#' columns or rows;
+#' otherwise, for compatibility with generic functions, may be ignored
 
 # print() method:
 #' @rdname latexMatrix
@@ -632,6 +645,57 @@ as.double.latexMatrix <- function(x, locals=list(), ...){
   }
 
   matrix(X, nrow=nrow)
+}
+
+#' @param i row index or indices (negative indices to omit rows)
+#' @param j column index or indices (negative indices to omit columns)
+#' @param drop to match the generic indexing function, ignored
+#' @rdname latexMatrix
+#' @export
+`[.latexMatrix` <- function(x, i, j, ..., drop){
+  numericDimensions(x)
+  X <- getBody(x)
+  X <- X[i, j, drop=FALSE]
+  X <- latexMatrix(X)
+  updateWrapper(X, getWrapper(x))
+}
+
+#' @param deparse.level to match the generic \code{\link{rbind}()}
+#' and \code{\link{cbind}()} funcctions; ignored
+#' @rdname latexMatrix
+#' @export
+cbind.latexMatrix <- function(..., deparse.level){
+  matrices <- list(...)
+  nrow <- Nrow(matrices[[1]])
+  if (length(matrices) == 1) return(matrices[[1]])
+  else {
+    X <- getBody(matrices[[1]])
+    for (matrix in matrices[-1]){
+      if (Nrow(matrix) != nrow) stop("number of rows not the same")
+      Y <- getBody(matrix)
+      X <- cbind(X, Y)
+    }
+    X <- latexMatrix(X)
+    return(updateWrapper(X, getWrapper(matrices[[1]])))
+  }
+}
+
+#' @rdname latexMatrix
+#' @export
+rbind.latexMatrix <- function(..., deparse.level = 1){
+  matrices <- list(...)
+  ncol <- Ncol(matrices[[1]])
+  if (length(matrices) == 1) return(matrices[[1]])
+  else {
+    X <- getBody(matrices[[1]])
+    for (matrix in matrices[-1]){
+      if (Ncol(matrix) != ncol) stop("number of columns not the same")
+      Y <- getBody(matrix)
+      X <- rbind(X, Y)
+    }
+    X <- latexMatrix(X)
+    return(updateWrapper(X, getWrapper(matrices[[1]])))
+  }
 }
 
 # unexported functions:

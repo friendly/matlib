@@ -17,6 +17,9 @@
 \alias{print.latexMatrix}
 \alias{is.numeric.latexMatrix}
 \alias{as.double.latexMatrix}
+\alias{[.latexMatrix}
+\alias{cbind.latexMatrix}
+\alias{rbind.latexMatrix}
 \title{Create and Manipulate LaTeX Repesentations of Matrices}
 \usage{
 latexMatrix(
@@ -69,6 +72,12 @@ Ncol(x, ...)
 \method{is.numeric}{latexMatrix}(x)
 
 \method{as.double}{latexMatrix}(x, locals = list(), ...)
+
+\method{[}{latexMatrix}(x, i, j, ..., drop)
+
+\method{cbind}{latexMatrix}(..., deparse.level)
+
+\method{rbind}{latexMatrix}(..., deparse.level = 1)
 }
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
@@ -134,7 +143,10 @@ on each element}
 
 \item{x}{a \code{"latexMatrix"} object}
 
-\item{...}{for compatibility with generic functions, may be ignored}
+\item{...}{for \code{rbind()} and \code{cbind()}, one or more 
+\code{"latexMatrix"} objects with, respectively, the same number of
+columns or rows;
+otherwise, for compatibility with generic functions, may be ignored}
 
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
@@ -143,6 +155,15 @@ the matrix on the R console.}
 specific numeric values; e.g.,
 \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or
 \code{locals = c(a = 1, b = 5, c = -1, d = 4)}}
+
+\item{i}{row index or indices (negative indices to omit rows)}
+
+\item{j}{column index or indices (negative indices to omit columns)}
+
+\item{drop}{to match the generic indexing function, ignored}
+
+\item{deparse.level}{to match the generic \code{\link{rbind}()}
+and \code{\link{cbind}()} funcctions; ignored}
 }
 \value{
 \code{latexMatrix()} returns an object of class \code{"latexMatrix"}
@@ -305,6 +326,16 @@ latexMatrix(m, fractions=TRUE)
 
 # zero-based indexing
 latexMatrix(zero.based=c(TRUE, TRUE))
+
+# binding rows and columns; indexing
+X <- latexMatrix("x", nrow=4, ncol=2)
+Y <- latexMatrix("y", nrow=4, ncol=1)
+Z <- latexMatrix(matrix(1:8, 4, 2))
+cbind(X, Y, Z)
+rbind(X, Z)
+X[1:2, ]
+X[-(1:2), ]
+X[1:2, 2]
 }
 \seealso{
 \code{\link{latexMatrixOperations}}, \code{\link{matrix2latex}},
