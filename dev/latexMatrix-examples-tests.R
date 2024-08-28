@@ -294,3 +294,28 @@ Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     "= \\mathbf{0}_{(2 \\times 3)}", 
     align=TRUE)
 
+
+# Partitioned matrices
+
+M <- latexMatrix("m", 4, 4)
+
+Mpart <- latexMatrix('\\mathbf{M}', nrow = 2, ncol = 2, comma = TRUE)
+Eqn("\\mathbf{M} =", Mpart,
+    " =", M)
+
+# Kronecker product 
+
+A <- latexMatrix("a", 2, 2)
+B <- latexMatrix("b", 2, 2)
+kronecker(A, B)
+
+# Generate the 'definition' of Kronecker product,
+Bmat <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
+kronecker(A, Bmat)
+
+Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
+    kronecker(A, Bmat),
+    "\\\\[1.5ex]\n= & ",
+    kronecker(A, B),
+    align = TRUE)
+

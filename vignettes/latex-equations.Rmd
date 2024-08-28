@@ -209,8 +209,13 @@ meaningful matrix equations in LaTeX far easier than doing this manually, matrix
 
 These computations include:
 
-* the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), and 
-* `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse). 
+* the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), 
+* `^` (raise to a power), and 
+* `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse), and
+* `%O%` (kronecker product).
+
+There are also function equivalents of the operators that are more flexible via optional arguments.  For example, using the operator `A %*% B` multiplies the two matrices `A` and `B`, returning a symbolic result. The corresponding function `matmult()` multiplies two _or more_ matrices, and can simplify the result 
+(with `simplify = TRUE`, default) and/or produce the numeric representation of the product (with `as.numeric = TRUE`, default).
 
 With the exception of `determinant()`, which (because it is a scalar quantity)  returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed, typeset, or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by 
 <!-- `as.numeric()` or  -->
@@ -408,6 +413,32 @@ Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
 In this example, note that the R objects `C`, `B` and `B0` are the results
 of `latexMatrix()` calls, which are character strings containing LaTeX
 expressions.
+
+### Partititioned matrices, Kronecker products
+
+Matrix notation sometimes portrays matrices whose elements are themselves
+matrices and vectors (rather than scalars) in order to show a higher-level
+structure. For example, the code below represents a $4 \times 4$ matrix
+$\mathbf{M}$, which is partitioned in $2 \times 2$ blocks, which are
+labeled $\mathbf{M}_{i,j}$.
+
+```{r partition1}
+M <- latexMatrix("m", 4, 4)
+Mpart <- latexMatrix('\\mathbf{M}', nrow = 2, ncol = 2, comma = TRUE)
+Eqn("\\mathbf{M} =", Mpart,
+    " =", M)
+```
+
+This typesets as:
+
+```{r partition2, results='asis', echo=FALSE}
+M <- latexMatrix("m", 4, 4)
+Mpart <- latexMatrix('\\mathbf{M}', nrow = 2, ncol = 2, comma = TRUE)
+Eqn("\\mathbf{M} =", Mpart,
+    " =", M)
+```
+
+
 
 ## matrix2latex {#matrix2latex}
 
