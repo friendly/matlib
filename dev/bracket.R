@@ -46,4 +46,7 @@ if (FALSE){
   cbind(X, Y)
   cbind(X, Y, Z)
   rbind(X, Z)
+  X[1:2, ]
+  X[-(1:2), ]
+  X[1:2, 2]
 }
