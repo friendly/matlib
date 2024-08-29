@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">matlib</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.91</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -256,7 +256,18 @@
 
         </dt>
         <dd>(Deprecated) Print a matrix, allowing fractions or LaTeX output</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      <h2 id="latex-matrices">LaTeX matrices<a class="anchor" aria-label="anchor" href="#latex-matrices"></a></h2>
+
+      <div class="section-desc"><p>Create and manipulate LaTeX repesentations of matrices and matrix equations</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="matrix2latex.html">matrix2latex()</a></code>
 
@@ -264,13 +275,19 @@
         <dd>(Deprecated) Convert matrix to LaTeX equation</dd>
       </dl><dl><dt>
 
-          <code><a href="latexMatrix.html">latexMatrix()</a></code> <code><a href="latexMatrix.html">getLatex()</a></code> <code><a href="latexMatrix.html">getBody()</a></code> <code><a href="latexMatrix.html">getWrapper()</a></code> <code><a href="latexMatrix.html">Dim()</a></code> <code><a href="latexMatrix.html">Nrow()</a></code> <code><a href="latexMatrix.html">Ncol()</a></code> <code><a href="latexMatrix.html">print(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">`+`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">`-`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">`%*%`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">`*`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">t(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">determinant(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">solve(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">as.double(<i>&lt;latexMatrix&gt;</i>)</a></code>
+          <code><a href="latexMatrix.html">latexMatrix()</a></code> <code><a href="latexMatrix.html">getLatex()</a></code> <code><a href="latexMatrix.html">getBody()</a></code> <code><a href="latexMatrix.html">getWrapper()</a></code> <code><a href="latexMatrix.html">Dim()</a></code> <code><a href="latexMatrix.html">Nrow()</a></code> <code><a href="latexMatrix.html">Ncol()</a></code> <code><a href="latexMatrix.html">print(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">is.numeric(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">as.double(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">`[`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">cbind(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrix.html">rbind(<i>&lt;latexMatrix&gt;</i>)</a></code>
 
         </dt>
         <dd>Create and Manipulate LaTeX Repesentations of Matrices</dd>
       </dl><dl><dt>
 
-          <code><a href="Eqn.html">Eqn()</a></code> <code><a href="Eqn.html">Eqn_newline()</a></code> <code><a href="Eqn.html">ref()</a></code>
+          <code><a href="latexMatrixOperations.html">matsum()</a></code> <code><a href="latexMatrixOperations.html">`+`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">matdiff()</a></code> <code><a href="latexMatrixOperations.html">`-`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">`*`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">Dot()</a></code> <code><a href="latexMatrixOperations.html">matmult()</a></code> <code><a href="latexMatrixOperations.html">`%*%`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">matpower()</a></code> <code><a href="latexMatrixOperations.html">`^`(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">inverse()</a></code> <code><a href="latexMatrixOperations.html">t(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">determinant(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">solve(<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">kronecker(<i>&lt;latexMatrix&gt;</i>,<i>&lt;latexMatrix&gt;</i>)</a></code> <code><a href="latexMatrixOperations.html">`%X%`</a></code>
+
+        </dt>
+        <dd>Various Functions and Operators for <code>"latexMatrix"</code> Objects</dd>
+      </dl><dl><dt>
+
+          <code><a href="Eqn.html">Eqn()</a></code> <code><a href="Eqn.html">Eqn_newline()</a></code> <code><a href="Eqn.html">Eqn_text()</a></code> <code><a href="Eqn.html">Eqn_hspace()</a></code> <code><a href="Eqn.html">Eqn_size()</a></code> <code><a href="Eqn.html">ref()</a></code>
 
         </dt>
         <dd>Create a LaTeX Equation Wrapper</dd>

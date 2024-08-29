@@ -314,6 +314,14 @@ Eqn(M11, M12,
     M21, M22,
     align = TRUE)
 
+# or, use cbind(), rbind()
+
+Mbind <-
+rbind(
+  cbind(M11, M12),
+  cbind(M21, M22)
+)
+
 # Kronecker product 
 
 A <- latexMatrix("a", 2, 2)

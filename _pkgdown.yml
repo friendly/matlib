@@ -54,8 +54,13 @@ reference:
       - Solve
       - printMatEqn
       - printMatrix
+      
+  - title: LaTeX matrices
+    desc: Create and manipulate LaTeX repesentations of matrices and matrix equations
+    contents:
       - matrix2latex
       - latexMatrix
+      - latexMatrixOperations
       - Eqn
 
   - title: Gaussian elimination
