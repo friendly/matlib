@@ -298,10 +298,21 @@ Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
 # Partitioned matrices
 
 M <- latexMatrix("m", 4, 4)
-
 Mpart <- latexMatrix('\\mathbf{M}', nrow = 2, ncol = 2, comma = TRUE)
 Eqn("\\mathbf{M} =", Mpart,
     " =", M)
+
+# extract sub-matrices
+M11 <- M[1:2, 1:2]
+M12 <- M[1:2, 3:4]
+M21 <- M[3:4, 1:2]
+M22 <- M[3:4, 3:4]
+
+# put them back together
+Eqn(M11, M12,
+    "\\\\ \n",
+    M21, M22,
+    align = TRUE)
 
 # Kronecker product 
 
@@ -319,3 +330,24 @@ Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
     kronecker(A, B),
     align = TRUE)
 
+# from Phil's comment in https://github.com/friendly/matlib/issues/59
+
+A <- latexMatrix("a", 2, 2)
+B <- latexMatrix("b", 2, 2)
+kronecker(A, B) |> Eqn()
+
+# Generate the 'definition' of Kronecker product,
+Bmat <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
+KABmat <- kronecker(A, Bmat)
+KAB <- kronecker(A, B)
+
+Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
+    KABmat,
+    "\\\\[1.5ex]\n= & ",
+    KAB,
+    align = TRUE)
+
+
+source(here::here('dev', 'printEqn.R'))
+printEqn("**A** \\otimes **B** = & %KABmat \\\\[1.5ex]
+                               = & %KAB", align=TRUE)

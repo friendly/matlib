@@ -414,7 +414,7 @@ In this example, note that the R objects `C`, `B` and `B0` are the results
 of `latexMatrix()` calls, which are character strings containing LaTeX
 expressions.
 
-### Partititioned matrices, Kronecker products
+### Partititioned matrices, indexing & binding
 
 Matrix notation sometimes portrays matrices whose elements are themselves
 matrices and vectors (rather than scalars) in order to show a higher-level
@@ -438,6 +438,36 @@ Eqn("\\mathbf{M} =", Mpart,
     " =", M)
 ```
 
+Just as rows and columns can be selected using `X[rows, cols]` indexing
+for ordinary matrices, the same operator can be used for LaTeX matrices,
+e.g., `M[rows, cols]`.  The following extracts 4 the sub-matrices of `M`:
+
+```{r partition3}
+M11 <- M[1:2, 1:2] |> print()
+M12 <- M[1:2, 3:4]
+M21 <- M[3:4, 1:2]
+M22 <- M[3:4, 3:4]
+```
+
+The operations of joining matrices by rows, with `rbind()`, and by columns, with
+`cbind()` are also defined for `"latexMatrices"`. This code puts the 4 pieces
+of $\mathbf{M}$ back together:
+
+```{r partition4}
+rbind(
+  cbind(M11, M12),
+  cbind(M21, M22)
+)
+```
+
+And, of course you can also format the sub-matrices together using `Eqn()`:
+
+```{r partition5, results='asis'}
+Eqn(M11, M12,
+    Eqn_newline(),
+    M21, M22,
+    align = TRUE)
+```
 
 
 ## matrix2latex {#matrix2latex}
