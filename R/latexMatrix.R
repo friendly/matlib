@@ -71,6 +71,9 @@
 #' You can supply a numeric matrix as the \code{symbol}, but the result will not be pretty
 #' unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
 #' \code{\link{matrix2latex}}.
+#' 
+#' The \code{partition()} function modifies (only) the printed LaTeX representation of a \code{"latexMatrix"}
+#' object to include partition lines by rows and/or columns.
 #'
 #' The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 #' \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
@@ -138,6 +141,9 @@
 #'          \item \code{"body"} (a character matrix of LaTeX expressions for the cells of the matrix);
 #'          \item \code{"wrapper"}(the beginning and ending lines for the LaTeX matrix environment).
 #'          }
+#'          
+#'          \code{partition()}, \code{rbind()}, \code{cbind()}, and indexing of
+#'          \code{"latexMatrix"} objects also return a \code{"latexMatrix"} object.
 #'
 #' @author John Fox
 #' @seealso \code{\link{latexMatrixOperations}}, \code{\link{matrix2latex}},
@@ -214,6 +220,10 @@
 #'
 #' # zero-based indexing
 #' latexMatrix(zero.based=c(TRUE, TRUE))
+#' 
+#' # partitioned matrix
+#' X <- latexMatrix(nrow=5, ncol=6)
+#' partition(X, rows=c(2, 4), columns=c(3, 5))
 #' 
 #' # binding rows and columns; indexing
 #' X <- latexMatrix("x", nrow=4, ncol=2)
@@ -518,6 +528,66 @@ latexMatrix <- function(
                  wrapper = wrapper)
   class(result) <- 'latexMatrix'
   result
+}
+
+#' @rdname latexMatrix
+#' @export
+partition <- function(x, ...){
+  UseMethod("partition")
+}
+
+#' @param rows row numbers \emph{after} which partition lines should
+#'   be drawn in the LaTeX printed representation of the matrix;
+#'   if omitted, then the matrix isn't partitioned by rows
+#' @param columns column numbers \emph{after} which partition lines should
+#'   be drawn in the LaTeX printed representation of the matrix;
+#'   if omitted, then the matrix isn't partitioned by columns
+#' @rdname latexMatrix
+#' @export
+partition.latexMatrix <- function(x, rows, columns, ...){
+  wrapper <- getWrapper(x)
+  wrapper[1] <- paste0(wrapper[1], " \n")
+  matrix <- getBody(x)
+  if (!missing(columns)){
+    if (any(columns < 1 | columns > ncol(matrix) - 1)){
+      stop("'columns' out of bounds")
+    }
+    cols <- rep("c", ncol(matrix))
+    for (col in columns){
+      cols[col] <- paste0(cols[col], " |")
+    }
+    wrapper[1] <- paste0(wrapper[1], 
+                         "\\begin{array}{",
+                         paste(cols, collapse = " "),
+                         "}\n")
+    wrapper[2] <- paste0("\\end{array}\n",
+                         wrapper[2])
+  }
+  if (!missing(rows)){
+    if (any(rows < 1 | rows > nrow(matrix) - 1)){
+      stop("'rows' out of bounds")
+    }
+    for (row in rows){
+      matrix[row + 1, 1] <- paste0("\\hline ", matrix[row + 1, 1])
+    }
+  }
+  result <- wrapper[1]
+  for (i in 1:nrow(matrix)){
+    result <- paste0(result, 
+                     paste(matrix[i, ], collapse=" & "),
+                     "\\\\ \n")
+  }
+  result <- paste0(result, wrapper[2])
+  x$matrix <- result
+  x
+}
+
+if (FALSE){
+  X <- latexMatrix(nrow=5, ncol=6)
+  partition(X)
+  partition(X, rows=3)
+  partition(X, columns=2)
+  partition(X, rows=c(2, 4), columns=c(3, 5))
 }
 
 # accessor functions:

@@ -2,6 +2,8 @@
 % Please edit documentation in R/latexMatrix.R
 \name{latexMatrix}
 \alias{latexMatrix}
+\alias{partition}
+\alias{partition.latexMatrix}
 \alias{getLatex}
 \alias{getLatex.latexMatrix}
 \alias{getBody}
@@ -42,6 +44,10 @@ latexMatrix(
   prefix.row = "",
   prefix.col = ""
 )
+
+partition(x, ...)
+
+\method{partition}{latexMatrix}(x, rows, columns, ...)
 
 getLatex(x, ...)
 
@@ -148,6 +154,14 @@ on each element}
 columns or rows;
 otherwise, for compatibility with generic functions, may be ignored}
 
+\item{rows}{row numbers \emph{after} which partition lines should
+be drawn in the LaTeX printed representation of the matrix;
+if omitted, then the matrix isn't partitioned by rows}
+
+\item{columns}{column numbers \emph{after} which partition lines should
+be drawn in the LaTeX printed representation of the matrix;
+if omitted, then the matrix isn't partitioned by columns}
+
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
 
@@ -175,6 +189,9 @@ and \code{\link{cbind}()} funcctions; ignored}
          \item \code{"body"} (a character matrix of LaTeX expressions for the cells of the matrix);
          \item \code{"wrapper"}(the beginning and ending lines for the LaTeX matrix environment).
          }
+         
+         \code{partition()}, \code{rbind()}, \code{cbind()}, and indexing of
+         \code{"latexMatrix"} objects also return a \code{"latexMatrix"} object.
 }
 \description{
 The purpose of the \code{latexMatrix()} function is to facilitate the preparation
@@ -247,6 +264,9 @@ You may need to use \code{extra_dependencies: ["amsmath"]} in your YAML header o
 You can supply a numeric matrix as the \code{symbol}, but the result will not be pretty
 unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
 \code{\link{matrix2latex}}.
+
+The \code{partition()} function modifies (only) the printed LaTeX representation of a \code{"latexMatrix"}
+object to include partition lines by rows and/or columns.
 
 The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
@@ -326,6 +346,10 @@ latexMatrix(m, fractions=TRUE)
 
 # zero-based indexing
 latexMatrix(zero.based=c(TRUE, TRUE))
+
+# partitioned matrix
+X <- latexMatrix(nrow=5, ncol=6)
+partition(X, rows=c(2, 4), columns=c(3, 5))
 
 # binding rows and columns; indexing
 X <- latexMatrix("x", nrow=4, ncol=2)
