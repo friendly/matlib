@@ -3,7 +3,7 @@ partition <- function(x, rows, columns){
   wrapper[1] <- paste0(wrapper[1], " \n")
   matrix <- getBody(x)
   if (!missing(columns)){
-    if (any(columns < 1 | columns > ncol(matrix))){
+    if (any(columns < 1 | columns > ncol(matrix) - 1)){
       stop("'columns' out of bounds")
     }
     cols <- rep("c", ncol(matrix))
@@ -18,7 +18,7 @@ partition <- function(x, rows, columns){
                          wrapper[2])
   }
   if (!missing(rows)){
-    if (any(rows < 1 | rows > nrow(matrix))){
+    if (any(rows < 1 | rows > nrow(matrix) - 1)){
       stop("'rows' out of bounds")
     }
     for (row in rows){
