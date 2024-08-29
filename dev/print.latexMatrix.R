@@ -1,6 +1,8 @@
 print.latexMatrix <- function(x, onConsole=TRUE,  hline, vline, ...){
   if (onConsole) {
-    if (missing(hline) && missing(vline)) cat(getLatex(x))
+    if (missing(hline) && missing(vline)) {
+      cat(getLatex(x))
+    } else {
     matrix <- getLatex(x)
     wrapper <- getWrapper(x)
     if (!missing(hline)){
@@ -25,6 +27,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  hline, vline, ...){
     matrix <- sub(wrapper[1], wrap1, matrix, fixed=TRUE)
     matrix <- sub(wrapper[2], wrap2, matrix, fixed=TRUE)
     cat(matrix)
+    }
   }
   invisible(x)
 }
@@ -35,7 +38,7 @@ insertString <- function(string, insert, after){
   paste0(start, insert, end)
 }
 
-\if (FALSE){
+if (FALSE){
   X <- latexMatrix(nrow=5, ncol= 6)
   print(X, hline=2, vline=2)
   print(X, hline=c(2, 4), vline=c(1, 3))
