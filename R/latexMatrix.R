@@ -494,8 +494,7 @@ latexMatrix <- function(
                                              if (zero.based[2] && !end.at.n.minus.1[2]) " + 1",
                                              ")}" ),
                        if (!missing(exponent)) paste0("^{", exponent, "}"),
-                       if (!isFALSE(transpose)) paste0("^", transpose),
-                       "\n")
+                       if (!isFALSE(transpose)) paste0("^", transpose))
 
   x.mat <- strsplit(mat.result, "\\n")[[1]]
   pick <- c(1, length(x.mat))
