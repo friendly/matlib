@@ -117,7 +117,7 @@ Eqn <- function(...,
         print(dots[[i]])
     }
   }
-  cat(sprintf("\n\\end{%s}\n", wrap))
+  cat(sprintf("\\end{%s}\n", wrap))
   invisible(NULL)
 }
 
