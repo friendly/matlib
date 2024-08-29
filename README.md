@@ -30,10 +30,10 @@ In addition, a collection of functions are provided for drawing vector diagrams 
 various concepts of linear algebra more concretely than has been available before.
 For example, 
 
-* `showEqn(A, b)` shows the matrix equations $A x = b$ in text or LaTeX form, while
+* `showEqn(A, b)` shows the matrix equations $\mathbf{A x} = \mathbf{b}$ in text or LaTeX form, while
 `plotEqn(A, b)` and `plotEqn3d(A, b)` plots those equations in 2D or 3D space.
 
-* `matrix2latex()` and `latexMatrix()` facilitate writing matrix equations in LaTeX
+* `matrix2latex()`, `latexMatrix()`, `Eqn()` and friends facilitate writing matrix equations in LaTeX.
 
 * `vectors()`, `vectors3d()` plot geometric vector diagrams in 2D or 3D, with other functions to draw
 angles and arcs.
@@ -120,26 +120,28 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions()`.
   - `vectors()`, `vectors3d()` - plot geometric vector diagrams in 2D/3D 
   - `regvec3d()` - calculate and plot vectors representing a bivariate regression model, `lm(y ~ x1 + x2)` in mean-deviation form.
 
-8. **Matrix equations** 
+8. **Matrix equations in LaTeX** 
   - `matrix2latex()`: Convert matrix to LaTeX equation
-  - `latexMatrix()`: Create and manipulate LaTeX repesentations of matrices
+  - `latexMatrix()`: Create and manipulate LaTeX representations of matrices
+  - `latexMatrixOperations`: Matrix operators (e.g., `%*%`) and functions for matrix arithmetic, but rendered in LaTeX
 
 ### Vignettes and presentations
 
 A small collection of vignettes is now available.  Use `browseVignettes("matlib")` to explore them.
 
-| Vignette                                                                            | Title                                         |
-|-------------------------------------------------------------------------------------|-----------------------------------------------|
-| [det-ex1](http://friendly.github.io/matlib/articles/det-ex1.html)                   | Properties of determinants                    |
-| [det-ex2](http://friendly.github.io/matlib/articles/det-ex2.html)                   | Evaluation of determinants                    |
-| [inv-ex1](http://friendly.github.io/matlib/articles/inv-ex1.html)                   | Inverse of a matrix                           |
-| [inv-ex2](http://friendly.github.io/matlib/articles/inv-ex2.html)                   | Matrix inversion by elementary row operations |
-| [ginv](http://friendly.github.io/matlib/articles/ginv.html)                         | Generalized inverse                           |
-| [eigen-ex1](http://friendly.github.io/matlib/articles/eigen-ex1.html)              | Eigenvalues and Eigenvectors: Properties      |
-| [eigen-ex2](http://friendly.github.io/matlib/articles/eigen-ex2.html)               | Eigenvalues: Spectral Decomposition           |
-| [linear-equations](http://friendly.github.io/matlib/articles/linear-equations.html) | Solving Linear Equations                      |
-| [gramreg](http://friendly.github.io/matlib/articles/gramreg.html)                   | Gram-Schmidt Orthogonalization and Regression |
-| [data-beta](http://friendly.github.io/matlib/articles/data-beta.html)               | Vector Spaces of Least Squares and Linear Equations |
+| Vignette                                                                            | Title                                                 |
+|-------------------------------------------------------------------------------------|-----------------------------------------------        |
+| [det-ex1](http://friendly.github.io/matlib/articles/det-ex1.html)                   | Properties of determinants                            |
+| [det-ex2](http://friendly.github.io/matlib/articles/det-ex2.html)                   | Evaluation of determinants                            |
+| [inv-ex1](http://friendly.github.io/matlib/articles/inv-ex1.html)                   | Inverse of a matrix                                   |
+| [inv-ex2](http://friendly.github.io/matlib/articles/inv-ex2.html)                   | Matrix inversion by elementary row operations         |
+| [ginv](http://friendly.github.io/matlib/articles/ginv.html)                         | Generalized inverse                                   |
+| [eigen-ex1](http://friendly.github.io/matlib/articles/eigen-ex1.html)               | Eigenvalues and Eigenvectors: Properties              |
+| [eigen-ex2](http://friendly.github.io/matlib/articles/eigen-ex2.html)               | Eigenvalues: Spectral Decomposition                   |
+| [linear-equations](http://friendly.github.io/matlib/articles/linear-equations.html) | Solving Linear Equations                              |
+| [latex-equations](http://friendly.github.io/matlib/articles/latex-equations.html)   | LaTeX Equations with latexMatrix, Eqn and matrix2latex|
+| [gramreg](http://friendly.github.io/matlib/articles/gramreg.html)                   | Gram-Schmidt Orthogonalization and Regression         |
+| [data-beta](http://friendly.github.io/matlib/articles/data-beta.html)               | Vector Spaces of Least Squares and Linear Equations   |
 
 
 See also: 

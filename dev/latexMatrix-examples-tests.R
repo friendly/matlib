@@ -322,6 +322,10 @@ rbind(
   cbind(M21, M22)
 )
 
+source(here::here("dev", "partition.R"))
+
+partition(M, rows=c(2, 2), columns=c(2, 2))
+
 # Kronecker product 
 
 A <- latexMatrix("a", 2, 2)
