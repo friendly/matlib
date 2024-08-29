@@ -21,9 +21,9 @@
 \alias{t.latexMatrix}
 \alias{determinant.latexMatrix}
 \alias{solve.latexMatrix}
+\alias{kronecker,latexMatrix,latexMatrix-method}
 \alias{\%X\%}
-\alias{is.numeric.latexMatrix}
-\title{Various Functions and Operators for latexMatrix Objects}
+\title{Various Functions and Operators for \code{"latexMatrix"} Objects}
 \usage{
 matsum(A, ...)
 
@@ -65,13 +65,14 @@ inverse(X, ...)
   a,
   b,
   simplify = FALSE,
+  as.numeric = TRUE,
   frac = c("\\\\dfrac", "\\\\frac", "\\\\tfrac", "\\\\cfrac"),
   ...
 )
 
-x \%X\% y
+\S4method{kronecker}{latexMatrix,latexMatrix}(X, Y, FUN = "*", make.dimnames = FALSE, ...)
 
-\method{is.numeric}{latexMatrix}(x)
+x \%X\% y
 }
 \arguments{
 \item{A}{a \code{"latexMatrix"} object}
@@ -79,13 +80,13 @@ x \%X\% y
 \item{...}{for \code{matmult()} and \code{sum()} zero or more 
 \code{"latexMatrix"} objects; otherwise arguments to be passed down}
 
-\item{as.numeric}{if \code{TRUE} (the default) and the matrices to be multiplied can be
-coerced to numeric, matrix multiplication is performed numerically;
+\item{as.numeric}{if \code{TRUE} (the default) and the matrices to be multiplied, added, etc., can be
+coerced to numeric, matrix multiplication, addition, etc., is performed numerically;
 supercedes \code{simplify}}
 
 \item{e1}{a \code{"latexMatrix"} object; or for \code{*} a scalar;}
 
-\item{e2}{a \code{"latexMatrix"} object; or for \code{*} a scalar;
+\item{e2}{a \code{"latexMatrix"} object;  for \code{*} a scalar;
 for \code{^} an integer power \code{>= -1} to raise a square matrix}
 
 \item{B}{a \code{"latexMatrix"} object}
@@ -115,44 +116,40 @@ ignored}
 
 \item{frac}{LaTeX command to use in forming fractions; the default
 is \code{"\\dfrac"}}
+
+\item{Y}{a \code{"latexMatrix"} object}
+
+\item{FUN}{to match the \code{\link{kronecker}()} generic, ignored}
+
+\item{make.dimnames}{to match the \code{\link{kronecker}()} generic, ignored}
 }
 \value{
 All of these functions return \code{"latexMatrix"} objects, 
 except for \code{Dot()}, which returns a LaTeX expression as a character string.
 }
 \description{
-These operators and functions provide for LaTeX representations of
-symbolic and numeric matrix arithmetic and computations.
-They provide reasonable means to compose meaningful matrix equations
-in LaTeX far easier than doing this manually matrix by matrix.
-
-The following operators and functions are documented here:
+Arithmetic and other functions and operators provided to manipulate 
+\code{"latexMatrix"} objects, both symbolic and numeric:
 \itemize{
 \item \code{matsum()} and \code{+}, matrix addition;
 \item \code{matdiff()} and \code{-}, matrix subtraction and negation;
-\item \code{*}, product of a scalar and a matrix);
+\item \code{*}, product of a scalar and a matrix;
 \item \code{Dot()}, inner product of two vectors;
 \item \code{matprod()} and \code{\%*\%}, matrix product;
 \item \code{matpower()} and \code{^}, powers (including inverse) of 
-       a square matrix;
+a square matrix;
 \item \code{solve()} and \code{inverse()}, matrix inverse of a square matrix;
 \item \code{t()}, transpose;
 \item \code{determinant()} of a square matrix;
-\item \code{kronecker()} and \code{\%O\%} (the Kronecker product).
+\item \code{kronecker()} and \code{\%O\%}, the Kronecker product.
 }
 }
 \details{
 These operators and functions only apply to \code{"latexMatrix"} objects
-of definite (i.e., numeric) dimensions. 
-
-When there are both a \emph{function} and an
-\emph{operator} (e.g., \code{matmult()} and \code{\%*\%}), the former is more
+of definite (i.e., numeric) dimensions. When there are both a funcion and an
+operator (e.g., \code{matmult()} and \code{\%*\%}), the former is more
 flexible via optional arguments and the latter calls the former with default 
-arguments. For example, using the operator \code{A \%*\% B} multiplies 
-the two matrices \code{A} and \code{B}, returning a symbolic result.
-The function \code{matmult()} multiplies two \emph{or more} matrices, and
-can simplify the result and/or produced the numeric representation of the
-product.
+arguments.
 
 The result of matrix multiplication, \eqn{\mathbf{C} = \mathbf{A} \: \mathbf{B}}
 is composed of the vector inner (dot) products of each \emph{row} of \eqn{\mathbf{A}} with
@@ -164,8 +161,7 @@ The \code{Dot()} function computes the inner product symbolically in LaTeX notat
 numeric and character vectors, simplifying the result if \code{simplify = TRUE.}
 The LaTeX symbol for multiplication (\code{"\\cdot"} by default)
 can be changed by changing \code{options(latexMultSymbol)},
-e.g, \code{options(latexMultSymbol = "\\times")}. 
-\code{matmult()} uses \code{Dot()} to multiply matrices.
+e.g, \code{options(latexMultSymbol = "\\\\times")} (note the double-backslash).
 }
 \examples{
 A <- latexMatrix(symbol="a", nrow=2, ncol=2)
@@ -193,7 +189,30 @@ X <- latexMatrix(matrix(1:6, 2, 3), matrix="bmatrix")
 I3 <- latexMatrix(diag(3))
 I3 \%X\% X
 kronecker(I3, X, sparse=TRUE)
-  
+
+(E <- latexMatrix(diag(1:3)))
+# equivalent:
+X \%*\% E
+matmult(X, E)
+
+matmult(X, E, simplify=FALSE, as.numeric=FALSE)
+
+# equivalent:
+X \%*\% E \%*\% E
+matmult(X, E, E)
+
+# equivalent:
+E^-1
+inverse(E)
+solve(E)
+
+solve(E, as.numeric=FALSE) # details
+
+# equivalent
+E^3
+matpower(E, 3)
+
+matpower(E, 3, as.numeric=FALSE)
 }
 \seealso{
 \code{\link{latexMatrix}}

@@ -1,7 +1,13 @@
 #' Create and Manipulate LaTeX Repesentations of Matrices
 #'
 #' @description
-#' The \code{latexMatrix()} function constructs the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
+#' The purpose of the \code{latexMatrix()} function is to facilitate the preparation
+#' of LaTeX and Markdown documents that include matrices. The function generates the
+#' the LaTeX code for matrices of various types programmatically. The objects produced
+#' by the function can also be manipulated, e.g., with standard arithmetic functions and operators:
+#' See \code{\link{latexMatrixOperations}}.
+#' 
+#' The \code{latexMatrix()} function can construct the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
 #' For example:
 #' \preformatted{
 #'  \\begin{pmatrix}
@@ -28,10 +34,10 @@
 #' the number of rows and/or columns can be \bold{integers}, generating a matrix of given size.
 #'
 #' As well, instead of a character for the matrix \code{symbol}, you can supply a \bold{matrix} of arbitrary character
-#' strings (in LaTeX notation), and these will be used as the elements of the matrix.
+#' strings (in LaTeX notation) or numbers, and these will be used as the elements of the matrix.
 #'
 #' You can print the resulting LaTeX code to the console. When the result is assigned to a variable,
-#' you can send it to the clipboard using \code{\link[clipr]{write_clip}}. Perhaps most convenient of all,
+#' you can send it to the clipboard using \code{\link[clipr]{write_clip}()}. Perhaps most convenient of all,
 #' the function can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
 #'
 #' \preformatted{
@@ -58,7 +64,7 @@
 #'   ...
 #'   \\end{array}
 #' \\right)
-#' }.
+#' }
 #'
 #' You may need to use \code{extra_dependencies: ["amsmath"]} in your YAML header of a \code{Rmd} or \code{qmd} file.
 #'
@@ -71,12 +77,12 @@
 #' components of the returned object.
 #' 
 #' Various functions and operators for \code{"latexMatrix"} objects are
-#' documents separately; see, \code{\link{latexMatrixOperations}}.
+#' documented separately; see, \code{\link{latexMatrixOperations}}.
 #'
 #' @param symbol name for matrix elements, character string. For LaTeX symbols,
 #'        the backslash must be doubled because it is an escape character in R.
 #'        That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}. Alternatively, this can be an
-#'        R matrix object, containing LaTeX code for the elements. For a row or column vector, use
+#'        R matrix object, containing numbers or LaTeX code for the elements. For a row or column vector, use
 #'        \code{matrix(..., nrow=1)} or \code{matrix(..., ncol=1)}
 #' @param nrow   Number of rows, a single character representing rows symbolically, or an integer, generating
 #'               that many rows.
@@ -119,7 +125,7 @@
 #' @param suffix optional character string to be appended to each matrix element, e.g., for exponents
 #'               on each element
 #' @param prefix.row optional character string to be pre-pended to each matrix row index
-#' @param prefix.col optional character string to be pre-pended to each matrix col index
+#' @param prefix.col optional character string to be pre-pended to each matrix column index
 #' @param onConsole if \code{TRUE}, the default, print the LaTeX code for
 #'                  the matrix on the R console.
 #'
@@ -144,8 +150,11 @@
 #' mat <- latexMatrix()
 #' str(mat)
 #' cat(getLatex(mat))
-#' # copy to clipboard
-#' #clipr::write_clip(mat)  # this can't be done in non-interactive mode
+#' 
+#' # copy to clipboard (can't be done in non-interactive mode)
+#' \dontrun{
+#' clipr::write_clip(mat) 
+#' } 
 #'
 #' # can use a complex symbol
 #' latexMatrix("\\widehat{\\beta}", 2, 4)
@@ -205,6 +214,16 @@
 #'
 #' # zero-based indexing
 #' latexMatrix(zero.based=c(TRUE, TRUE))
+#' 
+#' # binding rows and columns; indexing
+#' X <- latexMatrix("x", nrow=4, ncol=2)
+#' Y <- latexMatrix("y", nrow=4, ncol=1)
+#' Z <- latexMatrix(matrix(1:8, 4, 2))
+#' cbind(X, Y, Z)
+#' rbind(X, Z)
+#' X[1:2, ]
+#' X[-(1:2), ]
+#' X[1:2, 2]
 
 
 latexMatrix <- function(
@@ -240,13 +259,6 @@ latexMatrix <- function(
   }
 
   end.at.n.minus.1 <- gsub(" ", "", end.at) == c("n-1", "m-1")
-
-  # if (is.numeric(nrow) && zero.based[1]){
-  #   stop("zero-based indexing not available for numeric 'nrow'")
-  # }
-  # if (is.numeric(ncol) && zero.based[2]){
-  #   stop("zero-based indexing not available for numeric 'ncol'")
-  # }
 
   if (isTRUE(transpose)) transpose <- "\\top"
   if (!missing(exponent) && !isFALSE(transpose)){
@@ -583,7 +595,10 @@ Ncol.latexMatrix <- function(x, ...){
 }
 
 #' @param x a \code{"latexMatrix"} object
-#' @param ...  for compatibility with generic functions, may be ignored
+#' @param ...  for \code{rbind()} and \code{cbind()}, one or more 
+#' \code{"latexMatrix"} objects with, respectively, the same number of
+#' columns or rows;
+#' otherwise, for compatibility with generic functions, may be ignored
 
 # print() method:
 #' @rdname latexMatrix
@@ -597,6 +612,14 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
 #'   specific numeric values; e.g.,
 #'   \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or
 #'   \code{locals = c(a = 1, b = 5, c = -1, d = 4)}
+
+#' @rdname latexMatrix
+#' @export
+is.numeric.latexMatrix <- function(x){
+  x <- getBody(x)
+  x <- suppressWarnings(as.numeric(x))
+  !any(is.na(x)) 
+}
 
 #' @rdname latexMatrix
 #' @export
@@ -622,6 +645,57 @@ as.double.latexMatrix <- function(x, locals=list(), ...){
   }
 
   matrix(X, nrow=nrow)
+}
+
+#' @param i row index or indices (negative indices to omit rows)
+#' @param j column index or indices (negative indices to omit columns)
+#' @param drop to match the generic indexing function, ignored
+#' @rdname latexMatrix
+#' @export
+`[.latexMatrix` <- function(x, i, j, ..., drop){
+  numericDimensions(x)
+  X <- getBody(x)
+  X <- X[i, j, drop=FALSE]
+  X <- latexMatrix(X)
+  updateWrapper(X, getWrapper(x))
+}
+
+#' @param deparse.level to match the generic \code{\link{rbind}()}
+#' and \code{\link{cbind}()} funcctions; ignored
+#' @rdname latexMatrix
+#' @export
+cbind.latexMatrix <- function(..., deparse.level){
+  matrices <- list(...)
+  nrow <- Nrow(matrices[[1]])
+  if (length(matrices) == 1) return(matrices[[1]])
+  else {
+    X <- getBody(matrices[[1]])
+    for (matrix in matrices[-1]){
+      if (Nrow(matrix) != nrow) stop("number of rows not the same")
+      Y <- getBody(matrix)
+      X <- cbind(X, Y)
+    }
+    X <- latexMatrix(X)
+    return(updateWrapper(X, getWrapper(matrices[[1]])))
+  }
+}
+
+#' @rdname latexMatrix
+#' @export
+rbind.latexMatrix <- function(..., deparse.level = 1){
+  matrices <- list(...)
+  ncol <- Ncol(matrices[[1]])
+  if (length(matrices) == 1) return(matrices[[1]])
+  else {
+    X <- getBody(matrices[[1]])
+    for (matrix in matrices[-1]){
+      if (Ncol(matrix) != ncol) stop("number of columns not the same")
+      Y <- getBody(matrix)
+      X <- rbind(X, Y)
+    }
+    X <- latexMatrix(X)
+    return(updateWrapper(X, getWrapper(matrices[[1]])))
+  }
 }
 
 # unexported functions:

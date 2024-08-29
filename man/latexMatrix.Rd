@@ -15,7 +15,11 @@
 \alias{Ncol}
 \alias{Ncol.latexMatrix}
 \alias{print.latexMatrix}
+\alias{is.numeric.latexMatrix}
 \alias{as.double.latexMatrix}
+\alias{[.latexMatrix}
+\alias{cbind.latexMatrix}
+\alias{rbind.latexMatrix}
 \title{Create and Manipulate LaTeX Repesentations of Matrices}
 \usage{
 latexMatrix(
@@ -65,13 +69,21 @@ Ncol(x, ...)
 
 \method{print}{latexMatrix}(x, onConsole = TRUE, ...)
 
+\method{is.numeric}{latexMatrix}(x)
+
 \method{as.double}{latexMatrix}(x, locals = list(), ...)
+
+\method{[}{latexMatrix}(x, i, j, ..., drop)
+
+\method{cbind}{latexMatrix}(..., deparse.level)
+
+\method{rbind}{latexMatrix}(..., deparse.level = 1)
 }
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
 the backslash must be doubled because it is an escape character in R.
 That is, you must use  \code{symbol = "\\\\beta"} to get \eqn{\beta}. Alternatively, this can be an
-R matrix object, containing LaTeX code for the elements. For a row or column vector, use
+R matrix object, containing numbers or LaTeX code for the elements. For a row or column vector, use
 \code{matrix(..., nrow=1)} or \code{matrix(..., ncol=1)}}
 
 \item{nrow}{Number of rows, a single character representing rows symbolically, or an integer, generating
@@ -127,11 +139,14 @@ on each element}
 
 \item{prefix.row}{optional character string to be pre-pended to each matrix row index}
 
-\item{prefix.col}{optional character string to be pre-pended to each matrix col index}
+\item{prefix.col}{optional character string to be pre-pended to each matrix column index}
 
 \item{x}{a \code{"latexMatrix"} object}
 
-\item{...}{for compatibility with generic functions, may be ignored}
+\item{...}{for \code{rbind()} and \code{cbind()}, one or more 
+\code{"latexMatrix"} objects with, respectively, the same number of
+columns or rows;
+otherwise, for compatibility with generic functions, may be ignored}
 
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
@@ -140,6 +155,15 @@ the matrix on the R console.}
 specific numeric values; e.g.,
 \code{locals = list(a = 1, b = 5, c = -1, d = 4)} or
 \code{locals = c(a = 1, b = 5, c = -1, d = 4)}}
+
+\item{i}{row index or indices (negative indices to omit rows)}
+
+\item{j}{column index or indices (negative indices to omit columns)}
+
+\item{drop}{to match the generic indexing function, ignored}
+
+\item{deparse.level}{to match the generic \code{\link{rbind}()}
+and \code{\link{cbind}()} funcctions; ignored}
 }
 \value{
 \code{latexMatrix()} returns an object of class \code{"latexMatrix"}
@@ -153,7 +177,13 @@ specific numeric values; e.g.,
          }
 }
 \description{
-The \code{latexMatrix()} function constructs the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
+The purpose of the \code{latexMatrix()} function is to facilitate the preparation
+of LaTeX and Markdown documents that include matrices. The function generates the
+the LaTeX code for matrices of various types programmatically. The objects produced
+by the function can also be manipulated, e.g., with standard arithmetic functions and operators:
+See \code{\link{latexMatrixOperations}}.
+
+The \code{latexMatrix()} function can construct the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
 For example:
 \preformatted{
  \\begin{pmatrix}
@@ -180,10 +210,10 @@ Alternatively, instead of characters,
 the number of rows and/or columns can be \bold{integers}, generating a matrix of given size.
 
 As well, instead of a character for the matrix \code{symbol}, you can supply a \bold{matrix} of arbitrary character
-strings (in LaTeX notation), and these will be used as the elements of the matrix.
+strings (in LaTeX notation) or numbers, and these will be used as the elements of the matrix.
 
 You can print the resulting LaTeX code to the console. When the result is assigned to a variable,
-you can send it to the clipboard using \code{\link[clipr]{write_clip}}. Perhaps most convenient of all,
+you can send it to the clipboard using \code{\link[clipr]{write_clip}()}. Perhaps most convenient of all,
 the function can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
 
 \preformatted{
@@ -210,7 +240,7 @@ This implementation assumes that the LaTeX \code{amsmath} package will be availa
   ...
   \\end{array}
 \\right)
-}.
+}
 
 You may need to use \code{extra_dependencies: ["amsmath"]} in your YAML header of a \code{Rmd} or \code{qmd} file.
 
@@ -223,7 +253,7 @@ The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 components of the returned object.
 
 Various functions and operators for \code{"latexMatrix"} objects are
-documents separately; see, \code{\link{latexMatrixOperations}}.
+documented separately; see, \code{\link{latexMatrixOperations}}.
 }
 \examples{
 latexMatrix()
@@ -232,8 +262,11 @@ latexMatrix()
 mat <- latexMatrix()
 str(mat)
 cat(getLatex(mat))
-# copy to clipboard
-#clipr::write_clip(mat)  # this can't be done in non-interactive mode
+
+# copy to clipboard (can't be done in non-interactive mode)
+\dontrun{
+clipr::write_clip(mat) 
+} 
 
 # can use a complex symbol
 latexMatrix("\\\\widehat{\\\\beta}", 2, 4)
@@ -293,6 +326,16 @@ latexMatrix(m, fractions=TRUE)
 
 # zero-based indexing
 latexMatrix(zero.based=c(TRUE, TRUE))
+
+# binding rows and columns; indexing
+X <- latexMatrix("x", nrow=4, ncol=2)
+Y <- latexMatrix("y", nrow=4, ncol=1)
+Z <- latexMatrix(matrix(1:8, 4, 2))
+cbind(X, Y, Z)
+rbind(X, Z)
+X[1:2, ]
+X[-(1:2), ]
+X[1:2, 2]
 }
 \seealso{
 \code{\link{latexMatrixOperations}}, \code{\link{matrix2latex}},
