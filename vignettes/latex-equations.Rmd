@@ -211,8 +211,9 @@ These computations include:
 
 * the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), 
 * `^` (raise to a power), and 
-* `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse), and
-* `%O%` (kronecker product).
+* `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse), 
+* `%O%` (kronecker product),
+* Selecting sub-matrices using indexing `X[rows, cols]` and binding rows/columns with `rbind()`, `cbind()`
 
 There are also function equivalents of the operators that are more flexible via optional arguments.  For example, using the operator `A %*% B` multiplies the two matrices `A` and `B`, returning a symbolic result. The corresponding function `matmult()` multiplies two _or more_ matrices, and can simplify the result 
 (with `simplify = TRUE`, default) and/or produce the numeric representation of the product (with `as.numeric = TRUE`, default).
