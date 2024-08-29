@@ -582,14 +582,6 @@ partition.latexMatrix <- function(x, rows, columns, ...){
   x
 }
 
-if (FALSE){
-  X <- latexMatrix(nrow=5, ncol=6)
-  partition(X)
-  partition(X, rows=3)
-  partition(X, columns=2)
-  partition(X, rows=c(2, 4), columns=c(3, 5))
-}
-
 # accessor functions:
 
 #' @rdname latexMatrix
