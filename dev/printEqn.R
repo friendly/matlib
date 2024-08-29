@@ -1,5 +1,5 @@
 eqn_parser <- function(string,
-                       `**`="boldsymbol", `*`="mathcal", ...){
+                       `**`="mathbf", `*`="mathcal", ...){
 
     # `*` -> \times
     if(grepl('`*`', string))
@@ -38,13 +38,13 @@ if(FALSE){
 
     identical(eqn_parser(s1), s1)
     eqn_parser(s2)
-    eqn_parser(s2, `**` = 'mathbf')
+    eqn_parser(s2, `**` = 'boldsymbol')
     identical(eqn_parser(s3), s3)
     eqn_parser(s4)
     eqn_parser(s5)
     # eqn_parser(s6)
     eqn_parser(s7)
-    identical(eqn_parser(s8, `**` = 'mathbf'), s3)
+    identical(eqn_parser(s8), s3)
 }
 
 #' String formatting for LaTeX Equations
@@ -60,8 +60,8 @@ if(FALSE){
 #'   italicizes (\code{*}) can be used for wrapping text elements with
 #'   \code{boldsymbol} and \code{mathcal} blocks, respectively.
 #'   These wrappers can be overwritten by matching the operator specification
-#'   in \code{...}; for example, using \code{mathbf} for bold text requires
-#'   passing \code{`**` = 'mathbf'}
+#'   in \code{...}; for example, using \code{boldsymbol} for bold text requires
+#'   passing \code{`**` = 'boldsymbol'}
 #' @param subs a named \code{list} containing the information for the
 #'   \code{%} indicators in \code{string}. Can be either a
 #'   \code{character} vector, a \code{matrix}, or a \code{latexMatrix}
@@ -99,20 +99,20 @@ if(FALSE){
 #'
 #' # align with &
 #' printEqn("*H*_0 : **C B** & = %C %B \\\\
-#'                           & = %B0 = **0**_{(2 `*` 3)}",
+#'                           & = %B0 = **0**_{(2 \\times 3)}",
 #'          list(C=C, B=B, B0=B0), align=TRUE)
 #'
 #' # If not specified in list will search in parent environment
 #' printEqn("*H*_0 : **C B** & = %C %B \\\\
-#'                           & = %B0 = **0**_{(2 `*` 3)}",
+#'                           & = %B0 = **0**_{(2 \\times 3)}",
 #'          align=TRUE)
 #'
-#' # Change ** use LaTeX "mathbf" instead of "boldsymbol" and
+#' # Change ** use LaTeX "boldsymbol" instead of "mathbf" and
 #' #  use %n to indicate newline
 #' printEqn("*H*_0 : **C B** & = %C %B %n
-#'                           & = %B0 = **0**_{(2 `*` 3)}",
+#'                           & = %B0 = **0**_{(2 \\times 3)}",
 #'          list(n="\\\\", C=C, B=B, B0=B0),
-#'          `**`='mathbf', align=TRUE)
+#'          `**`='boldsymbol', align=TRUE)
 #'
 printEqn <- function(string, subs = list(), mat_args = list(),
                       markdown = TRUE, ...){
@@ -156,13 +156,14 @@ if(FALSE){
         latexMatrix("v", "k", "p", transpose = TRUE),
         align=TRUE)
 
-    printEqn("**X** & = **U \\Lambda V**^\\top %n
+    # TODO worth detecting Greek letters to use boldsymbol?
+    printEqn("**X** & = **U** \\boldsymbol{\\Lambda} **V**^\\top %n
                      & =  %U    %L    %V",        ## output structure
               list(n=Eqn_newline(),               ## % macro elements
                    U=latexMatrix("u", "n", "ks"),
                    V=latexMatrix("v", "k", "p", transpose = TRUE),
                    L=latexMatrix("\\lambda", "k", "k", diag=TRUE)),
-              align=TRUE, label='eq:svd', `**`='mathbf')
+              align=TRUE, label='eq:svd')
 
     # next
     A <- latexMatrix(aa <- matrix(c(1, -3, 0, 1), 2, 2))
@@ -174,8 +175,6 @@ if(FALSE){
 
     printEqn("**A** + **B** = %A + %B = %AB = %C",
               list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))))
-    printEqn("**A** + **B** = %A + %B = %AB = %C",
-              list(A=A, B=B, AB=A + B, C=latexMatrix(as.double(A+B))), `**`="mathbf")
 
     # search in parent envir if not listed
     AB <- A + B
@@ -200,7 +199,7 @@ if(FALSE){
         align=TRUE)
 
     printEqn("*H*_0 : **C B** & = %C %B \\\\
-                               & = %B0 = **0**_{(2 `*` 3)}",
-              list(C=C, B=B, B0=B0), `**`='mathbf', align=TRUE)
+                               & = %B0 = **0**_{(2 \\times 3)}",
+              list(C=C, B=B, B0=B0), align=TRUE)
 
 }
