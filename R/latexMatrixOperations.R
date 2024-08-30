@@ -1,8 +1,12 @@
 #' Various Functions and Operators for \code{"latexMatrix"} Objects
 #'
 #' @description
-#' Arithmetic and other functions and operators provided to manipulate 
-#' \code{"latexMatrix"} objects, both symbolic and numeric:
+#' These operators and functions provide for LaTeX representations of
+#' symbolic and numeric matrix arithmetic and computations.
+#' They provide reasonable means to compose meaningful matrix equations
+#' in LaTeX far easier than doing this manually matrix by matrix.
+#' 
+#' The following operators and functions are documented here:
 #' \itemize{
 #' \item \code{matsum()} and \code{+}, matrix addition;
 #' \item \code{matdiff()} and \code{-}, matrix subtraction and negation;
@@ -20,10 +24,17 @@
 #' 
 #' @details
 #' These operators and functions only apply to \code{"latexMatrix"} objects
-#' of definite (i.e., numeric) dimensions. When there are both a funcion and an
-#' operator (e.g., \code{matmult()} and \code{\%*\%}), the former is more
+#' of definite (i.e., numeric) dimensions. 
+#' 
+#' When there are both a \emph{function} and an
+#' \emph{operator} (e.g., \code{matmult()} and \code{\%*\%}), the former is more
 #' flexible via optional arguments and the latter calls the former with default 
-#' arguments.
+#' arguments. For example, using the operator \code{A \%*\% B} multiplies 
+#' the two matrices \code{A} and \code{B}, returning a symbolic result.
+#' The function \code{matmult()} multiplies two \emph{or more} matrices, and
+#' can simplify the result and/or produced the numeric representation of the
+#' product.
+
 #' 
 #' The result of matrix multiplication, \eqn{\mathbf{C} = \mathbf{A} \: \mathbf{B}}
 #' is composed of the vector inner (dot) products of each \emph{row} of \eqn{\mathbf{A}} with
@@ -66,7 +77,7 @@
 #' @param as.numeric if \code{TRUE} (the default) and the matrices to be multiplied, added, etc., can be
 #' coerced to numeric, matrix multiplication, addition, etc., is performed numerically;
 #' supercedes \code{simplify}
-#' @param power to raise a square matrix, an integer \code{>= -1}. 
+#' @param power to raise a square matrix to this power, an integer \code{>= -1}. 
 #' @param ... for \code{matmult()} and \code{sum()} zero or more 
 #' \code{"latexMatrix"} objects; otherwise arguments to be passed down
 #' @param a a \code{"latexMatrix"} object representing a square matrix
