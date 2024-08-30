@@ -470,6 +470,16 @@ Eqn(M11, M12,
     align = TRUE)
 ```
 
+Finally, the `partition()` function alters the print representation of a matrix
+using horizontal and  vertical lines separating the sub-matrices.
+It does this by re-wrapping the matrix in a LaTeX `\begin{array} ... \end{array}`
+environment. This may be the simplest way to portray partitioned matrices
+in writing.
+
+```{r partition6, results='asis'}
+partition(M, rows=c(2, 2), columns=c(2, 2))
+```
+
 
 ## matrix2latex {#matrix2latex}
 
