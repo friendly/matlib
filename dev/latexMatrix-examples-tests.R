@@ -324,7 +324,7 @@ rbind(
 
 source(here::here("dev", "partition.R"))
 
-partition(M, rows=c(2, 2), columns=c(2, 2))
+partition(M, rows=2, columns=2)
 
 # Kronecker product 
 
@@ -346,7 +346,7 @@ Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
 
 A <- latexMatrix("a", 2, 2)
 B <- latexMatrix("b", 2, 2)
-kronecker(A, B) |> Eqn()
+kronecker(A, B) |> partition(rows = 2, columns = 2)
 
 # Generate the 'definition' of Kronecker product,
 Bmat <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
@@ -357,6 +357,8 @@ Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
     KABmat,
     "\\\\[1.5ex]\n= & ",
     KAB,
+    "\\\\[1.5ex]\n= & ",
+    latexMatrix(as.double(KAB)),
     align = TRUE)
 
 

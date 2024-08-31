@@ -477,7 +477,52 @@ environment. This may be the simplest way to portray partitioned matrices
 in writing.
 
 ```{r partition6, results='asis'}
-partition(M, rows=c(2, 2), columns=c(2, 2))
+partition(M, rows=2, columns=2)
+```
+
+### Kronecker products
+
+The Kronecker product of two matrices, $\mathbf{A}_{m \times n} \otimes \mathbf{B}_{p \times q}$ is the $mp \times nq$ block matrix consisting of each element $a_{ij}$ multiplied by
+$\mathbf{B}$. This has many uses in statistics, among these the nice result that
+the design matrix $\mathbf{X}$ in the linear ANOVA model for factors A, B, C, ...
+can be generated as the Kronecker product of their contrast matrices
+$\mathbf{C}_A, \mathbf{C}_B, \mathbf{C}_C \dots$, each
+preceded by the unit vector $\mathbf{1}$.
+
+$$
+\mathbf{X}_{ABC\dots} = 
+  [\mathbf{1} \mid \mathbf{C}_A] \;\otimes\;
+  [\mathbf{1} \mid  \mathbf{C}_B] \;\otimes\;
+  [\mathbf{1} \mid  \mathbf{C}_B] \;\otimes\; \dots
+$$
+
+This is implemented in the `%O%` operator and the `kronecker()` function in the package.
+For example,
+
+```{r kronecker1, results='asis'}
+A <- matrix(1:4, nrow = 2) |> 
+  latexMatrix() |> print()
+B <- matrix(5:8, nrow = 2) |> 
+  latexMatrix() |> print()
+kronecker(A, B) |> partition(rows = 2, columns = 2)
+```
+
+You can also use `Eqn()` to illustrate the definition of the Kronecker product
+more explicitly. In the following, `KAB` is the product in symbolic form;
+`as.double()` is used to evaluate the result numerically.
+
+```{r kronecker2, results='asis'}
+Bmat <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
+KABmat <- kronecker(A, Bmat)
+KAB <- kronecker(A, B)
+
+Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
+    KABmat,
+    "\\\\[1.5ex]\n= & ",
+    KAB,
+    "\\\\[1.5ex]\n= & ",
+    latexMatrix(as.double(KAB)),
+    align = TRUE)
 ```
 
 
