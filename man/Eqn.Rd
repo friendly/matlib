@@ -17,7 +17,7 @@ Eqn(
   mat_args = list()
 )
 
-Eqn_newline()
+Eqn_newline(vspace = 0, metric = "ex")
 
 Eqn_text(text)
 
@@ -53,6 +53,14 @@ that support \code{knitr}}
 properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
 each \code{matrix} objects supplied. If further specificity is required create
 \code{\link{latexMatrix}} objects directly.}
+
+\item{vspace}{includes extra vertical space. If not specified
+only newline returns are included.
+Is used in concert with \code{metric}}
+
+\item{metric}{metric of the vertical space. Defaults to
+'ex', but can be 'pt', 'mm', 'cm', 'em', 'bp', 'dd',
+'pc', or 'in'}
 
 \item{text}{argument to be used within \code{\\text{}}}
 
@@ -154,6 +162,11 @@ cbind(A,b) |> Eqn(mat_args=list(matrix='bmatrix'))
 
 # with showEqn()
 showEqn(A, b, latex=TRUE) |> Eqn()
+
+
+Eqn_newline()
+Eqn_newline(vspace=1.5)
+Eqn_newline(vspace=1, metric='cm')
 
 
 Eqn_hspace()

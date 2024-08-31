@@ -125,9 +125,39 @@ Eqn <- function(...,
 #'
 #' \code{Eqn_newline()} emits a newline in an equation
 #'
+#' @param vspace includes extra vertical space. If not specified
+#'   only newline returns are included.
+#'   Is used in concert with \code{metric}
+#' @param metric metric of the vertical space. Defaults to
+#'   'ex', but can be 'pt', 'mm', 'cm', 'em', 'bp', 'dd',
+#'   'pc', or 'in'
 #' @rdname Eqn
 #' @export
-Eqn_newline <- function() ' \\\\ \n'
+#'
+#' @examples
+#'
+#' Eqn_newline()
+#' Eqn_newline(vspace=1.5)
+#' Eqn_newline(vspace=1, metric='cm')
+#'
+Eqn_newline <- function(vspace = 0, metric = 'ex'){
+    checkLaTeXMetric(metric)
+    ret <- if(vspace > 0)
+        sprintf(" \\\\[%s%s] \n", as.character(vspace), metric)
+    else ' \\\\ \n'
+    ret
+}
+
+
+checkLaTeXMetric <- function(metric){
+    valid <- c('em', 'pt', 'mm', 'cm', 'ex',
+               'bp', 'dd', 'pc', 'in')
+    ret <- metric %in% valid
+    if(!ret) stop('LaTeX metric is invalid')
+    invisible(ret)
+}
+
+
 
 #' Eqn_text Include literal string in equations
 #'
