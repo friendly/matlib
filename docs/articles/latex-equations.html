@@ -498,8 +498,8 @@ coerced to numeric matrices; for example:</p>
 <p>Using these tools, it is easy to typeset complete matrix equations,
 giving multiple arguments to <code><a href="../reference/Eqn.html">Eqn()</a></code>:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{A} + \\mathbf{B} ="</span>, <span class="va">A</span>, <span class="st">" + "</span>, <span class="va">B</span>, <span class="st">" = "</span>, <span class="va">A</span> <span class="op">+</span> <span class="va">B</span>, <span class="st">" = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐀</mi><mo>+</mo><mi>𝐁</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{equation*}
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{A} + \\mathbf{B} ="</span>, <span class="va">A</span>, <span class="st">" + "</span>, <span class="va">B</span>, <span class="st">" = "</span>, <span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">)</span></span></code></pre></div>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐀</mi><mo>+</mo><mi>𝐁</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{equation*}
 \mathbf{A} + \mathbf{B} =\begin{pmatrix} 
  1 &amp;  0 \\ 
 -3 &amp;  1 \\ 
@@ -509,10 +509,6 @@ giving multiple arguments to <code><a href="../reference/Eqn.html">Eqn()</a></co
  3 &amp;  4 \\ 
 \end{pmatrix}
  = \begin{pmatrix}  
- 6 &amp; -1 \\ 
- 0 &amp;  5 \\ 
-\end{pmatrix}
- = \begin{pmatrix} 
  6 &amp; -1 \\ 
  0 &amp;  5 \\ 
 \end{pmatrix}
@@ -905,8 +901,7 @@ block matrix consisting of each element
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">a_{ij}</annotation></semantics></math>
 multiplied by
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐁</mi><annotation encoding="application/x-tex">\mathbf{B}</annotation></semantics></math>.
-This has many uses in statistics, among these the nice result that the
-design matrix
+This has many uses in statistics, among these the nice result <span class="citation">(Bock 1975; Sunwoo 1996)</span> that the design matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
 in the linear ANOVA model for factors A, B, C, … can be generated as the
 Kronecker product of their contrast matrices
@@ -1075,6 +1070,21 @@ a_{11} \cdot x_1 &amp;+&amp; a_{12} \cdot x_2 &amp;+&amp; a_{13} \cdot x_3  &amp
 a_{21} \cdot x_1 &amp;+&amp; a_{22} \cdot x_2 &amp;+&amp; a_{23} \cdot x_3  &amp;=&amp;  b_2 \\ 
 a_{31} \cdot x_1 &amp;+&amp; a_{32} \cdot x_2 &amp;+&amp; a_{33} \cdot x_3  &amp;=&amp;  b_3 \\ 
 \end{array}\end{equation*}</annotation></semantics></math></p>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Bock:75" class="csl-entry">
+Bock, R. Darrell. 1975. <em>Multivariate Statistical Methods in
+Behavioral Research</em>. New York: McGraw Hill.
+</div>
+<div id="ref-Sunwoo1996" class="csl-entry">
+Sunwoo, Hasik. 1996. <span>“Simple Algorithms about Kronecker Products
+in the Linear Model.”</span> <em>Linear Algebra and Its
+Applications</em> 237–238 (April): 351–58. <a href="https://doi.org/10.1016/0024-3795(95)00675-3" class="external-link">https://doi.org/10.1016/0024-3795(95)00675-3</a>.
+</div>
+</div>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

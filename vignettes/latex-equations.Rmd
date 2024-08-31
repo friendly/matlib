@@ -10,6 +10,9 @@ output:
   pdf_document:
     toc: true
     keep_tex: true
+template:
+  math-rendering: mathjax
+bibliography: "references.bib"
 vignette: >
   %\VignetteIndexEntry{LaTeX Equations with latexMatrix, Eqn and matrix2latex}
   %\VignetteEncoding{UTF-8}
@@ -261,7 +264,7 @@ Using these tools, it is easy to typeset complete matrix equations, giving multi
 arguments to `Eqn()`:
 
 ```{r matrix-arith-equation, results='asis'}
-Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B, " = ", as.double(A + B))
+Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B)
 ```
 
 If the elements of a matrix are valid R variable names, then it is also possible to give these elements numeric values, as in
@@ -483,7 +486,8 @@ partition(M, rows=2, columns=2)
 ### Kronecker products
 
 The Kronecker product of two matrices, $\mathbf{A}_{m \times n} \otimes \mathbf{B}_{p \times q}$ is the $mp \times nq$ block matrix consisting of each element $a_{ij}$ multiplied by
-$\mathbf{B}$. This has many uses in statistics, among these the nice result that
+$\mathbf{B}$. This has many uses in statistics, among these the nice result [@Bock:75;@Sunwoo1996]
+that
 the design matrix $\mathbf{X}$ in the linear ANOVA model for factors A, B, C, ...
 can be generated as the Kronecker product of their contrast matrices
 $\mathbf{C}_A, \mathbf{C}_B, \mathbf{C}_C \dots$, each
@@ -597,3 +601,4 @@ desired result:
 showEqn(A, b, vars = x, latex=TRUE) |> Eqn()
 ```
 
+## References
