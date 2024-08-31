@@ -83,7 +83,7 @@ Ncol(x, ...)
 
 \method{cbind}{latexMatrix}(..., deparse.level)
 
-\method{rbind}{latexMatrix}(..., deparse.level = 1)
+\method{rbind}{latexMatrix}(..., deparse.level)
 }
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,

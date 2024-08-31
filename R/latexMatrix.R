@@ -744,7 +744,7 @@ cbind.latexMatrix <- function(..., deparse.level){
 
 #' @rdname latexMatrix
 #' @export
-rbind.latexMatrix <- function(..., deparse.level = 1){
+rbind.latexMatrix <- function(..., deparse.level){
   matrices <- list(...)
   ncol <- Ncol(matrices[[1]])
   if (length(matrices) == 1) return(matrices[[1]])
