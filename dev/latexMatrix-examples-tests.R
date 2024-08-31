@@ -355,10 +355,10 @@ KAB <- kronecker(A, B)
 
 Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
     KABmat,
-    "\\\\[1.5ex]\n= & ",
-    KAB,
-    "\\\\[1.5ex]\n= & ",
-    latexMatrix(as.double(KAB)),
+    Eqn_newline(vspace=1.5), "= & ",
+    KAB |> partition(rows = 2, columns = 2),
+    Eqn_newline(vspace=1.5), "= & ",
+    latexMatrix(as.double(KAB)) |> partition(rows = 2, columns = 2),
     align = TRUE)
 
 

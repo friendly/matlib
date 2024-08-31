@@ -70,7 +70,20 @@ used directly in `.Rmd` or `.qmd` documents to compile to equations.
 When used directly in R, they produce their output to the console (using `cat()`).
 In a `.Rmd` or `.qmd` document, use the chunk options: `results='asis', echo=FALSE`
 so that `knitr` just outputs the text of the equations to the document.
-The rendering of the equations is handled by [`pandoc`](https://pandoc.org/).
+The rendering of the equations is handled by [`pandoc`](https://pandoc.org/) for standard
+Rmarkdown or Quarto documents.
+
+**Note**: There are several different engines for rendering mathematics in HTML documents for the Web:
+[`mathml`](https://developer.mozilla.org/en-US/docs/Web/MathML),
+[`katex`](https://katex.org/), and
+[`mathjax`](https://www.mathjax.org/) and others, all of which can be made to work with
+`pandoc`.
+The features we describe below work in standard Rmarkdown or Quarto documents.
+However, some more advanced
+features (equation numbers and references, horizontal and vertical lines for partitioned matrices) **do not work** in this vignette as rendered by [`pkgdown`](https://pkgdown.r-lib.org/), as far as we can determine.
+See the discussion in [this pkgdown issue](https://github.com/r-lib/pkgdown/issues/2739), 
+
+
 
 ## Using `latexMatrix()` and `Eqn()`
 
@@ -96,7 +109,7 @@ latexMatrix() |> Eqn()
 ```
 
 For chunk output in a document, you will get a LaTeX error, "missing $ inserted" if you forget
-to use `Eqn()` or otherwise fail to make a math environment.
+to use `Eqn()` or otherwise fail to make the LaTeX appear inside a math environment.
 
 Some other examples:
 
@@ -117,7 +130,19 @@ latexMatrix(matrix(LETTERS[1:4], nrow=1), matrix="Bmatrix") |> Eqn()
 latexMatrix(matrix(letters[1:3], ncol=1), matrix = "vmatrix") |> Eqn()
 ```
 
-As the above examples illustrate, the matrix delimeters can be varied using the `matrix` argument.
+As the above examples illustrate, the matrix delimiters can be varied using the `matrix` argument.
+
+A wide variety of options are available for the matrix element symbols, fonts, subscripts and decorations:
+
+```{r eqn5,results='asis'}
+latexMatrix("\\mathbb{q}", 3, 3, 
+            matrix = "bmatrix",
+            zero.based = c(TRUE, FALSE), 
+            comma=TRUE, 
+            exponent="-1") |>
+  Eqn()
+```
+
 
 ### The SVD
 As a more complicated example,
@@ -476,12 +501,20 @@ Eqn(M11, M12,
 Finally, the `partition()` function alters the print representation of a matrix
 using horizontal and  vertical lines separating the sub-matrices.
 It does this by re-wrapping the matrix in a LaTeX `\begin{array} ... \end{array}`
-environment. This may be the simplest way to portray partitioned matrices
+environment, using `|` in `{c c | c c}` for the vertical lines and `\hline` for horizontal lines. 
+This may be the simplest way to portray partitioned matrices
 in writing.
 
 ```{r partition6, results='asis'}
 partition(M, rows=2, columns=2)
 ```
+
+Note that `partition()` can show more than one horizontal and vertical partition lines (or no line at all):
+
+```{r partition7, results='asis'}
+partition(M, rows=c(1,3), columns=c(1,3))
+```
+
 
 ### Kronecker products
 
@@ -515,6 +548,7 @@ You can also use `Eqn()` to illustrate the definition of the Kronecker product
 more explicitly. In the following, `KAB` is the product in symbolic form;
 `as.double()` is used to evaluate the result numerically.
 
+
 ```{r kronecker2, results='asis'}
 Bmat <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
 KABmat <- kronecker(A, Bmat)
@@ -522,10 +556,10 @@ KAB <- kronecker(A, B)
 
 Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
     KABmat,
-    "\\\\[1.5ex]\n= & ",
-    KAB,
-    "\\\\[1.5ex]\n= & ",
-    latexMatrix(as.double(KAB)),
+    Eqn_newline(vspace=1.5), "= & ",
+    KAB |> partition(rows = 2, columns = 2),
+    Eqn_newline(vspace=1.5), "= & ",
+    latexMatrix(as.double(KAB)) |> partition(rows = 2, columns = 2),
     align = TRUE)
 ```
 
