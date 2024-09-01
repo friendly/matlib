@@ -125,39 +125,14 @@ Eqn <- function(...,
 #'
 #' \code{Eqn_newline()} emits a newline in an equation
 #'
-#' @param vspace includes extra vertical space. If not specified
-#'   only newline returns are included.
-#'   Is used in concert with \code{metric}
-#' @param metric metric of the vertical space. Defaults to
-#'   'ex', but can be 'pt', 'mm', 'cm', 'em', 'bp', 'dd',
-#'   'pc', or 'in'
 #' @rdname Eqn
 #' @export
 #'
 #' @examples
 #'
 #' Eqn_newline()
-#' Eqn_newline(vspace=1.5)
-#' Eqn_newline(vspace=1, metric='cm')
 #'
-Eqn_newline <- function(vspace = 0, metric = 'ex'){
-    checkLaTeXMetric(metric)
-    ret <- if(vspace > 0)
-        sprintf(" \\\\[%s%s] \n", as.character(vspace), metric)
-    else ' \\\\ \n'
-    ret
-}
-
-
-checkLaTeXMetric <- function(metric){
-    valid <- c('em', 'pt', 'mm', 'cm', 'ex',
-               'bp', 'dd', 'pc', 'in')
-    ret <- metric %in% valid
-    if(!ret) stop('LaTeX metric is invalid')
-    invisible(ret)
-}
-
-
+Eqn_newline <- function()' \\\\ \n'
 
 #' Eqn_text Include literal string in equations
 #'
@@ -176,8 +151,9 @@ Eqn_text <- function(text) sprintf("\\text{%s}", text)
 #'
 #' @param lhs spacing size. Can be a number between -1 and 6. -1 provides negative
 #'   spaces and 0 gives no spacing. Input can also be a character vector, which will be
-#'   passed to \code{\\hspace{}} (e.g., \code{'1cm'}).
-#'   Default is 5, resulting in a \code{\\quad} space
+#'   passed to \code{\\hspace{}} (e.g., \code{'1cm'}; see \code{space} argument
+#'   for supported metrics).
+#'   Default is 5, resulting in a \code{\\quad} space.
 #'
 #' @param mid character vector to place in the middle of the space specification. Most
 #'   commonly this will be operators like \code{'='}
@@ -215,7 +191,11 @@ Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
                    "4"='\\ ',
                    "5"='\\quad',
                    "6"='\\qquad')
-        } else sprintf('\\hspace{%s}', inp)
+        } else {
+            metric <- substr(inp, nchar(inp)-1, nchar(inp))
+            checkLaTeXMetric(metric)
+            sprintf('\\hspace{%s}', inp)
+        }
         space
     }
 
@@ -228,6 +208,32 @@ Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
     space.lhs <- paste0(rep(spacer(lhs), times=times), collapse='')
     space.rhs <- paste0(rep(spacer(rhs), times=times), collapse='')
     paste0(c(space.lhs, mid, space.rhs), collapse='')
+}
+
+
+#' @param space includes extra vertical space. Metric of the vertical space
+#'   must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'
+#' @rdname Eqn
+#' @export
+#' @examples
+#'
+#' Eqn_vspace('1.5ex')
+#' Eqn_vspace('1cm')
+#'
+#'
+Eqn_vspace <- function(space){
+    metric <- substr(space, nchar(space)-1, nchar(space))
+    checkLaTeXMetric(metric)
+    sprintf(" \\vspace{%s} \n", space)
+}
+
+
+checkLaTeXMetric <- function(metric){
+    valid <- c('em', 'pt', 'mm', 'cm', 'ex',
+               'bp', 'dd', 'pc', 'in')
+    ret <- metric %in% valid
+    if(!ret) stop('LaTeX metric is invalid', call. = FALSE)
+    invisible(ret)
 }
 
 #' Change size of LaTeX text
