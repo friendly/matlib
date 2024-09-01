@@ -13,7 +13,7 @@ latexMatrix(nrow=4, prefix="\\sqrt{", suffix="}")
 latexMatrix(nrow=4, ncol=4)
 latexMatrix(nrow=4, ncol=4,  prefix="\\sqrt{", suffix="}")
 latexMatrix(nrow=1)
-latexMatrix(nrow=1, prefix="\\sqrt{", suffix="}") 
+latexMatrix(nrow=1, prefix="\\sqrt{", suffix="}")
 latexMatrix(ncol=1)
 latexMatrix(ncol=1,  prefix="\\sqrt{", suffix="}")
 latexMatrix(nrow=1, ncol=4)
@@ -21,9 +21,9 @@ latexMatrix(nrow=1, ncol=4, prefix="\\sqrt{", suffix="}")
 latexMatrix(nrow=3, ncol=1)
 latexMatrix(nrow=3, ncol=1, prefix="\\sqrt{", suffix="}")
 latexMatrix(nrow=3, ncol=3, diag=TRUE)
-latexMatrix(nrow=3, ncol=3, diag=TRUE, prefix="\\sqrt{", suffix="}") 
+latexMatrix(nrow=3, ncol=3, diag=TRUE, prefix="\\sqrt{", suffix="}")
 latexMatrix(nrow="n", ncol="n", diag=TRUE)
-latexMatrix(nrow="n", ncol="n", diag=TRUE, prefix="\\sqrt{", suffix="}") 
+latexMatrix(nrow="n", ncol="n", diag=TRUE, prefix="\\sqrt{", suffix="}")
 
 latexMatrix(comma="TRUE")
 latexMatrix(comma="TRUE", prefix="\\sqrt{", suffix="}")
@@ -49,7 +49,7 @@ X <- latexMatrix("x", "n", "p")
 U <- latexMatrix("u", "n", "k")
 D <- latexMatrix("\\lambda", "k", "k", diag=TRUE)
 V <- latexMatrix("v", "k", "p", transpose = TRUE)
-cat("SVD:\n", getLatex(X), "=\n", getLatex(U), 
+cat("SVD:\n", getLatex(X), "=\n", getLatex(U),
     "\n", getLatex(D), "\n", getLatex(V))
 
 m <- matrix(c(
@@ -79,36 +79,36 @@ latexMatrix(prefix="{", suffix="^{1/2}")
 latexMatrix(1:4) # error (expected)
 latexMatrix(LETTERS[1:4]) # error (expected)
 
-latexMatrix(show.size=TRUE) 
-latexMatrix(nrow=3, show.size=TRUE) 
-latexMatrix(ncol=3, show.size=TRUE) 
-latexMatrix(nrow=3, ncol=3, show.size=TRUE) 
-latexMatrix(show.size=TRUE, transpose=TRUE) 
-latexMatrix(show.size=TRUE, transpose=TRUE, exponent="-1") 
+latexMatrix(show.size=TRUE)
+latexMatrix(nrow=3, show.size=TRUE)
+latexMatrix(ncol=3, show.size=TRUE)
+latexMatrix(nrow=3, ncol=3, show.size=TRUE)
+latexMatrix(show.size=TRUE, transpose=TRUE)
+latexMatrix(show.size=TRUE, transpose=TRUE, exponent="-1")
 
 m <- matrix(3/(1:9), 3, 3)
 latexMatrix(m)
 latexMatrix(m, digits=2)
 latexMatrix(m, fractions=TRUE)
-m[1, 1] <- - m[1, 1] 
-m[2, 2] <- - m[2, 2] 
-m[3, 3] <- - m[3, 3] 
+m[1, 1] <- - m[1, 1]
+m[2, 2] <- - m[2, 2]
+m[3, 3] <- - m[3, 3]
 latexMatrix(m, fractions=TRUE)
 
 latexMatrix(zero.based=c(TRUE, TRUE))
 latexMatrix(nrow=3, ncol=4, zero.based=c(TRUE, TRUE))  # error (expected)
-latexMatrix(ncol=4, zero.based=c(TRUE, FALSE)) 
-latexMatrix(nrow=3, zero.based=c(FALSE, TRUE)) 
+latexMatrix(ncol=4, zero.based=c(TRUE, FALSE))
+latexMatrix(nrow=3, zero.based=c(FALSE, TRUE))
 latexMatrix(nrow="n", ncol="n", diag=TRUE, zero.based=c(TRUE, TRUE))
 
 latexMatrix(zero.based=c(TRUE, FALSE))
 latexMatrix(zero.based=c(FALSE, TRUE))
 
 latexMatrix(nrow=3, ncol="m", zero.based=c(FALSE, TRUE),
-               end.at=c("n-1", "m")) 
+               end.at=c("n-1", "m"))
 
-latexMatrix("\\mathbf{B}", nrow="q", ncol="p", 
-               zero.based=c(TRUE, FALSE), 
+latexMatrix("\\mathbf{B}", nrow="q", ncol="p",
+               zero.based=c(TRUE, FALSE),
                end.at=c("n-1", "m"))
 
 latexMatrix(zero.based=c(TRUE, TRUE), end.at=c("n - 1", "m - 1"))
@@ -266,18 +266,18 @@ letters*W # error (expected)
 
 Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     latexMatrix(latexMatrix(matrix(c(0, 1, 0, 0,
-                                     0, 0, 1, 0), nrow=2, byrow=TRUE), 
+                                     0, 0, 1, 0), nrow=2, byrow=TRUE),
                             matrix = "bmatrix")),
     latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'),
-    Eqn_newline(), Eqn_newline(), 
-    latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_'), 
+    Eqn_newline(), Eqn_newline(),
+    latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_'),
     align=TRUE)
 
 # simplify
 C <- latexMatrix(matrix(c(0, 1, 0, 0,
-                          0, 0, 1, 0), nrow=2, byrow=TRUE), 
+                          0, 0, 1, 0), nrow=2, byrow=TRUE),
                  matrix = "bmatrix")
-B <- latexMatrix('\\beta', ncol = 3, nrow=4, 
+B <- latexMatrix('\\beta', ncol = 3, nrow=4,
                  comma=TRUE, prefix.col = 'y_',
                  zero.based=c(TRUE, FALSE))
 # result of C %*% B should be:
@@ -288,10 +288,10 @@ C %*% B
 
 Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     C, B,
-    Eqn_newline(), Eqn_newline(), 
+    Eqn_newline(), Eqn_newline(),
     '&\n',
     B0,
-    "= \\mathbf{0}_{(2 \\times 3)}", 
+    "= \\mathbf{0}_{(2 \\times 3)}",
     align=TRUE)
 
 
@@ -326,7 +326,7 @@ source(here::here("dev", "partition.R"))
 
 partition(M, rows=2, columns=2)
 
-# Kronecker product 
+# Kronecker product
 
 A <- latexMatrix("a", 2, 2)
 B <- latexMatrix("b", 2, 2)
@@ -355,9 +355,9 @@ KAB <- kronecker(A, B)
 
 Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
     KABmat,
-    Eqn_newline(vspace=1.5), "= & ",
+    Eqn_newline(), Eqn_vspace(1.5), "= & ",
     KAB |> partition(rows = 2, columns = 2),
-    Eqn_newline(vspace=1.5), "= & ",
+    Eqn_newline(), Eqn_vspace(1.5), "= & ",
     latexMatrix(as.double(KAB)) |> partition(rows = 2, columns = 2),
     align = TRUE)
 

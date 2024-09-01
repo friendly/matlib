@@ -5,6 +5,7 @@
 \alias{Eqn_newline}
 \alias{Eqn_text}
 \alias{Eqn_hspace}
+\alias{Eqn_vspace}
 \alias{Eqn_size}
 \alias{ref}
 \title{Create a LaTeX Equation Wrapper}
@@ -17,11 +18,13 @@ Eqn(
   mat_args = list()
 )
 
-Eqn_newline(vspace = 0, metric = "ex")
+Eqn_newline()
 
 Eqn_text(text)
 
 Eqn_hspace(lhs = 5, mid = "", rhs = NULL, times = 1)
+
+Eqn_vspace(space, metric = "ex")
 
 Eqn_size(string, size = 0)
 
@@ -54,14 +57,6 @@ properties of the \code{matrix} input objects. Note that these inputs are used g
 each \code{matrix} objects supplied. If further specificity is required create
 \code{\link{latexMatrix}} objects directly.}
 
-\item{vspace}{includes extra vertical space. If not specified
-only newline returns are included.
-Is used in concert with \code{metric}}
-
-\item{metric}{metric of the vertical space. Defaults to
-'ex', but can be 'pt', 'mm', 'cm', 'em', 'bp', 'dd',
-'pc', or 'in'}
-
 \item{text}{argument to be used within \code{\\text{}}}
 
 \item{lhs}{spacing size. Can be a number between -1 and 6. -1 provides negative
@@ -76,6 +71,14 @@ commonly this will be operators like \code{'='}}
 the this will be set to \code{rhs} to create symmetric spaces around \code{mid}}
 
 \item{times}{number of times to repeat the spacings}
+
+\item{space}{includes extra vertical space. If not specified
+only newline returns are included.
+Is used in concert with \code{metric}}
+
+\item{metric}{metric of the vertical space. Defaults to
+'ex', but can be 'pt', 'mm', 'cm', 'em', 'bp', 'dd',
+'pc', or 'in'}
 
 \item{string}{a string that should have its text size modified. If missing
 the size modifier is returned, which applied the size modifier
@@ -165,8 +168,6 @@ showEqn(A, b, latex=TRUE) |> Eqn()
 
 
 Eqn_newline()
-Eqn_newline(vspace=1.5)
-Eqn_newline(vspace=1, metric='cm')
 
 
 Eqn_hspace()
