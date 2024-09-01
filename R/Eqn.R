@@ -215,7 +215,11 @@ Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
                    "4"='\\ ',
                    "5"='\\quad',
                    "6"='\\qquad')
-        } else sprintf('\\hspace{%s}', inp)
+        } else {
+            metric <- substr(inp, nchar(inp)-1, nchar(inp))
+            checkLaTeXMetric(metric)
+            sprintf('\\hspace{%s}', inp)
+        }
         space
     }
 
