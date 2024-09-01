@@ -10,8 +10,6 @@ output:
   pdf_document:
     toc: true
     keep_tex: true
-template:
-  math-rendering: mathjax
 bibliography: "references.bib"
 vignette: >
   %\VignetteIndexEntry{LaTeX Equations with latexMatrix, Eqn and matrix2latex}
