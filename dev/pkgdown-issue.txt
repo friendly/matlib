@@ -1,0 +1,33 @@
+[My env: R version 4.4.1, RStudio 2023.06.1, pkgdown 2.1.0]
+
+This issue is similar to https://github.com/r-lib/pkgdown/issues/2739
+
+I'm writing a vignette for the [`matlib`](https://github.com/friendly/matlib) package
+on our new facilities for creating LaTeX matrices & matrix equations in R.
+Needless to say, it creates some complex LaTeX.
+
+The [vignette in question](http://friendly.github.io/matlib/articles/latex-equations.html)
+has this YAML header:
+
+```
+---
+title: "LaTeX Equations with latexMatrix, Eqn and matrix2latex"
+author: Phil Chalmers, John Fox, Michael Friendly
+date: "`r Sys.Date()`"
+output: 
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    number_sections: false
+    toc: true
+  pdf_document:
+    toc: true
+    keep_tex: true
+template:
+  math-rendering: mathjax
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{LaTeX Equations with latexMatrix, Eqn and matrix2latex}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+```
