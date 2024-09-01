@@ -1,3 +1,5 @@
+Math rendering for LaTeX arrays and equation number in vignettes
+
 [My env: R version 4.4.1, RStudio 2023.06.1, pkgdown 2.1.0]
 
 This issue is similar to https://github.com/r-lib/pkgdown/issues/2739
@@ -31,3 +33,44 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 ```
+
+There are two problems with what `pkgdown` produces compared to what I get when I just use `knitr` on the vignette `.Rmd` file:
+
+(1) Equation numbers don't appear and cannot be referenced
+
+One example uses our functions as so to produce two equations with `\label{}`s
+
+```
+Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
+Eqn(latexMatrix("u", "n", "k"),
+    latexMatrix("\\lambda", "k", "k", diag=TRUE),
+    latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
+```
+
+This produces the LaTeX code:
+
+```
+\begin{equation}
+\label{eq:svdmats}
+\begin{pmatrix} 
+  u_{11} & u_{12} & \cdots & u_{1k} \\ 
+  u_{21} & u_{22} & \cdots & u_{2k} \\ 
+  \vdots & \vdots &        & \vdots \\ 
+  u_{n1} & u_{n2} & \cdots & u_{nk} \\ 
+\end{pmatrix}
+\begin{pmatrix} 
+  \lambda_{1} & 0           & \cdots      & 0           \\ 
+  0           & \lambda_{2} & \cdots      & 0           \\ 
+  \vdots      & \vdots      & \ddots      & \vdots      \\ 
+  0           & 0           & \cdots      & \lambda_{k} \\ 
+\end{pmatrix}
+\begin{pmatrix} 
+  v_{11} & v_{12} & \cdots & v_{1p} \\ 
+  v_{21} & v_{22} & \cdots & v_{2p} \\ 
+  \vdots & \vdots &        & \vdots \\ 
+  v_{k1} & v_{k2} & \cdots & v_{kp} \\ 
+\end{pmatrix}^\top
+\end{equation}
+```
+
+
