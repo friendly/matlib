@@ -24,7 +24,7 @@ Eqn_text(text)
 
 Eqn_hspace(lhs = 5, mid = "", rhs = NULL, times = 1)
 
-Eqn_vspace(space, metric = "ex")
+Eqn_vspace(space)
 
 Eqn_size(string, size = 0)
 
@@ -61,8 +61,9 @@ each \code{matrix} objects supplied. If further specificity is required create
 
 \item{lhs}{spacing size. Can be a number between -1 and 6. -1 provides negative
 spaces and 0 gives no spacing. Input can also be a character vector, which will be
-passed to \code{\\hspace{}} (e.g., \code{'1cm'}).
-Default is 5, resulting in a \code{\\quad} space}
+passed to \code{\\hspace{}} (e.g., \code{'1cm'}; see \code{space} argument
+for supported metrics).
+Default is 5, resulting in a \code{\\quad} space.}
 
 \item{mid}{character vector to place in the middle of the space specification. Most
 commonly this will be operators like \code{'='}}
@@ -72,13 +73,8 @@ the this will be set to \code{rhs} to create symmetric spaces around \code{mid}}
 
 \item{times}{number of times to repeat the spacings}
 
-\item{space}{includes extra vertical space. If not specified
-only newline returns are included.
-Is used in concert with \code{metric}}
-
-\item{metric}{metric of the vertical space. Defaults to
-'ex', but can be 'pt', 'mm', 'cm', 'em', 'bp', 'dd',
-'pc', or 'in'}
+\item{space}{includes extra vertical space. Metric of the vertical space
+must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'}
 
 \item{string}{a string that should have its text size modified. If missing
 the size modifier is returned, which applied the size modifier
@@ -178,6 +174,11 @@ Eqn_hspace('1cm')
 # symmetric spacing around mid
 Eqn_hspace(mid='=')
 Eqn_hspace(mid='=', times=2)
+
+
+Eqn_vspace('1.5ex')
+Eqn_vspace('1cm')
+
 
 
 # set size globally
