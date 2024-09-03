@@ -33,6 +33,8 @@
 #'   or again via \code{\link{ref}} for convenience
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
 #'   changed for compiled documents that support \code{knitr}
+#' @param quarto logical; use Quarto referencing syntax? When \code{TRUE}
+#'   the \code{html_output} will be irrelevant
 #' @param align logical; use the \code{align} environment with explicit \code{&} representing alignment
 #'   points. Default: \code{FALSE}
 #' @param mat_args list of arguments to be passed to \code{\link{latexMatrix}} to change the
@@ -55,6 +57,9 @@
 #'
 #' # html output (auto detected in compiled documents)
 #' Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
+#'
+#' # Quarto output
+#' Eqn('e=mc^2', label = 'eq-einstein', quarto = TRUE)
 #'
 #' # Multiple expressions
 #' Eqn("e=mc^2",
@@ -94,13 +99,16 @@ Eqn <- function(...,
                 label = NULL,
                 align = FALSE,
                 html_output = knitr::is_html_output(),
+                quarto = FALSE, ## TODO, detect globally via options()
                 mat_args = list()) {
 
   number <- !is.null(label)
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
-  cat(sprintf("\n\\begin{%s}\n", wrap))
-  if(!is.null(label)){
+  if(quarto) cat("\n$$")
+  if(quarto && !align) cat("\n")
+  else cat(sprintf("\n\\begin{%s}\n", wrap))
+  if(!is.null(label) && !quarto){
       if(html_output){
           if(substring(label, 1, 2) != 'eq')
               stop('HTML outputs require labels to start with \"eq\"')
@@ -117,7 +125,17 @@ Eqn <- function(...,
         print(dots[[i]])
     }
   }
-  cat(sprintf("\\end{%s}\n", wrap))
+  if(quarto && !align) cat("\n")
+  else cat(sprintf("\\end{%s}\n", wrap))
+  if(quarto){
+      if(quarto) cat("$$ ")
+      if(!is.null(label)){
+          if(substring(label, 1, 3) != 'eq-')
+              stop('Quarto equation labels must start with \"eq-\"')
+          cat(sprintf('{#%s}', label))
+      }
+      cat("\n")
+  }
   invisible(NULL)
 }
 
@@ -307,14 +325,27 @@ Eqn_size <- function(string, size = 0){
 #' ref('eq:einstein', parentheses=FALSE)
 #' ref('eq:einstein', html_output=TRUE)
 #'
+#' # with Quarto
+#' Eqn('e = mc^2', label='eq-einstein', quarto=TRUE)
+#' ref('eq-einstein', quarto=TRUE)
+#' ref('eq-einstein', quarto=TRUE, parentheses=FALSE)
+#'
 ref <- function(label,
                 html_output = knitr::is_html_output(),
+                quarto = FALSE, ## TODO, detect globally via options()
                 parentheses = TRUE){
-    ret <- if(html_output){
-        sprintf('\\@ref(%s)', label)
+    ret <- if(quarto){
+        sprintf('@%s', label)
+        # if(parentheses)
+        #     sprintf('([-@%s])', label)
+        # else sprintf('[-@%s]', label)
     } else {
-        if(parentheses) sprintf('(\\ref{%s})', label)
-        else sprintf('\\ref{%s}', label)
-     }
+        if(html_output){
+            sprintf('\\@ref(%s)', label)
+        } else {
+            if(parentheses) sprintf('(\\ref{%s})', label)
+            else sprintf('\\ref{%s}', label)
+        }
+    }
     ret
 }

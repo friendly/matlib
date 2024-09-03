@@ -15,6 +15,7 @@ Eqn(
   label = NULL,
   align = FALSE,
   html_output = knitr::is_html_output(),
+  quarto = FALSE,
   mat_args = list()
 )
 
@@ -28,7 +29,12 @@ Eqn_vspace(space)
 
 Eqn_size(string, size = 0)
 
-ref(label, html_output = knitr::is_html_output(), parentheses = TRUE)
+ref(
+  label,
+  html_output = knitr::is_html_output(),
+  quarto = FALSE,
+  parentheses = TRUE
+)
 }
 \arguments{
 \item{...}{comma separated LaTeX expressions that are either a) a character vector,
@@ -51,6 +57,9 @@ points. Default: \code{FALSE}}
 \item{html_output}{logical; use references for HTML outputs instead
 of the LaTeX? Automatically changed for compiled documents
 that support \code{knitr}}
+
+\item{quarto}{logical; use Quarto referencing syntax? When \code{TRUE}
+the \code{html_output} will be irrelevant}
 
 \item{mat_args}{list of arguments to be passed to \code{\link{latexMatrix}} to change the
 properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
@@ -128,6 +137,9 @@ Eqn("X=U \\\\lambda V", label='eq:svd')
 # html output (auto detected in compiled documents)
 Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 
+# Quarto output
+Eqn('e=mc^2', label = 'eq-einstein', quarto = TRUE)
+
 # Multiple expressions
 Eqn("e=mc^2",
     Eqn_newline(),
@@ -198,6 +210,11 @@ Eqn('e = mc^2', label='eq:einstein')
 ref('eq:einstein')
 ref('eq:einstein', parentheses=FALSE)
 ref('eq:einstein', html_output=TRUE)
+
+# with Quarto
+Eqn('e = mc^2', label='eq-einstein', quarto=TRUE)
+ref('eq-einstein', quarto=TRUE)
+ref('eq-einstein', quarto=TRUE, parentheses=FALSE)
 
 }
 \seealso{
