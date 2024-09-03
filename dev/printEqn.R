@@ -1,16 +1,25 @@
 eqn_parser <- function(string,
-                       `**`="mathbf", `*`="mathcal", ...){
+                       `**`="mathbf", `*`="mathcal",
+                       GreekBS = TRUE, ...){
 
     # `*` -> \times
     if(grepl('`*`', string))
         string <- gsub('`*`', "\\times ", string, fixed=TRUE)
 
+    if(GreekBS){
+        for(symb in GreekLaTeXSymbols()){
+            bsymb <- paste0('**', symb, "**")
+            replace <- paste0('\\boldsymbol{', symb, "}")
+            string <- gsub(bsymb, replace, string, fixed=TRUE)
+        }
+    }
+
     # **.**
     if(grepl('\\*\\*', string)){
         loc <- gregexpr("\\*\\*", string)[[1L]]
         for(i in loc[seq(length(loc), 2, by=-2)])
-            substring(string, i, i+1L) <- '} '
-        string <- gsub('} ', '}', string, fixed = TRUE)
+            substring(string, i, i+1L) <- '}#'
+        string <- gsub('}#', "}", string)
         string <- gsub('\\*\\*', replacement = sprintf("\\\\%s{", `**`), string)
     }
 
@@ -26,6 +35,16 @@ eqn_parser <- function(string,
     string
 }
 
+GreekLaTeXSymbols <- function() paste0("\\", c("alpha", "nu", "beta", "xi", "Xi",
+                             "gamma", "Gamma","delta", "Delta",
+                             "pi", "Pi", "epsilon", "varepsilon",
+                             "rho", "varrho", "zeta", "sigma", "Sigma",
+                             "eta", "tau", "theta", "vartheta",
+                             "Theta", "upsilon", "Upsilon", "iota",
+                             "phi", "varphi", "Phi", "kappa", "chi",
+                             "lambda", "Lambda", "psi", "Psi",
+                             "mu", "omega", "Omega"))
+
 if(FALSE){
     s1 <- "e = mc^2"
     s2 <- "**e** = **mc**^2"
@@ -35,6 +54,8 @@ if(FALSE){
     # s6 <- "*H*_0 : %n *C* *B* & = "
     s7 <- "*H*_0 : *C* `*` *B*  = "
     s8 <- "*H*_0 : **C** **B** & = "
+    s9 <- "**U** **\\Lambda** **V**^\\top"
+    s10 <- "\\mathbf{U} \\boldsymbol{\\Lambda} \\mathbf{V}^\\top"
 
     identical(eqn_parser(s1), s1)
     eqn_parser(s2)
@@ -45,6 +66,8 @@ if(FALSE){
     # eqn_parser(s6)
     eqn_parser(s7)
     identical(eqn_parser(s8), s3)
+    eqn_parser(s9)
+    identical(eqn_parser(s9), s10)
 }
 
 #' String formatting for LaTeX Equations
@@ -58,7 +81,8 @@ if(FALSE){
 #'   Additionally, \code{markdown = TRUE}
 #'   markdown syntax for bold fonts (\code{**}) and
 #'   italicizes (\code{*}) can be used for wrapping text elements with
-#'   \code{boldsymbol} and \code{mathcal} blocks, respectively.
+#'   \code{mathbf}/\code{boldsymbol} (for detected Greek symbols)
+#'   and \code{mathcal} blocks, respectively.
 #'   These wrappers can be overwritten by matching the operator specification
 #'   in \code{...}; for example, using \code{boldsymbol} for bold text requires
 #'   passing \code{`**` = 'boldsymbol'}
@@ -82,6 +106,10 @@ if(FALSE){
 #'
 #' # markdown-style formatting
 #' printEqn("*H*_0 : **C** **B**")
+#'
+#' # Bold Greek letters use boldsymbol
+#' printEqn("*H*_0 : **\\Lambda** **B**")
+#' printEqn("*H*_0 : **\\Lambda** **B**", GreekBS = FALSE) # disabled
 #'
 #' # expressions with % substitutions
 #' c <- matrix(c(0, 1, 0, 0,
