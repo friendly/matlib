@@ -47,25 +47,43 @@ library(matlib)
 
 LaTeX is the de facto standard for communication and publication in scientific documents and it is very easy to typeset mathematical expressions
 like Pythagoras' theorem, $a^2 + b^2 = c^2$ (using `a^2 + b^2 = c^2`) once you learn
-the notation. Writing equations with arrays, matrices and vectors is
+the notation. With a bit of practice, the PDF of the normal distribution can be written as
+
+```
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} 
+  \exp\left[ -\left(\frac{x-\mu}{2\sigma}\right)^{\!2}\,\right]
+```
+which renders as
+
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} 
+  \exp\left[ -\left(\frac{x-\mu}{2\sigma}\right)^{\!2}\,\right]
+$$
+
+Writing equations with arrays, matrices and vectors is
 somewhat more challenging. Many people rely on interactive LaTeX editors like [Overleaf](https://www.overleaf.com/), [MathType](https://www.wiris.com/en/mathtype/), or online
 versions like [Lagrida LaTeX Equation Editor](https://latexeditor.lagrida.com/)
 that provide a menu-driven interface with fill-in templates for
 matrices.
 
-There are already some tools available in R for producing LaTeX output for
-tables (`xtable::xtable()`), R objects (`Hmisc::latex()`)
-and statistical models (`equatiomatic::extract_eq()`).
+There are already some tools available in R for producing LaTeX output:
+
+* tables (e.g, `xtable::xtable()`), 
+* R objects (`Hmisc::latex()`),
+* statistical models (`equatiomatic::extract_eq()`),
+* `knitr::knit_print()` can be used to define [methods for printing objects of class `"matrix"`](https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable). 
+* The [`mathpix`](https://cran.r-project.org/package=mathpix) package
+can take an image of a an equation or formula and produce the LaTeX code which should generate that image.
+
 
 The `matlib` package extends these, providing a collection of functions that simplify using LaTeX notation for matrices, vectors and equations in documentation and in writing:
 
 * `latexMatrix()`: Constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. `latexMatrix()` also supports matrices with numeric elements, and the objects it produces may be used in various kinds of matrix computations, both symbolic and numeric.
 * `matrix2latex()`: Constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts
 * `showEqn()`: Shows what matrices $\mathbf{A}, \mathbf{b}$ look like as the system of linear equations, $\mathbf{A x} = \mathbf{b}$, but written out as a set of equations.
-* `Eqn()`: A wrapper to produce LaTeX expressions that can be copied/pasted into documents or
-used directly in `.Rmd` or `.qmd` documents to compile to equations.
+* `Eqn()`: A wrapper to produce LaTeX expressions or equations that can be copied/pasted into documents or used directly in `.Rmd` or `.qmd` documents to compile to equations.
 
-When used directly in R, they produce their output to the console (using `cat()`).
+When used directly in R, these functions produce their output to the console (using `cat()`).
 In a `.Rmd` or `.qmd` document, use the chunk options: `results='asis', echo=FALSE`
 so that `knitr` just outputs the text of the equations to the document.
 The rendering of the equations is handled by [`pandoc`](https://pandoc.org/) for standard
@@ -78,7 +96,10 @@ Rmarkdown or Quarto documents.
 `pandoc`.
 The features we describe below work in standard Rmarkdown or Quarto documents.
 However, some more advanced
-features (equation numbers and references, horizontal and vertical lines for partitioned matrices) **do not work** in this vignette as rendered by [`pkgdown`](https://pkgdown.r-lib.org/), as far as we can determine.
+features (horizontal and vertical lines for partitioned matrices)
+require `katex`
+to work with [`pkgdown`](https://pkgdown.r-lib.org/).
+Equation numbers and cross-references to them still do not work in `pkgdown.
 See the discussion in [this pkgdown issue](https://github.com/r-lib/pkgdown/issues/2739), 
 
 
@@ -402,7 +423,10 @@ in a $h$ degree-of-freedom hypothesis.
 
 For example, for a multivariate regression model 
 with
-three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by the `latexMatrix()` expression:
+three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by the following `latexMatrix()` expression, where several arguments are used to:
+(a) start row indices at zero (`zero.based`);
+(b) make the column indices a subscript of $y$ (`prefix.col`);
+(c) insert a comma between row/column subscrpts.
 
 ```{r linhyp-beta, results='asis'}
 (B <- latexMatrix('\\beta', ncol = 3, nrow=4, 
