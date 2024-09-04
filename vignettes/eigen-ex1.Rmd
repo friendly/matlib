@@ -45,7 +45,7 @@ elements in `values`.
 The following steps illustrate the main properties of eigenvalues and eigenvectors.  We use the notation
 $A = V' \Lambda V$ to express the decomposition of the matrix $A$, where $V$ is the matrix of
 eigenvectors and $\Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_p)$ is the diagonal matrix
-composed of the ordered eivenvalues, $\lambda_1 \ge \lambda_2 \ge \dots \lambda_p$.
+composed of the ordered eigenvalues, $\lambda_1 \ge \lambda_2 \ge \dots \lambda_p$.
 
 0. Orthogonality: Eigenvectors are always orthogonal, $V' V = I$.  `zapsmall()` is handy for cleaning up tiny values.
 ```{r orthog}

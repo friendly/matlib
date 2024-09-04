@@ -22,7 +22,7 @@
 \alias{[.latexMatrix}
 \alias{cbind.latexMatrix}
 \alias{rbind.latexMatrix}
-\title{Create and Manipulate LaTeX Repesentations of Matrices}
+\title{Create and Manipulate LaTeX Representations of Matrices}
 \usage{
 latexMatrix(
   symbol = "x",
@@ -179,7 +179,7 @@ specific numeric values; e.g.,
 \item{drop}{to match the generic indexing function, ignored}
 
 \item{deparse.level}{to match the generic \code{\link{rbind}()}
-and \code{\link{cbind}()} funcctions; ignored}
+and \code{\link{cbind}()} functions; ignored}
 }
 \value{
 \code{latexMatrix()} returns an object of class \code{"latexMatrix"}

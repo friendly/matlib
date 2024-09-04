@@ -107,13 +107,13 @@ the result of compiling the LaTeX expressions.
 
 \code{Eqn_newline()} emits a newline (\code{\\}) in an equation
 
-\code{Eqn_text()} inserts a literla string to be rendered in a text font in an equation
+\code{Eqn_text()} inserts a literal string to be rendered in a text font in an equation
 
 \code{Eqn_hspace()} is used to create (symmetric) equation spaces, most typically around
 \code{=} signs
 Input to \code{lhs}, \code{rhs} can be a
 numeric to increase the size of the space or a
-character vector to be passed to the LaTex macro \code{\\hspace{}}.
+character vector to be passed to the LaTeX macro \code{\\hspace{}}.
 
 \code{Eqn_vspace()} inserts vertical space between lines in an equation.
 Typically used for aligned, multiline equations.

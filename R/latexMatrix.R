@@ -727,7 +727,7 @@ as.double.latexMatrix <- function(x, locals=list(), ...){
 }
 
 #' @param deparse.level to match the generic \code{\link{rbind}()}
-#' and \code{\link{cbind}()} funcctions; ignored
+#' and \code{\link{cbind}()} functions; ignored
 #' @rdname latexMatrix
 #' @export
 cbind.latexMatrix <- function(..., deparse.level){

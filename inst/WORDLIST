@@ -1,6 +1,8 @@
 adjoint
 Adjoint
 Beaton
+behaviour
+bmatrix
 buglet
 carData
 Cheung
@@ -17,6 +19,7 @@ Dempster
 det
 diag
 diagonalizes
+dmurdoch
 eigen
 Eigen
 eigenstructure
@@ -35,6 +38,7 @@ inv
 Jarecki
 kronecker
 Lagrida
+latexMatrix
 Lundberg
 macOS
 mathbf
@@ -43,6 +47,7 @@ MathJax
 MathType
 matrixkit
 mikewlcheung
+norglwidget
 orthogonalization
 Orthogonalization
 orthonormal
@@ -54,6 +59,7 @@ Penrose
 pkgdown
 plotEqn
 pmatrix
+pre
 Proj
 programmatically
 pseudoinverse

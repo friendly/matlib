@@ -162,7 +162,7 @@ Eqn_newline <- function()' \\\\ \n'
 
 #' Eqn_text Include literal string in equations
 #'
-#' \code{Eqn_text()} inserts a literla string to be rendered in a text font in an equation
+#' \code{Eqn_text()} inserts a literal string to be rendered in a text font in an equation
 #'
 #' @param text argument to be used within \code{\\text{}}
 #' @rdname Eqn
@@ -175,7 +175,7 @@ Eqn_text <- function(text) sprintf("\\text{%s}", text)
 #' \code{=} signs
 #' Input to \code{lhs}, \code{rhs} can be a
 #' numeric to increase the size of the space or a
-#' character vector to be passed to the LaTex macro \code{\\hspace{}}.
+#' character vector to be passed to the LaTeX macro \code{\\hspace{}}.
 #'
 #' @param lhs spacing size. Can be a number between -1 and 6. -1 provides negative
 #'   spaces and 0 gives no spacing. Input can also be a character vector, which will be
