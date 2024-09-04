@@ -20,7 +20,8 @@ diagonalizes
 eigen
 Eigen
 eigenstructure
-eivenvalues
+eigenvalues
+Eqn
 ERO
 EROs
 gaussianElimination
@@ -28,11 +29,17 @@ ginv
 gramreg
 Hotelling
 Hotelling's
+http
+https
 inv
 Jarecki
+kronecker
+Lagrida
 Lundberg
 macOS
 mathbf
+MathJax
+MathType
 matrixkit
 mikewlcheung
 orthogonalization
@@ -42,6 +49,7 @@ Orthonormalization
 parallelpiped
 partialled
 Penrose
+pkgdown
 plotEqn
 Proj
 pseudoinverse
@@ -54,7 +62,10 @@ rgl
 rglwidget
 Rightarrow
 Scazzocchio
+showEqn
+StackExchange
 stackoverflow
+StackOverflow
 subscripted
 svd
 thx
@@ -71,4 +82,5 @@ Weiner
 widehat
 wikipedia
 XQuartz
+YAML
 yorku

@@ -3,10 +3,10 @@
 - added `latexMatrix()` to create a symbolic matrix
 - `latexMatrix()` made more general to handle much wider variety of cases, with LaTeX output [JF]
 - this is fleshed out with an `Eqn()` wrapper to work with other LaTeX-generating code in the package [PC]
-- a document, `dev/Eqn_test.Rmd` describes all this, to be made a vignette
 - added a vignette, `inv-3d` illustrating linear transformations and matrix inverse in 3D using `rgl`
 - `latexMatrix()` gets operators for matrix arithmetic (`+,-, %*%`) and operators (`t()`)
-- added vignette, `latex-equations.Rmd`
+- added vignette, `latex-equations.Rmd` illustrating the variety of functions in the package for constructing matrix equations in LaTeX
+- added functions `matmult()`, `matsum()`, `matpower()` similar to the operators, but providing `simplify = TRUE`, `as.numeric = TRUE`
 
 # matlib 0.9.8
 

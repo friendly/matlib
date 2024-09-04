@@ -356,7 +356,7 @@ The matrix product in the previous example typesets as
 Eqn(M %*% t(D))
 ```
 
-### Determnants & inverse
+### Determinants & inverse
 
 The determinant is computed _recursively_ by finding the _cofactors_ of the first row of the matrix,
 i.e., $\det(\mathbf{A}_{n \times n}) = \Sigma_j^n \, a_{ij}\: C_{ij}$ where the cofactors
@@ -426,7 +426,7 @@ with
 three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by the following `latexMatrix()` expression, where several arguments are used to:
 (a) start row indices at zero (`zero.based`);
 (b) make the column indices a subscript of $y$ (`prefix.col`);
-(c) insert a comma between row/column subscrpts.
+(c) insert a comma between row/column subscripts.
 
 ```{r linhyp-beta, results='asis'}
 (B <- latexMatrix('\\beta', ncol = 3, nrow=4, 
@@ -469,7 +469,10 @@ expressions.
 
 Matrix notation sometimes portrays matrices whose elements are themselves
 matrices and vectors (rather than scalars) in order to show a higher-level
-structure. For example, the code below represents a $4 \times 4$ matrix
+structure. Such matrices, called **partitioned** or **block** matrices
+have similar [arithmetic and algebraic properties](https://www.statlect.com/matrix-algebra/properties-of-block-matrices) to those of ordinary matrices.
+
+For example, the code below represents a $4 \times 4$ matrix
 $\mathbf{M}$, which is partitioned in $2 \times 2$ blocks, which are
 labeled $\mathbf{M}_{i,j}$.
 
@@ -535,6 +538,19 @@ Note that `partition()` can show more than one horizontal and vertical partition
 
 ```{r partition7, results='asis'}
 partition(M, rows=c(1,3), columns=c(1,3))
+```
+
+Using this notation, we can illustrate matrix arithmetic with partitioned
+matrices. For example, assuming the partitions of matrices $\mathbf{C}$ and $\mathbf{D}$ are of the same size, their sum is just the sum of corresponding
+sub-matrices:
+
+
+```{r partition8, results='asis'}
+C <- latexMatrix("\\mathbf{C}", 2, 2)
+D <- latexMatrix("\\mathbf{D}", 2, 2)
+Eqn("\\mathbf{C} + \\mathbf{D} =",
+    C, "+", D, "=", 
+    C + D)
 ```
 
 

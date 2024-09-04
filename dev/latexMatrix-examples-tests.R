@@ -326,6 +326,14 @@ source(here::here("dev", "partition.R"))
 
 partition(M, rows=2, columns=2)
 
+# matrix arithmetic with partitioned matrices
+
+C <- latexMatrix("\\mathbf{C}", 2, 2)
+D <- latexMatrix("\\mathbf{D}", 2, 2)
+Eqn("\\mathbf{C} + \\mathbf{D} =",
+    C, "+", D, "=", 
+    C + D)
+
 # Kronecker product
 
 A <- latexMatrix("a", 2, 2)
@@ -365,3 +373,19 @@ Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
 source(here::here('dev', 'printEqn.R'))
 printEqn("**A** \\otimes **B** = & %KABmat \\\\[1.5ex]
                                = & %KAB", align=TRUE)
+
+# equations in OLS regression
+
+X_y <- "\\left[ \\mathbf{X} \\mid \\mathbf{y} \\right]"
+
+XX <- "\\mathbf{X}^\\top \\mathbf{X}"
+Xy <- "\\mathbf{X}^\\top \\mathbf{y}"
+yX <- "\\mathbf{y}^\\top \\mathbf{X}"
+yy <- "\\mathbf{y}^\\top \\mathbf{y}"
+bigXY <- matrix(c(XX, Xy, yX, yy), 2, 2, byrow = TRUE)
+
+Eqn(X_y,"^\\top\\;", X_y, "=",
+    latexMatrix(bigXY, matrix = "bmatrix") |> partition(rows=1, columns=1)
+    )
+
+
