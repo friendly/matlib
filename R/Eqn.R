@@ -332,13 +332,12 @@ Eqn_size <- function(string, size = 0){
 #'
 ref <- function(label,
                 html_output = knitr::is_html_output(),
-                quarto = FALSE, ## TODO, detect globally via options()
                 parentheses = TRUE){
+    quarto = FALSE ## TODO, detect globally via options()
     ret <- if(quarto){
-        sprintf('@%s', label)
-        # if(parentheses)
-        #     sprintf('([-@%s])', label)
-        # else sprintf('[-@%s]', label)
+        if(parentheses)
+            sprintf('([-@%s])', label)
+        else sprintf('[-@%s]', label)
     } else {
         if(html_output){
             sprintf('\\@ref(%s)', label)

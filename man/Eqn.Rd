@@ -29,12 +29,7 @@ Eqn_vspace(space)
 
 Eqn_size(string, size = 0)
 
-ref(
-  label,
-  html_output = knitr::is_html_output(),
-  quarto = FALSE,
-  parentheses = TRUE
-)
+ref(label, html_output = knitr::is_html_output(), parentheses = TRUE)
 }
 \arguments{
 \item{...}{comma separated LaTeX expressions that are either a) a character vector,
