@@ -141,7 +141,7 @@ Eqn <- function(...,
 
 #' Emit a newline in an equation
 #'
-#' \code{Eqn_newline()} emits a newline in an equation
+#' \code{Eqn_newline()} emits a newline (\code{\\}) in an equation
 #'
 #' @rdname Eqn
 #' @export
@@ -153,6 +153,8 @@ Eqn <- function(...,
 Eqn_newline <- function()' \\\\ \n'
 
 #' Eqn_text Include literal string in equations
+#' 
+#' \code{Eqn_text()} inserts a literla string to be rendered in a text font in an equation
 #'
 #' @param text argument to be used within \code{\\text{}}
 #' @rdname Eqn
@@ -229,6 +231,11 @@ Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
 }
 
 
+#' Insert Vertical Space in an Equation
+#' 
+#' \code{Eqn_vspace()} inserts vertical space between lines in an equation. 
+#' Typically used for aligned, multiline equations.
+#' 
 #' @param space includes extra vertical space. Metric of the vertical space
 #'   must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'
 #' @rdname Eqn
