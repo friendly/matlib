@@ -34,7 +34,9 @@
 #' @param html_output logical; use labels for HTML outputs instead of the LaTeX? Automatically
 #'   changed for compiled documents that support \code{knitr}
 #' @param quarto logical; use Quarto referencing syntax? When \code{TRUE}
-#'   the \code{html_output} will be irrelevant
+#'   the \code{html_output} will be irrelevant. Can be set globally via
+#'   \code{\link{options}} with \code{options(quartoEqn=TRUE)}
+#'
 #' @param align logical; use the \code{align} environment with explicit \code{&} representing alignment
 #'   points. Default: \code{FALSE}
 #' @param mat_args list of arguments to be passed to \code{\link{latexMatrix}} to change the
@@ -60,6 +62,11 @@
 #'
 #' # Quarto output
 #' Eqn('e=mc^2', label = 'eq-einstein', quarto = TRUE)
+#'
+#' # Set Quarto option globally for all calls to Eqn()
+#' options(quartoEqn=TRUE)
+#' Eqn('e=mc^2', label = 'eq-einstein')
+#' options(quartoEqn=FALSE) ## reset
 #'
 #' # Multiple expressions
 #' Eqn("e=mc^2",
@@ -99,9 +106,10 @@ Eqn <- function(...,
                 label = NULL,
                 align = FALSE,
                 html_output = knitr::is_html_output(),
-                quarto = FALSE, ## TODO, detect globally via options()
+                quarto = getOption('quartoEqn'),
                 mat_args = list()) {
-
+  if(is.null(quarto)) quarto <- FALSE
+  stopifnot(is.logical(quarto))
   number <- !is.null(label)
   wrap <- if(align) "align" else "equation"
   if(!number) wrap <- paste0(wrap, '*')
@@ -153,7 +161,7 @@ Eqn <- function(...,
 Eqn_newline <- function()' \\\\ \n'
 
 #' Eqn_text Include literal string in equations
-#' 
+#'
 #' \code{Eqn_text()} inserts a literla string to be rendered in a text font in an equation
 #'
 #' @param text argument to be used within \code{\\text{}}
@@ -232,10 +240,10 @@ Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
 
 
 #' Insert Vertical Space in an Equation
-#' 
-#' \code{Eqn_vspace()} inserts vertical space between lines in an equation. 
+#'
+#' \code{Eqn_vspace()} inserts vertical space between lines in an equation.
 #' Typically used for aligned, multiline equations.
-#' 
+#'
 #' @param space includes extra vertical space. Metric of the vertical space
 #'   must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'
 #' @rdname Eqn

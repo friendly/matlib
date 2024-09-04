@@ -15,7 +15,7 @@ Eqn(
   label = NULL,
   align = FALSE,
   html_output = knitr::is_html_output(),
-  quarto = FALSE,
+  quarto = getOption("quartoEqn"),
   mat_args = list()
 )
 
@@ -54,7 +54,8 @@ of the LaTeX? Automatically changed for compiled documents
 that support \code{knitr}}
 
 \item{quarto}{logical; use Quarto referencing syntax? When \code{TRUE}
-the \code{html_output} will be irrelevant}
+the \code{html_output} will be irrelevant. Can be set globally via
+\code{\link{options}} with \code{options(quartoEqn=TRUE)}}
 
 \item{mat_args}{list of arguments to be passed to \code{\link{latexMatrix}} to change the
 properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
@@ -114,7 +115,7 @@ Input to \code{lhs}, \code{rhs} can be a
 numeric to increase the size of the space or a
 character vector to be passed to the LaTex macro \code{\\hspace{}}.
 
-\code{Eqn_vspace()} inserts vertical space between lines in an equation. 
+\code{Eqn_vspace()} inserts vertical space between lines in an equation.
 Typically used for aligned, multiline equations.
 
 \code{Eqn_size()} is used to increase or decrease the size of LaTeX text and equations. Can be applied
@@ -139,6 +140,11 @@ Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 
 # Quarto output
 Eqn('e=mc^2', label = 'eq-einstein', quarto = TRUE)
+
+# Set Quarto option globally for all calls to Eqn()
+options(quartoEqn=TRUE)
+Eqn('e=mc^2', label = 'eq-einstein')
+options(quartoEqn=FALSE) ## reset
 
 # Multiple expressions
 Eqn("e=mc^2",
