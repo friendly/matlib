@@ -317,7 +317,10 @@ Eqn_size <- function(string, size = 0){
 #' \code{ref{}} provides for inline references to equations in a document.
 #' Depending on the output type this function will provide the correct
 #' inline wrapper for MathJax or LaTeX equations. This provides more
-#' consistent referencing when switching between HTML and PDF outputs.
+#' consistent referencing when switching between HTML and PDF outputs. Note
+#' that for documents build with Quarto this approach is not supported; hence,
+#' referencing of equations must be done with the "@eq-name" approach in-text.
+#'
 #'
 #' @param label the equation label used within \code{\link{Eqn}} or
 #'   defined explicitly in the document
@@ -340,10 +343,9 @@ Eqn_size <- function(string, size = 0){
 #' ref('eq:einstein', parentheses=FALSE)
 #' ref('eq:einstein', html_output=TRUE)
 #'
-#' # with Quarto
+#' # With Quarto, however, the "@" syntax must be used
 #' Eqn('e = mc^2', label='eq-einstein', quarto=TRUE)
-#' ref('eq-einstein', quarto=TRUE)
-#' ref('eq-einstein', quarto=TRUE, parentheses=FALSE)
+#' # In text: "As seen in @eq-einstein ..."
 #'
 ref <- function(label,
                 html_output = knitr::is_html_output(),
