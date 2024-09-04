@@ -38,6 +38,7 @@ Lagrida
 Lundberg
 macOS
 mathbf
+mathcal
 MathJax
 MathType
 matrixkit
@@ -46,12 +47,15 @@ orthogonalization
 Orthogonalization
 orthonormal
 Orthonormalization
+otimes
 parallelpiped
 partialled
 Penrose
 pkgdown
 plotEqn
+pmatrix
 Proj
+programmatically
 pseudoinverse
 Rdoc
 regvec
@@ -60,7 +64,9 @@ req
 revdep
 rgl
 rglwidget
+Rmarkdown
 Rightarrow
+Savov
 Scazzocchio
 showEqn
 StackExchange
@@ -81,6 +87,7 @@ webshot
 Weiner
 widehat
 wikipedia
+Winsemius
 XQuartz
 YAML
 yorku
