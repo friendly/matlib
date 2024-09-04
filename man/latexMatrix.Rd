@@ -28,7 +28,7 @@ latexMatrix(
   symbol = "x",
   nrow = "n",
   ncol = "m",
-  matrix = "pmatrix",
+  matrix = getOption("latexMatrixEnv"),
   diag = FALSE,
   sparse = FALSE,
   zero.based = c(FALSE, FALSE),
@@ -106,7 +106,9 @@ that many columns.}
    \item{\code{"vmatrix"}}{uses vertical bars: \code{"|", "|"}}
    \item{\code{"Vmatrix"}}{uses double vertical bars: \code{"||", "||"}}
    \item{\code{"matrix"}}{generates a plain matrix without delimeters}
-}}
+}
+The default is taken from the \code{"latexMatrixEnv"} option;
+if this option isn't set, then \code{"pmatrix"} is used.}
 
 \item{diag}{logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})}
 

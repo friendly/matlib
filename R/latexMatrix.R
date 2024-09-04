@@ -100,6 +100,8 @@
 #'    \item{\code{"Vmatrix"}}{uses double vertical bars: \code{"||", "||"}}
 #'    \item{\code{"matrix"}}{generates a plain matrix without delimeters}
 #' }
+#' The default is taken from the \code{"latexMatrixEnv"} option;
+#' if this option isn't set, then \code{"pmatrix"} is used.
 #'
 #' @param diag   logical; if \code{TRUE}, off-diagonal elements are all 0 (and \code{nrow} must == \code{ncol})
 #' @param sparse logical; if \code{TRUE} replace 0's with empty characters to print a sparse matrix
@@ -240,7 +242,7 @@ latexMatrix <- function(
     symbol="x",
     nrow="n",
     ncol="m",
-    matrix="pmatrix",
+    matrix=getOption("latexMatrixEnv"),
     diag=FALSE,
     sparse=FALSE,
     zero.based=c(FALSE, FALSE),
@@ -267,6 +269,8 @@ latexMatrix <- function(
     x <- if (negative) paste0("-", x) else paste0(negatives, x)
     x
   }
+  
+  if (is.null(matrix)) matrix <- "pmatrix"
 
   end.at.n.minus.1 <- gsub(" ", "", end.at) == c("n-1", "m-1")
 
@@ -786,8 +790,11 @@ isOdd <- function(x){
 }
 
 updateWrapper <- function(result, wrapper){
-  matrix <- sub("begin\\{pmatrix\\}", wrapper[1], getLatex(result))
-  matrix <- sub("end\\{pmatrix\\}", wrapper[2], matrix)
+  mat.env <- getOption("latexMatrixEnv")
+  if (is.null(mat.env)) mat.env <- "pmatrix"
+  matrix <- sub(paste0("begin\\{", mat.env, "\\}"), wrapper[1], 
+                getLatex(result))
+  matrix <- sub(paste0("end\\{", mat.env, "\\}"), wrapper[2], matrix)
   result$matrix <- matrix
   result$wrapper <- wrapper
   result
