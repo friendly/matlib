@@ -1,4 +1,4 @@
-#' Create and Manipulate LaTeX Repesentations of Matrices
+#' Create and Manipulate LaTeX Representations of Matrices
 #'
 #' @description
 #' The purpose of the \code{latexMatrix()} function is to facilitate the preparation

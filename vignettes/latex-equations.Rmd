@@ -465,7 +465,7 @@ In this example, note that the R objects `C`, `B` and `B0` are the results
 of `latexMatrix()` calls, which are character strings containing LaTeX
 expressions.
 
-### Partititioned matrices, indexing & binding
+### Partitioned matrices, indexing & binding
 
 Matrix notation sometimes portrays matrices whose elements are themselves
 matrices and vectors (rather than scalars) in order to show a higher-level
