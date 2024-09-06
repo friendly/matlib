@@ -47,7 +47,7 @@ Commented Jun 22, 2015 at 15:56
 ## A function?
 Another SO discussion, https://stackoverflow.com/questions/20749444/converting-r-matrix-into-latex-matrix-in-the-math-or-equation-environment gives this function:
 
-```{r}
+```{r borderfunc}
 borderMatrix <- function(matr) {
     matr <- round(x = matr, digits = 2)  # sadly this is necessary because given this function, the options(digits = 2) does not work
     matr2 <- data.frame(c("~",rownames(matr)))  # add rownames
@@ -64,10 +64,21 @@ borderMatrix <- function(matr) {
 }
 ```
 
-There is also this LateX macro
+Which uses this LateX macro:
 
 ```
-\newcommand\\bordermatrix[3]{%
+\newcommand{\bordermatrix}[3]{%
+  \begin{matrix} & %
+    \begin{matrix}#1 %       row labels
+    \end{matrix} \\\\ %
+    \begin{matrix}#2 %       col labels
+    \end{matrix} %
+    \hspace{-1em} & #3 %     body
+  \end{matrix}}
+```
+
+$$
+\newcommand{\bordermatrix}[3]{%
   \begin{matrix} & %
     \begin{matrix}#1 %
     \end{matrix} \\\\ %
@@ -75,18 +86,38 @@ There is also this LateX macro
     \end{matrix} %
     \hspace{-1em} & #3 % 
   \end{matrix}}
-```
+$$
 
-Used as:
+The macro is used as:
 
 ```
-\bordermatrix{A & C & G & T }{\alpha \\  \beta \\  \gamma \\ \epsilon}
-  {    \begin{pmatrix}                  % body
+\bordermatrix{A & C & G & T }
+             {\alpha \\  \beta \\  \gamma \\ \epsilon}
+  { 
+  \begin{pmatrix}                  % body
     1 & 2 & 3 & 4\\
     3 & 4 & 5 & 6\\
     3 & 4 & 5 & 6\\
     3 & 4 & 5 & 6
   \end{pmatrix}\\
-}
+  }
 
 ```
+
+Testing the function:
+
+```{r border-test}
+mat <- matrix(1:16, nrow=4)
+rownames(mat) <- c("\\alpha", "\\beta", "\\gamma", "\\epsilon")
+colnames(mat) <- LETTERS[1:4]
+
+borderMatrix(mat)
+```
+
+Trying to render the result:
+
+```{r results='asis'}
+borderMatrix(mat)
+```
+
+

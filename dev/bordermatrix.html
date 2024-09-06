@@ -406,25 +406,50 @@ gives this function:</p>
     out2 &lt;- paste(&quot;\\bordermatrix{&quot;, paste(out, collapse = &#39; &#39;),&quot;}&quot;)
     return(out2)
 }</code></pre>
-<p>There is also this LateX macro</p>
-<pre><code>\newcommand\\bordermatrix[3]{%
+<p>Which uses this LateX macro:</p>
+<pre><code>\newcommand{\bordermatrix}[3]{%
+  \begin{matrix} &amp; %
+    \begin{matrix}#1 %       row labels
+    \end{matrix} \\\\ %
+    \begin{matrix}#2 %       col labels
+    \end{matrix} %
+    \hspace{-1em} &amp; #3 %     body
+  \end{matrix}}</code></pre>
+<p><span class="math display">\[
+\newcommand{\bordermatrix}[3]{%
   \begin{matrix} &amp; %
     \begin{matrix}#1 %
     \end{matrix} \\\\ %
     \begin{matrix}#2 %
     \end{matrix} %
-    \hspace{-1em} &amp; #3 % 
-  \end{matrix}}</code></pre>
-<p>Used as:</p>
-<pre><code>\bordermatrix{A &amp; C &amp; G &amp; T }{\alpha \\  \beta \\  \gamma \\ \epsilon}
-  {    \begin{pmatrix}                  % body
+    \hspace{-1em} &amp; #3 %
+  \end{matrix}}
+\]</span></p>
+<p>The macro is used as:</p>
+<pre><code>\bordermatrix{A &amp; C &amp; G &amp; T }
+             {\alpha \\  \beta \\  \gamma \\ \epsilon}
+  { 
+  \begin{pmatrix}                  % body
     1 &amp; 2 &amp; 3 &amp; 4\\
     3 &amp; 4 &amp; 5 &amp; 6\\
     3 &amp; 4 &amp; 5 &amp; 6\\
     3 &amp; 4 &amp; 5 &amp; 6
   \end{pmatrix}\\
-}
+  }
 </code></pre>
+<p>Testing the function:</p>
+<pre class="r"><code>mat &lt;- matrix(1:16, nrow=4)
+rownames(mat) &lt;- c(&quot;\\alpha&quot;, &quot;\\beta&quot;, &quot;\\gamma&quot;, &quot;\\epsilon&quot;)
+colnames(mat) &lt;- LETTERS[1:4]
+
+borderMatrix(mat)</code></pre>
+<pre><code>## [1] &quot;\\bordermatrix{ ~ &amp; A &amp; B &amp; C &amp; D \\cr \\alpha &amp; 1 &amp; 5 &amp; 9 &amp; 13 \\cr \\beta &amp; 2 &amp; 6 &amp; 10 &amp; 14 \\cr \\gamma &amp; 3 &amp; 7 &amp; 11 &amp; 15 \\cr \\epsilon &amp; 4 &amp; 8 &amp; 12 &amp; 16 \\cr }&quot;</code></pre>
+<p>Trying to render the result:</p>
+<pre class="r"><code>borderMatrix(mat)</code></pre>
+<p>[1] “\bordermatrix{ ~ &amp; A &amp; B &amp; C &amp; D \cr \alpha
+&amp; 1 &amp; 5 &amp; 9 &amp; 13 \cr \beta &amp; 2 &amp; 6 &amp; 10
+&amp; 14 \cr \gamma &amp; 3 &amp; 7 &amp; 11 &amp; 15 \cr \epsilon &amp;
+4 &amp; 8 &amp; 12 &amp; 16 \cr }”</p>
 </div>
 
 
