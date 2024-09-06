@@ -63,10 +63,15 @@ setQuartoEqn <- function(){
         files <- dir()
         if(sum(grepl(paste0(stripped, '.qmd'), files)) == 1)
             options('quartoEqn' = TRUE)
-        matched_files <- files[grepl(paste0(stripped, '.'), files, fixed=TRUE)]
+        else options('quartoEqn' = FALSE)
+        if(getOption('quartoEqn')){
+            matched_files <- files[grepl(paste0(stripped, '.'), files, fixed=TRUE)]
         exts <- gsub(paste0(stripped, '.'), "", matched_files, fixed=TRUE)
         if(any(tolower(exts) %in% c('rmd', 'rnw')))
-           stop('Detected files with identical names but different extensions. Please use unique file names when a mix of .qmd and R markdown files (e.g., .Rmd, .Rnw) are in the same directory')
+           stop(c('Detected files with identical names but different extensions. ',
+                '\n\n  Please use unique file names when a mix of .qmd and R markdown files',
+                ' (e.g., .Rmd, .Rnw) are in the same directory.'))
+        }
     }
     invisible(NULL)
 }
