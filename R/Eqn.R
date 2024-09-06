@@ -120,13 +120,23 @@ Eqn <- function(...,
                 html_output = knitr::is_html_output(),
                 quarto = getOption('quartoEqn'),
                 mat_args = list()) {
+
+  # for connection saftey
+  sink.reset <- function(){
+    if(sink.number() > 1L){
+      for(i in seq_len(sink.number())){
+         sink(NULL)
+      }
+    }
+  }
+  on.exit(sink.reset())
   preview <- preview && interactive()
   if(preview){
       quarto <- FALSE
       tmpfile <- tempfile()
       # everything except the kitchen ...
       sink(tmpfile)
-      on.exit(file.remove(tmpfile))
+      on.exit(file.remove(tmpfile), add = TRUE)
       cat(
 "
 ---
