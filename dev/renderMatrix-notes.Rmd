@@ -1,0 +1,60 @@
+---
+title: "Notes on a `renderMatrix()` function"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+It would be nice to be able to render a LaTeX equation from the console for the purpose of testing an equation using `Eqn()` before putting the result into a document. Presently, I'm using the [Lagrida LaTeX Equation Editor](https://latexeditor.lagrida.com/).
+
+The idea is to be able to do something like:
+
+```{r eval=FALSE}
+matX <- latexMatrix()
+renderMatrix(matX)
+```
+
+and see the result in an RStudio `Viewer` panel. However, I note that (unless I'm mistaken)
+`Eqn()` now no longer has an option to return the result other than via `cat()`.
+
+
+## Ideas
+
+1. This [SO question shows the use of `kableExtra`](https://stackoverflow.com/questions/69822328/is-it-possible-to-view-an-latex-table-in-the-viewer-pane) to render a LaTeX table
+
+See result in a Viewer pane:
+```{r kable1, eval=FALSE}
+library(kableExtra)
+kable(head(mtcars), booktabs = T) |>
+     kable_styling(latex_options = c("striped", "scale_down")) 
+```
+
+Display latex code in console:
+```{r kable2}
+library(kableExtra)
+kable(mtcars, format = "latex", booktabs = T) |>
+     kable_styling(latex_options = c("striped", "scale_down")) 
+```
+
+
+For this, would need to look into the internals of `kableExtra::kable()` to see how this is done.
+
+2. The [texPreview package](https://yonicd.github.io/texPreview/) seems to do exactly what I want.
+But it seems to require `TexLive` and the `tinytex` package. I'm using `MikTeX` and am
+reluctant to switch to test this.
+
+```{r eval=FALSE}
+if(!(require(texPreview))) install.packages("texPreview")
+library(texPreview)
+
+texPreview::check_requirements()
+texPreview::tex_preview(matX)
+```
+
+3. A function `renderMatrix()` to: 
+* Insert result of `latexMatrix()` or `Eqn()` into a document template
+* Compile that with `knitr`
+* Preview result with `browseURL()`
+
+4. [LaTeX formula in Shiny panel](https://stackoverflow.com/questions/30169101/latex-formula-in-shiny-panel) shows use of a `withMathJax()` function.
+
+

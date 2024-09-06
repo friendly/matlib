@@ -26,16 +26,6 @@ options(digits=4)
 par(mar=c(5,4,1,1)+.1)
 ```
 
-
-<!-- --- -->
-<!-- title: "LaTeX Equations with latexMatrix, Eqn and matrix2latex" -->
-<!-- output:  -->
-<!--     pdf_document: -->
-<!--         extra_dependencies: ["amsmath"] -->
-<!-- author: Phil Chalmers, Michael Friendly -->
-<!-- date: "`r format(Sys.time(), '%d %B, %Y')`" -->
-<!-- --- -->
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
