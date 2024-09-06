@@ -300,11 +300,11 @@ latexMatrix <- function(
   if (!is.null(colnames)){
     if (!is.numeric(ncol)){
       if (length(colnames) != 3) 
-        stop("there should be 3 col names")
+        stop("there should be 3 column names")
       colnames <- c(colnames[1:2], "\\cdots", colnames[3])
     } else {
       if (length(colnames) != ncol) 
-        stop("there should be ", ncol, " col names")
+        stop("there should be ", ncol, " column names")
     }
   }
   
@@ -327,12 +327,12 @@ dimnames.latexMatrix <- function(x){
 print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if (!is.null(rownames(x)) || !is.null(colnames(x))){
     rownames <- rownames(x)
-    if (is.null(rownames)) rownames <- rep("~", nrow(getBody(x)))
+    if (is.null(rownames)) rownames <- rep("", nrow(getBody(x)))
     colnames <- colnames(x)
     if (is.null(colnames)) colnames <- rep("~", ncol(getBody(x)))
     max.col <- apply(nchar(getBody(x)), 2, max)
     for (j in 1:length(colnames)){
-      pad <- max(max.col[j] - max(nchar(colnames[j])) - 3, 0)
+      pad <- max(max.col[j] - nchar(colnames[j]) - 3, 0)
       colnames[j] <- paste0(colnames[j], 
                             paste(rep("~", pad), collapse=""))
     }
@@ -365,6 +365,10 @@ dimnames(B)
 rownames(B)
 colnames(B)
 B
+
+D <- latexMatrix(nrow=2, ncol=3, rownames=letters[1:2])
+dimnames(D)
+D
 
 X <- latexMatrix(rownames=letters[1:3], colnames=LETTERS[1:3])
 dimnames(X)
