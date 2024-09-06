@@ -398,6 +398,7 @@ ref <- function(label,
                 parentheses = TRUE,
                 html_output = knitr::is_html_output(),
                 quarto = getOption('quartoEqn')) {
+    if(is.null(quarto)) quarto <- FALSE
     ret <- if(quarto){
         if(parentheses)
             sprintf('([-@%s])', label)
