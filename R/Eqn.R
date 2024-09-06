@@ -42,6 +42,8 @@
 #'   properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
 #'   each \code{matrix} objects supplied. If further specificity is required create
 #'   \code{\link{latexMatrix}} objects directly.
+#' @param preview logical; render an HTML version of the equation and display? This is intended for
+#'  testing purposes and is only applicable to interactive R sessions
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @author Phil Chalmers
@@ -51,6 +53,9 @@
 #'
 #' # character input
 #' Eqn('e=mc^2')
+#'
+#' # preview the equation
+#' Eqn('e=mc^2', preview=TRUE)
 #'
 #' # Equation numbers & labels
 #' Eqn('e=mc^2', label = 'eq:einstein')
@@ -86,6 +91,13 @@
 #'     latexMatrix("v", "k", "p", transpose = TRUE),
 #'     align=TRUE)
 #'
+#' # preview the equation
+#' Eqn("X &= U \\lambda V", Eqn_newline(),
+#'     "& = ", latexMatrix("u", "n", "k"),
+#'     latexMatrix("\\lambda", "k", "k", diag=TRUE),
+#'     latexMatrix("v", "k", "p", transpose = TRUE),
+#'     align=TRUE, preview=TRUE)
+#'
 #' #  numeric/character matrix example
 #' A <- matrix(c(2, 1, -1,
 #'               -3, -1, 2,
@@ -104,9 +116,25 @@
 Eqn <- function(...,
                 label = NULL,
                 align = FALSE,
+                preview = FALSE,
                 html_output = knitr::is_html_output(),
                 quarto = getOption('quartoEqn'),
                 mat_args = list()) {
+  preview <- preview && interactive()
+  if(preview){
+      quarto <- FALSE
+      tmpfile <- tempfile()
+      # everything except the kitchen ...
+      sink(tmpfile)
+      on.exit(file.remove(tmpfile))
+      cat(
+"
+---
+title: '&nbsp;'
+---
+")
+
+  }
   if(is.null(quarto)) quarto <- FALSE
   stopifnot(is.logical(quarto))
   number <- !is.null(label)
@@ -142,6 +170,11 @@ Eqn <- function(...,
           cat(sprintf('{#%s}', label))
       }
       cat("\n")
+  }
+  if(preview){
+      sink()
+      rmarkdown::render(tmpfile, 'html_document', clean = TRUE, quiet = TRUE)
+      rstudioapi::viewer(paste0(tmpfile, '.html'))
   }
   invisible(NULL)
 }
