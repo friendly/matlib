@@ -29,7 +29,12 @@ Eqn_vspace(space)
 
 Eqn_size(string, size = 0)
 
-ref(label, html_output = knitr::is_html_output(), parentheses = TRUE)
+ref(
+  label,
+  parentheses = TRUE,
+  html_output = knitr::is_html_output(),
+  quarto = getOption("quartoEqn")
+)
 }
 \arguments{
 \item{...}{comma separated LaTeX expressions that are either a) a character vector,
@@ -121,12 +126,12 @@ Typically used for aligned, multiline equations.
 \code{Eqn_size()} is used to increase or decrease the size of LaTeX text and equations. Can be applied
 to a specific string or applied to all subsequent text until overwritten.
 
-\code{ref{}} provides for inline references to equations in a document.
+\code{ref{}} provides for inline references to equations in a R
+markdown and Quarto documents.
 Depending on the output type this function will provide the correct
 inline wrapper for MathJax or LaTeX equations. This provides more
-consistent referencing when switching between HTML and PDF outputs. Note
-that for documents build with Quarto this approach is not supported; hence,
-referencing of equations must be done with the "@eq-name" approach in-text.
+consistent referencing when switching between HTML and PDF outputs as
+well as documentation types (\code{.Rmd} vs \code{.qmd}).
 }
 \examples{
 
@@ -219,9 +224,10 @@ ref('eq:einstein')
 ref('eq:einstein', parentheses=FALSE)
 ref('eq:einstein', html_output=TRUE)
 
-# With Quarto, however, the "@" syntax must be used
+# With Quarto
 Eqn('e = mc^2', label='eq-einstein', quarto=TRUE)
-# In text: "As seen in @eq-einstein ..."
+ref('eq:einstein', quarto=TRUE)
+ref('eq:einstein', quarto=TRUE, parentheses=FALSE)
 
 }
 \seealso{

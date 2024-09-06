@@ -36,7 +36,6 @@
 #' @param quarto logical; use Quarto referencing syntax? When \code{TRUE}
 #'   the \code{html_output} will be irrelevant. Can be set globally via
 #'   \code{\link{options}} with \code{options(quartoEqn=TRUE)}
-#'
 #' @param align logical; use the \code{align} environment with explicit \code{&} representing alignment
 #'   points. Default: \code{FALSE}
 #' @param mat_args list of arguments to be passed to \code{\link{latexMatrix}} to change the
@@ -314,19 +313,21 @@ Eqn_size <- function(string, size = 0){
 
 #' Provide inline reference of equations
 #'
-#' \code{ref{}} provides for inline references to equations in a document.
+#' \code{ref{}} provides for inline references to equations in a R
+#' markdown and Quarto documents.
 #' Depending on the output type this function will provide the correct
 #' inline wrapper for MathJax or LaTeX equations. This provides more
-#' consistent referencing when switching between HTML and PDF outputs. Note
-#' that for documents build with Quarto this approach is not supported; hence,
-#' referencing of equations must be done with the "@eq-name" approach in-text.
-#'
+#' consistent referencing when switching between HTML and PDF outputs as
+#' well as documentation types (\code{.Rmd} vs \code{.qmd}).
 #'
 #' @param label the equation label used within \code{\link{Eqn}} or
 #'   defined explicitly in the document
 #' @param html_output logical; use references for HTML outputs instead
 #'   of the LaTeX? Automatically changed for compiled documents
 #'   that support \code{knitr}
+#' @param quarto logical; use Quarto referencing syntax? When \code{TRUE}
+#'   the \code{html_output} will be irrelevant. Can be set globally via
+#'   \code{\link{options}} with \code{options(quartoEqn=TRUE)}
 #' @param parentheses logical; include parentheses around the referenced equation?
 #'   Only changes the behaviour for referencing in LaTeX/PDF documents.
 #'
@@ -343,14 +344,15 @@ Eqn_size <- function(string, size = 0){
 #' ref('eq:einstein', parentheses=FALSE)
 #' ref('eq:einstein', html_output=TRUE)
 #'
-#' # With Quarto, however, the "@" syntax must be used
+#' # With Quarto
 #' Eqn('e = mc^2', label='eq-einstein', quarto=TRUE)
-#' # In text: "As seen in @eq-einstein ..."
+#' ref('eq:einstein', quarto=TRUE)
+#' ref('eq:einstein', quarto=TRUE, parentheses=FALSE)
 #'
 ref <- function(label,
+                parentheses = TRUE,
                 html_output = knitr::is_html_output(),
-                parentheses = TRUE){
-    quarto = FALSE ## TODO, detect globally via options()
+                quarto = getOption('quartoEqn')) {
     ret <- if(quarto){
         if(parentheses)
             sprintf('([-@%s])', label)
@@ -363,5 +365,6 @@ ref <- function(label,
             else sprintf('\\ref{%s}', label)
         }
     }
+    if(quarto) return(I(ret))
     ret
 }

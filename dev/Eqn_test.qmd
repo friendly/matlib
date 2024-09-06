@@ -1,5 +1,5 @@
 ---
-title: "Eqn() test with Quarto"
+title: "Eqn() and ref() test with Quarto"
 engine: knitr
 ---
 
@@ -42,10 +42,9 @@ Eqn("f\\left(k\\right) = \\binom{n}{k} p^k\\left(1-p\\right)^{n-k}",
 ## Inline equation referencing.
 
 - Manually with Quarto syntax (works): @eq-binom and @eq-binom2
-- Manually with `cat()` and string statements (does not work): `{r} cat('@eq-binom')` and `{r} cat('@eq-binom2')`, `{r} '@eq-binom'` and `{r} '@eq-binom2'`,  `{r} print('@eq-binom')` and `{r} print('@eq-binom2')`
-- With `matlib` (does not work): `{r} ref("eq-binom", quarto=TRUE)` and `{r} ref("eq-binom2", quarto=TRUE)`
+- With `matlib` using `ref()`: `{r} ref("eq-binom", quarto=TRUE)` and `{r} ref("eq-binom2", quarto=TRUE)`
 
-Yet, if used within an equation it will work...
+Will also work within an equation, not that this is particularly useful.
     
 ```{r}
 #| results: 'asis'
