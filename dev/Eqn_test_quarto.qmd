@@ -1,0 +1,86 @@
+---
+title: "Eqn() and ref() test with Quarto"
+engine: knitr
+---
+
+```{r}
+#| include : FALSE
+library(matlib)
+```
+
+Standard equation and reference
+
+$$
+f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
+$$ {#eq-binom}
+
+See @eq-binom, and [-@eq-binom]
+
+Syntax generated with `Eqn()`. Raw output:
+
+```{r}
+Eqn("f\\left(k\\right) = \\binom{n}{k} p^k\\left(1-p\\right)^{n-k}",
+    quarto=TRUE)
+```
+
+Rendered.
+
+```{r}
+#| results: 'asis'
+Eqn("f\\left(k\\right) = \\binom{n}{k} p^k\\left(1-p\\right)^{n-k}",
+    quarto=TRUE)
+```
+
+With equation label and number.
+
+```{r}
+#| results: 'asis'
+Eqn("f\\left(k\\right) = \\binom{n}{k} p^k\\left(1-p\\right)^{n-k}",
+    quarto=TRUE, label='eq-binom2')
+```
+
+## Inline equation referencing.
+
+- Manually with Quarto syntax (works): @eq-binom and @eq-binom2
+- With `matlib` using `ref(., quarto=TRUE)`: `{r} ref("eq-binom", quarto=TRUE)` and `{r} ref("eq-binom2", quarto=TRUE)`
+
+Will also work within an equation, not that this is particularly useful.
+    
+```{r}
+#| results: 'asis'
+"@eq-binom"
+```
+
+# Test if .qmd file used
+
+Set global to TRUE if .qmd file detected from input. Warning raised if files have the same name but different extension (`Eqn.qmd` and `Eqn.Rmd` will raise error if in same dir).
+
+```{r echo=FALSE}
+setQuartoEqn <- function(){
+    if(isTRUE(getOption('knitr.in.progress')) && is.null(getOption('quartoEqn'))){
+        finp <- knitr::current_input()
+        stripped <- gsub('.rmarkdown', '', finp)
+        files <- dir()
+        if(sum(grepl(paste0(stripped, '.qmd'), files)) == 1)
+            options('quartoEqn' = TRUE)
+        matched_files <- files[grepl(paste0(stripped, '.'), files, fixed=TRUE)]
+        exts <- gsub(paste0(stripped, '.'), "", matched_files, fixed=TRUE)
+        if(any(tolower(exts) %in% c('rmd', 'rnw')))
+           stop('Detected files with identical names but different extensions. Please use unique file names when a mix of .qmd and R markdown files (e.g., .Rmd, .Rnw) are in the same directory')
+    }
+    invisible(NULL)
+}
+```
+
+```{r echo=FALSE}
+setQuartoEqn()
+```
+
+
+```{r}
+#| results: 'asis'
+Eqn("f\\left(k\\right) = \\binom{n}{k} p^k\\left(1-p\\right)^{n-k}", label = 'eq-auto')
+```
+
+
+See `{r} ref("eq-auto", quarto=TRUE)` for auto-detected quarto label.
