@@ -332,7 +332,10 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
     if (is.null(colnames)) colnames <- rep("~", ncol(getBody(x)))
     max.col <- apply(nchar(getBody(x)), 2, max)
     for (j in 1:length(colnames)){
-      pad <- max(max.col[j] - nchar(colnames[j]) - 3, 0)
+      nchar <- nchar(colnames[j])
+      if (grepl("^\\.*", colnames[j])) nchar <- 1
+      if (grepl("\\cdots", colnames[j])) nchar <- 3
+      pad <- max(max.col[j] - nchar - 3, 0)
       colnames[j] <- paste0(colnames[j], 
                             paste(rep("~", pad), collapse=""))
     }
@@ -380,3 +383,7 @@ C <- latexMatrix(matrix(letters[1:24], 3, 8), rownames=letters[1:3],
                  colnames=LETTERS[1:8])
 C # alignment of column names breaks down
 }
+
+G <- latexMatrix(rownames=c("\\alpha", "\\beta", "\\omega"),
+                 colnames=c("A", "B", "\\Omega"))
+G
