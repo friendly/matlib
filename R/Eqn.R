@@ -46,6 +46,8 @@
 #'  testing purposes and is only applicable to interactive R sessions
 #' @returns NULL
 #' @importFrom knitr is_html_output
+#' @importFrom rstudioapi viewer
+#' @importFrom rmarkdown render
 #' @author Phil Chalmers
 #' @seealso \code{\link{latexMatrix}}, \code{\link{matrix2latex}}, \code{\link{ref}}
 #' @export
