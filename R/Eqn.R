@@ -43,7 +43,8 @@
 #'   each \code{matrix} objects supplied. If further specificity is required create
 #'   \code{\link{latexMatrix}} objects directly.
 #' @param preview logical; render an HTML version of the equation and display? This is intended for
-#'  testing purposes and is only applicable to interactive R sessions
+#'  testing purposes and is only applicable to interactive R sessions. Disabled
+#'  whenever \code{quarto} or \code{html_output} are \code{TRUE}
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @importFrom rstudioapi viewer
@@ -56,14 +57,15 @@
 #' # character input
 #' Eqn('e=mc^2')
 #'
-#' # preview the equation
-#' Eqn('e=mc^2', preview=TRUE)
+#' # show only the LaTeX code
+#' Eqn('e=mc^2', preview=FALSE)
 #'
 #' # Equation numbers & labels
 #' Eqn('e=mc^2', label = 'eq:einstein')
 #' Eqn("X=U \\lambda V", label='eq:svd')
 #'
-#' # html output (auto detected in compiled documents)
+#' # html_output and quarto outputs only show code:
+#' #   (auto detected in compiled documents)
 #' Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 #'
 #' # Quarto output
@@ -93,13 +95,6 @@
 #'     latexMatrix("v", "k", "p", transpose = TRUE),
 #'     align=TRUE)
 #'
-#' # preview the equation
-#' Eqn("X &= U \\lambda V", Eqn_newline(),
-#'     "& = ", latexMatrix("u", "n", "k"),
-#'     latexMatrix("\\lambda", "k", "k", diag=TRUE),
-#'     latexMatrix("v", "k", "p", transpose = TRUE),
-#'     align=TRUE, preview=TRUE)
-#'
 #' #  numeric/character matrix example
 #' A <- matrix(c(2, 1, -1,
 #'               -3, -1, 2,
@@ -118,12 +113,12 @@
 Eqn <- function(...,
                 label = NULL,
                 align = FALSE,
-                preview = FALSE,
+                preview = TRUE,
                 html_output = knitr::is_html_output(),
                 quarto = getOption('quartoEqn'),
                 mat_args = list()) {
 
-  # for connection saftey
+  # for connection safety
   sink.reset <- function(){
     if(sink.number() > 1L){
       for(i in seq_len(sink.number())){
@@ -133,6 +128,7 @@ Eqn <- function(...,
   }
   on.exit(sink.reset())
   preview <- preview && interactive()
+  if(html_output || quarto) preview <- FALSE
   if(preview){
       quarto <- FALSE
       tmpfile <- tempfile()
@@ -187,6 +183,8 @@ title: '&nbsp;'
       sink()
       rmarkdown::render(tmpfile, 'html_document', clean = TRUE, quiet = TRUE)
       rstudioapi::viewer(paste0(tmpfile, '.html'))
+      inp <- paste0(readLines(tmpfile)[-c(1:4)], collapse='\n')
+      cat(inp)
   }
   invisible(NULL)
 }

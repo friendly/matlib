@@ -14,7 +14,7 @@ Eqn(
   ...,
   label = NULL,
   align = FALSE,
-  preview = FALSE,
+  preview = TRUE,
   html_output = knitr::is_html_output(),
   quarto = getOption("quartoEqn"),
   mat_args = list()
@@ -56,7 +56,8 @@ defined explicitly in the document}
 points. Default: \code{FALSE}}
 
 \item{preview}{logical; render an HTML version of the equation and display? This is intended for
-testing purposes and is only applicable to interactive R sessions}
+testing purposes and is only applicable to interactive R sessions. Disabled
+whenever \code{quarto} or \code{html_output} are \code{TRUE}}
 
 \item{html_output}{logical; use references for HTML outputs instead
 of the LaTeX? Automatically changed for compiled documents
@@ -142,14 +143,15 @@ well as documentation types (\code{.Rmd} vs \code{.qmd}).
 # character input
 Eqn('e=mc^2')
 
-# preview the equation
-Eqn('e=mc^2', preview=TRUE)
+# show only the LaTeX code
+Eqn('e=mc^2', preview=FALSE)
 
 # Equation numbers & labels
 Eqn('e=mc^2', label = 'eq:einstein')
 Eqn("X=U \\\\lambda V", label='eq:svd')
 
-# html output (auto detected in compiled documents)
+# html_output and quarto outputs only show code:
+#   (auto detected in compiled documents)
 Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 
 # Quarto output
@@ -178,13 +180,6 @@ Eqn("X &= U \\\\lambda V", Eqn_newline(),
     latexMatrix("\\\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE),
     align=TRUE)
-
-# preview the equation
-Eqn("X &= U \\\\lambda V", Eqn_newline(),
-    "& = ", latexMatrix("u", "n", "k"),
-    latexMatrix("\\\\lambda", "k", "k", diag=TRUE),
-    latexMatrix("v", "k", "p", transpose = TRUE),
-    align=TRUE, preview=TRUE)
 
 #  numeric/character matrix example
 A <- matrix(c(2, 1, -1,

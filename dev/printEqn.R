@@ -107,8 +107,8 @@ if(FALSE){
 #' # markdown-style formatting
 #' printEqn("*H*_0 : **C** **B**")
 #'
-#' # preview (caught from Eqn())
-#' printEqn("*H*_0 : **C** **B**", preview = TRUE)
+#' # no equation preview (caught from Eqn())
+#' printEqn("*H*_0 : **C** **B**", preview = FALSE)
 #'
 #' # Bold Greek letters use boldsymbol
 #' printEqn("*H*_0 : **\\Lambda** **B**")
