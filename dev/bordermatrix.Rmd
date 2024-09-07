@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 It would be nice to add a feature to border matrices with row/col labels. Here it is done naively from scratch using nested
-matrix/pmatrix arrays, from https://github.com/mathjax/MathJax/issues/2031
+`matrix` / `pmatrix` arrays, from https://github.com/mathjax/MathJax/issues/2031
 
 ```
 $$
@@ -77,6 +77,7 @@ Which uses this LateX macro:
   \end{matrix}}
 ```
 
+In this document, the above is inserted using `$$` .. `$$`.
 $$
 \newcommand{\bordermatrix}[3]{%
   \begin{matrix} & %
@@ -91,8 +92,8 @@ $$
 The macro is used as:
 
 ```
-\bordermatrix{A & C & G & T }
-             {\alpha \\  \beta \\  \gamma \\ \epsilon}
+\bordermatrix{A & C & G & T }%
+             {\alpha \\  \beta \\  \gamma \\ \epsilon}%
   { 
   \begin{pmatrix}                  % body
     1 & 2 & 3 & 4\\
