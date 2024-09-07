@@ -127,6 +127,7 @@ Eqn <- function(...,
     }
   }
   on.exit(sink.reset())
+  if(is.null(quarto)) quarto <- FALSE
   preview <- preview && interactive()
   if(html_output || quarto) preview <- FALSE
   if(preview){
@@ -143,7 +144,6 @@ title: '&nbsp;'
 ")
 
   }
-  if(is.null(quarto)) quarto <- FALSE
   stopifnot(is.logical(quarto))
   number <- !is.null(label)
   wrap <- if(align) "align" else "equation"
