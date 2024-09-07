@@ -52,6 +52,12 @@ latexMatrix <- function(
   # matrix input:
   
   if (is.matrix(symbol)){
+    dimnames <- dimnames(symbol)
+    if (!is.null(dimnames) && is.null(rownames) 
+        && is.null(colnames)){
+      rownames <- dimnames[[1]]
+      colnames <- dimnames[[2]]
+    }
     if (is.numeric(symbol)){
       if (is.null(digits) && all(trunc(symbol) == symbol) ) digits <- 0
       if (fractions) {
@@ -325,8 +331,8 @@ dimnames.latexMatrix <- function(x){
 
 print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   
-  countChars <- function(string){
-    gsub("\\\\[[:alpha:]]*", "X", string) |> 
+  countChars <- function(string, adjust=TRUE){
+    gsub("\\\\[[:alpha:]]*", if(adjust) "X" else "", string) |> 
       gsub("[_^{}]*", "", x = _) |>
       nchar()
   }
@@ -334,19 +340,51 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if (!is.null(rownames(x)) || !is.null(colnames(x))){
     rownames <- rownames(x)
     colnames <- colnames(x)
-    max.col <- apply(countChars(getBody(x)), 2, max)
+    X <- getBody(x)
+    
+    # adjust size of column names
+    max.col <- apply(countChars(X), 2, max)
     if (!is.null(colnames)){
       for (j in 1:length(colnames)){
         nchar <- if ("\\cdots" == colnames[j]) {
           3
         } else {
-          countChars(colnames[j]) 
+          countChars(colnames[j], adjust=FALSE) 
         }
         pad <- max(max.col[j] - nchar, 0) 
         colnames[j] <- paste0(colnames[j], 
                               paste(rep("~", pad), collapse=""))
       }
     }
+    # browser()
+    if (!is.null(colnames)){
+      nchar.colnames <- countChars(colnames, adjust=FALSE)
+      for (i in 1:nrow(X)){
+        for (j in 1:ncol(X)){
+          xij <- X[i, j]
+          nchar <- if ("\\cdots" == xij) {
+            3
+          } else if ("\\vdots" == xij) {
+            1
+          } else if ("\\ddots" == xij) {
+            3
+          } else {
+            countChars(xij)
+          }
+          pad <- max(nchar.colnames[j] - nchar, 0)
+          if (pad > 0) {
+            X[i, j] <- paste0("\\phantom{",
+                              paste(rep("0", pad), collapse=""), 
+                              "}", xij)
+          }
+        }
+      }
+      XX <- latexMatrix(X, colnames=colnames, rownames=rownames)
+      XX$wrapper <- matlib:::updateWrapper(XX, getWrapper(x))
+      XX$dim <- Dim(x)
+      x <- XX
+    }
+    
     latex <- getLatex(x)
     latex <- paste0("\\begin{matrix}\n",
                     if (!is.null(rownames))  "  & ",
@@ -488,4 +526,13 @@ dimnames(AA)
 Colnames(AA) <- LETTERS[10:12]
 dimnames(AA)
 
+mat <- matrix(sample(25), nrow = 5,
+              dimnames = list(who = c("Abe", "Bart", "Cat", "Doug", "Eve"),
+                              what = c("Geog", "Hist", "Math", "Read", "Spell")))
+
+latexMatrix(mat)
+
+latexMatrix(mat, 
+            rownames = paste0("\\mathrm{", rownames(mat), "}"), 
+            colnames = paste0("\\mathrm{", colnames(mat), "}"))
 }
