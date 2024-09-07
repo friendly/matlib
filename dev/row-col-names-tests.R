@@ -325,18 +325,25 @@ dimnames.latexMatrix <- function(x){
 }
 
 print.latexMatrix <- function(x, onConsole=TRUE,  ...){
+  
+  countChars <- function(string){
+    gsub("\\\\[[:alpha:]]*", "X", string) |> 
+      gsub("[_^{}]*", "", x = _) |>
+      nchar()
+  }
+  
   if (!is.null(rownames(x)) || !is.null(colnames(x))){
     rownames <- rownames(x)
-    # if (is.null(rownames)) rownames <- rep("", nrow(getBody(x)))
     colnames <- colnames(x)
-    # if (is.null(colnames)) colnames <- rep("~", ncol(getBody(x)))
-    max.col <- apply(nchar(getBody(x)), 2, max)
+    max.col <- apply(countChars(getBody(x)), 2, max)
     if (!is.null(colnames)){
       for (j in 1:length(colnames)){
-        nchar <- nchar(colnames[j])
-        if (grepl("^\\.*", colnames[j])) nchar <- 1
-        if (grepl("\\cdots", colnames[j])) nchar <- 3
-        pad <- max(max.col[j] - nchar - 3, 0)
+        nchar <- if ("\\cdots" == colnames[j]) {
+          3
+        } else {
+          countChars(colnames[j]) 
+        }
+        pad <- max(max.col[j] - nchar, 0) 
         colnames[j] <- paste0(colnames[j], 
                               paste(rep("~", pad), collapse=""))
       }
@@ -360,6 +367,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if (onConsole) cat(getLatex(x))
   invisible(x)
 }
+
 
 if (FALSE){
   
@@ -393,5 +401,14 @@ C # alignment of column names breaks down
 G <- latexMatrix(rownames=c("\\alpha", "\\beta", "\\omega"),
                  colnames=c("A", "B", "\\Omega"))
 G
+
+W <- latexMatrix(rownames=c("\\alpha_1", "\\alpha_2", "\\alpha_m"),
+                 colnames=c("\\beta_1", "\\beta_2", "\\beta_n"))
+W
+
+Z <- latexMatrix(prefix="\\sqrt{", suffix="}",
+                 rownames=c("\\alpha_1", "\\alpha_2", "\\alpha_m"),
+                 colnames=c("\\beta_1", "\\beta_2", "\\beta_n"))
+Z # alignment of column names breaks down
 
 }
