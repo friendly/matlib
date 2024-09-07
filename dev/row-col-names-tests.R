@@ -278,7 +278,6 @@ latexMatrix <- function(
   wrapper <- x.mat[pick] # LaTeX matrix environment
   body <- x.mat[-pick]
   body <- gsub('\\\\\\\\', '', body)
-  # body <- gsub(' ', '', body)
   splt <- sapply(body, function(x.mat) strsplit(x.mat, '&'))
   nrow.x <- length(splt)
   body <- unname(do.call(rbind, splt)) # matrix of LaTeX cells
@@ -368,6 +367,70 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   invisible(x)
 }
 
+`Dimnames<-` <- function (x, value) {
+  UseMethod("Dimnames<-")
+}
+
+`Dimnames<-.latexMatrix` <- function (x, value) {
+  oldnames <- dimnames(x)
+  if (!is.list(value) || length(value) != 2)
+    stop("'value' must be a 2-element list with row and column names")
+  dim <- Dim(x)
+  nrow <- dim[1]
+  ncol <- dim[2]
+  rownames <- value[[1]]
+  colnames <- value[[2]]
+  
+  if (!is.null(rownames) && (length(rownames) > 1 || rownames != "")){
+    if (!is.numeric(nrow)){
+      if (length(rownames) != 3) 
+        stop("there should be 3 row names")
+      rownames <- c(rownames[1:2], "\\vdots", rownames[3])
+    } else {
+      if (length(rownames) != nrow) 
+        stop("there should be ", nrow, " row names")
+    }
+  }
+  
+  if (!is.null(colnames) && (length(colnames) > 1 || colnames != "")){
+    if (!is.numeric(ncol)){
+      if (length(colnames) != 3) 
+        stop("there should be 3 column names")
+      colnames <- c(colnames[1:2], "\\cdots", colnames[3])
+    } else {
+      if (length(colnames) != ncol) 
+        stop("there should be ", ncol, " column names")
+    }
+  }
+  
+  newnames <- oldnames
+  if (!is.null(rownames) && (length(rownames) > 1 || rownames != "")) newnames$rownames <- rownames
+  if (is.null(rownames)) newnames["rownames"] <- list(NULL)
+  if (!is.null(colnames) && (length(colnames) > 1 || colnames != "")) newnames$colnames <- colnames
+  if (is.null(colnames)) newnames["colnames"] <- list(NULL)
+  x$dimnames <- newnames
+  x
+}
+
+`Rownames<-` <- function(x, value){
+  UseMethod("Rownames<-")
+}
+
+`Rownames<-.latexMatrix` <- function(x, value){
+  names <- list(rownames=value, colnames="")
+  Dimnames(x) <- names
+  x
+}
+
+`Colnames<-` <- function(x, value){
+  UseMethod("Colnames<-")
+}
+
+`Colnames<-.latexMatrix` <- function(x, value){
+  names <- list(rownames="", colnames=value)
+  Dimnames(x) <- names
+  x
+}
 
 if (FALSE){
   
@@ -410,5 +473,19 @@ Z <- latexMatrix(prefix="\\sqrt{", suffix="}",
                  rownames=c("\\alpha_1", "\\alpha_2", "\\alpha_m"),
                  colnames=c("\\beta_1", "\\beta_2", "\\beta_n"))
 Z # alignment of column names breaks down
+
+AA <- A
+dimnames(AA)
+Dimnames(AA) <- list(letters[3:4], LETTERS[4:6])
+dimnames(AA)
+
+Rownames(AA) <- letters[10:11]
+dimnames(AA)
+
+Rownames(AA) <- NULL
+dimnames(AA)
+
+Colnames(AA) <- LETTERS[10:12]
+dimnames(AA)
 
 }
