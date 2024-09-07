@@ -327,28 +327,34 @@ dimnames.latexMatrix <- function(x){
 print.latexMatrix <- function(x, onConsole=TRUE,  ...){
   if (!is.null(rownames(x)) || !is.null(colnames(x))){
     rownames <- rownames(x)
-    if (is.null(rownames)) rownames <- rep("", nrow(getBody(x)))
+    # if (is.null(rownames)) rownames <- rep("", nrow(getBody(x)))
     colnames <- colnames(x)
-    if (is.null(colnames)) colnames <- rep("~", ncol(getBody(x)))
+    # if (is.null(colnames)) colnames <- rep("~", ncol(getBody(x)))
     max.col <- apply(nchar(getBody(x)), 2, max)
-    for (j in 1:length(colnames)){
-      nchar <- nchar(colnames[j])
-      if (grepl("^\\.*", colnames[j])) nchar <- 1
-      if (grepl("\\cdots", colnames[j])) nchar <- 3
-      pad <- max(max.col[j] - nchar - 3, 0)
-      colnames[j] <- paste0(colnames[j], 
-                            paste(rep("~", pad), collapse=""))
+    if (!is.null(colnames)){
+      for (j in 1:length(colnames)){
+        nchar <- nchar(colnames[j])
+        if (grepl("^\\.*", colnames[j])) nchar <- 1
+        if (grepl("\\cdots", colnames[j])) nchar <- 3
+        pad <- max(max.col[j] - nchar - 3, 0)
+        colnames[j] <- paste0(colnames[j], 
+                              paste(rep("~", pad), collapse=""))
+      }
     }
     latex <- getLatex(x)
     latex <- paste0("\\begin{matrix}\n",
-                    "  & \\begin{matrix} ", paste(colnames, collapse=" & "), 
-                    "\n  \\end{matrix} \\\\ \n",
-                    " \\begin{matrix}  \n", 
-                    paste(paste0("   ", rownames, "\\\\ \n"), collapse=""),
-                    "\\end{matrix}  & \n",
+                    if (!is.null(rownames))  "  & ",
+                    if (!is.null(colnames)) paste0(" \\begin{matrix} ", 
+                                                   paste(colnames, collapse=" & "), 
+                                                   "\n  \\end{matrix} \\\\ \n"),
+                    if (!is.null(rownames)) paste0(" \\begin{matrix}  \n", 
+                                                   paste(paste0("   ", 
+                                                                rownames, "\\\\ \n"), 
+                                                         collapse=""),
+                                                   "\\end{matrix}  & \n"),
                     latex, "\\\\ \n",
                     "\\end{matrix} \n"
-                    )
+    )
     x$matrix <- latex
   }
   if (onConsole) cat(getLatex(x))
@@ -356,6 +362,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
 }
 
 if (FALSE){
+  
 A <- latexMatrix("a", nrow=2, ncol=3, rownames=letters[1:2], 
                  colnames=LETTERS[1:3])
 A
@@ -382,8 +389,9 @@ X
 C <- latexMatrix(matrix(letters[1:24], 3, 8), rownames=letters[1:3],
                  colnames=LETTERS[1:8])
 C # alignment of column names breaks down
-}
 
 G <- latexMatrix(rownames=c("\\alpha", "\\beta", "\\omega"),
                  colnames=c("A", "B", "\\Omega"))
 G
+
+}
