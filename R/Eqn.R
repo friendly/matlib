@@ -125,6 +125,7 @@ Eqn <- function(...,
   }
   on.exit(sink.reset())
   quarto <- setQuartoEqn(quarto)
+  if(is.null(quarto)) quarto <- FALSE
   preview <- preview && interactive()
   if(html_output || quarto) preview <- FALSE
   if(preview){
@@ -417,6 +418,7 @@ ref <- function(label,
                 html_output = knitr::is_html_output(),
                 quarto = getOption('quartoEqn')) {
     quarto <- setQuartoEqn(quarto)
+    if(is.null(quarto)) quarto <- FALSE
     ret <- if(quarto){
         if(parentheses)
             sprintf('([-@%s])', label)
