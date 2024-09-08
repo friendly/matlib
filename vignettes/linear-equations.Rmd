@@ -189,6 +189,7 @@ x
 Plot the equations. You can see that each pair of equations has a solution,
 but all three do not have a common, consistent solution.
 ```{r plotEqn4}
+#| fig.alt: Plot of the lines corresponding to three inconsistent equations. They do not all intersect in a point, indicating that there is no common solution.
 par(mar=c(4,4,0,0)+.1)
 plotEqn(A,b, xlim=c(-2, 4))
 # add the ginv() solution

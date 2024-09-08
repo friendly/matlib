@@ -23,6 +23,8 @@
 <meta name="description" content="A collection of matrix functions for teaching and learning matrix linear algebra as used in multivariate statistical methods. These functions are mainly for tutorial purposes in learning matrix algebra ideas using R. In some cases, functions are provided for concepts available elsewhere in R, but where the function call or name is not obvious. In other cases, functions are provided to show or demonstrate an algorithm. In addition, a collection of functions are provided for drawing vector diagrams in 2D and 3D.">
 <meta property="og:description" content="A collection of matrix functions for teaching and learning matrix linear algebra as used in multivariate statistical methods. These functions are mainly for tutorial purposes in learning matrix algebra ideas using R. In some cases, functions are provided for concepts available elsewhere in R, but where the function call or name is not obvious. In other cases, functions are provided to show or demonstrate an algorithm. In addition, a collection of functions are provided for drawing vector diagrams in 2D and 3D.">
 <meta property="og:image" content="http://friendly.github.io/matlib/logo.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -32,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="index.html">matlib</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.91</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.95</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,8 +88,8 @@
 <p>In other cases, we provide cover functions to show or demonstrate an algorithm in more detail, sometimes providing a <code>verbose =</code> argument to print the details of computations, e.g., <code><a href="reference/Det.html">Det()</a></code> for a matrix determinant, <code><a href="reference/Inverse.html">Inverse()</a></code> for a matrix inverse, using <code><a href="reference/gaussianElimination.html">gaussianElimination()</a></code> to show the steps.</p>
 <p>In addition, a collection of functions are provided for drawing vector diagrams in 2D and 3D, illustrating various concepts of linear algebra more concretely than has been available before. For example,</p>
 <ul>
-<li><p><code>showEqn(A, b)</code> shows the matrix equations <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>x</mi><mo>=</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">A x = b</annotation></semantics></math> in text or LaTeX form, while <code>plotEqn(A, b)</code> and <code>plotEqn3d(A, b)</code> plots those equations in 2D or 3D space.</p></li>
-<li><p><code><a href="reference/matrix2latex.html">matrix2latex()</a></code> and <code><a href="reference/latexMatrix.html">latexMatrix()</a></code> facilitate writing matrix equations in LaTeX</p></li>
+<li><p><code>showEqn(A, b)</code> shows the matrix equations <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi>𝐀</mi><mi>𝐱</mi></mrow><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A x} = \mathbf{b}</annotation></semantics></math> in text or LaTeX form, while <code>plotEqn(A, b)</code> and <code>plotEqn3d(A, b)</code> plots those equations in 2D or 3D space.</p></li>
+<li><p><code><a href="reference/matrix2latex.html">matrix2latex()</a></code>, <code><a href="reference/latexMatrix.html">latexMatrix()</a></code>, <code><a href="reference/Eqn.html">Eqn()</a></code> and friends facilitate writing matrix equations in LaTeX.</p></li>
 <li><p><code><a href="reference/vectors.html">vectors()</a></code>, <code><a href="reference/vectors3d.html">vectors3d()</a></code> plot geometric vector diagrams in 2D or 3D, with other functions to draw angles and arcs.</p></li>
 <li><p><code><a href="reference/regvec3d.html">regvec3d()</a></code> calculates and plot vectors representing a bivariate regression model, <code>lm(y ~ x1 + x2)</code></p></li>
 </ul>
@@ -165,7 +167,7 @@
 </ol>
 <ul>
 <li>
-<code>showEqn(A, b)</code> - show matrices (A, b) as linear equations</li>
+<code>showEqn(A, b)</code> - show matrices (A, b) as linear equations, as text or in LaTeX</li>
 <li>
 <code>plotEqn(A, b)</code>, <code>plotEqn3d(A, b)</code> - plot matrices (A, b) as linear equations</li>
 </ul>
@@ -225,13 +227,17 @@
 <code><a href="reference/regvec3d.html">regvec3d()</a></code> - calculate and plot vectors representing a bivariate regression model, <code>lm(y ~ x1 + x2)</code> in mean-deviation form.</li>
 </ul>
 <ol start="8" style="list-style-type: decimal">
-<li><strong>Matrix equations</strong></li>
+<li><strong>Matrix equations in LaTeX</strong></li>
 </ol>
 <ul>
 <li>
 <code><a href="reference/matrix2latex.html">matrix2latex()</a></code>: Convert matrix to LaTeX equation</li>
 <li>
-<code><a href="reference/latexMatrix.html">latexMatrix()</a></code>: Create and manipulate LaTeX repesentations of matrices</li>
+<code><a href="reference/latexMatrix.html">latexMatrix()</a></code>: Create and manipulate LaTeX representations of matrices</li>
+<li>
+<code>latexMatrixOperations</code>: Matrix operators (e.g., <code>%*%</code>, <code>%O%</code>) and functions (<code><a href="reference/latexMatrixOperations.html">matmult()</a></code>, <code><a href="https://rdrr.io/r/base/kronecker.html" class="external-link">kronecker()</a></code>) for matrix arithmetic, but rendered in LaTeX</li>
+<li>
+<code><a href="reference/Eqn.html">Eqn()</a></code>: A wrapper for equations composed from <code><a href="reference/latexMatrix.html">latexMatrix()</a></code> expressions and LaTeX text, with ability to preview the results in a Viewer pane.</li>
 </ul>
 <div class="section level3">
 <h3 id="vignettes-and-presentations">Vignettes and presentations<a class="anchor" aria-label="anchor" href="#vignettes-and-presentations"></a>
@@ -280,10 +286,14 @@
 <td>Solving Linear Equations</td>
 </tr>
 <tr class="odd">
+<td><a href="http://friendly.github.io/matlib/articles/latex-equations.html">latex-equations</a></td>
+<td>LaTeX Equations with latexMatrix, Eqn and matrix2latex</td>
+</tr>
+<tr class="even">
 <td><a href="http://friendly.github.io/matlib/articles/gramreg.html">gramreg</a></td>
 <td>Gram-Schmidt Orthogonalization and Regression</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="http://friendly.github.io/matlib/articles/data-beta.html">data-beta</a></td>
 <td>Vector Spaces of Least Squares and Linear Equations</td>
 </tr>

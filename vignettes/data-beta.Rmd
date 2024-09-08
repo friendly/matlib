@@ -68,7 +68,8 @@ Fit the linear model, `y ~ x`. The intercept is `b0 = 2.5` and the slope is `b1 
 ```
 Plot the data and the least squares line.
 ```{r plotmod2}
-#' fig.alt: A plot showing 4 points in data space and the linear regression line
+#| fig.cap: A plot showing 4 points in data space and the linear regression line
+#| fig.alt: A plot showing 4 points in data space and the linear regression line
 par(mar=c(4,4,1,1)+.1)
 plot(y ~ x, pch=16, cex=1.5)
 abline(mod, lwd=2)
@@ -96,7 +97,8 @@ Each equation corresponds to a line in $(b_0, b_1)$ space. Let's plot them. `plo
 intersection of each pair of lines --- a solution for that pair of observations.
 
 ```{r ploteqn1, echo=2}
-#' fig.alt: Each point in data space corresponds to a line in "beta" space. The figure shows the four lines corresponding to the points in the previous figure.
+#| fig.cap: Each point in data space corresponds to a line in "beta" space. The figure shows the four lines corresponding to the points in the previous figure.
+#| fig.alt: Each point in data space corresponds to a line in "beta" space. The figure shows the four lines corresponding to the points in the previous figure.
 par(mar=c(4,4,1,1)+.1)
 plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))
 ```

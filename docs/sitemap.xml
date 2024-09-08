@@ -10,8 +10,10 @@
 <url><loc>http://friendly.github.io/matlib/articles/ginv.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/articles/gramreg.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/articles/index.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/inv-3d.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/articles/inv-ex1.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/articles/inv-ex2.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/articles/latex-equations.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/articles/linear-equations.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/authors.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/index.html</loc></url>
@@ -31,6 +33,7 @@
 <url><loc>http://friendly.github.io/matlib/reference/Det.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/echelon.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/Eigen.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/Eqn.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/gaussianElimination.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/getYmult.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/Ginv.html</loc></url>
@@ -40,6 +43,8 @@
 <url><loc>http://friendly.github.io/matlib/reference/Inverse.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/is_square.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/J.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/latexMatrix.html</loc></url>
+<url><loc>http://friendly.github.io/matlib/reference/latexMatrixOperations.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/len.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/LU.html</loc></url>
 <url><loc>http://friendly.github.io/matlib/reference/matlib-package.html</loc></url>
