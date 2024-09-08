@@ -176,7 +176,8 @@ The two calls to `Eqn()` are rendered as separate equations, center aligned.
 
 ```{r eval=FALSE}
 Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
-Eqn(latexMatrix("u", "n", "k", lhs = ''),
+Eqn("\\mathbf{X} =",
+    latexMatrix("u", "n", "k"),
     latexMatrix("\\lambda", "k", "k", diag=TRUE),
     latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
 ```
