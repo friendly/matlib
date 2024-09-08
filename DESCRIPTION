@@ -29,6 +29,7 @@ Suggests:
     carData,
     webshot2,
     markdown,
+    bookdown,
     clipr
 Imports:
     xtable,

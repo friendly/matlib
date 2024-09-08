@@ -88,7 +88,7 @@ all(AA==A)
 
 I want to be able to display 3D mesh objects, with colored points, lines and faces.
 This is a little tricky, because in rgl colors are applied to vertices, not faces. The faces are colored by interpolating the colors at the vertices. See the StackOverflow discussion
-[drawing a cube with colored faces, vertex points and lines](http://stackoverflow.com/questions/39730889/rgl-drawing-a-cube-with-colored-faces-vertex-points-and-lines).
+[drawing a cube with colored faces, vertex points and lines](https://stackoverflow.com/questions/39730889/rgl-drawing-a-cube-with-colored-faces-vertex-points-and-lines).
 The function `draw3d()` handles this for `"mesh3d"` objects.
 Another function, `vlabels()` allows for labeling vertices.
 
