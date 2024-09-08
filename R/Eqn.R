@@ -382,16 +382,8 @@ Eqn_size <- function(string, size = 0){
 #' Depending on the output type this function will provide the correct
 #' inline wrapper for MathJax or LaTeX equations. This provides more
 #' consistent referencing when switching between HTML and PDF outputs as
-#' well as documentation types (\code{.Rmd} vs \code{.qmd}).
+#' well as documentation types (e.g., \code{.Rmd} vs \code{.qmd}).
 #'
-#' @param label the equation label used within \code{\link{Eqn}} or
-#'   defined explicitly in the document
-#' @param html_output logical; use references for HTML outputs instead
-#'   of the LaTeX? Automatically changed for compiled documents
-#'   that support \code{knitr}
-#' @param quarto logical; use Quarto referencing syntax? When \code{TRUE}
-#'   the \code{html_output} will be irrelevant. Can be set globally via
-#'   \code{\link{options}} with \code{options(quartoEqn=TRUE)}
 #' @param parentheses logical; include parentheses around the referenced equation?
 #'   Only changes the behaviour for referencing in LaTeX/PDF documents.
 #'

@@ -49,8 +49,13 @@ ref(
   their body should return an empty character vector to avoid printing the
   returned object}
 
-\item{label}{the equation label used within \code{\link{Eqn}} or
-defined explicitly in the document}
+\item{label}{character vector specifying the LaTeX label to use (e.g., \code{eq:myeqn}), which
+  can be reference via \code{\\ref{eq:myeqn}} or via the inline function
+  \code{\link{ref}}. Including a label will also include an equation number automatically.
+
+  For compiled documents if an HTML output is detected (see \code{html_output})
+  then the equations will be labelled  via \code{(\#eq:myeqn)} and references via \code{\@ref(eq:myeqn)},
+  or again via \code{\link{ref}} for convenience}
 
 \item{align}{logical; use the \code{align} environment with explicit \code{&} representing alignment
 points. Default: \code{FALSE}}
@@ -59,13 +64,13 @@ points. Default: \code{FALSE}}
 testing purposes and is only applicable to interactive R sessions. Disabled
 whenever \code{quarto} or \code{html_output} are \code{TRUE}}
 
-\item{html_output}{logical; use references for HTML outputs instead
-of the LaTeX? Automatically changed for compiled documents
-that support \code{knitr}}
+\item{html_output}{logical; use labels for HTML outputs instead of the LaTeX? Automatically
+changed for compiled documents that support \code{knitr}. Generally not
+required or recommended for the user to modify, except to view the generated syntax}
 
 \item{quarto}{logical; use Quarto referencing syntax? When \code{TRUE}
-the \code{html_output} will be irrelevant. Can be set globally via
-\code{\link{options}} with \code{options(quartoEqn=TRUE)}}
+the \code{html_output} will be irrelevant. Generally not recommended for the
+user to modify, except to view the generated syntax}
 
 \item{mat_args}{list of arguments to be passed to \code{\link{latexMatrix}} to change the
 properties of the \code{matrix} input objects. Note that these inputs are used globally, and apply to
@@ -137,7 +142,7 @@ markdown and Quarto documents.
 Depending on the output type this function will provide the correct
 inline wrapper for MathJax or LaTeX equations. This provides more
 consistent referencing when switching between HTML and PDF outputs as
-well as documentation types (\code{.Rmd} vs \code{.qmd}).
+well as documentation types (e.g., \code{.Rmd} vs \code{.qmd}).
 }
 \examples{
 
