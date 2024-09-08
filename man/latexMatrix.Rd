@@ -22,12 +22,21 @@
 \alias{[.latexMatrix}
 \alias{cbind.latexMatrix}
 \alias{rbind.latexMatrix}
+\alias{dimnames.latexMatrix}
+\alias{Dimnames<-}
+\alias{Dimnames<-.latexMatrix}
+\alias{Rownames<-}
+\alias{Rownames<-.latexMatrix}
+\alias{Colnames<-}
+\alias{Colnames<-.latexMatrix}
 \title{Create and Manipulate LaTeX Representations of Matrices}
 \usage{
 latexMatrix(
   symbol = "x",
   nrow = "n",
   ncol = "m",
+  rownames = NULL,
+  colnames = NULL,
   matrix = getOption("latexMatrixEnv"),
   diag = FALSE,
   sparse = FALSE,
@@ -84,6 +93,20 @@ Ncol(x, ...)
 \method{cbind}{latexMatrix}(..., deparse.level)
 
 \method{rbind}{latexMatrix}(..., deparse.level)
+
+\method{dimnames}{latexMatrix}(x)
+
+Dimnames(x) <- value
+
+\method{Dimnames}{latexMatrix}(x) <- value
+
+Rownames(x) <- value
+
+\method{Rownames}{latexMatrix}(x) <- value
+
+Colnames(x) <- value
+
+\method{Colnames}{latexMatrix}(x) <- value
 }
 \arguments{
 \item{symbol}{name for matrix elements, character string. For LaTeX symbols,
@@ -97,6 +120,16 @@ that many rows.}
 
 \item{ncol}{Number of columns, a single character representing columns symbolically, or an integer, generating
 that many columns.}
+
+\item{rownames}{optional vector of names for the matrix rows.
+if \code{symbol} is an R matrix with row names, these are used.
+For a matrix with a non-numeric (e.g., \code{"m"}) number of rows,
+3 names should be supplied, for the 1st, 2nd, and last rows.}
+
+\item{colnames}{optional vector of names for the matrix columns.
+if \code{symbol} is an R matrix with column names, these are used.
+For a matrix with a non-numeric (e.g., \code{"n"}) number of columns,
+3 names should be supplied, for the 1st, 2nd, and last columns.}
 
 \item{matrix}{Character string giving the LaTeX matrix environment used in \code{\\begin{}}, \code{\\end{}}. Typically one of:
 \describe{
@@ -180,6 +213,11 @@ specific numeric values; e.g.,
 
 \item{deparse.level}{to match the generic \code{\link{rbind}()}
 and \code{\link{cbind}()} functions; ignored}
+
+\item{value}{for \code{"Dimnames<-()"}, a two-element list with,
+respectively, character vectors of row and column names;
+for  \code{"Rownames<-()"} and \code{"Colnames<-()"}, a
+vector of names.}
 }
 \value{
 \code{latexMatrix()} returns an object of class \code{"latexMatrix"}
@@ -362,6 +400,14 @@ rbind(X, Z)
 X[1:2, ]
 X[-(1:2), ]
 X[1:2, 2]
+
+# defining row and column names
+W <- latexMatrix(rownames=c("\\\\alpha_1", "\\\\alpha_2", "\\\\alpha_m"),
+                 colnames=c("\\\\beta_1", "\\\\beta_2", "\\\\beta_n"))
+W
+Rownames(W) <- c("\\\\mathrm{Abe}", "\\\\mathrm{Barry}", "\\\\mathrm{Zelda}")
+Colnames(W) <- c("\\\\mathrm{Age}", "\\\\mathrm{BMI}", "\\\\mathrm{Waist}")
+W
 }
 \seealso{
 \code{\link{latexMatrixOperations}}, \code{\link{matrix2latex}},
