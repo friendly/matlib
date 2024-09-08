@@ -1,4 +1,4 @@
-# matlib 0.9.9
+# matlib 0.9.95
 
 - added `latexMatrix()` to create a symbolic matrix
 - `latexMatrix()` made more general to handle much wider variety of cases, with LaTeX output [JF]
@@ -7,6 +7,8 @@
 - `latexMatrix()` gets operators for matrix arithmetic (`+,-, %*%`) and operators (`t()`)
 - added vignette, `latex-equations.Rmd` illustrating the variety of functions in the package for constructing matrix equations in LaTeX
 - added functions `matmult()`, `matsum()`, `matpower()` similar to the operators, but providing `simplify = TRUE`, `as.numeric = TRUE`
+- `Eqn()` gains a `preview` argument, rendering a LaTeX matrix expression in a Viewer pane.
+- `latexMatrix()` now allows row/column names to be displayed with a matrix.
 
 # matlib 0.9.8
 

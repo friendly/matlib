@@ -89,7 +89,7 @@ The functions in this package are grouped under the following topics
 
 4. **Linear equations**: functions to illustrate linear equations of the form $\mathbf{A x = b}$
 
-  - `showEqn(A, b)` - show matrices (A, b) as linear equations
+  - `showEqn(A, b)` - show matrices (A, b) as linear equations, as text or in LaTeX
   - `plotEqn(A, b)`, `plotEqn3d(A, b)`  - plot matrices (A, b) as linear equations
   
 5. **Gaussian elimination**: functions for illustrating Gaussian elimination for solving systems of linear equations of the form
@@ -123,7 +123,8 @@ and a `fractions=TRUE` argument to show results using `MASS::fractions()`.
 8. **Matrix equations in LaTeX** 
   - `matrix2latex()`: Convert matrix to LaTeX equation
   - `latexMatrix()`: Create and manipulate LaTeX representations of matrices
-  - `latexMatrixOperations`: Matrix operators (e.g., `%*%`) and functions for matrix arithmetic, but rendered in LaTeX
+  - `latexMatrixOperations`: Matrix operators (e.g., `%*%`, `%O%`) and functions (`matmult()`, `kronecker()`) for matrix arithmetic, but rendered in LaTeX
+  - `Eqn()`: A wrapper for equations composed from `latexMatrix()` expressions and LaTeX text, with ability to preview the results in a Viewer pane.
 
 ### Vignettes and presentations
 
