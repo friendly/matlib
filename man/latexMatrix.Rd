@@ -82,7 +82,13 @@ Ncol(x, ...)
 
 \method{Ncol}{latexMatrix}(x, ...)
 
-\method{print}{latexMatrix}(x, onConsole = TRUE, ...)
+\method{print}{latexMatrix}(
+  x,
+  onConsole = TRUE,
+  cell.spacing = getOption("cell.spacing"),
+  colname.spacing = getOption("colname.spacing"),
+  ...
+)
 
 \method{is.numeric}{latexMatrix}(x)
 
@@ -199,6 +205,14 @@ if omitted, then the matrix isn't partitioned by columns}
 
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
+
+\item{cell.spacing}{a character whose width is used to try to even out spacing
+of printed cell elements; the default is taken from the \code{"cell.spacing"}
+option, and if that option isn't set the character \code{"e"} is used.}
+
+\item{colname.spacing}{a character whose width is used to try to even out spacing
+of printed column names; the default is taken from the \code{"colname.spacing"}
+option, and if that option isn't set the character \code{"i"} is used.}
 
 \item{locals}{an optional list or named numeric vector of variables to be given
 specific numeric values; e.g.,

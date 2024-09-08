@@ -716,9 +716,21 @@ Ncol.latexMatrix <- function(x, ...){
 #' otherwise, for compatibility with generic functions, may be ignored
 
 # print() method:
+#' @param cell.spacing a character whose width is used to try to even out spacing
+#'        of printed cell elements; the default is taken from the \code{"cell.spacing"}
+#'        option, and if that option isn't set the character \code{"e"} is used.
+#' @param colname.spacing a character whose width is used to try to even out spacing
+#'        of printed column names; the default is taken from the \code{"colname.spacing"}
+#'        option, and if that option isn't set the character \code{"i"} is used.
 #' @rdname latexMatrix
 #' @export
-print.latexMatrix <- function(x, onConsole=TRUE,  ...){
+print.latexMatrix <- function(x, onConsole=TRUE, 
+                              cell.spacing=getOption("cell.spacing"),
+                              colname.spacing=getOption("colname.spacing"),
+                              ...){
+  
+  if (is.null(cell.spacing)) cell.spacing <- "e"
+  if (is.null(colname.spacing)) colname.spacing <- "i"
   
   countChars <- function(string, adjust=TRUE){
     gsub("\\\\[[:alpha:]]*", if(adjust) "X" else "", string) |> 
@@ -742,7 +754,9 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
         }
         pad <- max(max.col[j] - nchar, 0) 
         colnames[j] <- paste0(colnames[j], 
-                              paste(rep("~", pad), collapse=""))
+                              paste0("\\phantom{", 
+                                     paste(rep(colname.spacing, pad), collapse=""),
+                                     "}"))
       }
     }
     if (!is.null(colnames)){
@@ -762,7 +776,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
           pad <- max(nchar.colnames[j] - nchar, 0)
           if (!is.na(pad) && pad > 0) {
             X[i, j] <- paste0("\\phantom{",
-                              paste(rep("e", pad), collapse=""), 
+                              paste(rep(cell.spacing, pad), collapse=""), 
                               "}", xij)
           }
         }
@@ -776,7 +790,8 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
     latex <- getLatex(x)
     latex <- paste0("\\begin{matrix}\n",
                     if (!is.null(rownames))  "  & ",
-                    if (!is.null(colnames)) paste0(" \\begin{matrix} ", 
+                    if (!is.null(colnames)) paste0(" \\begin{matrix} \\phantom{", 
+                                                   colname.spacing ,"} ", 
                                                    paste(colnames, collapse=" & "), 
                                                    "\n  \\end{matrix} \\\\ \n"),
                     if (!is.null(rownames)) paste0(" \\begin{matrix}  \n", 

@@ -61,7 +61,7 @@ latexMatrix <- function(
     if (is.numeric(symbol)){
       if (is.null(digits) && all(trunc(symbol) == symbol) ) digits <- 0
       if (fractions) {
-        symbol <- as.character(Fractions(symbol))
+        symbol <- as.character(matlib:::Fractions(symbol))
         negatives <- if (any(grepl("-", symbol))) "\\phantom{-}" else ""
         for (i in 1:nrow(symbol)){
           for (j in 1:ncol(symbol)){
@@ -329,7 +329,13 @@ dimnames.latexMatrix <- function(x){
   x$dimnames
 }
 
-print.latexMatrix <- function(x, onConsole=TRUE,  ...){
+print.latexMatrix <- function(x, onConsole=TRUE, 
+                              cell.spacing=getOption("cell.spacing"),
+                              colname.spacing=getOption("colname.spacing"),
+                              ...){
+  
+  if (is.null(cell.spacing)) cell.spacing <- "e"
+  if (is.null(colname.spacing)) colname.spacing <- "i"
   
   countChars <- function(string, adjust=TRUE){
     gsub("\\\\[[:alpha:]]*", if(adjust) "X" else "", string) |> 
@@ -353,7 +359,9 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
         }
         pad <- max(max.col[j] - nchar, 0) 
         colnames[j] <- paste0(colnames[j], 
-                              paste(rep("~", pad), collapse=""))
+                              paste0("\\phantom{", 
+                                     paste(rep(colname.spacing, pad), collapse=""),
+                                     "}"))
       }
     }
     if (!is.null(colnames)){
@@ -373,7 +381,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
           pad <- max(nchar.colnames[j] - nchar, 0)
           if (!is.na(pad) && pad > 0) {
             X[i, j] <- paste0("\\phantom{",
-                              paste(rep("e", pad), collapse=""), 
+                              paste(rep(cell.spacing, pad), collapse=""), 
                               "}", xij)
           }
         }
@@ -387,7 +395,8 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
     latex <- getLatex(x)
     latex <- paste0("\\begin{matrix}\n",
                     if (!is.null(rownames))  "  & ",
-                    if (!is.null(colnames)) paste0(" \\begin{matrix} ", 
+                    if (!is.null(colnames)) paste0(" \\begin{matrix} \\phantom{", 
+                                                   colname.spacing ,"} ", 
                                                    paste(colnames, collapse=" & "), 
                                                    "\n  \\end{matrix} \\\\ \n"),
                     if (!is.null(rownames)) paste0(" \\begin{matrix}  \n", 
