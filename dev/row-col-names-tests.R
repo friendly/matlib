@@ -356,7 +356,6 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
                               paste(rep("~", pad), collapse=""))
       }
     }
-    # browser()
     if (!is.null(colnames)){
       nchar.colnames <- countChars(colnames, adjust=FALSE)
       for (i in 1:nrow(X)){
@@ -365,22 +364,22 @@ print.latexMatrix <- function(x, onConsole=TRUE,  ...){
           nchar <- if ("\\cdots" == xij) {
             3
           } else if ("\\vdots" == xij) {
-            1
+            NA
           } else if ("\\ddots" == xij) {
-            3
+            NA
           } else {
             countChars(xij)
           }
           pad <- max(nchar.colnames[j] - nchar, 0)
-          if (pad > 0) {
+          if (!is.na(pad) && pad > 0) {
             X[i, j] <- paste0("\\phantom{",
-                              paste(rep("0", pad), collapse=""), 
+                              paste(rep("e", pad), collapse=""), 
                               "}", xij)
           }
         }
       }
       XX <- latexMatrix(X, colnames=colnames, rownames=rownames)
-      XX$wrapper <- matlib:::updateWrapper(XX, getWrapper(x))
+      XX <- matlib:::updateWrapper(XX, getWrapper(x))
       XX$dim <- Dim(x)
       x <- XX
     }
@@ -532,7 +531,15 @@ mat <- matrix(sample(25), nrow = 5,
 
 latexMatrix(mat)
 
+latexMatrix(mat, matrix="bmatrix",
+            rownames = paste0("\\mathrm{", rownames(mat), "}"), 
+            colnames = paste0("\\mathrm{", colnames(mat), "}"))
+
 latexMatrix(mat, 
             rownames = paste0("\\mathrm{", rownames(mat), "}"), 
             colnames = paste0("\\mathrm{", colnames(mat), "}"))
+
+M <- latexMatrix(matrix="bmatrix", rownames=letters[1:3], 
+            colnames=LETTERS[1:3])
+M
 }
