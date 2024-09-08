@@ -58,12 +58,17 @@ matrices.
 
 There are already some tools available in R for producing LaTeX output:
 
-* tables (e.g, `xtable::xtable()`), 
+* tables (e.g, `xtable::xtable()`, `tables::toLatex()`), 
 * R objects (`Hmisc::latex()`),
 * statistical models (`equatiomatic::extract_eq()`),
 * `knitr::knit_print()` can be used to define [methods for printing objects of class `"matrix"`](https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable). 
 * The [`mathpix`](https://cran.r-project.org/package=mathpix) package
 can take an image of a an equation or formula and produce the LaTeX code which should generate that image.
+* The [`texPreview`](https://cran.r-project.org/package=texPreview) package
+compiles snippets of LaTeX directly into images from the R console to view in the RStudio viewer pane, Shiny apps and RMarkdown documents.
+
+See [Tools for making latex tables in R](https://stackoverflow.com/questions/5465314/tools-for-making-latex-tables-in-r)
+for a more comprehensive list
 
 
 The `matlib` package extends these, providing a collection of functions that simplify using LaTeX notation for matrices, vectors and equations in documentation and in writing:
