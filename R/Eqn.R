@@ -47,8 +47,10 @@
 #'   each \code{matrix} object supplied. If further specificity is required create
 #'   \code{\link{latexMatrix}} objects directly.
 #' @param preview logical; render an HTML version of the equation and display? This is intended for
-#'  testing purposes and is only applicable to interactive R sessions. Disabled
-#'  whenever \code{quarto} or \code{html_output} are \code{TRUE}
+#'  testing purposes and is only applicable to interactive R sessions, though
+#'  for code testing purposes can be set globally
+#'  via \code{\link{options}} (e.g., \code{options('previewEqn' = FALSE)}).
+#'  Disabled whenever \code{quarto} or \code{html_output} are \code{TRUE}
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @importFrom rstudioapi viewer
@@ -112,7 +114,7 @@
 Eqn <- function(...,
                 label = NULL,
                 align = FALSE,
-                preview = TRUE,
+                preview = getOption('previewEqn'),
                 html_output = knitr::is_html_output(),
                 quarto = getOption('quartoEqn'),
                 mat_args = list()) {
@@ -126,6 +128,7 @@ Eqn <- function(...,
     }
   }
   on.exit(sink.reset())
+  if(is.null(preview)) preview <- TRUE
   quarto <- setQuartoEqn(quarto)
   if(is.null(quarto)) quarto <- FALSE
   preview <- preview && interactive()

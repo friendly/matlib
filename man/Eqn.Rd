@@ -14,7 +14,7 @@ Eqn(
   ...,
   label = NULL,
   align = FALSE,
-  preview = TRUE,
+  preview = getOption("previewEqn"),
   html_output = knitr::is_html_output(),
   quarto = getOption("quartoEqn"),
   mat_args = list()
@@ -63,8 +63,10 @@ ref(
 points. Default: \code{FALSE}}
 
 \item{preview}{logical; render an HTML version of the equation and display? This is intended for
-testing purposes and is only applicable to interactive R sessions. Disabled
-whenever \code{quarto} or \code{html_output} are \code{TRUE}}
+testing purposes and is only applicable to interactive R sessions, though
+for code testing purposes can be set globally
+via \code{\link{options}} (e.g., \code{options('previewEqn' = FALSE)}).
+Disabled whenever \code{quarto} or \code{html_output} are \code{TRUE}}
 
 \item{html_output}{logical; use labels for HTML outputs instead of the LaTeX? Automatically
 changed for compiled documents that support \code{knitr}. Generally not
