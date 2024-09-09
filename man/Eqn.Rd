@@ -19,7 +19,7 @@ Eqn(
   quarto = getOption("quartoEqn"),
   mat_args = list(),
   preview.pdf = FALSE,
-  preview.header = ""
+  preview.packages = NULL
 )
 
 Eqn_newline(space = 0)
@@ -87,9 +87,8 @@ each \code{matrix} object supplied. If further specificity is required create
 not require unless additional LaTeX packages are required that are not supported
 by MathJax}
 
-\item{preview.header}{character vector to add additional information to the
-equation preview. Most useful for adding packages when \code{preview.pdf = TRUE}.
-For example, \code{preview.header = "pdf_document:\n \t extra_dependencies: ['amsmath', 'bm']"}}
+\item{preview.packages}{character vector for adding additional LaTeX package information to the
+equation preview. Only used when \code{preview.pdf = TRUE}}
 
 \item{space}{includes extra vertical space. Metric of the vertical space
 must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'}
@@ -185,8 +184,8 @@ Eqn('e=mc^2', preview.pdf=TRUE)
 
 # Add extra LaTeX dependencies for PDF build
 Eqn('\\\\bm{e}=mc^2', preview.pdf=TRUE,
-    preview.header="pdf_document:
-        extra_dependencies: ['amsmath', 'bm']")
+    preview.packages=c('amsmath', 'bm'))
+
 }
 
 # Multiple expressions

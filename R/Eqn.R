@@ -54,9 +54,8 @@
 #' @param preview.pdf logical; build a PDF of the preview equation? Generally
 #'  not require unless additional LaTeX packages are required that are not supported
 #'  by MathJax
-#' @param preview.header character vector to add additional information to the
-#'  equation preview. Most useful for adding packages when \code{preview.pdf = TRUE}.
-#'  For example, \code{preview.header = "pdf_document:\n \t extra_dependencies: ['amsmath', 'bm']"}
+#' @param preview.packages character vector for adding additional LaTeX package information to the
+#'  equation preview. Only used when \code{preview.pdf = TRUE}
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @importFrom rstudioapi viewer
@@ -91,8 +90,8 @@
 #'
 #' # Add extra LaTeX dependencies for PDF build
 #' Eqn('\\bm{e}=mc^2', preview.pdf=TRUE,
-#'     preview.header="pdf_document:
-#'         extra_dependencies: ['amsmath', 'bm']")
+#'     preview.packages=c('amsmath', 'bm'))
+#'
 #' }
 #'
 #' # Multiple expressions
@@ -141,7 +140,7 @@ Eqn <- function(...,
                 quarto = getOption('quartoEqn'),
                 mat_args = list(),
                 preview.pdf = FALSE,
-                preview.header="") {
+                preview.packages=NULL) {
 
   # for connection safety
   sink.reset <- function(){
@@ -162,8 +161,10 @@ Eqn <- function(...,
       # everything except the kitchen ...
       sink(tmpfile)
       on.exit(file.remove(tmpfile), add = TRUE)
-      if(preview.header != '')
-          preview.header <- paste0('\n', preview.header, collapse='')
+      preview.header <- if(!is.null(preview.packages) && preview.pdf){
+          preview.header <- sprintf('\noutput:\n    pdf_document:\n      extra_dependencies: [%s]',
+                                    paste(preview.packages, collapse=','))
+      } else  ""
       cat(sprintf(
 "
 ---
