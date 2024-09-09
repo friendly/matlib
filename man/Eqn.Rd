@@ -189,13 +189,17 @@ Eqn("X &= U \\\\lambda V", Eqn_newline(),
 A <- matrix(c(2, 1, -1,
               -3, -1, 2,
               -2,  1, 2), 3, 3, byrow=TRUE)
-b <- c(8, -11, -3)
+b <- matrix(c(8, -11, -3))
 
+# numeric matrix wrapped internally
 cbind(A,b) |> Eqn()
-cbind(A,'\\\\bigm|', b) |> Eqn()
+cbind(A,b) |> latexMatrix() |> Eqn()
 
-# change matrix brackets globally
+# change numeric matrix brackets globally
 cbind(A,b) |> Eqn(mat_args=list(matrix='bmatrix'))
+
+# greater flexibility when using latexMatrix()
+cbind(A, b) |> latexMatrix() |> partition(columns=3) |> Eqn()
 
 # with showEqn()
 showEqn(A, b, latex=TRUE) |> Eqn()
