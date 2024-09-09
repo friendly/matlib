@@ -753,10 +753,13 @@ print.latexMatrix <- function(x, onConsole=TRUE,
           countChars(colnames[j], adjust=FALSE) 
         }
         pad <- max(max.col[j] - nchar, 0) 
-        colnames[j] <- paste0(colnames[j], 
-                              paste0("\\phantom{", 
-                                     paste(rep(colname.spacing, pad), collapse=""),
-                                     "}"))
+        if (any(pad > 0)){
+          colnames[j] <- paste0(colnames[j], 
+                                paste0("\\phantom{", 
+                                       paste(rep(colname.spacing, pad), 
+                                             collapse=""),
+                                       "}"))
+        }
       }
     }
     if (!is.null(colnames)){
