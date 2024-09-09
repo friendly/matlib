@@ -51,6 +51,12 @@
 #'  for code testing purposes can be set globally
 #'  via \code{\link{options}} (e.g., \code{options('previewEqn' = FALSE)}).
 #'  Disabled whenever \code{quarto} or \code{html_output} are \code{TRUE}
+#' @param preview.pdf logical; build a PDF of the preview equation? Generally
+#'  not require unless additional LaTeX packages are required that are not supported
+#'  by MathJax
+#' @param preview.header character vector to add additional information to the
+#'  equation preview. Most useful for adding packages when \code{preview.pdf = TRUE}.
+#'  For example, \code{preview.header = "pdf_document:\n \t extra_dependencies: ['amsmath', 'bm']"}
 #' @returns NULL
 #' @importFrom knitr is_html_output
 #' @importFrom rstudioapi viewer
@@ -76,6 +82,18 @@
 #'
 #' # Quarto output
 #' Eqn('e=mc^2', label = 'eq-einstein', quarto = TRUE)
+#'
+#' \dontrun{
+#' # The following requires LaTeX compilers to be pre-installed
+#'
+#' # View PDF instead of HTML
+#' Eqn('e=mc^2', preview.pdf=TRUE)
+#'
+#' # Add extra LaTeX dependencies for PDF build
+#' Eqn('\\bm{e}=mc^2', preview.pdf=TRUE,
+#'     preview.header="pdf_document:
+#'         extra_dependencies: ['amsmath', 'bm']")
+#' }
 #'
 #' # Multiple expressions
 #' Eqn("e=mc^2",
@@ -121,7 +139,9 @@ Eqn <- function(...,
                 preview = getOption('previewEqn'),
                 html_output = knitr::is_html_output(),
                 quarto = getOption('quartoEqn'),
-                mat_args = list()) {
+                mat_args = list(),
+                preview.pdf = FALSE,
+                preview.header="") {
 
   # for connection safety
   sink.reset <- function(){
@@ -142,13 +162,14 @@ Eqn <- function(...,
       # everything except the kitchen ...
       sink(tmpfile)
       on.exit(file.remove(tmpfile), add = TRUE)
-      cat(
+      if(preview.header != '')
+          preview.header <- paste0('\n', preview.header, collapse='')
+      cat(sprintf(
 "
 ---
-title: '&nbsp;'
+title: '&nbsp;'%s
 ---
-")
-
+", preview.header))
   }
   stopifnot(is.logical(quarto))
   number <- !is.null(label)
@@ -187,9 +208,16 @@ title: '&nbsp;'
   }
   if(preview){
       sink()
-      rmarkdown::render(tmpfile, 'html_document', clean = TRUE, quiet = TRUE)
-      rstudioapi::viewer(paste0(tmpfile, '.html'))
-      inp <- paste0(readLines(tmpfile)[-c(1:4)], collapse='\n')
+      if(preview.pdf){
+          rmarkdown::render(tmpfile, 'pdf_document', clean = TRUE, quiet = TRUE)
+          rstudioapi::viewer(paste0(tmpfile, '.pdf'))
+      } else {
+          rmarkdown::render(tmpfile, 'html_document', clean = TRUE, quiet = TRUE)
+          rstudioapi::viewer(paste0(tmpfile, '.html'))
+      }
+      lines <- readLines(tmpfile)
+      dashloc <- which(lines == '---')
+      inp <- paste0(lines[-c(1, dashloc[1]:dashloc[2])], collapse='\n')
       cat(inp)
   }
   invisible(NULL)

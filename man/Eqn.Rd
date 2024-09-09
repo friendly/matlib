@@ -17,7 +17,9 @@ Eqn(
   preview = getOption("previewEqn"),
   html_output = knitr::is_html_output(),
   quarto = getOption("quartoEqn"),
-  mat_args = list()
+  mat_args = list(),
+  preview.pdf = FALSE,
+  preview.header = ""
 )
 
 Eqn_newline(space = 0)
@@ -80,6 +82,14 @@ user to modify, except to view the generated syntax}
 properties of the \code{matrix} input object(s). Note that these inputs are used globally, and apply to
 each \code{matrix} object supplied. If further specificity is required create
 \code{\link{latexMatrix}} objects directly.}
+
+\item{preview.pdf}{logical; build a PDF of the preview equation? Generally
+not require unless additional LaTeX packages are required that are not supported
+by MathJax}
+
+\item{preview.header}{character vector to add additional information to the
+equation preview. Most useful for adding packages when \code{preview.pdf = TRUE}.
+For example, \code{preview.header = "pdf_document:\n \t extra_dependencies: ['amsmath', 'bm']"}}
 
 \item{space}{includes extra vertical space. Metric of the vertical space
 must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'}
@@ -166,6 +176,18 @@ Eqn('e=mc^2', label = 'eq:einstein', html_output = TRUE)
 
 # Quarto output
 Eqn('e=mc^2', label = 'eq-einstein', quarto = TRUE)
+
+\dontrun{
+# The following requires LaTeX compilers to be pre-installed
+
+# View PDF instead of HTML
+Eqn('e=mc^2', preview.pdf=TRUE)
+
+# Add extra LaTeX dependencies for PDF build
+Eqn('\\\\bm{e}=mc^2', preview.pdf=TRUE,
+    preview.header="pdf_document:
+        extra_dependencies: ['amsmath', 'bm']")
+}
 
 # Multiple expressions
 Eqn("e=mc^2",
