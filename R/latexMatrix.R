@@ -289,6 +289,13 @@ latexMatrix <- function(
     x
   }
   
+  if (0 != anyDuplicated(rownames, incomparables="")) 
+    stop("there are duplicated row names")
+  cnames <- colnames
+  cnames <- sub("\\\\phantom\\{.*\\}", "", cnames)
+  if (0 != anyDuplicated(cnames, incomparables="")) 
+    stop("there are duplicated column names")
+  
   if (is.null(matrix)) matrix <- "pmatrix"
   
   end.at.n.minus.1 <- gsub(" ", "", end.at) == c("n-1", "m-1")
@@ -302,7 +309,6 @@ latexMatrix <- function(
   # start composing output string:
   
   result <- paste0(if (fractions) "\\renewcommand*{\\arraystretch}{1.5} \n",
-                   # if (!missing(lhs)) paste0(lhs, " = \n"),
                    "\\begin{", matrix, "} \n"
   )
   
@@ -858,6 +864,8 @@ as.double.latexMatrix <- function(x, locals=list(), ...){
 `[.latexMatrix` <- function(x, i, j, ..., drop){
   numericDimensions(x)
   X <- getBody(x)
+  if (!is.null(nms <- rownames(x))) rownames(X) <- nms
+  if (!is.null(nms <- colnames(x))) colnames(X) <- nms
   X <- X[i, j, drop=FALSE]
   X <- latexMatrix(X)
   updateWrapper(X, getWrapper(x))

@@ -160,7 +160,14 @@ matsum.latexMatrix <- function(A, ..., as.numeric=TRUE){
   }
   
   numericDimensions(A)
-  for (M in matrices)   numericDimensions(M)
+  
+  dimnames <- dimnames(A)
+  for (M in matrices)   {
+    numericDimensions(M)
+    if (!isTRUE(all.equal(dimnames, dimnames(M)))){
+      stop("matrix dimension names don't match")
+    }
+  }
   
   wrapper <- getWrapper(A)
   
@@ -187,6 +194,7 @@ matsum.latexMatrix <- function(A, ..., as.numeric=TRUE){
   }
   A <- latexMatrix(A)
   A <- updateWrapper(A, wrapper)
+  Dimnames(A) <- dimnames
   A
 }
 
@@ -211,6 +219,7 @@ matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
   # unary -
   if (is.null(B)){
     numericDimensions(A)
+    dimnames <- dimnames(A)
     if (as.numeric && is.numeric(A)){
       A <- as.numeric(A)
       A <- -A
@@ -221,6 +230,7 @@ matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
     }
     A <- latexMatrix(A)
     A <- updateWrapper(A, getWrapper(A))
+    Dimnames(A) <- dimnames
     return(A)
   }
   if (!inherits(B, "latexMatrix")){
@@ -229,6 +239,10 @@ matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
   }
   numericDimensions(A)
   numericDimensions(B)
+  if (!isTRUE(all.equal(dimnames(A), dimnames(B)))){
+    stop("matrix dimension names don't match")
+  }
+  dimnames <- dimnames(A)
   dimA <- Dim(A)
   dimB <- Dim(B)
   if (!all(dimA == dimB)) 
@@ -246,6 +260,7 @@ matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
   }
   A <- latexMatrix(A)
   A <- updateWrapper(A, wrapper)
+  Dimnames(A) <- dimnames
   A
 }
 
@@ -278,6 +293,7 @@ matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
   A <- getBody(e2)
   dimA <- dim(A)
   wrapper <- getWrapper(e2)
+  dimnames <- dimnames(e2)
   result <- matrix(if (swapped) {
     paste(sapply(A, parenthesize), latexMultSymbol, e1)
   } else{
@@ -287,6 +303,7 @@ matdiff.latexMatrix <- function(A, B=NULL, as.numeric=TRUE, ...){
   result <- latexMatrix(result)
   result <- updateWrapper(result, getWrapper(e2))
   result$dim <- Dim(e2)
+  Dimnames(result) <- dimnames
   result
 }
 
@@ -352,6 +369,17 @@ matmult.latexMatrix <- function(X, ..., simplify=TRUE,
   numericDimensions(X)
   for (M in matrices)   numericDimensions(M)
   
+  n.matrices <- length(matrices)
+  if (n.matrices > 1){
+    for (i in 1:(n.matrices - 1)){
+      if (!isTRUE(all.equal(colnames(M[[i]]), 
+                            rownames(M[[i + 1]])))){
+        stop("matrix dimension names don't match")
+      }
+    }
+  }
+  dimnames <- list(rownames = rownames(X),
+                   colnames = colnames(matrices[[n.matrices]]))
   wrapper <- getWrapper(X)
   
   if (as.numeric && is.numeric(X) && all(sapply(matrices, is.numeric))){
@@ -385,6 +413,7 @@ matmult.latexMatrix <- function(X, ..., simplify=TRUE,
   }
   X <- latexMatrix(X)
   X <- updateWrapper(X, wrapper)
+  Dimnames(X) <- dimnames
   return(X)
   
 }
@@ -408,6 +437,8 @@ matpower.latexMatrix <- function(X, power, simplify=TRUE,
   
   numericDimensions(X)
   dimX <- Dim(X)
+  dimnames <- dimnames(X)
+  
   if (dimX[1] != dimX[2]) stop ("X is not square")
   if (power != round(power) || power < -1) 
     stop("'power' must be an integer >= -1")
@@ -417,6 +448,7 @@ matpower.latexMatrix <- function(X, power, simplify=TRUE,
   if (power == 0){
     result <- latexMatrix(diag(dimX[1]))
     result <- updateWrapper(result, wrapper)
+    Dimnames(result) <- dimnames
     return(result)
   }
   
@@ -444,7 +476,10 @@ matpower.latexMatrix <- function(X, power, simplify=TRUE,
       result
     }
   }
-  Xp <- updateWrapper(Xp, wrapper)
+  if (inherits(Xp, "latexMatrix")){
+    Xp <- updateWrapper(Xp, wrapper)
+    Dimnames(Xp) <- dimnames
+  }
   return(Xp)
 }
 
@@ -473,7 +508,9 @@ t.latexMatrix <- function(x){
   numericDimensions(x)
   result <- latexMatrix(t(getBody(x)))
   result <- updateWrapper(result, getWrapper(x))
-  result$dim <- rev(Dim(x))
+  dimnames <- dimnames(x)
+  Dimnames(result) <- list(rownames = dimnames[[2]],
+                           colnames = dimnames[[1]])
   result
 }
 
@@ -525,10 +562,14 @@ solve.latexMatrix <- function (a, b, simplify=FALSE, as.numeric=TRUE,
   if (Nrow(a) != Ncol(a)) stop("matrix 'a' must be square")
   if (!missing(b)) warning("'b' argument to solve() ignored")
   
+  dimnames <- dimnames(a)
+  
   if (as.numeric && is.numeric(a)){
     a.inv <- solve(as.numeric(a))
     a.inv <- latexMatrix(a.inv)
-    return(updateWrapper(a.inv, getWrapper(a)))
+    a.inv <- updateWrapper(a.inv, getWrapper(a))
+    Dimnames(a.inv) <- dimnames
+    return(a.inv)
   }
   
   det <- determinant(a)
@@ -554,6 +595,7 @@ solve.latexMatrix <- function (a, b, simplify=FALSE, as.numeric=TRUE,
   A_inv <- t(A_inv) # adjoint
   result <- latexMatrix(A_inv)
   result <- updateWrapper(result, getWrapper(a))
+  Dimnames(result) <- dimnames
   
   if (!simplify) {
     return(result)
@@ -574,6 +616,11 @@ setMethod("kronecker",
             
             numericDimensions(X)
             numericDimensions(Y)
+            
+            if (!is.null(unlist(dimnames(X))) && 
+                !is.null(unlist(dimnames(X)))){
+              message("Note: dimension names are ignored")
+            }
             
             latexMultSymbol <- getLatexMultSymbol()
             
