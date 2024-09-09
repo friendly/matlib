@@ -20,7 +20,7 @@ Eqn(
   mat_args = list()
 )
 
-Eqn_newline()
+Eqn_newline(space = 0)
 
 Eqn_text(text)
 
@@ -81,6 +81,9 @@ properties of the \code{matrix} input object(s). Note that these inputs are used
 each \code{matrix} object supplied. If further specificity is required create
 \code{\link{latexMatrix}} objects directly.}
 
+\item{space}{includes extra vertical space. Metric of the vertical space
+must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'}
+
 \item{text}{argument to be used within \code{\\text{}}}
 
 \item{lhs}{spacing size. Can be a number between -1 and 6. -1 provides negative
@@ -96,9 +99,6 @@ commonly this will be operators like \code{'='}}
 the this will be set to \code{rhs} to create symmetric spaces around \code{mid}}
 
 \item{times}{number of times to repeat the spacings}
-
-\item{space}{includes extra vertical space. Metric of the vertical space
-must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'}
 
 \item{string}{a string that should have its text size modified. If missing
 the size modifier is returned, which applies the size modifier
@@ -124,7 +124,8 @@ in either a \code{\\begin{equation} ...\\end{equation}} or
 In a code chunk, use the chunk options \code{results='asis', echo=FALSE} to show only
 the result of compiling the LaTeX expressions.
 
-\code{Eqn_newline()} emits a newline (\code{\\}) in an equation.
+\code{Eqn_newline()} emits a newline (\code{\\}) in an equation, with
+an optional increase to the padding following the newline.
 
 \code{Eqn_text()} inserts a literal string to be rendered in a text font in an equation.
 
@@ -206,6 +207,7 @@ showEqn(A, b, latex=TRUE) |> Eqn()
 
 
 Eqn_newline()
+Eqn_newline('10ex')
 
 
 Eqn_hspace()

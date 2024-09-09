@@ -221,7 +221,8 @@ setQuartoEqn <- function(quarto){
 
 #' Emit a newline in an equation
 #'
-#' \code{Eqn_newline()} emits a newline (\code{\\}) in an equation.
+#' \code{Eqn_newline()} emits a newline (\code{\\}) in an equation, with
+#' an optional increase to the padding following the newline.
 #'
 #' @rdname Eqn
 #' @export
@@ -229,8 +230,17 @@ setQuartoEqn <- function(quarto){
 #' @examples
 #'
 #' Eqn_newline()
+#' Eqn_newline('10ex')
 #'
-Eqn_newline <- function()' \\\\ \n'
+Eqn_newline <- function(space = 0){
+    ret <- if(space > 0){
+        metric <- substr(space, nchar(space)-1, nchar(space))
+        checkLaTeXMetric(metric)
+        sprintf(' \\\\[%s] \n', space)
+    } else ' \\\\ \n'
+    ret
+}
+
 
 #' Eqn_text Include literal string in equations
 #'
