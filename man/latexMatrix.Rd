@@ -85,6 +85,7 @@ Ncol(x, ...)
 \method{print}{latexMatrix}(
   x,
   onConsole = TRUE,
+  bordermatrix = getOption("bordermatrix"),
   cell.spacing = getOption("cell.spacing"),
   colname.spacing = getOption("colname.spacing"),
   ...
@@ -205,6 +206,12 @@ if omitted, then the matrix isn't partitioned by columns}
 
 \item{onConsole}{if \code{TRUE}, the default, print the LaTeX code for
 the matrix on the R console.}
+
+\item{bordermatrix}{if \code{TRUE}, the LaTeX \code{"\bordermatrix"} macro
+is used for matrices with row and/or column names. This macro
+doesn't work in Markdown-based documents. The default is taken
+from the \code{"bordermatrix"} option, and if that option isn't set
+the argument is set to \code{FALSE}.}
 
 \item{cell.spacing}{a character whose width is used to try to even out spacing
 of printed cell elements; the default is taken from the \code{"cell.spacing"}

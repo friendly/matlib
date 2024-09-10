@@ -722,6 +722,11 @@ Ncol.latexMatrix <- function(x, ...){
 #' otherwise, for compatibility with generic functions, may be ignored
 
 # print() method:
+#' @param bordermatrix if \code{TRUE}, the LaTeX \code{"\bordermatrix"} macro
+#'        is used for matrices with row and/or column names. This macro
+#'        doesn't work in Markdown-based documents. The default is taken
+#'        from the \code{"bordermatrix"} option, and if that option isn't set
+#'        the argument is set to \code{FALSE}.
 #' @param cell.spacing a character whose width is used to try to even out spacing
 #'        of printed cell elements; the default is taken from the \code{"cell.spacing"}
 #'        option, and if that option isn't set the character \code{"e"} is used.
@@ -731,10 +736,12 @@ Ncol.latexMatrix <- function(x, ...){
 #' @rdname latexMatrix
 #' @export
 print.latexMatrix <- function(x, onConsole=TRUE, 
+                              bordermatrix=getOption("bordermatrix"),
                               cell.spacing=getOption("cell.spacing"),
                               colname.spacing=getOption("colname.spacing"),
                               ...){
   
+  if (is.null(bordermatrix)) bordermatrix <- FALSE
   if (is.null(cell.spacing)) cell.spacing <- "e"
   if (is.null(colname.spacing)) colname.spacing <- "i"
   
@@ -749,68 +756,82 @@ print.latexMatrix <- function(x, onConsole=TRUE,
     colnames <- colnames(x)
     X <- getBody(x)
     
-    # adjust size of column names
-    max.col <- apply(countChars(X), 2, max)
-    if (!is.null(colnames)){
-      for (j in 1:length(colnames)){
-        nchar <- if ("\\cdots" == colnames[j]) {
-          3
-        } else {
-          countChars(colnames[j], adjust=FALSE) 
-        }
-        pad <- max(max.col[j] - nchar, 0) 
-        if (any(pad > 0)){
-          colnames[j] <- paste0(colnames[j], 
-                                paste0("\\phantom{", 
-                                       paste(rep(colname.spacing, pad), 
-                                             collapse=""),
-                                       "}"))
-        }
-      }
-    }
-    if (!is.null(colnames)){
-      nchar.colnames <- countChars(colnames, adjust=FALSE)
-      for (i in 1:nrow(X)){
-        for (j in 1:ncol(X)){
-          xij <- X[i, j]
-          nchar <- if ("\\cdots" == xij) {
+    if (bordermatrix){
+      
+      latex <- cbind(rownames, X)
+      latex <- paste(
+        paste(apply(latex, 1, \(x) 
+                    paste(x, collapse=" & ")), "\\cr\n"),
+        collapse=" ")
+      latex <- paste("\\bordermatrix{ ~ &",
+                     paste(colnames, collapse=" & "),
+                     "\\cr\n", latex,"}\n"
+      )
+      
+    } else {
+      # adjust size of column names
+      max.col <- apply(countChars(X), 2, max)
+      if (!is.null(colnames)){
+        for (j in 1:length(colnames)){
+          nchar <- if ("\\cdots" == colnames[j]) {
             3
-          } else if ("\\vdots" == xij) {
-            NA
-          } else if ("\\ddots" == xij) {
-            NA
           } else {
-            countChars(xij)
+            countChars(colnames[j], adjust=FALSE) 
           }
-          pad <- max(nchar.colnames[j] - nchar, 0)
-          if (!is.na(pad) && pad > 0) {
-            X[i, j] <- paste0("\\phantom{",
-                              paste(rep(cell.spacing, pad), collapse=""), 
-                              "}", xij)
+          pad <- max(max.col[j] - nchar, 0) 
+          if (any(pad > 0)){
+            colnames[j] <- paste0(colnames[j], 
+                                  paste0("\\phantom{", 
+                                         paste(rep(colname.spacing, pad), 
+                                               collapse=""),
+                                         "}"))
           }
         }
       }
-      XX <- latexMatrix(X, colnames=colnames, rownames=rownames)
-      XX <- updateWrapper(XX, getWrapper(x))
-      XX$dim <- Dim(x)
-      x <- XX
+      if (!is.null(colnames)){
+        nchar.colnames <- countChars(colnames, adjust=FALSE)
+        for (i in 1:nrow(X)){
+          for (j in 1:ncol(X)){
+            xij <- X[i, j]
+            nchar <- if ("\\cdots" == xij) {
+              3
+            } else if ("\\vdots" == xij) {
+              NA
+            } else if ("\\ddots" == xij) {
+              NA
+            } else {
+              countChars(xij)
+            }
+            pad <- max(nchar.colnames[j] - nchar, 0)
+            if (!is.na(pad) && pad > 0) {
+              X[i, j] <- paste0("\\phantom{",
+                                paste(rep(cell.spacing, pad), collapse=""), 
+                                "}", xij)
+            }
+          }
+        }
+        XX <- latexMatrix(X, colnames=colnames, rownames=rownames)
+        XX <- updateWrapper(XX, getWrapper(x))
+        XX$dim <- Dim(x)
+        x <- XX
+      }
+      
+      latex <- getLatex(x)
+      latex <- paste0("\\begin{matrix}\n",
+                      if (!is.null(rownames))  "  & ",
+                      if (!is.null(colnames)) paste0(" \\begin{matrix} \\phantom{", 
+                                                     colname.spacing ,"} ", 
+                                                     paste(colnames, collapse=" & "), 
+                                                     "\n  \\end{matrix} \\\\ \n"),
+                      if (!is.null(rownames)) paste0(" \\begin{matrix}  \n", 
+                                                     paste(paste0("   ", 
+                                                                  rownames, "\\\\ \n"), 
+                                                           collapse=""),
+                                                     "\\end{matrix}  & \n"),
+                      latex, "\\\\ \n",
+                      "\\end{matrix} \n"
+      )
     }
-    
-    latex <- getLatex(x)
-    latex <- paste0("\\begin{matrix}\n",
-                    if (!is.null(rownames))  "  & ",
-                    if (!is.null(colnames)) paste0(" \\begin{matrix} \\phantom{", 
-                                                   colname.spacing ,"} ", 
-                                                   paste(colnames, collapse=" & "), 
-                                                   "\n  \\end{matrix} \\\\ \n"),
-                    if (!is.null(rownames)) paste0(" \\begin{matrix}  \n", 
-                                                   paste(paste0("   ", 
-                                                                rownames, "\\\\ \n"), 
-                                                         collapse=""),
-                                                   "\\end{matrix}  & \n"),
-                    latex, "\\\\ \n",
-                    "\\end{matrix} \n"
-    )
     x$matrix <- latex
   }
   if (onConsole) cat(getLatex(x))
