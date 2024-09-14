@@ -74,15 +74,13 @@ for a more comprehensive list
 The `matlib` package extends these, providing a collection of functions that simplify using LaTeX notation for matrices, vectors and equations in documentation and in writing:
 
 * `latexMatrix()`: Constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. `latexMatrix()` also supports matrices with numeric elements, and the objects it produces may be used in various kinds of matrix computations, both symbolic and numeric.
-* `matrix2latex()`: Constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts
+* `Eqn()`: A wrapper to produce LaTeX expressions or equations that can be used directly in `.Rmd` or `.qmd` documents to compile to equations. It also provides for direct preview of the resulting equation.
 * `showEqn()`: Shows what matrices $\mathbf{A}, \mathbf{b}$ look like as the system of linear equations, $\mathbf{A x} = \mathbf{b}$, but written out as a set of equations.
-* `Eqn()`: A wrapper to produce LaTeX expressions or equations that can be copied/pasted into documents or used directly in `.Rmd` or `.qmd` documents to compile to equations.
 
 When used directly in R, these functions produce their output to the console (using `cat()`).
 In a `.Rmd` or `.qmd` document, use the chunk options: `results='asis', echo=FALSE`
 so that `knitr` just outputs the text of the equations to the document.
-The rendering of the equations is handled by [`pandoc`](https://pandoc.org/) for standard
-Rmarkdown or Quarto documents.
+The rendering of the equations is mediated by [`pandoc`](https://pandoc.org/) for standard Rmarkdown or Quarto documents.
 
 **Note**: There are several different engines for rendering mathematics in HTML documents for the Web:
 [`mathml`](https://developer.mozilla.org/en-US/docs/Web/MathML),
@@ -101,9 +99,9 @@ See the discussion in [this pkgdown issue](https://github.com/r-lib/pkgdown/issu
 
 ## Using `latexMatrix()` and `Eqn()`
 
-`latexMatrix()` constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. For example, by default (with no arguments) it produces the expression for a matrix whose elements
-are $x_{ij}$, for $i = 1, 2, \cdots, n; j = 1, 2, \cdots,m$ in a LaTeX `\begin{pmatrix} ... \end{pmatrix}`
-environment that looks like this:
+`latexMatrix()` constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. For example, by default (with no arguments) it produces the expression for an $n \times m$ matrix $\mathbf{X}$ whose elements
+are $x_{ij}$ in a LaTeX `\begin{pmatrix} ... \end{pmatrix}`
+environment. The LaTeX code generated looks like this:
 
 ```
 \begin{pmatrix} 
@@ -115,8 +113,10 @@ environment that looks like this:
 ```
 
 The code above appears in the console. To render this as a matrix in a document, this must
-be wrapped in a display math environment, which is provided by `Eqn()` and used in a code
-chunk with the `results = 'asis'` option, giving:
+be wrapped in a display math environment, typically specified as `$$ ... $$`
+or `\[ ... \]`.
+This is provided by `Eqn()` and used in a code
+chunk with the `results = 'asis'` option, giving the rendered expression.
 
 ```{r eqn1,results='asis'}
 latexMatrix() |> Eqn()
@@ -128,7 +128,8 @@ to use `Eqn()` or otherwise fail to make the LaTeX appear inside a math environm
 Some other examples:
 
 * A $3 \times 3$ identity matrix with square brackets, specified as an equation with a left-hand side $\mathbf{I}_3$. The first argument to
-`latexMatrix()` can be any numeric matrix.
+`latexMatrix()` can be any numeric matrix. The `matrix="bmatrix"` argument here
+specifies square brackets around the matrix.
 
 ```{r eqn2,results='asis'}
 Eqn("\\mathbf{I}_3 =", latexMatrix(diag(3), matrix="bmatrix"))
@@ -144,9 +145,14 @@ latexMatrix(matrix(LETTERS[1:4], nrow=1), matrix="Bmatrix") |> Eqn()
 latexMatrix(matrix(letters[1:3], ncol=1), matrix = "vmatrix") |> Eqn()
 ```
 
-As the above examples illustrate, the matrix delimiters can be varied using the `matrix` argument.
+The above examples illustrate, some styles of matrix delimiters using the `matrix` argument.
 
-A wide variety of options are available for the matrix element symbols, fonts, subscripts and decorations:
+A wide variety of options are available for the matrix element symbols, fonts, subscripts and decorations: 
+
+* The typical element can use any LaTeX math font, e.g., `\\mathbb{}, \mathcal{}, ...`;
+* the row/column subscripts can start at 0 or 1;
+* they can be separated by a comma, and 
+* one can apply an exponent ($\bullet^{-1}$) or transpose symbol ($\bullet^\top$ or $\bullet^\prime$)
 
 ```{r eqn5,results='asis'}
 latexMatrix("\\mathbb{q}", 3, 3, 
@@ -165,7 +171,7 @@ general $n \times p$ matrix $\mathbf{X}$
 using `Eqn()` and `latexMatrix()`. In Rmd markup, `Eqn()` can be given an equation 
 **label** (using the `label` argument), which will both label and number the equations.
 
-Two calls to `Eqn()` produce separate equations in the output.
+Two calls to `Eqn()` produce separate equations in the output below.
 Both of these equations are numbered.
 (`Eqn()` uses the LaTeX `equation` environment, `\begin{equation} ... \end{equation}`,
 or `equation*` if the equation does not include a `label`).
