@@ -108,7 +108,9 @@
 #'    \item{\code{"vmatrix"}}{uses vertical bars: \code{"|", "|"}}
 #'    \item{\code{"Vmatrix"}}{uses double vertical bars: \code{"||", "||"}}
 #'    \item{\code{"matrix"}}{generates a plain matrix without delimeters}
+#'    \item{\code{"smallmatrix"}}{same as \code{"matrix"}, but for in-line use}
 #' }
+#' Small matrix definitions from the \code{mathtools} LaTeX package are also possible for in-line use (e.g., \code{"psmallmatrix"}). 
 #' The default is taken from the \code{"latexMatrixEnv"} option;
 #' if this option isn't set, then \code{"pmatrix"} is used.
 #'
@@ -297,6 +299,7 @@ latexMatrix <- function(
     stop("there are duplicated column names")
   
   if (is.null(matrix)) matrix <- "pmatrix"
+  validateMatrix(matrix)
   
   end.at.n.minus.1 <- gsub(" ", "", end.at) == c("n-1", "m-1")
   
@@ -1040,6 +1043,15 @@ parenthesize <- function(element){
 
 isOdd <- function(x){
   1 == x %% 2
+}
+
+validateMatrix <- function(matrix){
+    firstletter <- c('p', 'b', 'B', 'v', 'V', '')
+    valid <- paste0(c(firstletter , paste0(firstletter, 'small')), 'matrix')
+    if(!(matrix %in% valid))
+        stop(sprintf('\"%s\" is not a valid LaTeX matrix. Please fix.', matrix),
+             call.=FALSE)
+    invisible(TRUE)
 }
 
 updateWrapper <- function(result, wrapper){

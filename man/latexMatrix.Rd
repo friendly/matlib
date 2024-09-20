@@ -146,7 +146,9 @@ For a matrix with a non-numeric (e.g., \code{"n"}) number of columns,
    \item{\code{"vmatrix"}}{uses vertical bars: \code{"|", "|"}}
    \item{\code{"Vmatrix"}}{uses double vertical bars: \code{"||", "||"}}
    \item{\code{"matrix"}}{generates a plain matrix without delimeters}
+   \item{\code{"smallmatrix"}}{same as \code{"matrix"}, but for in-line use}
 }
+Small matrix definitions from the \code{mathtools} LaTeX package are also possible for in-line use (e.g., \code{"psmallmatrix"}). 
 The default is taken from the \code{"latexMatrixEnv"} option;
 if this option isn't set, then \code{"pmatrix"} is used.}
 
