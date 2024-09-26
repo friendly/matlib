@@ -322,17 +322,21 @@ as.double(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
 ### Matrix products and transpose
 
 The product of two matrices is given by `%*%` for `"latexMatrix"` objects.
+When the arguments are both numeric, the numeric result is evaluated
+and presented in LaTeX form.
 
 
 ```{r product1, results='asis'}
 A %*% B
 ```
 
-To get the numeric result evaluated, use `as.double()` and perform ordinary
-matrix multiplication:
+But the result is symbolic if either argument is symbolic:
+
+<!-- To get the numeric result evaluated, use `as.double()` and perform ordinary -->
+<!-- matrix multiplication: -->
 
 ```{r product2, results='asis'}
-as.double(A) %*% as.double(B) |> latexMatrix()
+A %*% latexMatrix("b", 2, 2)
 ```
 
 The LaTeX symbol for multiplication is a centered dot, `\\cdot` ($\cdot$), by default.
