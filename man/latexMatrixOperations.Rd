@@ -82,7 +82,7 @@ x \%X\% y
 
 \item{as.numeric}{if \code{TRUE} (the default) and the matrices to be multiplied, added, etc., can be
 coerced to numeric, matrix multiplication, addition, etc., is performed numerically;
-supercedes \code{simplify}}
+supersedes \code{simplify}}
 
 \item{e1}{a \code{"latexMatrix"} object; or for \code{*} a scalar;}
 

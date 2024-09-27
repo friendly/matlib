@@ -65,7 +65,7 @@ There are already some tools available in R for producing LaTeX output:
 * The [`mathpix`](https://cran.r-project.org/package=mathpix) package
 can take an image of a an equation or formula and produce the LaTeX code which should generate that image.
 * The [`texPreview`](https://cran.r-project.org/package=texPreview) package
-compiles snippets of LaTeX directly into images from the R console to view in the RStudio viewer pane, Shiny apps and RMarkdown documents.
+compiles snippets of LaTeX directly into images from the R console to view in the RStudio viewer pane, Shiny apps and Rmarkdown documents.
 
 See [Tools for making latex tables in R](https://stackoverflow.com/questions/5465314/tools-for-making-latex-tables-in-r)
 for a more comprehensive list

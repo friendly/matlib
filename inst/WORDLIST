@@ -6,6 +6,8 @@ bmatrix
 buglet
 carData
 Cheung
+cdot
+cdots
 cofactor
 Cofactor
 cofactors
@@ -25,6 +27,7 @@ Eigen
 eigenstructure
 eigenvalues
 Eqn
+eqn
 ERO
 EROs
 gaussianElimination
@@ -72,6 +75,7 @@ rgl
 rglwidget
 Rmarkdown
 Rightarrow
+RStudio
 Savov
 Scazzocchio
 showEqn
@@ -87,6 +91,7 @@ travis
 underdetermined
 useR
 Vandermode
+vdots
 vectorize
 Vectorize
 webshot

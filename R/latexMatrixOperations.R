@@ -76,7 +76,7 @@
 #' element of the adjoint matrix is divided by the determinant
 #' @param as.numeric if \code{TRUE} (the default) and the matrices to be multiplied, added, etc., can be
 #' coerced to numeric, matrix multiplication, addition, etc., is performed numerically;
-#' supercedes \code{simplify}
+#' supersedes \code{simplify}
 #' @param power to raise a square matrix to this power, an integer \code{>= -1}. 
 #' @param ... for \code{matmult()} and \code{sum()} zero or more 
 #' \code{"latexMatrix"} objects; otherwise arguments to be passed down

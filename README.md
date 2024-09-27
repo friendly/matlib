@@ -4,8 +4,8 @@
 [![R-universe](https://friendly.r-universe.dev/badges/matlib)](https://friendly.r-universe.dev)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/matlib)](https://cran.r-project.org/package=matlib)
 [![downloads](http://cranlogs.r-pkg.org/badges/matlib)](https://cran.r-project.org/package=matlib)
+
 <!-- [![Dependencies](https://tinyverse.netlify.com/badge/matlib)](https://cran.r-project.org/package=matlib) -->
-[![Travis-CI Build Status](https://travis-ci.org/friendly/matlib.svg?branch=master)](https://travis-ci.org/friendly/matlib)
 
 <!-- badges: end -->
 
