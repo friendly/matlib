@@ -10,7 +10,8 @@ in either a \begin{equation} ...\end{equation} or
 ref for consistent inline referencing of numbered equations.
 In a code chunk, use the chunk options results='asis', echo=FALSE to show only
 the result of compiling the LaTeX expressions.
-Eqn_newline() emits a newline (\) in an equation.
+Eqn_newline() emits a newline (\) in an equation, with
+an optional increase to the padding following the newline.
 Eqn_text() inserts a literal string to be rendered in a text font in an equation.
 Eqn_hspace() is used to create (symmetric) equation spaces, most typically around
 = signs
@@ -37,7 +38,8 @@ in either a \begin{equation} ...\end{equation} or
 ref for consistent inline referencing of numbered equations.
 In a code chunk, use the chunk options results='asis', echo=FALSE to show only
 the result of compiling the LaTeX expressions.
-Eqn_newline() emits a newline (\) in an equation.
+Eqn_newline() emits a newline (\) in an equation, with
+an optional increase to the padding following the newline.
 Eqn_text() inserts a literal string to be rendered in a text font in an equation.
 Eqn_hspace() is used to create (symmetric) equation spaces, most typically around
 = signs
@@ -61,7 +63,7 @@ well as documentation types (e.g., .Rmd vs .qmd)."><meta property="og:image" con
 
     <a class="navbar-brand me-2" href="../index.html">matlib</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.95</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,7 +115,8 @@ in either a <code>\begin{equation} ...\end{equation}</code> or
 <code>ref</code> for consistent inline referencing of numbered equations.</p>
 <p>In a code chunk, use the chunk options <code>results='asis', echo=FALSE</code> to show only
 the result of compiling the LaTeX expressions.</p>
-<p><code>Eqn_newline()</code> emits a newline (<code>\</code>) in an equation.</p>
+<p><code>Eqn_newline()</code> emits a newline (<code>\</code>) in an equation, with
+an optional increase to the padding following the newline.</p>
 <p><code>Eqn_text()</code> inserts a literal string to be rendered in a text font in an equation.</p>
 <p><code>Eqn_hspace()</code> is used to create (symmetric) equation spaces, most typically around
 <code>=</code> signs
@@ -138,13 +141,15 @@ well as documentation types (e.g., <code>.Rmd</code> vs <code>.qmd</code>).</p>
 <span>  <span class="va">...</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  align <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  preview <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  preview <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"previewEqn"</span><span class="op">)</span>,</span>
 <span>  html_output <span class="op">=</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/output_type.html" class="external-link">is_html_output</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  quarto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"quartoEqn"</span><span class="op">)</span>,</span>
-<span>  mat_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  mat_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  preview.pdf <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  preview.packages <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">Eqn_newline</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">Eqn_newline</span><span class="op">(</span>space <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">Eqn_text</span><span class="op">(</span><span class="va">text</span><span class="op">)</span></span>
 <span></span>
@@ -196,8 +201,10 @@ points. Default: <code>FALSE</code></p></dd>
 
 <dt id="arg-preview">preview<a class="anchor" aria-label="anchor" href="#arg-preview"></a></dt>
 <dd><p>logical; render an HTML version of the equation and display? This is intended for
-testing purposes and is only applicable to interactive R sessions. Disabled
-whenever <code>quarto</code> or <code>html_output</code> are <code>TRUE</code></p></dd>
+testing purposes and is only applicable to interactive R sessions, though
+for code testing purposes can be set globally
+via <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></code> (e.g., <code>options('previewEqn' = FALSE)</code>).
+Disabled whenever <code>quarto</code> or <code>html_output</code> are <code>TRUE</code></p></dd>
 
 
 <dt id="arg-html-output">html_output<a class="anchor" aria-label="anchor" href="#arg-html-output"></a></dt>
@@ -217,6 +224,22 @@ user to modify, except to view the generated syntax</p></dd>
 properties of the <code>matrix</code> input object(s). Note that these inputs are used globally, and apply to
 each <code>matrix</code> object supplied. If further specificity is required create
 <code><a href="latexMatrix.html">latexMatrix</a></code> objects directly.</p></dd>
+
+
+<dt id="arg-preview-pdf">preview.pdf<a class="anchor" aria-label="anchor" href="#arg-preview-pdf"></a></dt>
+<dd><p>logical; build a PDF of the preview equation? Generally
+not require unless additional LaTeX packages are required that are not supported
+by MathJax</p></dd>
+
+
+<dt id="arg-preview-packages">preview.packages<a class="anchor" aria-label="anchor" href="#arg-preview-packages"></a></dt>
+<dd><p>character vector for adding additional LaTeX package information to the
+equation preview. Only used when <code>preview.pdf = TRUE</code></p></dd>
+
+
+<dt id="arg-space">space<a class="anchor" aria-label="anchor" href="#arg-space"></a></dt>
+<dd><p>includes extra vertical space. Metric of the vertical space
+must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'</p></dd>
 
 
 <dt id="arg-text">text<a class="anchor" aria-label="anchor" href="#arg-text"></a></dt>
@@ -243,11 +266,6 @@ the this will be set to <code>rhs</code> to create symmetric spaces around <code
 
 <dt id="arg-times">times<a class="anchor" aria-label="anchor" href="#arg-times"></a></dt>
 <dd><p>number of times to repeat the spacings</p></dd>
-
-
-<dt id="arg-space">space<a class="anchor" aria-label="anchor" href="#arg-space"></a></dt>
-<dd><p>includes extra vertical space. Metric of the vertical space
-must be 'ex', 'pt', 'mm', 'cm', 'em', 'bp', 'dd', 'pc', or 'in'</p></dd>
 
 
 <dt id="arg-string">string<a class="anchor" aria-label="anchor" href="#arg-string"></a></dt>
@@ -316,6 +334,18 @@ normal test size (<code>\normalsize</code>; default)</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \label{eq-einstein}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> e=mc^2\end{equation}</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># The following requires LaTeX compilers to be pre-installed</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># View PDF instead of HTML</span></span></span>
+<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'e=mc^2'</span>, preview.pdf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Add extra LaTeX dependencies for PDF build</span></span></span>
+<span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">'\\bm{e}=mc^2'</span>, preview.pdf<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    preview.packages<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'amsmath'</span>, <span class="st">'bm'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple expressions</span></span></span>
 <span class="r-in"><span><span class="fu">Eqn</span><span class="op">(</span><span class="st">"e=mc^2"</span>,</span></span>
@@ -389,8 +419,9 @@ normal test size (<code>\normalsize</code>; default)</p></dd>
 <span class="r-in"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span>,</span></span>
 <span class="r-in"><span>              <span class="op">-</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>              <span class="op">-</span><span class="fl">2</span>,  <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fl">3</span>, <span class="fl">3</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="op">-</span><span class="fl">11</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="op">-</span><span class="fl">11</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># numeric matrix wrapped internally</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>,<span class="va">b</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
@@ -400,17 +431,17 @@ normal test size (<code>\normalsize</code>; default)</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -2 &amp;   1 &amp;   2 &amp;  -3 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>,<span class="st">'\\bigm|'</span>, <span class="va">b</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>,<span class="va">b</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  &amp; 1  &amp; -1 &amp; \bigm| &amp; 8   \\ </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -3 &amp; -1 &amp; 2  &amp; \bigm| &amp; -11 \\ </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -2 &amp; 1  &amp; 2  &amp; \bigm| &amp; -3  \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2 &amp;   1 &amp;  -1 &amp;   8 \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -3 &amp;  -1 &amp;   2 &amp; -11 \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -2 &amp;   1 &amp;   2 &amp;  -3 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># change matrix brackets globally</span></span></span>
+<span class="r-in"><span><span class="co"># change numeric matrix brackets globally</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>,<span class="va">b</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span>mat_args<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>matrix<span class="op">=</span><span class="st">'bmatrix'</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
@@ -420,6 +451,18 @@ normal test size (<code>\normalsize</code>; default)</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -2 &amp;   1 &amp;   2 &amp;  -3 \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{bmatrix}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># greater flexibility when using latexMatrix()</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">b</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="latexMatrix.html">partition</a></span><span class="op">(</span>columns<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix}  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{array}{c c c | c}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 &amp; 1 &amp; -1 &amp; 8\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -3 &amp; -1 &amp; 2 &amp; -11\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -2 &amp; 1 &amp; 2 &amp; -3\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{array}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}\end{equation*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># with showEqn()</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="showEqn.html">showEqn</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">b</span>, latex<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">Eqn</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -434,6 +477,8 @@ normal test size (<code>\normalsize</code>; default)</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">Eqn_newline</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] " \\\\ \n"</span>
+<span class="r-in"><span><span class="fu">Eqn_newline</span><span class="op">(</span><span class="st">'10ex'</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] " \\\\[10ex] \n"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">Eqn_hspace</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -509,7 +554,7 @@ normal test size (<code>\normalsize</code>; default)</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

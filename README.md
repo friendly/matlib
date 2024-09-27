@@ -147,8 +147,10 @@ A small collection of vignettes is now available.  Use `browseVignettes("matlib"
 
 See also: 
 
-* Fox & Friendly, [_Visualizing Simultaneous Linear Equations, Geometric Vectors, and Least-Squares Regression with the matlib Package for R_](https://socialsciences.mcmaster.ca/jfox/Papers/matlib-useR2016.pdf),
+* Fox & Friendly, _Visualizing Simultaneous Linear Equations, Geometric Vectors, and Least-Squares Regression with the matlib Package for R_.
 June 2016, useR! Conference, Stanford.
+
+<!-- (https://socialsciences.mcmaster.ca/jfox/Papers/matlib-useR2016.pdf), -->
 
 * Ivan Savov, [Linear algebra explained in four pages](https://souravsengupta.com/cds2016/lectures/Savov_Notes.pdf)
 

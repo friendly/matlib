@@ -97,7 +97,7 @@ $$
 
     <a class="navbar-brand me-2" href="../index.html">matlib</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.95</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -192,6 +192,8 @@ $$
 <span>  symbol <span class="op">=</span> <span class="st">"x"</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="st">"m"</span>,</span>
+<span>  rownames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  colnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  matrix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"latexMatrixEnv"</span><span class="op">)</span>,</span>
 <span>  diag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sparse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -245,7 +247,14 @@ $$
 <span><span class="fu">Ncol</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'latexMatrix'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, onConsole <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  onConsole <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bordermatrix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"bordermatrix"</span><span class="op">)</span>,</span>
+<span>  cell.spacing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"cell.spacing"</span><span class="op">)</span>,</span>
+<span>  colname.spacing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"colname.spacing"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'latexMatrix'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -260,7 +269,25 @@ $$
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">...</span>, <span class="va">deparse.level</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'latexMatrix'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">...</span>, <span class="va">deparse.level</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">...</span>, <span class="va">deparse.level</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'latexMatrix'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">Dimnames</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'latexMatrix'</span></span>
+<span><span class="fu">Dimnames</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span></span>
+<span><span class="fu">Rownames</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'latexMatrix'</span></span>
+<span><span class="fu">Rownames</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span></span>
+<span><span class="fu">Colnames</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'latexMatrix'</span></span>
+<span><span class="fu">Colnames</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -285,6 +312,20 @@ that many rows.</p></dd>
 that many columns.</p></dd>
 
 
+<dt id="arg-rownames">rownames<a class="anchor" aria-label="anchor" href="#arg-rownames"></a></dt>
+<dd><p>optional vector of names for the matrix rows.
+if <code>symbol</code> is an R matrix with row names, these are used.
+For a matrix with a non-numeric (e.g., <code>"m"</code>) number of rows,
+3 names should be supplied, for the 1st, 2nd, and last rows.</p></dd>
+
+
+<dt id="arg-colnames">colnames<a class="anchor" aria-label="anchor" href="#arg-colnames"></a></dt>
+<dd><p>optional vector of names for the matrix columns.
+if <code>symbol</code> is an R matrix with column names, these are used.
+For a matrix with a non-numeric (e.g., <code>"n"</code>) number of columns,
+3 names should be supplied, for the 1st, 2nd, and last columns.</p></dd>
+
+
 <dt id="arg-matrix">matrix<a class="anchor" aria-label="anchor" href="#arg-matrix"></a></dt>
 <dd><p>Character string giving the LaTeX matrix environment used in <code>\begin{}</code>, <code>\end{}</code>. Typically one of:</p><dl><dt><code>"pmatrix"</code></dt>
 <dd><p>uses parentheses: <code>"(", ")"</code></p></dd>
@@ -302,10 +343,14 @@ that many columns.</p></dd>
 <dd><p>uses double vertical bars: <code>"||", "||"</code></p></dd>
 
    <dt><code>"matrix"</code></dt>
-<dd><p>generates a plain matrix without delimeters</p></dd>
+<dd><p>generates a plain matrix without delimiters</p></dd>
+
+   <dt><code>"smallmatrix"</code></dt>
+<dd><p>same as <code>"matrix"</code>, but for in-line use</p></dd>
 
 
-</dl><p>The default is taken from the <code>"latexMatrixEnv"</code> option;
+</dl><p>Small matrix definitions from the <code>mathtools</code> LaTeX package are also possible for in-line use (e.g., <code>"psmallmatrix"</code>).
+The default is taken from the <code>"latexMatrixEnv"</code> option;
 if this option isn't set, then <code>"pmatrix"</code> is used.</p></dd>
 
 
@@ -404,6 +449,26 @@ if omitted, then the matrix isn't partitioned by columns</p></dd>
 the matrix on the R console.</p></dd>
 
 
+<dt id="arg-bordermatrix">bordermatrix<a class="anchor" aria-label="anchor" href="#arg-bordermatrix"></a></dt>
+<dd><p>if <code>TRUE</code>, the LaTeX <code>"\bordermatrix"</code> macro
+is used for matrices with row and/or column names. This macro
+doesn't work in Markdown-based documents. The default is taken
+from the <code>"bordermatrix"</code> option, and if that option isn't set
+the argument is set to <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-cell-spacing">cell.spacing<a class="anchor" aria-label="anchor" href="#arg-cell-spacing"></a></dt>
+<dd><p>a character whose width is used to try to even out spacing
+of printed cell elements; the default is taken from the <code>"cell.spacing"</code>
+option, and if that option isn't set the character <code>"e"</code> is used.</p></dd>
+
+
+<dt id="arg-colname-spacing">colname.spacing<a class="anchor" aria-label="anchor" href="#arg-colname-spacing"></a></dt>
+<dd><p>a character whose width is used to try to even out spacing
+of printed column names; the default is taken from the <code>"colname.spacing"</code>
+option, and if that option isn't set the character <code>"i"</code> is used.</p></dd>
+
+
 <dt id="arg-locals">locals<a class="anchor" aria-label="anchor" href="#arg-locals"></a></dt>
 <dd><p>an optional list or named numeric vector of variables to be given
 specific numeric values; e.g.,
@@ -426,6 +491,13 @@ specific numeric values; e.g.,
 <dt id="arg-deparse-level">deparse.level<a class="anchor" aria-label="anchor" href="#arg-deparse-level"></a></dt>
 <dd><p>to match the generic <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a>()</code>
 and <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a>()</code> functions; ignored</p></dd>
+
+
+<dt id="arg-value">value<a class="anchor" aria-label="anchor" href="#arg-value"></a></dt>
+<dd><p>for <code>"Dimnames&lt;-()"</code>, a two-element list with,
+respectively, character vectors of row and column names;
+for  <code>"Rownames&lt;-()"</code> and <code>"Colnames&lt;-()"</code>, a
+vector of names.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -485,11 +557,14 @@ documented separately; see, <code><a href="latexMatrixOperations.html">latexMatr
 <span class="r-in"><span><span class="co"># return value</span></span></span>
 <span class="r-in"><span><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu">latexMatrix</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ matrix : chr "\\begin{pmatrix} \n  x_{11} &amp; x_{12} &amp; \\cdots &amp; x_{1m} \\\\ \n  x_{21} &amp; x_{22} &amp; \\cdots &amp; x_{2m} \\\\ \n  \\"| __truncated__</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dim    : chr [1:2] "n" "m"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ body   : chr [1:4, 1:4] "x_{11}" "x_{21}" "\\vdots" "x_{n1}" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ wrapper: chr [1:2] "\\begin{pmatrix} " "\\end{pmatrix}"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ matrix  : chr "\\begin{pmatrix} \n  x_{11} &amp; x_{12} &amp; \\cdots &amp; x_{1m} \\\\ \n  x_{21} &amp; x_{22} &amp; \\cdots &amp; x_{2m} \\\\ \n  \\"| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dim     : chr [1:2] "n" "m"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ body    : chr [1:4, 1:4] "x_{11}" "x_{21}" "\\vdots" "x_{n1}" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ wrapper : chr [1:2] "\\begin{pmatrix} " "\\end{pmatrix}"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dimnames:List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ rownames: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ colnames: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "class")= chr "latexMatrix"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">getLatex</span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix} </span>
@@ -766,6 +841,48 @@ documented separately; see, <code><a href="latexMatrixOperations.html">latexMatr
 <span class="r-out co"><span class="r-pr">#&gt;</span> x_{12} \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x_{22} \\ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># defining row and column names</span></span></span>
+<span class="r-in"><span><span class="va">W</span> <span class="op">&lt;-</span> <span class="fu">latexMatrix</span><span class="op">(</span>rownames<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"\\alpha_1"</span>, <span class="st">"\\alpha_2"</span>, <span class="st">"\\alpha_m"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 colnames<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"\\beta_1"</span>, <span class="st">"\\beta_2"</span>, <span class="st">"\\beta_n"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">W</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{matrix}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &amp;  \begin{matrix} \phantom{i} \beta_1\phantom{ii} &amp; \beta_2\phantom{ii} &amp; \cdots &amp; \beta_n\phantom{ii}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   \end{matrix} \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  \begin{matrix}  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    \alpha_1\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    \alpha_2\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    \vdots\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    \alpha_m\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{matrix}  &amp; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix}  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1m} \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2m} \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \vdots &amp; \vdots &amp;        &amp; \vdots \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nm} \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{matrix} </span>
+<span class="r-in"><span><span class="fu">Rownames</span><span class="op">(</span><span class="va">W</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"\\mathrm{Abe}"</span>, <span class="st">"\\mathrm{Barry}"</span>, <span class="st">"\\mathrm{Zelda}"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">Colnames</span><span class="op">(</span><span class="va">W</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"\\mathrm{Age}"</span>, <span class="st">"\\mathrm{BMI}"</span>, <span class="st">"\\mathrm{Waist}"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">W</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{matrix}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &amp;  \begin{matrix} \phantom{i} \mathrm{Age} &amp; \mathrm{BMI} &amp; \cdots &amp; \mathrm{Waist}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   \end{matrix} \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  \begin{matrix}  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    \mathrm{Abe}\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    \mathrm{Barry}\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    \vdots\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    \mathrm{Zelda}\\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{matrix}  &amp; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{pmatrix}  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_{11} &amp; x_{12} &amp; \cdots &amp; \phantom{ee}x_{1m} \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_{21} &amp; x_{22} &amp; \cdots &amp; \phantom{ee}x_{2m} \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \vdots &amp; \vdots &amp;        &amp; \vdots             \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_{n1} &amp; x_{n2} &amp; \cdots &amp; \phantom{ee}x_{nm} \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \\ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{matrix} </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -777,7 +894,7 @@ documented separately; see, <code><a href="latexMatrixOperations.html">latexMatr
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

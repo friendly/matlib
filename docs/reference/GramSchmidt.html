@@ -15,7 +15,7 @@ column."><meta property="og:image" content="http://friendly.github.io/matlib/log
 
     <a class="navbar-brand me-2" href="../index.html">matlib</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.95</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,13 +122,13 @@ column.</p>
 <span class="r-in"><span><span class="op">(</span><span class="va">zz</span> <span class="op">&lt;-</span> <span class="fu">GramSchmidt</span><span class="op">(</span><span class="va">xx</span>, normalize<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in GramSchmidt(xx, normalize = FALSE):</span> unused argument (normalize = FALSE)</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">zz</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'zz' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'zz' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># normalized</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">zz</span> <span class="op">&lt;-</span> <span class="fu">GramSchmidt</span><span class="op">(</span><span class="va">xx</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in GramSchmidt(xx):</span> argument "v2" is missing, with no default</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">zz</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'zz' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'zz' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># print steps</span></span></span>
 <span class="r-in"><span><span class="fu">GramSchmidt</span><span class="op">(</span><span class="va">xx</span>, verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -151,7 +151,7 @@ column.</p>
 <span class="r-in"><span><span class="op">(</span><span class="va">zz</span> <span class="op">&lt;-</span> <span class="fu">GramSchmidt</span><span class="op">(</span><span class="va">xx</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in GramSchmidt(xx):</span> argument "v2" is missing, with no default</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">zz</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'zz' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'zz' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -164,7 +164,7 @@ column.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

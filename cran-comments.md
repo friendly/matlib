@@ -1,7 +1,7 @@
 ## Test environments
 * local Windows 10 install, 4.4.1 (2024-06-14 ucrt) 
 * travis.ci on github
-* win-builder  R Under development (unstable) (2024-09-07 r87105 ucrt)
+* win-builder  R Under development (unstable) (2024-09-25 r87194 ucrt)
 
 ## Comments
 This is a major update, adding a system for constructing and rendering matrix expressions, operations and equations in LaTeX
