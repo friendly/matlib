@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">matlib</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.95</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@
                         <h4 data-toc-skip class="author">Phil Chalmers,
 John Fox, Michael Friendly</h4>
             
-            <h4 data-toc-skip class="date">2024-09-08</h4>
+            <h4 data-toc-skip class="date">2024-09-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/HEAD/vignettes/latex-equations.Rmd" class="external-link"><code>vignettes/latex-equations.Rmd</code></a></small>
       <div class="d-none name"><code>latex-equations.Rmd</code></div>
@@ -111,7 +111,8 @@ templates for matrices.</p>
 <p>There are already some tools available in R for producing LaTeX
 output:</p>
 <ul>
-<li>tables (e.g, <code><a href="https://rdrr.io/pkg/xtable/man/xtable.html" class="external-link">xtable::xtable()</a></code>),</li>
+<li>tables (e.g, <code><a href="https://rdrr.io/pkg/xtable/man/xtable.html" class="external-link">xtable::xtable()</a></code>,
+<code><a href="https://rdrr.io/r/utils/toLatex.html" class="external-link">tables::toLatex()</a></code>),</li>
 <li>R objects (<code><a href="https://rdrr.io/pkg/Hmisc/man/latex.html" class="external-link">Hmisc::latex()</a></code>),</li>
 <li>statistical models (<code><a href="https://datalorax.github.io/equatiomatic/reference/extract_eq.html" class="external-link">equatiomatic::extract_eq()</a></code>),</li>
 <li>
@@ -120,7 +121,13 @@ for printing objects of class <code>"matrix"</code></a>.</li>
 <li>The <a href="https://cran.r-project.org/package=mathpix" class="external-link"><code>mathpix</code></a>
 package can take an image of a an equation or formula and produce the
 LaTeX code which should generate that image.</li>
+<li>The <a href="https://cran.r-project.org/package=texPreview" class="external-link"><code>texPreview</code></a>
+package compiles snippets of LaTeX directly into images from the R
+console to view in the RStudio viewer pane, Shiny apps and Rmarkdown
+documents.</li>
 </ul>
+<p>See <a href="https://stackoverflow.com/questions/5465314/tools-for-making-latex-tables-in-r" class="external-link">Tools
+for making latex tables in R</a> for a more comprehensive list</p>
 <p>The <code>matlib</code> package extends these, providing a collection
 of functions that simplify using LaTeX notation for matrices, vectors
 and equations in documentation and in writing:</p>
@@ -132,27 +139,23 @@ matrix, whose elements are a symbol, with row and column subscripts.
 and the objects it produces may be used in various kinds of matrix
 computations, both symbolic and numeric.</li>
 <li>
-<code><a href="../reference/matrix2latex.html">matrix2latex()</a></code>: Constructs the LaTeX code for a
-symbolic matrix, whose elements are a symbol, with row and column
-subscripts</li>
+<code><a href="../reference/Eqn.html">Eqn()</a></code>: A wrapper to produce LaTeX expressions or
+equations that can be used directly in <code>.Rmd</code> or
+<code>.qmd</code> documents to compile to equations. It also provides
+for direct preview of the resulting equation.</li>
 <li>
 <code><a href="../reference/showEqn.html">showEqn()</a></code>: Shows what matrices
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐀</mi><mo>,</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A}, \mathbf{b}</annotation></semantics></math>
 look like as the system of linear equations,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi>𝐀</mi><mi>𝐱</mi></mrow><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A x} = \mathbf{b}</annotation></semantics></math>,
 but written out as a set of equations.</li>
-<li>
-<code><a href="../reference/Eqn.html">Eqn()</a></code>: A wrapper to produce LaTeX expressions or
-equations that can be copied/pasted into documents or used directly in
-<code>.Rmd</code> or <code>.qmd</code> documents to compile to
-equations.</li>
 </ul>
 <p>When used directly in R, these functions produce their output to the
 console (using <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>). In a <code>.Rmd</code> or
 <code>.qmd</code> document, use the chunk options:
 <code>results='asis', echo=FALSE</code> so that <code>knitr</code> just
 outputs the text of the equations to the document. The rendering of the
-equations is handled by <a href="https://pandoc.org/" class="external-link"><code>pandoc</code></a> for standard
+equations is mediated by <a href="https://pandoc.org/" class="external-link"><code>pandoc</code></a> for standard
 Rmarkdown or Quarto documents.</p>
 <p><strong>Note</strong>: There are several different engines for
 rendering mathematics in HTML documents for the Web: <a href="https://developer.mozilla.org/en-US/docs/Web/MathML" class="external-link"><code>mathml</code></a>,
@@ -161,21 +164,25 @@ of which can be made to work with <code>pandoc</code>. The features we
 describe below work in standard Rmarkdown or Quarto documents. However,
 some more advanced features (horizontal and vertical lines for
 partitioned matrices) require <code>katex</code> to work with <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a>. Equation
-numbers and cross-references to them still do not work in `pkgdown. See
-the discussion in <a href="https://github.com/r-lib/pkgdown/issues/2739" class="external-link">this pkgdown
-issue</a>,</p>
+numbers and cross-references to them still do not work in
+<code>pkgdown</code>. See the discussion in <a href="https://github.com/r-lib/pkgdown/issues/2739" class="external-link">this pkgdown
+issue</a>. Rendering of matrix equations doesn’t seem to work at all in
+the <a href="https://friendly.r-universe.dev/articles/matlib/latex-equations.html" class="external-link">friendly.r-universe.dev</a>
+version of this vignette.</p>
 <div class="section level2">
 <h2 id="using-latexmatrix-and-eqn">Using <code>latexMatrix()</code> and <code>Eqn()</code><a class="anchor" aria-label="anchor" href="#using-latexmatrix-and-eqn"></a>
 </h2>
 <p><code><a href="../reference/latexMatrix.html">latexMatrix()</a></code> constructs the LaTeX code for a symbolic
 matrix, whose elements are a symbol, with row and column subscripts. For
-example, by default (with no arguments) it produces the expression for a
-matrix whose elements are
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">x_{ij}</annotation></semantics></math>,
-for
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>⋯</mi><mo>,</mo><mi>n</mi><mo>;</mo><mi>j</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>⋯</mi><mo>,</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">i = 1, 2, \cdots, n; j = 1, 2, \cdots,m</annotation></semantics></math>
-in a LaTeX <code>\begin{pmatrix} ... \end{pmatrix}</code> environment
-that looks like this:</p>
+example, by default (with no arguments) it produces the expression for
+an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">n \times m</annotation></semantics></math>
+matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
+whose elements are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">x_{ij}</annotation></semantics></math>
+in a LaTeX <code>\begin{pmatrix} ... \end{pmatrix}</code> environment.
+The LaTeX code generated looks like this:</p>
 <pre><code>\begin{pmatrix} 
   x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1m} \\ 
   x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2m} \\ 
@@ -183,9 +190,11 @@ that looks like this:</p>
   x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nm} \\ 
 \end{pmatrix}</code></pre>
 <p>The code above appears in the console. To render this as a matrix in
-a document, this must be wrapped in a display math environment, which is
-provided by <code><a href="../reference/Eqn.html">Eqn()</a></code> and used in a code chunk with the
-<code>results = 'asis'</code> option, giving:</p>
+a document, this must be wrapped in a display math environment,
+typically specified as <code>$$ ... $$</code> or <code>\[ ... \]</code>.
+This is provided by <code><a href="../reference/Eqn.html">Eqn()</a></code> and used in a code chunk with the
+<code>results = 'asis'</code> option, giving the rendered
+expression.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>12</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mrow><mn>1</mn><mi>m</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>22</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mrow><mn>2</mn><mi>m</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mrow><mi>n</mi><mn>1</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mrow><mi>n</mi><mn>2</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mrow><mi>n</mi><mi>m</mi></mrow></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
@@ -207,7 +216,8 @@ identity matrix with square brackets, specified as an equation with a
 left-hand side
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐈</mi><mn>3</mn></msub><annotation encoding="application/x-tex">\mathbf{I}_3</annotation></semantics></math>.
 The first argument to <code><a href="../reference/latexMatrix.html">latexMatrix()</a></code> can be any numeric
-matrix.</li>
+matrix. The <code>matrix="bmatrix"</code> argument here specifies square
+brackets around the matrix.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{I}_3 ="</span>, <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, matrix<span class="op">=</span><span class="st">"bmatrix"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -240,10 +250,22 @@ b \\
 c \\ 
 \end{vmatrix}
 \end{equation*}</annotation></semantics></math></p>
-<p>As the above examples illustrate, the matrix delimiters can be varied
-using the <code>matrix</code> argument.</p>
+<p>The above examples illustrate, some styles of matrix delimiters using
+the <code>matrix</code> argument.</p>
 <p>A wide variety of options are available for the matrix element
 symbols, fonts, subscripts and decorations:</p>
+<ul>
+<li>The typical element can use any LaTeX math font, e.g.,
+<code>\\mathbb{}, \mathcal{}, ...</code>;</li>
+<li>the row/column subscripts can start at 0 or 1;</li>
+<li>they can be separated by a comma, and</li>
+<li>one can apply an exponent
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mo>•</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\bullet^{-1}</annotation></semantics></math>)
+or transpose symbol
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mo>•</mo><mi>⊤</mi></msup><annotation encoding="application/x-tex">\bullet^\top</annotation></semantics></math>
+or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mo>•</mo><mi>′</mi></msup><annotation encoding="application/x-tex">\bullet^\prime</annotation></semantics></math>)</li>
+</ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"\\mathbb{q}"</span>, <span class="fl">3</span>, <span class="fl">3</span>, </span>
 <span>            matrix <span class="op">=</span> <span class="st">"bmatrix"</span>,</span>
@@ -272,8 +294,8 @@ using <code><a href="../reference/Eqn.html">Eqn()</a></code> and <code><a href="
 (using the <code>label</code> argument), which will both label and
 number the equations.</p>
 <p>Two calls to <code><a href="../reference/Eqn.html">Eqn()</a></code> produce separate equations in the
-output. Both of these equations are numbered. (<code><a href="../reference/Eqn.html">Eqn()</a></code> uses
-the LaTeX <code>equation</code> environment,
+output below. Both of these equations are numbered. (<code><a href="../reference/Eqn.html">Eqn()</a></code>
+uses the LaTeX <code>equation</code> environment,
 <code>\begin{equation} ... \end{equation}</code>, or
 <code>equation*</code> if the equation does not include a
 <code>label</code>). The two calls to <code><a href="../reference/Eqn.html">Eqn()</a></code> are rendered as
@@ -282,7 +304,8 @@ separate equations, center aligned.</p>
 <!-- intersperses the code with the equation output for some reason.) -->
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top"</span>, label<span class="op">=</span><span class="st">'eq:svd'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"n"</span>, <span class="st">"k"</span>, lhs <span class="op">=</span> <span class="st">''</span><span class="op">)</span>,</span>
+<span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{X} ="</span>,</span>
+<span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"n"</span>, <span class="st">"k"</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"\\lambda"</span>, <span class="st">"k"</span>, <span class="st">"k"</span>, diag<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"v"</span>, <span class="st">"k"</span>, <span class="st">"p"</span>, transpose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, label<span class="op">=</span><span class="st">'eq:svdmats'</span><span class="op">)</span></span></code></pre></div>
 <p>This produces the two numbered equations:<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;At present equation numbers don’t work in vignettes
@@ -573,19 +596,21 @@ also possible to give these elements numeric values, as in</p>
 <h3 id="matrix-products-and-transpose">Matrix products and transpose<a class="anchor" aria-label="anchor" href="#matrix-products-and-transpose"></a>
 </h3>
 <p>The product of two matrices is given by <code>%*%</code> for
-<code>"latexMatrix"</code> objects.</p>
+<code>"latexMatrix"</code> objects. When the arguments are both numeric,
+the numeric result is evaluated and presented in LaTeX form.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span></span></code></pre></div>
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>12</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>7</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix}  
   5 &amp;  -1 \\ 
 -12 &amp;   7 \\ 
-\end{pmatrix}</annotation></semantics></math><p>To get the numeric result evaluated, use <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> and
-perform ordinary matrix multiplication:</p>
+\end{pmatrix}</annotation></semantics></math><p>But the result is symbolic if either argument is symbolic:</p>
+<!-- To get the numeric result evaluated, use `as.double()` and perform ordinary -->
+<!-- matrix multiplication: -->
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>12</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>7</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 
-  5 &amp;  -1 \\ 
--12 &amp;   7 \\ 
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>12</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><msub><mi>b</mi><mn>11</mn></msub><mo>+</mo><msub><mi>b</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><msub><mi>b</mi><mn>12</mn></msub><mo>+</mo><msub><mi>b</mi><mn>22</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix}  
+b_{11}                     &amp; b_{12}                     \\ 
+(-3) \cdot b_{11} + b_{21} &amp; (-3) \cdot b_{12} + b_{22} \\ 
 \end{pmatrix}</annotation></semantics></math><p>The LaTeX symbol for multiplication is a centered dot,
 <code>\\cdot</code>
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⋅</mo><annotation encoding="application/x-tex">\cdot</annotation></semantics></math>),
@@ -1193,7 +1218,7 @@ Applications</em> 237–238 (April): 351–58. <a href="https://doi.org/10.1016/
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
