@@ -1,35 +1,38 @@
 # Platform
 
-|field    |value                                                    |
-|:--------|:--------------------------------------------------------|
-|version  |R version 4.2.1 (2022-06-23 ucrt)                        |
-|os       |Windows 7 x64 (build 7601) SP 1                          |
-|system   |x86_64, mingw32                                          |
-|ui       |RStudio                                                  |
-|language |(EN)                                                     |
-|collate  |English_United States.1252                               |
-|ctype    |English_United States.1252                               |
-|tz       |America/New_York                                         |
-|date     |2022-12-07                                               |
-|rstudio  |2022.07.2+576 Spotted Wakerobin (desktop)                |
-|pandoc   |1.16 @ C:\Users\friendly\AppData\Local\Pandoc\pandoc.exe |
+|field    |value                                       |
+|:--------|:-------------------------------------------|
+|version  |R version 4.4.1 (2024-06-14 ucrt)           |
+|os       |Windows 10 x64 (build 19044)                |
+|system   |x86_64, mingw32                             |
+|ui       |RStudio                                     |
+|language |(EN)                                        |
+|collate  |English_Canada.utf8                         |
+|ctype    |English_Canada.utf8                         |
+|tz       |America/Toronto                             |
+|date     |2024-09-27                                  |
+|rstudio  |2023.06.1+524 Mountain Hydrangea (desktop)  |
+|pandoc   |3.1.2 @ C:/PROGRA~1/Pandoc/ (via rmarkdown) |
 
 # Dependencies
 
-|package  |old   |new    |<U+0394>  |
-|:--------|:-----|:------|:--|
-|matlib   |0.9.5 |0.9.6  |*  |
-|cli      |NA    |3.4.1  |*  |
-|digest   |NA    |0.6.30 |*  |
-|processx |NA    |3.8.0  |*  |
-|ps       |NA    |1.7.2  |*  |
-|vctrs    |NA    |0.5.1  |*  |
+|package        |old   |new       |Δ  |
+|:--------------|:-----|:---------|:--|
+|matlib         |0.9.8 |0.9.95    |*  |
+|abind          |NA    |1.4-8     |*  |
+|broom          |NA    |1.0.7     |*  |
+|car            |NA    |3.1-3     |*  |
+|cpp11          |NA    |0.5.0     |*  |
+|Deriv          |NA    |4.1.6     |*  |
+|digest         |NA    |0.6.37    |*  |
+|evaluate       |NA    |1.0.0     |*  |
+|jsonlite       |NA    |1.8.9     |*  |
+|microbenchmark |NA    |1.5.0     |*  |
+|minqa          |NA    |1.2.8     |*  |
+|RcppEigen      |NA    |0.3.4.0.2 |*  |
+|rmarkdown      |NA    |2.28      |*  |
+|tinytex        |NA    |0.53      |*  |
+|xfun           |NA    |0.47      |*  |
 
 # Revdeps
-
-## Failed to check (1)
-
-|package |version |error |warning |note |
-|:-------|:-------|:-----|:-------|:----|
-|MIIPW   |0.1.0   |1     |        |     |
 

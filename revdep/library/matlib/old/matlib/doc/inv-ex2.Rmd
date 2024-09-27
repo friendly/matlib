@@ -1,0 +1,134 @@
+---
+title: "Matrix inversion by elementary row operations"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Matrix inversion by elementary row operations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+options(digits=4)
+par(mar=c(5,4,1,1)+.1)
+```
+
+The following examples illustrate the steps in finding the inverse of a matrix
+using *elementary row operations* (EROs):
+
+* Add a multiple of one row to another (`rowadd()`)
+* Multiply one row by a constant (`rowmult()`)
+* Interchange two rows (`rowswap()`)
+
+These have the properties that they do not change the inverse.  The method used here
+is sometimes called the *Gauss-Jordan* method, a form of *Gaussian elimination*.
+Another term is *(row-reduced) echelon form*.
+
+Steps:
+
+1.  Adjoin the identity matrix to the right side of A, to give the matrix $[A | I]$
+2.  Apply row operations to this matrix until the left ($A$) side is reduced to $I$
+3.  The inverse matrix appears in the right ($I$) side
+
+Why this works:  The series of row operations transforms
+$$ [A | I] \Rightarrow [A^{-1} A | A^{-1} I] = [I | A^{-1}]$$
+
+ If the matrix is does not have an inverse (is *singular*) a row of all zeros will appear
+ in the left ($A$) side.
+
+### Load the `matlib` package
+
+
+```{r }
+library(matlib)
+```
+
+### Create a 3 x 3 matrix
+
+```{r }
+   A <- matrix( c(1, 2, 3,
+                  2, 3, 0,
+                  0, 1,-2), nrow=3, byrow=TRUE)
+```
+
+### Join an identity matrix to A
+
+```{r }
+   (AI <-  cbind(A, diag(3)))
+```
+
+### Apply elementary row operations to reduce A to an identity matrix.
+The right three cols will then contain inv(A).
+We will do this three ways:
+
+ 1. first, just using R arithmetic on the rows of `AI`
+ 2. using the ERO functions in the `matlib` package
+ 3. using the `echelon()` function
+
+
+### 1. Using R arithmetic
+
+```{r }
+	(AI[2,] <- AI[2,] - 2*AI[1,])     # row 2 <- row 2 - 2 * row 1
+	(AI[3,] <- AI[3,] + AI[2,])       # row 3 <- row 3 + row 2
+	(AI[2,] <- -1 * AI[2,])           # row 2 <- -1 * row 2
+	(AI[3,] <-  -(1/8) * AI[3,])        # row 3 <- -.25 * row 3
+```
+
+Now, all elements below the diagonal are zero
+
+```{r }
+	AI
+
+      #--continue, making above diagonal == 0
+	AI[2,] <- AI[2,] - 6 * AI[3,]     # row 2 <- row 2 - 6 * row 3
+	AI[1,] <- AI[1,] - 3 * AI[3,]     # row 1 <- row 1 - 3 * row 3
+	AI[1,] <- AI[1,] - 2 * AI[2,]     # row 1 <- row 1 - 2 * row 2
+
+	AI
+   #-- last three cols are the inverse
+  (AInv <- AI[,-(1:3)])
+
+   #-- compare with inv()
+  inv(A)
+```
+
+### 2. Do the same, using matlib functions `rowadd()`, `rowmult()` and `rowswap()`
+
+```{r }
+   AI <-  cbind(A, diag(3))
+
+   AI <- rowadd(AI, 1, 2, -2)        # row 2 <- row 2 - 2 * row 1
+   AI <- rowadd(AI, 2, 3, 1)         # row 3 <- row 3 + row 2
+   AI <- rowmult(AI, 2, -1)          # row 1 <- -1 * row 2
+   AI <- rowmult(AI, 3, -1/8)        # row 3 <- -.25 * row 3
+
+   # show result so far
+   AI
+
+  	#--continue, making above-diagonal == 0
+   AI <- rowadd(AI, 3, 2, -6)        # row 2 <- row 2 - 6 * row 3
+   AI <- rowadd(AI, 2, 1, -2)        # row 1 <- row 1 - 2 * row 2
+   AI <- rowadd(AI, 3, 1, -3)        # row 1 <- row 1 - 3 * row 3
+   AI
+```
+
+### 3. Using `echelon()`
+`echelon()` does all these steps *row by row*, and returns the result
+
+```{r }
+   echelon( cbind(A, diag(3)))
+```
+
+It is more interesting to see the steps, using the argument `verbose=TRUE`. In
+many cases, it is informative to see the numbers printed as fractions.
+
+```{r }
+   echelon( cbind(A, diag(3)), verbose=TRUE, fractions=TRUE)
+```
+

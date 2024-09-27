@@ -92,8 +92,10 @@ However, some more advanced
 features (horizontal and vertical lines for partitioned matrices)
 require `katex`
 to work with [`pkgdown`](https://pkgdown.r-lib.org/).
-Equation numbers and cross-references to them still do not work in `pkgdown.
-See the discussion in [this pkgdown issue](https://github.com/r-lib/pkgdown/issues/2739), 
+Equation numbers and cross-references to them still do not work in `pkgdown`.
+See the discussion in [this pkgdown issue](https://github.com/r-lib/pkgdown/issues/2739).
+Rendering of matrix equations doesn't seem to work at all in the
+[friendly.r-universe.dev](https://friendly.r-universe.dev/articles/matlib/latex-equations.html) version of this vignette.
 
 
 

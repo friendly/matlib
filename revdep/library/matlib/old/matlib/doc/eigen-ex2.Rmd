@@ -1,0 +1,111 @@
+---
+title: "Eigenvalues: Spectral Decomposition"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Eigenvalues: Spectral Decomposition}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+options(digits=4)
+```
+```{r}
+library(matlib)   # use the package
+```
+
+## Setup
+
+This vignette uses an example of a $3 \times 3$ matrix to illustrate some properties of
+eigenvalues and eigenvectors.  We could consider this to be the variance-covariance matrix of three variables,
+but the main thing is that the matrix is **square** and **symmetric**, which guarantees that the eigenvalues, $\lambda_i$ are
+real numbers, and non-negative, $\lambda_i \ge 0$.
+
+```{r}
+A <- matrix(c(13, -4, 2, -4, 11, -2, 2, -2, 8), 3, 3, byrow=TRUE)
+A
+```
+
+
+Get the eigenvalues and eigenvectors using `eigen()`;  this returns a named list, with eigenvalues named `values` and
+eigenvectors named `vectors`. We call these `L` and `V` here, but in formulas they correspond to
+a diagonal matrix, $\mathbf{\Lambda} = diag(\lambda_1, \lambda_2, \lambda_3)$, and a (orthogonal) matrix $\mathbf{V}$.
+```{r}
+ev <- eigen(A)
+# extract components
+(L <- ev$values)
+(V <- ev$vectors)
+```
+
+## Matrix factorization
+
+1.  Factorization of A: A = V diag(L) V'. That is, the matrix $\mathbf{A}$ can be represented as the product
+$\mathbf{A}= \mathbf{V} \mathbf{\Lambda} \mathbf{V}'$.
+```{r}
+V %*% diag(L) %*% t(V)
+```
+
+
+2. V diagonalizes A: L = V' A V.  That is, the matrix $\mathbf{V}$ transforms $\mathbf{A}$ into the diagonal
+matrix $\mathbf{\Lambda}$, corresponding to orthogonal (uncorrelated) variables.
+```{r}
+diag(L)
+zapsmall(t(V) %*% A %*% V)
+```
+
+## Spectral decomposition
+
+The basic idea here is that each eigenvalue--eigenvector pair generates a rank 1 matrix, $\lambda_i \mathbf{v}_i \mathbf{v}_i '$,
+and these sum to the original matrix, $\mathbf{A} = \sum_i \lambda_i \mathbf{v}_i \mathbf{v}_i '$.
+
+```{r}
+A1 = L[1] * V[,1] %*% t(V[,1])
+A1
+
+A2 = L[2] * V[,2] %*% t(V[,2])
+A2
+
+A3 = L[3] * V[,3] %*% t(V[,3])
+A3
+```
+
+Then, summing them gives `A`, so they do decompose `A`:
+
+```{r}
+A1 + A2 + A3
+all.equal(A, A1+A2+A3)
+```
+
+### Further properties
+
+1. Sum of squares of A = sum of sum of squares of A1, A2, A3
+```{r}
+sum(A^2)
+c( sum(A1^2), sum(A2^2), sum(A3^2) )
+sum( sum(A1^2), sum(A2^2), sum(A3^2) )
+#' same as tr(A' A)
+tr(crossprod(A))
+```
+
+2. Each squared eigenvalue gives the sum of squares accounted for by the latent vector
+```{r}
+L^2
+cumsum(L^2)   # cumulative
+```
+
+3. The first $i$ eigenvalues and vectors give a rank $i$ approximation to `A`
+```{r}
+R(A1)
+R(A1 + A2)
+R(A1 + A2 + A3)
+# two dimensions
+sum((A1+A2)^2)
+sum((A1+A2)^2) / sum(A^2)   # proportion
+```
+

@@ -1,0 +1,129 @@
+---
+title: "Gram-Schmidt Orthogonalization and Regression"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Gram-Schmidt Orthogonalization and Regression}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+options(digits=4)
+par(mar=c(5,4,1,1)+.1)
+```
+
+This vignette illustrates the process of transforming a set of variables to a new set of uncorrelated (orthogonal)
+variables. It carries out the Gram-Schmidt process **directly** by successively projecting each successive variable
+on the previous ones and subtracting (taking residuals).  This is equivalent by replacing each successive variable by
+its residuals from a least squares regression on the previous variables.
+
+When this method is used on the predictors in a regression problem,
+the resulting orthogonal variables have exactly the same `anova()` summary (based on "Type I", sequential sums of squares) 
+as do original variables.
+
+## Setup
+
+We use the `class` data set, but convert the character factor `sex` to a dummy (0/1) variable `male`.
+
+```{r class1}
+library(matlib)
+data(class)
+class$male <- as.numeric(class$sex=="M")
+```
+
+For later use in regression, we create a variable `IQ` as a response variable
+```{r class2}
+class <- transform(class, 
+                   IQ = round(20 + height + 3*age -.1*weight -3*male + 10*rnorm(nrow(class))))
+head(class)
+```
+
+Reorder the predictors we want, forming a numeric matrix, `X`.
+```{r class3}
+X <- as.matrix(class[,c(3,4,2,5)])
+head(X)
+```
+
+## Orthogonalization by projections
+
+The Gram-Schmidt process treats the variables in a given order, according to the columns in `X`.
+We start with a new matrix `Z` consisting of `X[,1]`.
+Then, find a new variable `Z[,2]` orthogonal to `Z[,1]` by subtracting the projection of `X[,2]` on `Z[,1]`.
+
+```{r}
+Z <- cbind(X[,1], 0, 0, 0)
+Z[,2] <- X[,2] - Proj(X[,2], Z[,1])
+crossprod(Z[,1], Z[,2])     # verify orthogonality
+```
+Continue in the same way, subtracting the projections of `X[,3]` on the previous columns, and so forth
+```{r}
+Z[,3] <- X[,3] - Proj(X[,3], Z[,1]) - Proj(X[,3], Z[,2]) 
+Z[,4] <- X[,4] - Proj(X[,4], Z[,1]) - Proj(X[,4], Z[,2]) - Proj(X[,4], Z[,3])
+```
+Note that if any column of `X` is a linear combination of the previous columns, the corresponding
+column of `Z` will be all zeros.
+
+These computations are similar to the following set of linear regressions:
+```{r usinglm}
+z2 <- residuals(lm(X[,2] ~ X[,1]), type="response")
+z3 <- residuals(lm(X[,3] ~ X[,1:2]), type="response")
+z4 <- residuals(lm(X[,4] ~ X[,1:3]), type="response")
+```
+
+The columns of `Z` are now orthogonal, but not of unit length,
+```{r ortho1}
+zapsmall(crossprod(Z))     # check orthogonality
+```
+
+We make standardize column to unit length, giving `Z` as an **orthonormal** matrix, such that $Z' Z = I$.
+```{r ortho2}
+Z <- Z %*% diag(1 / len(Z))    # make each column unit length
+zapsmall(crossprod(Z))         # check orthonormal
+colnames(Z) <- colnames(X)
+```
+
+### Relationship to QR factorization
+The QR method uses essentially the same process, factoring the matrix $\mathbf{X}$ as $\mathbf{X = Q R}$,
+where $\mathbf{Q}$ is the orthonormal matrix corresponding to `Z` and $\mathbf{R}$ is an upper triangular matrix.
+However, the signs of the columns of $\mathbf{Q}$ are arbitrary, and `QR()` returns `QR(X)$Q` with
+signs reversed, compared to `Z`.
+
+```{r QR}
+# same result as QR(X)$Q, but with signs reversed
+head(Z, 5)
+head(-QR(X)$Q, 5)
+all.equal( unname(Z), -QR(X)$Q )
+```
+
+## Regression with X and Z
+
+We carry out two regressions of `IQ` on the variables in `X` and in `Z`. These are equivalent, in the sense that
+
+- The $R^2$ and MSE are the same in both models
+- Residuals are the same
+- The Type I tests given by `anova()` are the same.
+
+```{r class2IQ}
+class2 <- data.frame(Z, IQ=class$IQ)
+```
+
+Regression of IQ on the original variables in `X`
+```{r mod1, R.options=list(digits=5)}
+mod1 <- lm(IQ ~ height + weight + age + male, data=class)
+anova(mod1)
+```
+Regression of IQ on the orthogonalized variables in `Z`
+```{r mod2, R.options=list(digits=5)}
+mod2 <- lm(IQ ~ height + weight + age + male, data=class2)
+anova(mod2)
+```
+
+This illustrates that `anova()` tests for linear models are *sequential* tests.  They test hypotheses about the
+extra contribution of each variable over and above all previous ones, in a given order.  These usually do not make
+substantive sense, except in testing ordered ("hierarchical") models.

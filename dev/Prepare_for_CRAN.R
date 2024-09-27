@@ -1,5 +1,8 @@
 # Prepare for CRAN ----
 
+# keep rgl from popping up windows
+Sys.setenv(RGL_USE_NULL = TRUE)
+
 # Update dependencies in DESCRIPTION
 # install.packages('attachment', repos = 'https://thinkr-open.r-universe.dev')
 attachment::att_amend_desc()
@@ -33,9 +36,11 @@ urlchecker::url_update()
 
 # check on other distributions
 # _rhub
+# This method is deprecated. See: ?rhubv2
 devtools::check_rhub()
 rhub::check_on_windows(check_args = "--force-multiarch")
 rhub::check_on_solaris()
+
 # _win devel CRAN
 devtools::check_win_devel()
 # _macos CRAN
@@ -49,7 +54,8 @@ usethis::use_build_ignore("revdep/")
 
 devtools::revdep()
 library(revdepcheck)
-# In another session
+revdepcheck::revdep_check(num_workers = 4)
+# Or, In another session
 id <- rstudioapi::terminalExecute("Rscript -e 'revdepcheck::revdep_check(num_workers = 4)'")
 rstudioapi::terminalKill(id)
 # See outputs

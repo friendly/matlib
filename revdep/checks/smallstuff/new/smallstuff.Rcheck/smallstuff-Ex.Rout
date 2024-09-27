@@ -1,0 +1,818 @@
+
+R version 4.4.1 (2024-06-14 ucrt) -- "Race for Your Life"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "smallstuff"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('smallstuff')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("CI")
+> ### * CI
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CI
+> ### Title: Normal Confidence Interval
+> ### Aliases: CI
+> 
+> ### ** Examples
+> 
+> CI()
+[1] -1.959964  1.959964
+> CI(150,5,30,.9)
+[1] 148.4985 151.5015
+> 
+> 
+> 
+> cleanEx()
+> nameEx("CVerror")
+> ### * CVerror
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CVerror
+> ### Title: k-Fold Cross Validation Error Rate
+> ### Aliases: CVerror
+> 
+> ### ** Examples
+> 
+> mtcars$am=as.factor(mtcars$am)
+> gmod=glm(am~mpg,binomial,mtcars)
+> CVerror(gmod)
+[1] 31.25
+> 
+> 
+> 
+> cleanEx()
+> nameEx("CVerrorknn")
+> ### * CVerrorknn
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CVerrorknn
+> ### Title: k-Fold Cross Validation Error Rate for KNN
+> ### Aliases: CVerrorknn
+> 
+> ### ** Examples
+> 
+> mtcars$am=as.factor(mtcars$am)
+> CVerrorknn(mtcars[,c("mpg","hp")],mtcars$am)
+[1] 37.5
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ROCcurve")
+> ### * ROCcurve
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ROCcurve
+> ### Title: Plot the ROC curve
+> ### Aliases: ROCcurve
+> 
+> ### ** Examples
+> 
+> gmod=glm(state~.,binomial,Puromycin)
+> ROCcurve(gmod)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ROCknn")
+> ### * ROCknn
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ROCknn
+> ### Title: KNN ROC curve
+> ### Aliases: ROCknn
+> 
+> ### ** Examples
+> 
+> yhat=class::knn(Puromycin[,c("conc","rate")],Puromycin[,c("conc","rate")],
++          Puromycin$state,10,prob=TRUE)
+> ROCknn(yhat,Puromycin$state)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("allspan3D")
+> ### * allspan3D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: allspan3D
+> ### Title: Plot Span and Vectors in 3D
+> ### Aliases: allspan3D
+> 
+> ### ** Examples
+> 
+> M=matrix(c(1,2,4,3,0,2),3)
+> oldpar <- par(mfrow=c(3,2))
+> allspan3D(M,cbind(M,M[,1]-M[,2]),V2=matrix(c(rep(0,6),M[,2]),3),col=c(2,2,1))
+> par(oldpar)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("allvectors3D")
+> ### * allvectors3D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: allvectors3D
+> ### Title: Plot Vectors in 3D
+> ### Aliases: allvectors3D
+> 
+> ### ** Examples
+> 
+> a=c(2,4,8)
+> b=c(6,0,4)
+> oldpar <- par(mfrow=c(3,2))
+> allvectors3D(cbind(a,b,a-b),V2=matrix(c(rep(0,6),b),3))
+> par(oldpar)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("as_adj_def")
+> ### * as_adj_def
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: as_adj_def
+> ### Title: Create an adjacency matrix from a multigraph according to the
+> ###   definition
+> ### Aliases: as_adj_def
+> 
+> ### ** Examples
+> 
+> g=igraph::graph_from_literal(1-2,2-2:3:3:4,3-4:5:6,5-1:1:1,6-6,simplify=FALSE)
+> as_adj_def(g)
+  1 2 3 4 5 6
+1 0 1 0 0 3 0
+2 1 2 2 1 0 0
+3 0 2 0 1 1 1
+4 0 1 1 0 0 0
+5 3 0 1 0 0 0
+6 0 0 1 0 0 2
+> 
+> 
+> 
+> cleanEx()
+> nameEx("coord2D")
+> ### * coord2D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: coord2D
+> ### Title: Plot a 2D Coordinate System
+> ### Aliases: coord2D
+> 
+> ### ** Examples
+> 
+> coord2D()
+NULL
+> 
+> 
+> 
+> cleanEx()
+> nameEx("coord3D")
+> ### * coord3D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: coord3D
+> ### Title: Plot a 3D Coordinate System
+> ### Aliases: coord3D
+> 
+> ### ** Examples
+> 
+> coord3D()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("crossing2")
+> ### * crossing2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: crossing2
+> ### Title: Find Edge Crossings
+> ### Aliases: crossing2
+> 
+> ### ** Examples
+> 
+> g=igraph::graph_from_literal(1-2,2-3:4,3-4:5:6,5-1)
+> split=c("A","A","B","B","A","B")
+> igraph::V(g);split
++ 6/6 vertices, named, from 7bc78f3:
+[1] 1 2 3 4 5 6
+[1] "A" "A" "B" "B" "A" "B"
+> igraph::E(g);crossing2(split,g)
++ 7/7 edges from 7bc78f3 (vertex names):
+[1] 1--2 1--5 2--3 2--4 3--4 3--5 3--6
+[1] FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dCohen")
+> ### * dCohen
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dCohen
+> ### Title: Cohen's d
+> ### Aliases: dCohen
+> 
+> ### ** Examples
+> 
+> #one-sample
+> x=c(1:10,5,6,3:8)
+> dCohen(x,mu0=7)
+[1] -0.6169255
+> 
+> #two-sample independent
+> y=1:15
+> dCohen(x,y)
+[1] -0.7135814
+> 
+> #two-sample paired
+> dCohen(x,1:18,paired=TRUE)
+[1] -1.029607
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dataSet")
+> ### * dataSet
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dataSet
+> ### Title: Obtain a Dataset from a Formula
+> ### Aliases: dataSet
+> 
+> ### ** Examples
+> 
+> dataSet(mpg~.-disp,mtcars,10:20)
+      mpg   cyl    hp  drat    wt  qsec    vs    am  gear  carb
+    <num> <num> <num> <num> <num> <num> <num> <num> <num> <num>
+ 1:  19.2     6   123  3.92 3.440 18.30     1     0     4     4
+ 2:  17.8     6   123  3.92 3.440 18.90     1     0     4     4
+ 3:  16.4     8   180  3.07 4.070 17.40     0     0     3     3
+ 4:  17.3     8   180  3.07 3.730 17.60     0     0     3     3
+ 5:  15.2     8   180  3.07 3.780 18.00     0     0     3     3
+ 6:  10.4     8   205  2.93 5.250 17.98     0     0     3     4
+ 7:  10.4     8   215  3.00 5.424 17.82     0     0     3     4
+ 8:  14.7     8   230  3.23 5.345 17.42     0     0     3     4
+ 9:  32.4     4    66  4.08 2.200 19.47     1     1     4     1
+10:  30.4     4    52  4.93 1.615 18.52     1     1     4     2
+11:  33.9     4    65  4.22 1.835 19.90     1     1     4     1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_subgraphs")
+> ### * get_subgraphs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_subgraphs
+> ### Title: Split a Graph into Subgraphs
+> ### Aliases: get_subgraphs
+> 
+> ### ** Examples
+> 
+> g=igraph::graph_from_literal(1-2,2-3:4,3-4:5:6,5-1)
+> split=c("A","A","B","B","A","B")
+> igraph::V(g);split
++ 6/6 vertices, named, from 7bd26b7:
+[1] 1 2 3 4 5 6
+[1] "A" "A" "B" "B" "A" "B"
+> igraph::V(get_subgraphs(g,split)[[1]])
++ 3/3 vertices, named, from 7bd3554:
+[1] 1 2 5
+> igraph::V(get_subgraphs(g,split)[[2]])
++ 3/3 vertices, named, from 7bd4334:
+[1] 3 4 6
+> 
+> 
+> 
+> cleanEx()
+> nameEx("graph_attr_from_df")
+> ### * graph_attr_from_df
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: graph_attr_from_df
+> ### Title: Add Graph Attributes to a Graph from a Data Frame
+> ### Aliases: graph_attr_from_df
+> 
+> ### ** Examples
+> 
+> g=igraph::graph_from_literal(1-2,2-3:4,3-4:5:6,5-1)
+> df=data.frame(name="Test Graph",descr="A graph")
+> graph_attr_from_df(g,df)
+IGRAPH 7bd5ced UN-- 6 7 -- Test Graph
++ attr: name (g/c), descr (g/c), name (v/c)
++ edges from 7bd5ced (vertex names):
+[1] 1--2 1--5 2--3 2--4 3--4 3--5 3--6
+> 
+> 
+> 
+> cleanEx()
+> nameEx("impNA")
+> ### * impNA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: impNA
+> ### Title: Impute Missing Values
+> ### Aliases: impNA
+> 
+> ### ** Examples
+> 
+> v1=c(2,5,3,NA,2,4,1,NA)
+> #Replace values with the mean
+> impNA(v1,na.rm=TRUE)
+[1] 2.000000 5.000000 3.000000 2.833333 2.000000 4.000000 1.000000 2.833333
+> #Replace values with the minimum
+> impNA(v1,min,na.rm=TRUE)
+[1] 2 5 3 1 2 4 1 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("isInt")
+> ### * isInt
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: isInt
+> ### Title: Determine if the Input contains Integers
+> ### Aliases: isInt
+> 
+> ### ** Examples
+> 
+> isInt(c(3,3.23,Inf))
+[1]  TRUE FALSE  TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("laCrossProd")
+> ### * laCrossProd
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: laCrossProd
+> ### Title: Cross Product (Linear Algebra)
+> ### Aliases: laCrossProd
+> 
+> ### ** Examples
+> 
+> x=c(1,2,1)
+> y=1:3
+> laCrossProd(x,y)
+[1]  4 -2  0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("lines3D")
+> ### * lines3D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: lines3D
+> ### Title: Lines in 3D
+> ### Aliases: lines3D
+> 
+> ### ** Examples
+> 
+> pl=coord3D(30)
+> lines3D(pl,0:10,0:10,rep(0,11))
+> lines3D(pl,0:10,0:10,c(0,2,1,3:8,7,5),col=2)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("lmPartReg")
+> ### * lmPartReg
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: lmPartReg
+> ### Title: Partial Regression Plot
+> ### Aliases: lmPartReg
+> 
+> ### ** Examples
+> 
+> lmod=lm(mpg~.,mtcars)
+> lmPartReg(lmod,"wt")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("lmSub")
+> ### * lmSub
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: lmSub
+> ### Title: Best Linear Model in Subset Selection
+> ### Aliases: lmSub
+> 
+> ### ** Examples
+> 
+> subs=leaps::regsubsets(mpg~.,mtcars)
+> summary(lmSub(subs,3))
+
+Call:
+stats::lm(formula = form, data = dataSet)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4811 -1.5555 -0.7257  1.4110  4.6610 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   9.6178     6.9596   1.382 0.177915    
+wt           -3.9165     0.7112  -5.507 6.95e-06 ***
+qsec          1.2259     0.2887   4.247 0.000216 ***
+am            2.9358     1.4109   2.081 0.046716 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.459 on 28 degrees of freedom
+Multiple R-squared:  0.8497,	Adjusted R-squared:  0.8336 
+F-statistic: 52.75 on 3 and 28 DF,  p-value: 1.21e-11
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("logistErrorRate")
+> ### * logistErrorRate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: logistErrorRate
+> ### Title: Calculate the Error Rate and Results Table for Logistic
+> ###   Regression Models
+> ### Aliases: logistErrorRate
+> 
+> ### ** Examples
+> 
+> gmod=glm(state~.,binomial,Puromycin)
+> logistErrorRate(gmod)
+$errorRate
+[1] 30.43478
+
+$result
+           response
+fitted      treated untreated Sum
+  treated         9         4  13
+  untreated       3         7  10
+  Sum            12        11  23
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("outliers")
+> ### * outliers
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: outliers
+> ### Title: Find Outliers
+> ### Aliases: outliers
+> 
+> ### ** Examples
+> 
+> x=c(100,30:40,101,25:28)
+> outliers(x)
+$idx
+[1]  1 13
+
+$values
+[1] 100 101
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plotCol")
+> ### * plotCol
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotCol
+> ### Title: Plot Colors
+> ### Aliases: plotCol
+> 
+> ### ** Examples
+> 
+> plotCol("maroon")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pop.sd")
+> ### * pop.sd
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pop.sd
+> ### Title: Calculate the Population Standard Deviation
+> ### Aliases: pop.sd
+> 
+> ### ** Examples
+> 
+> pop.sd(c(1:6,NA,7:10))
+[1] 2.872281
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pop.var")
+> ### * pop.var
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pop.var
+> ### Title: Calculate the Population Variance
+> ### Aliases: pop.var
+> 
+> ### ** Examples
+> 
+> pop.var(c(1:6,NA,7:10))
+[1] 8.25
+> 
+> 
+> 
+> cleanEx()
+> nameEx("predict.regsubsets")
+> ### * predict.regsubsets
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: predict.regsubsets
+> ### Title: Obtain Predictions using Subset Selection
+> ### Aliases: predict.regsubsets
+> 
+> ### ** Examples
+> 
+> subs=leaps::regsubsets(mpg~.,mtcars,subset=1:25)
+> predict(subs,3L,mtcars[26:32,])
+       [,1]
+1 29.523783
+2 29.066864
+3 25.060418
+4 22.628986
+5 13.823663
+6  8.174934
+7 27.124345
+> 
+> 
+> 
+> cleanEx()
+> nameEx("projMatrix")
+> ### * projMatrix
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: projMatrix
+> ### Title: Create the Projection Matrix of a Matrix
+> ### Aliases: projMatrix
+> 
+> ### ** Examples
+> 
+> projMatrix(matrix(c(3,4,-1,2,1,1),3))
+          [,1]       [,2]       [,3]
+[1,] 0.6666667  0.3333333  0.3333333
+[2,] 0.3333333  0.6666667 -0.3333333
+[3,] 0.3333333 -0.3333333  0.6666667
+> 
+> 
+> 
+> cleanEx()
+> nameEx("qqlineHalf")
+> ### * qqlineHalf
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: qqlineHalf
+> ### Title: Line through a Half-Normal Plot
+> ### Aliases: qqlineHalf
+> 
+> ### ** Examples
+> 
+> z=rnorm(100)
+> faraway::halfnorm(z)
+> qqlineHalf(z)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rcpp_hello_world")
+> ### * rcpp_hello_world
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rcpp_hello_world
+> ### Title: Simple function using Rcpp
+> ### Aliases: rcpp_hello_world
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D rcpp_hello_world()
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("round2")
+> ### * round2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: round2
+> ### Title: Round to the Nearest Number
+> ### Aliases: round2
+> 
+> ### ** Examples
+> 
+> round2(2.5)
+[1] 3
+> 
+> 
+> 
+> cleanEx()
+> nameEx("span3D")
+> ### * span3D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: span3D
+> ### Title: Span of a Matrix
+> ### Aliases: span3D
+> 
+> ### ** Examples
+> 
+> span3D(matrix(c(1,0,0,1,1,1),3))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("systemEq")
+> ### * systemEq
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: systemEq
+> ### Title: Solve a System of Equations
+> ### Aliases: systemEq
+> 
+> ### ** Examples
+> 
+> systemEq(matrix(c(1:3,2,4,4),3),c(3,6,7))
+[1] 1 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vector2D")
+> ### * vector2D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vector2D
+> ### Title: Add a Vector to a 2D Coordinate System
+> ### Aliases: vector2D
+> 
+> ### ** Examples
+> 
+> a=c(2,4)
+> b=c(0,3)
+> coord2D()
+NULL
+> vector2D(a)
+> vector2D(b)
+> vector2D(a-b,b,"blue")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vector3D")
+> ### * vector3D
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vector3D
+> ### Title: Add a Vector to a 3D Coordinate System
+> ### Aliases: vector3D
+> 
+> ### ** Examples
+> 
+> a=c(2,4,8)
+> b=c(6,0,4)
+> pl=coord3D()
+> vector3D(pl,a)
+> vector3D(pl,b)
+> vector3D(pl,a-b,b,3)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("weight_distribution")
+> ### * weight_distribution
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: weight_distribution
+> ### Title: Weight Distribution of a Graph
+> ### Aliases: weight_distribution
+> 
+> ### ** Examples
+> 
+> g=igraph::graph_from_literal(1-2,2-3:4,3-4:5:6,5-1)
+> igraph::E(g)$weight=c(1,2,1,4,2,1,1)
+> table(igraph::strength(g))/6
+
+        1         3         5         6 
+0.1666667 0.3333333 0.1666667 0.3333333 
+> weight_distribution(g)
+        0         1         2         3         4         5         6 
+0.0000000 0.1666667 0.0000000 0.3333333 0.0000000 0.1666667 0.3333333 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("withinPC")
+> ### * withinPC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: withinPC
+> ### Title: Calculate Row or Column Percentages
+> ### Aliases: withinPC
+> 
+> ### ** Examples
+> 
+> (X=matrix(c(1:12),3))
+     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12
+> withinPC(X)
+     [,1] [,2] [,3] [,4]
+[1,]  4.5 18.2 31.8 45.5
+[2,]  7.7 19.2 30.8 42.3
+[3,] 10.0 20.0 30.0 40.0
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  6.42 1.64 9.13 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

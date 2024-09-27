@@ -1,0 +1,101 @@
+---
+title: "Eigenvalues and Eigenvectors: Properties"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Eigenvalues and Eigenvectors: Properties}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+options(digits=4)
+```
+## Setup
+
+This vignette uses an example of a $3 \times 3$ matrix to illustrate some properties of
+eigenvalues and eigenvectors.  We could consider this to be the variance-covariance matrix of three variables,
+but the main thing is that the matrix is **square** and **symmetric**, which guarantees that the eigenvalues, $\lambda_i$ are
+real numbers. Covariance matrices are also **positive semi-definite**, meaning
+that their eigenvalues are non-negative, $\lambda_i \ge 0$.
+
+```{r}
+A <- matrix(c(13, -4, 2, -4, 11, -2, 2, -2, 8), 3, 3, byrow=TRUE)
+A
+```
+
+Get the eigenvalues and eigenvectors using `eigen()`;  this returns a named list, with eigenvalues named `values` and
+eigenvectors named `vectors`.
+```{r}
+ev <- eigen(A)
+# extract components
+(values <- ev$values)
+(vectors <- ev$vectors)
+```
+The eigenvalues are always returned in decreasing order, and each column of `vectors` corresponds to the
+elements in `values`.
+
+
+## Properties of eigenvalues and eigenvectors
+The following steps illustrate the main properties of eigenvalues and eigenvectors.  We use the notation
+$A = V' \Lambda V$ to express the decomposition of the matrix $A$, where $V$ is the matrix of
+eigenvectors and $\Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_p)$ is the diagonal matrix
+composed of the ordered eivenvalues, $\lambda_1 \ge \lambda_2 \ge \dots \lambda_p$.
+
+0. Orthogonality: Eigenvectors are always orthogonal, $V' V = I$.  `zapsmall()` is handy for cleaning up tiny values.
+```{r}
+crossprod(vectors)
+zapsmall(crossprod(vectors))
+```
+
+
+1. trace(A) = sum of eigenvalues, $\sum \lambda_i$.
+```{r}
+library(matlib)   # use the matlib package
+tr(A)
+sum(values)
+```
+
+2. sum of squares of A = sum of squares of eigenvalues, $\sum \lambda_i^2$.
+```{r}
+sum(A^2)
+sum(values^2)
+```
+
+3. determinant = product of eigenvalues, $det(A) = \prod \lambda_i$. This means that the determinant will be zero
+if any $\lambda_i = 0$.
+```{r}
+det(A)
+prod(values)
+```
+
+4. rank = number of non-zero eigenvalues
+```{r}
+R(A)
+sum(values != 0)
+```
+
+
+5. eigenvalues of $A^{-1}$ = 1/eigenvalues of A. The eigenvectors are the same, except for order, because eigenvalues
+are returned in decreasing order.
+```{r}
+AI <- solve(A)
+AI
+eigen(AI)$values
+eigen(AI)$vectors
+```
+
+6. There are similar relations for other powers of a matrix: `values(mpower(A,p)) = values(A)^p`, where 
+`mpower(A,2) = A %*% A`, etc.
+```{r}
+eigen(A %*% A)
+eigen(A %*% A %*% A)$values
+eigen(mpower(A, 4))$values
+
+```
+

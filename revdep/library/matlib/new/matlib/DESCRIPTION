@@ -1,0 +1,44 @@
+Package: matlib
+Type: Package
+Title: Matrix Functions for Teaching and Learning Linear Algebra and
+        Multivariate Statistics
+Version: 0.9.95
+Date: 2024-09-08
+Authors@R: c(person(given = "Michael", family = "Friendly", 
+                    role=c("aut", "cre"), email="friendly@yorku.ca",
+                    comment=c(ORCID="0000-0002-3237-0941")),
+            person(given = "John", family = "Fox", role="aut", comment = c(ORCID = "0000-0002-1196-8012")),
+            person(given = "Phil", family = "Chalmers", role="aut", comment = c(ORCID="0000-0001-5332-2810")),
+            person(given = "Georges", family = "Monette", role="ctb", comment = c(ORCID = "0000-0003-0076-5532")),
+            person(given = "Gaston", family = "Sanchez", role="ctb")
+            )
+Maintainer: Michael Friendly <friendly@yorku.ca>
+Description: A collection of matrix functions for teaching and learning matrix
+    linear algebra as used in multivariate statistical methods. These functions are
+    mainly for tutorial purposes in learning matrix algebra ideas using R. In some
+    cases, functions are provided for concepts available elsewhere in R, but where
+    the function call or name is not obvious. In other cases, functions are provided
+    to show or demonstrate an algorithm. In addition, a collection of functions are
+    provided for drawing vector diagrams in 2D and 3D.
+License: GPL (>= 2)
+Language: en-US
+URL: https://github.com/friendly/matlib,
+        http://friendly.github.io/matlib/
+BugReports: https://github.com/friendly/matlib/issues
+LazyData: TRUE
+Suggests: carData, webshot2, markdown, bookdown, clipr
+Imports: xtable, MASS, rgl, car, methods, dplyr, knitr, rmarkdown,
+        rstudioapi
+VignetteBuilder: knitr
+RoxygenNote: 7.3.2
+Encoding: UTF-8
+RemoteType: local
+RemoteUrl: C:\Dropbox\R\projects\matlib
+NeedsCompilation: no
+Packaged: 2024-09-27 14:28:29 UTC; friendly
+Author: Michael Friendly [aut, cre] (<https://orcid.org/0000-0002-3237-0941>),
+  John Fox [aut] (<https://orcid.org/0000-0002-1196-8012>),
+  Phil Chalmers [aut] (<https://orcid.org/0000-0001-5332-2810>),
+  Georges Monette [ctb] (<https://orcid.org/0000-0003-0076-5532>),
+  Gaston Sanchez [ctb]
+Built: R 4.4.1; ; 2024-09-27 14:28:31 UTC; windows
