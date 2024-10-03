@@ -14,5 +14,8 @@ Eqn("\\mathbf{X} =",
     latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
 ```
 
+The attached image shows this in RStudio, with the preview pane.
 
-See the vignette, http://friendly.github.io/matlib/articles/latex-equations.html
+![](man/figures/matlib-preview.png)
+
+See the vignette, http://friendly.github.io/matlib/articles/latex-equations.html for other examples.
