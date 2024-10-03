@@ -1,4 +1,4 @@
-# matlib 0.9.95
+# matlib 1.0.0
 
 - added `latexMatrix()` to create a symbolic matrix
 - `latexMatrix()` made more general to handle much wider variety of cases, with LaTeX output [JF]

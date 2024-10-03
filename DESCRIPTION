@@ -2,8 +2,8 @@ Package: matlib
 Type: Package
 Title: Matrix Functions for Teaching and Learning Linear Algebra and
     Multivariate Statistics
-Version: 1.0.0
-Date: 2024-09-27
+Version: 1.0.1
+Date: 2024-10-03
 Authors@R: c(person(given = "Michael", family = "Friendly", 
                     role=c("aut", "cre"), email="friendly@yorku.ca",
                     comment=c(ORCID="0000-0002-3237-0941")),
@@ -14,12 +14,13 @@ Authors@R: c(person(given = "Michael", family = "Friendly",
             )
 Maintainer: Michael Friendly <friendly@yorku.ca>
 Description: A collection of matrix functions for teaching and learning matrix
-    linear algebra as used in multivariate statistical methods. These functions are
-    mainly for tutorial purposes in learning matrix algebra ideas using R. In some
+    linear algebra as used in multivariate statistical methods. Many of these functions are
+    designed for tutorial purposes in learning matrix algebra ideas using R. In some
     cases, functions are provided for concepts available elsewhere in R, but where
     the function call or name is not obvious. In other cases, functions are provided
     to show or demonstrate an algorithm. In addition, a collection of functions are
-    provided for drawing vector diagrams in 2D and 3D.
+    provided for drawing vector diagrams in 2D and 3D and for rendering matrix
+    expressions and equations in LaTeX.
 License: GPL (>= 2)
 Language: en-US
 URL: https://github.com/friendly/matlib, http://friendly.github.io/matlib/

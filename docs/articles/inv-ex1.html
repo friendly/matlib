@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">matlib</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.95</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@
                         <h4 data-toc-skip class="author">Michael
 Friendly</h4>
             
-            <h4 data-toc-skip class="date">September 08, 2024</h4>
+            <h4 data-toc-skip class="date">October 03, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/HEAD/vignettes/inv-ex1.Rmd" class="external-link"><code>vignettes/inv-ex1.Rmd</code></a></small>
       <div class="d-none name"><code>inv-ex1.Rmd</code></div>
@@ -96,14 +96,14 @@ we can solve a simple equation like
 for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
 by multiplying both sides by the reciprocal
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mi>x</mi><mo>=</mo><mn>8</mn><mo>⇒</mo><msup><mn>4</mn><mrow><mo>−</mo><mn>1</mn></mrow></msup><mn>4</mn><mi>x</mi><mo>=</mo><msup><mn>4</mn><mrow><mo>−</mo><mn>1</mn></mrow></msup><mn>8</mn><mo>⇒</mo><mi>x</mi><mo>=</mo><mn>8</mn><mi>/</mi><mn>4</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex"> 4 x = 8 \Rightarrow 4^{-1} 4 x = 4^{-1} 8 \Rightarrow x = 8 / 4 = 2</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mi>x</mi><mo>=</mo><mn>8</mn><mo>⇒</mo><msup><mn>4</mn><mrow><mi>−</mi><mn>1</mn></mrow></msup><mn>4</mn><mi>x</mi><mo>=</mo><msup><mn>4</mn><mrow><mi>−</mi><mn>1</mn></mrow></msup><mn>8</mn><mo>⇒</mo><mi>x</mi><mo>=</mo><mn>8</mn><mi>/</mi><mn>4</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex"> 4 x = 8 \Rightarrow 4^{-1} 4 x = 4^{-1} 8 \Rightarrow x = 8 / 4 = 2</annotation></semantics></math>
 we can solve a matrix equation like
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi>𝐀</mi><mi>𝐱</mi></mrow><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A x} = \mathbf{b}</annotation></semantics></math>
 for the vector
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math>
 by multiplying both sides by the inverse of the matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐀</mi><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math>,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi>𝐀</mi><mi>𝐱</mi></mrow><mo>=</mo><mi>𝐛</mi><mo>⇒</mo><msup><mi>𝐀</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mrow><mi>𝐀</mi><mi>𝐱</mi></mrow><mo>=</mo><msup><mi>𝐀</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mi>𝐛</mi><mo>⇒</mo><mi>𝐱</mi><mo>=</mo><msup><mi>𝐀</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A x} = \mathbf{b} \Rightarrow \mathbf{A}^{-1} \mathbf{A x} = \mathbf{A}^{-1} \mathbf{b} \Rightarrow \mathbf{x} = \mathbf{A}^{-1} \mathbf{b}</annotation></semantics></math></p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi>𝐀</mi><mi>𝐱</mi></mrow><mo>=</mo><mi>𝐛</mi><mo>⇒</mo><msup><mi>𝐀</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mrow><mi>𝐀</mi><mi>𝐱</mi></mrow><mo>=</mo><msup><mi>𝐀</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>𝐛</mi><mo>⇒</mo><mi>𝐱</mi><mo>=</mo><msup><mi>𝐀</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A x} = \mathbf{b} \Rightarrow \mathbf{A}^{-1} \mathbf{A x} = \mathbf{A}^{-1} \mathbf{b} \Rightarrow \mathbf{x} = \mathbf{A}^{-1} \mathbf{b}</annotation></semantics></math></p>
 <p>The following examples illustrate the basic properties of the inverse
 of a matrix.</p>
 <div class="section level3">
@@ -141,18 +141,18 @@ standard R function for matrix inverse is <code><a href="https://rdrr.io/r/base/
 </div>
 <div class="section level3">
 <h3 id="definition-of-the-inverse-a-1-a-a-a-1-i-or-ai-a-diagnrowa">2. Definition of the inverse:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mi>A</mi><mo>=</mo><mi>A</mi><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">A^{-1} A = A A^{-1} = I</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>A</mi><mo>=</mo><mi>A</mi><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">A^{-1} A = A A^{-1} = I</annotation></semantics></math>
 or <code>AI * A = diag(nrow(A))</code><a class="anchor" aria-label="anchor" href="#definition-of-the-inverse-a-1-a-a-a-1-i-or-ai-a-diagnrowa"></a>
 </h3>
 <p>The inverse of a matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
 is defined as the matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>
 which multiplies
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
 to give the identity matrix, just as, for a scalar
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><msup><mi>a</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>a</mi><mi>/</mi><mi>a</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a a^{-1} = a / a = 1</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><msup><mi>a</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo>=</mo><mi>a</mi><mi>/</mi><mi>a</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a a^{-1} = a / a = 1</annotation></semantics></math>.</p>
 <p>NB: Sometimes you will get very tiny off-diagonal values (like
 <code>1.341e-13</code>). The function <code><a href="https://rdrr.io/r/base/zapsmall.html" class="external-link">zapsmall()</a></code> will round
 those to 0.</p>
@@ -340,7 +340,7 @@ product of the inverses in reverse order.</p>
 </div>
 <div class="section level3">
 <h3 id="det-a-1-1-deta-deta-1">6.
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mi>/</mi><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">[</mo><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\det (A^{-1}) = 1 / \det(A) = [\det(A)]^{-1}</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#det-a-1-1-deta-deta-1"></a>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mi>/</mi><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">[</mo><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\det (A^{-1}) = 1 / \det(A) = [\det(A)]^{-1}</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#det-a-1-1-deta-deta-1"></a>
 </h3>
 <p>The determinant of an inverse is the inverse (reciprocal) of the
 determinant</p>
@@ -373,7 +373,7 @@ non-singular matrix
 <p>The larger the determinant of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>,
 the smaller is the determinant of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">AI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Inverse.html">inv</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span>
 <span><span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fractions.html" class="external-link">fractions</a></span><span class="op">(</span><span class="va">AI</span><span class="op">)</span></span></code></pre></div>
@@ -404,7 +404,7 @@ by these vectors is the determinant.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>, <span class="st">"A"</span>, cex<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="inv-ex1_files/figure-html/plot-inv1-1.png" width="480"></p>
 <p>The rows of the inverse
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>
 can be shown as vectors
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>a</mi><mn>1</mn></msup><mo>,</mo><msup><mi>a</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a^1, a^2</annotation></semantics></math>
 from the origin in the same space.</p>
@@ -417,12 +417,12 @@ from the origin in the same space.</p>
 <p>Thus, we can see:</p>
 <ul>
 <li><p>The shape of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>
 is a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>90</mn><mi>o</mi></msup><annotation encoding="application/x-tex">90^o</annotation></semantics></math>
 rotation of the shape of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>.</p></li>
-<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">A^{-1}</annotation></semantics></math>
 is small in the directions where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
 is large.</p></li>
@@ -441,7 +441,7 @@ by a constant
 to make its determinant larger (by a factor of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>k</mi><mn>2</mn></msup><annotation encoding="application/x-tex">k^2</annotation></semantics></math>),
 the inverse would have to be divided by the same factor to preserve
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">A A^{-1} = I</annotation></semantics></math>.</p></li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">A A^{-1} = I</annotation></semantics></math>.</p></li>
 </ul>
 <p>One might wonder whether these properties depend on symmetry of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>,
@@ -459,7 +459,7 @@ so here is another example, for the matrix
 <span><span class="co">## [1,]    1   -1</span></span>
 <span><span class="co">## [2,]   -1    2</span></span></code></pre>
 <p>The areas of the two parallelograms are the same because
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\det(A) = \det(A^{-1}) = 1</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>A</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\det(A) = \det(A^{-1}) = 1</annotation></semantics></math>.
 <img src="inv-ex1_files/figure-html/plot-inv3-1.png" width="480"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -473,7 +473,7 @@ so here is another example, for the matrix
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
