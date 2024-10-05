@@ -1,3 +1,7 @@
+# matlib 1.0.1
+
+- Rename vignettes to put them in order
+
 # matlib 1.0.0
 
 - added `latexMatrix()` to create a symbolic matrix
