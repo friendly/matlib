@@ -20,3 +20,4 @@ pkgdown/
 ^\.Rproj\.user$
 ^CRAN-SUBMISSION$
 dev/
+papers/
