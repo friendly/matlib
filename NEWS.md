@@ -1,6 +1,7 @@
 # matlib 1.0.1
 
 - Rename vignettes to put them in order
+- Add `papers/matlib-useR-2016.pdf` to avoid bad URL
 
 # matlib 1.0.0
 
