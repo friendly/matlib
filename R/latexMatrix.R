@@ -736,17 +736,32 @@ Ncol.latexMatrix <- function(x, ...){
 #' @param colname.spacing a character whose width is used to try to even out spacing
 #'        of printed column names; the default is taken from the \code{"colname.spacing"}
 #'        option, and if that option isn't set the character \code{"i"} is used.
+#' @param text.labels whether to set row and column labels in text mode rather than
+#'        math model; the default is taken from the \code{"text.labels"} option,
+#'        and if the option isn't set, the default is \code{c(row=FALSE, column=FALSE)}.
+#' @param display.labels whether or not to display row and column labels (if they exist);
+#'        the default is taken from the \code{"display.labels"} option and if the option
+#'        isn't set, the default is \code{TRUE}.
+#' @param mathtext a latex command to display text in math mode;
+#'        the default is taken from the \code{"mathtext"} option and if the
+#'        option isn't set, the default is \code{"mathrm"}.
 #' @rdname latexMatrix
 #' @export
 print.latexMatrix <- function(x, onConsole=TRUE, 
                               bordermatrix=getOption("bordermatrix"),
                               cell.spacing=getOption("cell.spacing"),
                               colname.spacing=getOption("colname.spacing"),
+                              text.labels=getOption("text.labels"),
+                              display.labels=getOption("display.labels"),
+                              mathtext=getOption("mathtext"),
                               ...){
   
   if (is.null(bordermatrix)) bordermatrix <- FALSE
   if (is.null(cell.spacing)) cell.spacing <- "e"
   if (is.null(colname.spacing)) colname.spacing <- "i"
+  if (is.null(text.labels)) text.labels <- c("row"=FALSE, "column"=FALSE)
+  if (is.null(display.labels)) display.labels <- TRUE
+  if (is.null(mathtext)) mathtext <- "mathrm"
   
   countChars <- function(string, adjust=TRUE){
     gsub("\\\\[[:alpha:]]*", if(adjust) "X" else "", string) |> 
@@ -754,9 +769,19 @@ print.latexMatrix <- function(x, onConsole=TRUE,
       nchar()
   }
   
-  if (!is.null(rownames(x)) || !is.null(colnames(x))){
+  labels2text <- function(labels){
+    paste0("\\", mathtext, "{", labels, "}")
+  }
+  
+  if (display.labels && (!is.null(rownames(x)) || !is.null(colnames(x)))){
     rownames <- rownames(x)
     colnames <- colnames(x)
+    if (text.labels["row"]){
+      rownames <- labels2text(rownames)
+    }
+    if (text.labels["column"]){
+      colnames <- labels2text(colnames)
+    }
     X <- getBody(x)
     
     if (bordermatrix){

@@ -88,6 +88,9 @@ Ncol(x, ...)
   bordermatrix = getOption("bordermatrix"),
   cell.spacing = getOption("cell.spacing"),
   colname.spacing = getOption("colname.spacing"),
+  text.labels = getOption("text.labels"),
+  display.labels = getOption("display.labels"),
+  mathtext = getOption("mathtext"),
   ...
 )
 
@@ -222,6 +225,18 @@ option, and if that option isn't set the character \code{"e"} is used.}
 \item{colname.spacing}{a character whose width is used to try to even out spacing
 of printed column names; the default is taken from the \code{"colname.spacing"}
 option, and if that option isn't set the character \code{"i"} is used.}
+
+\item{text.labels}{whether to set row and column labels in text mode rather than
+math model; the default is taken from the \code{"text.labels"} option,
+and if the option isn't set, the default is \code{c(row=FALSE, column=FALSE)}.}
+
+\item{display.labels}{whether or not to display row and column labels (if they exist);
+the default is taken from the \code{"display.labels"} option and if the option
+isn't set, the default is \code{TRUE}.}
+
+\item{mathtext}{a latex command to display text in math mode;
+the default is taken from the \code{"mathtext"} option and if the
+option isn't set, the default is \code{"mathrm"}.}
 
 \item{locals}{an optional list or named numeric vector of variables to be given
 specific numeric values; e.g.,
