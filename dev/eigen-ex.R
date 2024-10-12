@@ -19,7 +19,8 @@ V <- S.eig$vectors |> print()
 
 # align V Lambda V' using \phantom{}
 options(digits = 4)
-rownames(S) <- colnames(S) <- c("\\small \\text{Exp}", "\\small \\text{Inc}")
+rownames(S) <- colnames(S) <- c("\\small \\text{Exp}", 
+                                "\\small \\text{Inc}")
 spacer <- "\\phantom{00000000000000}"
 Eqn("\\mathbf{S} & = \\mathbf{V}", spacer,
     "\\mathbf{\\Lambda}", spacer,  
