@@ -19,8 +19,8 @@ V <- S.eig$vectors |> print()
 
 # align V Lambda V' using \phantom{}
 options(digits = 4)
-rownames(S) <- colnames(S) <- c("\\small \\text{Exp}", 
-                                "\\small \\text{Inc}")
+rownames(S) <- colnames(S) <- c("\\text{Exp}", 
+                                "\\text{Inc}")
 spacer <- "\\phantom{00000000000000}"
 Eqn("\\mathbf{S} & = \\mathbf{V}", spacer,
     "\\mathbf{\\Lambda}", spacer,  
@@ -33,12 +33,20 @@ Eqn("\\mathbf{S} & = \\mathbf{V}", spacer,
 #   Also, they are in math font rather than \text{}
 #   One idea for improving bordered matrices alignment might be to use \small{} or other reduced size
 
+# Phil: add more &
+
+options(digits = 4)
+Eqn("\\mathbf{S} & = & \\mathbf{V} & &\\mathbf{\\Lambda} & &\\mathbf{V}^\\top", Eqn_newline(),
+    latexMatrix(S), "& = & ", latexMatrix(V), "& &", diag(Lambda), "& &", latexMatrix(V, transpose=TRUE),
+    align = TRUE)
+
+
 # What's wrong here?
-spacer <- " & "
-Eqn("\\mathbf{S} & = \\mathbf{V}", spacer,
+spacer <- " & & "
+Eqn("\\mathbf{S} & = & \\mathbf{V}", spacer,
     "\\mathbf{\\Lambda}", spacer,  
     "\\mathbf{V}^\\top", Eqn_newline(),
-    latexMatrix(S), "& =", 
+    latexMatrix(S), "& = &", 
     latexMatrix(V), "  ", diag(Lambda), "  ", latexMatrix(V, transpose=TRUE),
     align = TRUE)
 

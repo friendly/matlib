@@ -52,7 +52,8 @@ $$
 
 Writing equations with arrays, matrices and vectors is
 somewhat more challenging. Many people rely on interactive LaTeX editors like [Overleaf](https://www.overleaf.com/), [MathType](https://www.wiris.com/en/mathtype/), or online
-versions like [Lagrida LaTeX Equation Editor](https://latexeditor.lagrida.com/)
+versions like [Lagrida LaTeX Equation Editor](https://latexeditor.lagrida.com/) or
+[Arachnoid](https://arachnoid.com/latex/)
 that provide a menu-driven interface with fill-in templates for
 matrices.
 
