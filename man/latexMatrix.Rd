@@ -91,6 +91,7 @@ Ncol(x, ...)
   text.labels = getOption("text.labels"),
   display.labels = getOption("display.labels"),
   mathtext = getOption("mathtext"),
+  mathtext.size = getOption("mathtext.size"),
   ...
 )
 
@@ -234,9 +235,13 @@ and if the option isn't set, the default is \code{c(row=FALSE, column=FALSE)}.}
 the default is taken from the \code{"display.labels"} option and if the option
 isn't set, the default is \code{TRUE}.}
 
-\item{mathtext}{a latex command to display text in math mode;
+\item{mathtext}{a LaTeX command to display row/column label text in math mode;
 the default is taken from the \code{"mathtext"} option and if the
-option isn't set, the default is \code{"mathrm"}.}
+option isn't set, the default is \code{"text"}.}
+
+\item{mathtext.size}{a LaTeX command to control the size of row/column text
+(e.g., \code{"footnotesize"}); the default is take from the \code{"mathtext.size"} option and if
+the option isn't set, the default is \code{""}.}
 
 \item{locals}{an optional list or named numeric vector of variables to be given
 specific numeric values; e.g.,

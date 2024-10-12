@@ -742,9 +742,12 @@ Ncol.latexMatrix <- function(x, ...){
 #' @param display.labels whether or not to display row and column labels (if they exist);
 #'        the default is taken from the \code{"display.labels"} option and if the option
 #'        isn't set, the default is \code{TRUE}.
-#' @param mathtext a latex command to display text in math mode;
+#' @param mathtext a LaTeX command to display row/column label text in math mode;
 #'        the default is taken from the \code{"mathtext"} option and if the
-#'        option isn't set, the default is \code{"mathrm"}.
+#'        option isn't set, the default is \code{"text"}.
+#' @param mathtext.size a LaTeX command to control the size of row/column text
+#'        (e.g., \code{"footnotesize"}); the default is taken from the \code{"mathtext.size"} option and if
+#'        the option isn't set, the default is \code{""}.
 #' @rdname latexMatrix
 #' @export
 print.latexMatrix <- function(x, onConsole=TRUE, 
@@ -754,6 +757,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,
                               text.labels=getOption("text.labels"),
                               display.labels=getOption("display.labels"),
                               mathtext=getOption("mathtext"),
+                              mathtext.size=getOption("mathtext.size"),
                               ...){
   
   if (is.null(bordermatrix)) bordermatrix <- FALSE
@@ -761,7 +765,14 @@ print.latexMatrix <- function(x, onConsole=TRUE,
   if (is.null(colname.spacing)) colname.spacing <- "i"
   if (is.null(text.labels)) text.labels <- c("row"=FALSE, "column"=FALSE)
   if (is.null(display.labels)) display.labels <- TRUE
-  if (is.null(mathtext)) mathtext <- "mathrm"
+  if (is.null(mathtext)) mathtext <- "text"
+  if (is.null(mathtext.size)) mathtext.size <- ""
+  if (mathtext.size != "") {
+    mathtext.size <- paste0("\\", mathtext.size, "{")
+    mathtext.size.right <- "}"
+  } else {
+    mathtext.size.right <- ""
+  }
   
   countChars <- function(string, adjust=TRUE){
     gsub("\\\\[[:alpha:]]*", if(adjust) "X" else "", string) |> 
@@ -770,7 +781,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,
   }
   
   labels2text <- function(labels){
-    paste0("\\", mathtext, "{", labels, "}")
+    paste0("\\", mathtext, "{", mathtext.size, labels, mathtext.size.right, "}")
   }
   
   if (display.labels && (!is.null(rownames(x)) || !is.null(colnames(x)))){
