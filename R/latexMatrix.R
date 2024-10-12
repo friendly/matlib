@@ -728,45 +728,57 @@ Ncol.latexMatrix <- function(x, ...){
 #' @param bordermatrix if \code{TRUE}, the LaTeX \code{"\bordermatrix"} macro
 #'        is used for matrices with row and/or column names. This macro
 #'        doesn't work in Markdown-based documents. The default is taken
-#'        from the \code{"bordermatrix"} option, and if that option isn't set
+#'        from the \code{"bordermatrix"} element of the \code{"print.latexMatrix"} option, 
+#'        and if that option isn't set
 #'        the argument is set to \code{FALSE}.
 #' @param cell.spacing a character whose width is used to try to even out spacing
 #'        of printed cell elements; the default is taken from the \code{"cell.spacing"}
-#'        option, and if that option isn't set the character \code{"e"} is used.
+#'        element of the \code{"print.latexMatrix"} option, and if that option isn't set the character \code{"e"} is used.
 #' @param colname.spacing a character whose width is used to try to even out spacing
 #'        of printed column names; the default is taken from the \code{"colname.spacing"}
-#'        option, and if that option isn't set the character \code{"i"} is used.
+#'        element of the \code{"print.latexMatrix"} option, and if that option isn't set the character \code{"i"} is used.
 #' @param text.labels whether to set row and column labels in text mode rather than
-#'        math model; the default is taken from the \code{"text.labels"} option,
+#'        math model; the default is taken from the \code{"text.labels"} element of the \code{"print.latexMatrix"} option,
 #'        and if the option isn't set, the default is \code{c(row=FALSE, column=FALSE)}.
 #' @param display.labels whether or not to display row and column labels (if they exist);
-#'        the default is taken from the \code{"display.labels"} option and if the option
+#'        the default is taken from the \code{"display.labels"} element of the \code{"print.latexMatrix"} option, and if the option
 #'        isn't set, the default is \code{TRUE}.
 #' @param mathtext a LaTeX command to display row/column label text in math mode;
-#'        the default is taken from the \code{"mathtext"} option and if the
+#'        the default is taken from the \code{"mathtext"} element of the \code{"print.latexMatrix"} option, and if the
 #'        option isn't set, the default is \code{"text"}.
 #' @param mathtext.size a LaTeX command to control the size of row/column text
-#'        (e.g., \code{"footnotesize"}); the default is taken from the \code{"mathtext.size"} option and if
-#'        the option isn't set, the default is \code{""}.
+#'        (e.g., \code{"footnotesize"}); the default is taken from the \code{"mathtext.size"} 
+#'        element of the \code{"print.latexMatrix"} option, and if
+#'        the option isn't set, the default is \code{""}. Note: Setting text
+#'        size for the row and column labels only works if \code{"text"} is used
+#'        for \code{mathtext} and if MathJax isn't used to
+#'        render LaTeX math in an HTML document.
 #' @rdname latexMatrix
 #' @export
 print.latexMatrix <- function(x, onConsole=TRUE, 
-                              bordermatrix=getOption("bordermatrix"),
-                              cell.spacing=getOption("cell.spacing"),
-                              colname.spacing=getOption("colname.spacing"),
-                              text.labels=getOption("text.labels"),
-                              display.labels=getOption("display.labels"),
-                              mathtext=getOption("mathtext"),
-                              mathtext.size=getOption("mathtext.size"),
+                              bordermatrix=getOption("print.latexMatrix")["bordermatrix"],
+                              cell.spacing=getOption("print.latexMatrix")["cell.spacing"],
+                              colname.spacing=getOption("print.latexMatrix")["colname.spacing"],
+                              text.labels=getOption("print.latexMatrix")["text.labels"],
+                              display.labels=getOption("print.latexMatrix")["display.labels"],
+                              mathtext=getOption("print.latexMatrix")["mathtext"],
+                              mathtext.size=getOption("print.latexMatrix")["mathtext.size"],
                               ...){
   
-  if (is.null(bordermatrix)) bordermatrix <- FALSE
-  if (is.null(cell.spacing)) cell.spacing <- "e"
-  if (is.null(colname.spacing)) colname.spacing <- "i"
-  if (is.null(text.labels)) text.labels <- c("row"=FALSE, "column"=FALSE)
-  if (is.null(display.labels)) display.labels <- TRUE
-  if (is.null(mathtext)) mathtext <- "text"
-  if (is.null(mathtext.size)) mathtext.size <- ""
+  if (is.null(bordermatrix) || is.na(bordermatrix)) 
+    bordermatrix <- FALSE
+  if (is.null(cell.spacing) || is.na(cell.spacing)) 
+    cell.spacing <- "e"
+  if (is.null(colname.spacing) || is.na(colname.spacing)) 
+    colname.spacing <- "i"
+  if (is.null(text.labels) || is.na(text.labels)) 
+    text.labels <- c("row"=FALSE, "column"=FALSE)
+  if (is.null(display.labels) || is.na(display.labels)) 
+    display.labels <- TRUE
+  if (is.null(mathtext) || is.na(mathtext)) 
+    mathtext <- "text"
+  if (is.null(mathtext.size) || is.na(mathtext.size)) 
+    mathtext.size <- ""
   if (mathtext.size != "") {
     mathtext.size <- paste0("\\", mathtext.size, "{")
     mathtext.size.right <- "}"
