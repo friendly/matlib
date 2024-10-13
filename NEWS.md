@@ -2,6 +2,8 @@
 
 - Rename vignettes to put them in order
 - Add `papers/matlib-useR-2016.pdf` to avoid bad URL
+- Consolidate options for `print.latexMatrix`
+- Fix bug in `print.latexMatrix(sparse=TRUE)`
 
 # matlib 1.0.0
 

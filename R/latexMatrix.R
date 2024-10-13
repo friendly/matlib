@@ -555,7 +555,7 @@ latexMatrix <- function(
   body <- unname(do.call(rbind, splt)) # matrix of LaTeX cells
   body <- sub(" *$", "", sub("^ *", "", body))
   if(sparse)
-    mat.result <- gsub('[[:blank:]]+0[[:blank:]]+', ' ', mat.result)
+    mat.result <- gsub('[[:blank:]]*0[[:blank:]]*', ' ', mat.result)
   
   if (!is.null(rownames)){
     rownames <- as.character(rownames)
@@ -771,7 +771,7 @@ print.latexMatrix <- function(x, onConsole=TRUE,
     cell.spacing <- "e"
   if (is.null(colname.spacing) || is.na(colname.spacing)) 
     colname.spacing <- "i"
-  if (is.null(text.labels) || is.na(text.labels)) 
+  if (is.null(text.labels) || all(is.na(text.labels))) 
     text.labels <- c("row"=FALSE, "column"=FALSE)
   if (is.null(display.labels) || is.na(display.labels)) 
     display.labels <- TRUE
