@@ -85,13 +85,13 @@ Ncol(x, ...)
 \method{print}{latexMatrix}(
   x,
   onConsole = TRUE,
-  bordermatrix = getOption("print.latexMatrix")["bordermatrix"],
-  cell.spacing = getOption("print.latexMatrix")["cell.spacing"],
-  colname.spacing = getOption("print.latexMatrix")["colname.spacing"],
-  text.labels = getOption("print.latexMatrix")["text.labels"],
-  display.labels = getOption("print.latexMatrix")["display.labels"],
-  mathtext = getOption("print.latexMatrix")["mathtext"],
-  mathtext.size = getOption("print.latexMatrix")["mathtext.size"],
+  bordermatrix = getOption("print.latexMatrix")[["bordermatrix"]],
+  cell.spacing = getOption("print.latexMatrix")[["cell.spacing"]],
+  colname.spacing = getOption("print.latexMatrix")[["colname.spacing"]],
+  text.labels = getOption("print.latexMatrix")[["text.labels"]],
+  display.labels = getOption("print.latexMatrix")[["display.labels"]],
+  mathtext = getOption("print.latexMatrix")[["mathtext"]],
+  mathtext.size = getOption("print.latexMatrix")[["mathtext.size"]],
   ...
 )
 
@@ -359,6 +359,13 @@ object to include partition lines by rows and/or columns.
 The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
 components of the returned object.
+
+Some LaTeX typesetting details are controlled by the \code{"print.latexMatrix"} option,
+which can be a list with one or more of the following elements (see the
+arguments to the \code{print.latexMatrix()} method for more information):
+\code{"bordermatrix"}, \code{"cell.spacing"}, \code{"colname.spacing"},
+\code{"text.labels"}, \code{"display.labels"}, \code{"mathtext"},
+and \code{"mathtext.size"}.
 
 Various functions and operators for \code{"latexMatrix"} objects are
 documented separately; see, \code{\link{latexMatrixOperations}}.
