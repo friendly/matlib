@@ -317,7 +317,7 @@ the number of rows and/or columns can be \bold{integers}, generating a matrix of
 As well, instead of a character for the matrix \code{symbol}, you can supply a \bold{matrix} of arbitrary character
 strings (in LaTeX notation) or numbers, and these will be used as the elements of the matrix.
 
-You can print the resulting LaTeX code to the console. When the result is assigned to a variable,
+The resulting LaTeX code is printed to the console by default. When the result is assigned to a variable,
 you can send it to the clipboard using \code{\link[clipr]{write_clip}()}. Perhaps most convenient of all,
 the function can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} document, e.g,
 
@@ -335,6 +335,9 @@ This generates
  0           & \lambda_{2} \\
  \end{pmatrix}
  }
+
+The function \code{\link{Eqn}} can be used to construct matrix equations, and in RStudio generates a preview of
+an equation in the Viewer panel.
 }
 \details{
 This implementation assumes that the LaTeX \code{amsmath} package will be available because it uses the shorthands
@@ -363,8 +366,12 @@ components of the returned object.
 Some LaTeX typesetting details are controlled by the \code{"print.latexMatrix"} option,
 which can be a list with one or more of the following elements (see the
 arguments to the \code{print.latexMatrix()} method for more information):
-\code{"bordermatrix"}, \code{"cell.spacing"}, \code{"colname.spacing"},
-\code{"text.labels"}, \code{"display.labels"}, \code{"mathtext"},
+\code{"bordermatrix"}, 
+\code{"cell.spacing"}, 
+\code{"colname.spacing"},
+\code{"text.labels"}, 
+\code{"display.labels"}, 
+\code{"mathtext"},
 and \code{"mathtext.size"}.
 
 Various functions and operators for \code{"latexMatrix"} objects are
@@ -465,7 +472,9 @@ Colnames(W) <- c("\\\\mathrm{Age}", "\\\\mathrm{BMI}", "\\\\mathrm{Waist}")
 W
 }
 \seealso{
-\code{\link{latexMatrixOperations}}, \code{\link{matrix2latex}},
+\code{\link{latexMatrixOperations}}, 
+ \code{\link{Eqn}},
+ \code{\link{matrix2latex}},
  \code{\link[clipr]{write_clip}}
 }
 \author{
