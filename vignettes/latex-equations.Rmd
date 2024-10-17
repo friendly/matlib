@@ -3,13 +3,13 @@ title: "LaTeX Equations with latexMatrix, Eqn and matrix2latex"
 author: Phil Chalmers, John Fox, Michael Friendly
 date: "`r Sys.Date()`"
 output: 
+  pdf_document:
+    toc: true
+    keep_tex: true
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
     number_sections: false
     toc: true
-  pdf_document:
-    toc: true
-    keep_tex: true
 bibliography: "references.bib"
 vignette: >
   %\VignetteIndexEntry{LaTeX Equations with latexMatrix, Eqn and matrix2latex}
