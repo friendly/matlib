@@ -4,6 +4,7 @@
 - Add `papers/matlib-useR-2016.pdf` to avoid bad URL
 - Consolidate options for `print.latexMatrix`
 - Fix bug in `print.latexMatrix(sparse=TRUE)`
+- `plotEqn()` gains a `...` to pass other graphical parameters
 
 # matlib 1.0.0
 

@@ -5,7 +5,8 @@
 library(rgl)
 library(matlib)
 
-# want to use labels that are expressions:
+# want to use labels that are expressions.
+# text3d() now allows this, using `plotmath3d()` for expressions
 labs <- c(expression(x[1]), "y", expression(x[2]))
 is.expression(labs)
 
@@ -16,7 +17,7 @@ E <- diag(3)
 rownames(E) <- c(expression(x[1]), "y", expression(x[2]))
 vectors3d(E, lwd=2)
 vectors3d(c(1, 1, 1),
-          labels=c("",expression(hat(y))), color="red",
+          labels=c(expression(hat(y))), color="red",
           lwd=3)
 vectors3d(c(1, 1, 0),
           labels=c("", "x+y"),
