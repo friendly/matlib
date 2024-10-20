@@ -21,6 +21,7 @@
 #'      using the character string resulting from \code{\link{showEqn}}, modified so that the
 #'      \code{x}s are properly subscripted.
 #' @param solution logical; should the solution points for pairs of equations be marked?
+#' @param ... Other arguments passed to \code{plot}
 #' @return nothing; used for the side effect of making a plot
 #'
 #' @author Michael Friendly
@@ -45,9 +46,10 @@
 plotEqn <- function(A, b, vars, xlim, ylim,
                     col=1:nrow(A), lwd=2, lty=1,
                     axes=TRUE, labels=TRUE,
-                    solution=TRUE
+                    solution=TRUE,
+                    ...
 ) {
-
+  
   if (!is.numeric(A) || !is.matrix(A)) stop("A must be a numeric matrix")
   if (missing(b)) {
     b <- A[ , ncol(A)]   # assume last column of Ab
@@ -114,8 +116,8 @@ plotEqn <- function(A, b, vars, xlim, ylim,
   }
 
   for (i in 1:neq) {
-    if (i == 1) plot(xlim, ylim, type="n", xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim)
-
+    if (i == 1) plot(xlim, ylim, type="n", xlab = vars[1], ylab = vars[2], xlim = xlim, ylim = ylim, ...)
+    
     if (A[i, 2] == 0) {
       abline(v = b[i] / A[i, 1], col = col[i], lwd = lwd[i], lty = lty[i])
       y <- ylim

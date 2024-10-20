@@ -15,7 +15,8 @@ plotEqn(
   lty = 1,
   axes = TRUE,
   labels = TRUE,
-  solution = TRUE
+  solution = TRUE,
+  ...
 )
 }
 \arguments{
@@ -47,6 +48,8 @@ using the character string resulting from \code{\link{showEqn}}, modified so tha
 \code{x}s are properly subscripted.}
 
 \item{solution}{logical; should the solution points for pairs of equations be marked?}
+
+\item{...}{Other arguments passed to \code{plot}}
 }
 \value{
 nothing; used for the side effect of making a plot
