@@ -3,9 +3,6 @@ title: "LaTeX Equations with latexMatrix, Eqn and matrix2latex"
 author: Phil Chalmers, John Fox, Michael Friendly
 date: "`r Sys.Date()`"
 output: 
-  pdf_document:
-    toc: true
-    keep_tex: true
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
     number_sections: false
@@ -16,6 +13,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
+
+<!-- Tried to compile to PDF, but this generates errors from TinyTeX
+  pdf_document:
+    toc: true
+    keep_tex: true
+-->
 
 ```{r nomessages, echo = FALSE}
 knitr::opts_chunk$set(

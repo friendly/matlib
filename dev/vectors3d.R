@@ -9,6 +9,7 @@
 #'
 #' @param X          a vector or three-column matrix representing a set of geometric vectors; if a matrix, one vector is drawn for each row
 #' @param origin     the origin from which they are drawn, a vector of length 3.
+#' @param color      color for the geometric vectors, recycled as necessary for the rows of \code{X}.
 #' @param headlength the \code{headlength} argument passed to \code{\link{arrows3d}} determining the length of arrow heads
 #' @param ref.length vector length to be used in scaling arrow heads so that they are all the same size; if \code{NULL}
 #'        the longest vector is used to scale the arrow heads
@@ -20,6 +21,7 @@
 #' @param adj.lab    label position relative to the label point as in \code{\link[rgl]{text3d}}, recycled as necessary.
 #' @param frac.lab   location of label point, as a fraction of the distance between \code{origin} and \code{X}, recycled as necessary.
 #'        Values \code{frac.lab > 1} locate the label beyond the end of the vector.
+#' @param col.lab    color for labels
 #' @param draw       if \code{TRUE} (the default), draw the vector(s).
 #' @param ...        other arguments passed on to graphics functions.
 #'
@@ -56,8 +58,13 @@
 #' rgl.bringtotop()
 
 vectors3d <- function(X, origin=c(0,0,0),
-                       headlength=0.035, ref.length=NULL, radius=1/60,
-                       labels=TRUE, cex.lab=1.2, adj.lab=0.5, frac.lab=1.1, draw=TRUE, ...) {
+                      color = rep("black", nrow(X)),
+                      headlength=0.035, ref.length=NULL, radius=1/60,
+                      labels=TRUE, 
+                      cex.lab=1.2, adj.lab=0.5, frac.lab=1.1, 
+                      col.lab = col,
+                      draw=TRUE,
+                      ...) {
 
   if (is.vector(X)) X <- matrix(X, ncol=3)
   n <- nrow(X)
@@ -66,7 +73,10 @@ vectors3d <- function(X, origin=c(0,0,0),
 
   scale <- c(1, 1, 1)
 #  radius <- 1/60
-  ref.length <- arrows3d(OX, headlength=headlength, scale=scale, radius=radius,
+  ref.length <- arrows3d(OX, 
+                         color = color,
+                         headlength=headlength, 
+                         scale=scale, radius=radius,
                          ref.length=ref.length, draw=draw, ...)
 
   if (draw){
@@ -80,7 +90,11 @@ vectors3d <- function(X, origin=c(0,0,0),
       xl = origin[1] + frac.lab * (X[,1]-origin[1])
       yl = origin[2] + frac.lab * (X[,2]-origin[2])
       zl = origin[3] + frac.lab * (X[,3]-origin[3])
-      text3d(xl, yl, zl, labels, cex=cex.lab, adj=adj.lab, ...)
+      # can't pass color to plotmath3d()
+      text3d(xl, yl, zl, labels, cex=cex.lab, adj=adj.lab,
+#             usePlotmath = is.expression(labels),
+             color = col.lab, 
+             ...)
     }
   }
   invisible(c(ref.length=ref.length))

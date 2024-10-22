@@ -56,13 +56,8 @@
 #' rgl.bringtotop()
 
 vectors3d <- function(X, origin=c(0,0,0),
-                      color,
-                      headlength=0.035, ref.length=NULL, radius=1/60,
-                      labels=TRUE, 
-                      cex.lab=1.2, adj.lab=0.5, frac.lab=1.1, 
-                      draw=TRUE,
-                      col.lab = col,
-                      ...) {
+                       headlength=0.035, ref.length=NULL, radius=1/60,
+                       labels=TRUE, cex.lab=1.2, adj.lab=0.5, frac.lab=1.1, draw=TRUE, ...) {
 
   if (is.vector(X)) X <- matrix(X, ncol=3)
   n <- nrow(X)
@@ -71,10 +66,7 @@ vectors3d <- function(X, origin=c(0,0,0),
 
   scale <- c(1, 1, 1)
 #  radius <- 1/60
-  ref.length <- arrows3d(OX, 
-                         color = color,
-                         headlength=headlength, 
-                         scale=scale, radius=radius,
+  ref.length <- arrows3d(OX, headlength=headlength, scale=scale, radius=radius,
                          ref.length=ref.length, draw=draw, ...)
 
   if (draw){
@@ -88,11 +80,7 @@ vectors3d <- function(X, origin=c(0,0,0),
       xl = origin[1] + frac.lab * (X[,1]-origin[1])
       yl = origin[2] + frac.lab * (X[,2]-origin[2])
       zl = origin[3] + frac.lab * (X[,3]-origin[3])
-      # can't pass color to plotmath3d()
-      text3d(xl, yl, zl, labels, cex=cex.lab, adj=adj.lab,
-#             usePlotmath = is.expression(labels),
-#             color = col.lab, 
-             ...)
+      text3d(xl, yl, zl, labels, cex=cex.lab, adj=adj.lab, ...)
     }
   }
   invisible(c(ref.length=ref.length))

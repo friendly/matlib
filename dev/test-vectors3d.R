@@ -10,7 +10,7 @@ library(matlib)
 labs <- c(expression(x[1]), "y", expression(x[2]))
 is.expression(labs)
 
-source(here::here("dev", "vectors3d.R"))
+#source(here::here("dev", "vectors3d.R"))
 
 open3d()
 E <- diag(3)

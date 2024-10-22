@@ -12,7 +12,6 @@ and \code{Stress}, a measure of perceived occupational stress,
 in a contrived sample of \eqn{n = 20} university people.
 }
 
-}
 \usage{data("coffee")}
 \format{
   A data frame with 20 observations on the following 4 variables.

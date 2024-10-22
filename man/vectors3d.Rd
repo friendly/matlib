@@ -7,7 +7,6 @@
 vectors3d(
   X,
   origin = c(0, 0, 0),
-  color,
   headlength = 0.035,
   ref.length = NULL,
   radius = 1/60,
@@ -16,7 +15,6 @@ vectors3d(
   adj.lab = 0.5,
   frac.lab = 1.1,
   draw = TRUE,
-  col.lab = col,
   ...
 )
 }
