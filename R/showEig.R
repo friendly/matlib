@@ -12,7 +12,7 @@
 #' @param levels      passed to dataEllipse determining the coverage of the data ellipse(s)
 #' @param plot.points logical; should the points be plotted?
 #' @param add         logical; should this call add to an existing plot?
-#' @param ...         other arguments passed to \code{link[car]{dataEllipse}}
+#' @param ...         other arguments passed to \code{\link[car]{dataEllipse}}
 #' @author Michael Friendly
 #' @seealso \code{\link[car]{dataEllipse}}
 #' @importFrom car dataEllipse

@@ -117,7 +117,7 @@ predictors appears as the lengths of the various vectors.  For example, the erro
 squares is the squared length of the \code{e} vector, and the regression sum of squares is
 the squared length of the \code{yhat} vector.
 
-The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
+The drawing functions \code{\link{vectors}} and \code{\link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
 reasonably well if the variables are shown on commensurate scales, i.e., with
 either \code{scale=TRUE} or \code{normalize=TRUE}.
 }

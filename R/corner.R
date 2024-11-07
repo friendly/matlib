@@ -51,7 +51,7 @@ pointOnLine <- function(x1, x2, d, absolute=TRUE) {
 #' @param absolute logical; if \code{TRUE}, \code{d} is taken as an absolute distance along the vectors; otherwise it
 #'            is calculated as a relative distance, i.e., a fraction of the length of the vectors.
 #'            See \code{\link{pointOnLine}} for the precise definition.
-#' @param ... Arguments passed to \code{link[graphics]{lines}} or to \code{link[rgl]{lines3d}}
+#' @param ... Arguments passed to \code{\link[graphics]{lines}} or to \code{\link[rgl]{lines3d}}
 #' @export
 #' @return none
 #' @family vector diagrams

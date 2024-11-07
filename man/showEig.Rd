@@ -33,7 +33,7 @@ showEig(
 
 \item{add}{logical; should this call add to an existing plot?}
 
-\item{...}{other arguments passed to \code{link[car]{dataEllipse}}}
+\item{...}{other arguments passed to \code{\link[car]{dataEllipse}}}
 }
 \description{
 This function is designed for illustrating the eigenvectors associated with the
