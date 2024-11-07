@@ -89,7 +89,7 @@ corner <- function(p1, p2, p3, d=.10, absolute=TRUE, ...) {
 #' @param d  The distance from \code{p2} along each vector for drawing their corner
 #' @param absolute logical; if \code{TRUE}, \code{d} is taken as an absolute distance along the vectors; otherwise it
 #'            is calculated as a relative distance, i.e., a fraction of the length of the vectors.
-#' @param ... Arguments passed to \code{link[graphics]{lines}} or to \code{link[rgl]{lines3d}}
+#' @param ... Arguments passed to \code{\link[graphics]{lines}} or to \code{\link[rgl]{lines3d}}
 #' @return none
 #' @references \url{https://math.stackexchange.com/questions/1507248/find-arc-between-two-tips-of-vectors-in-3d}
 #' @family vector diagrams

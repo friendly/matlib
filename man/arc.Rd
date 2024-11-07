@@ -18,7 +18,7 @@ arc(p1, p2, p3, d = 0.1, absolute = TRUE, ...)
 \item{absolute}{logical; if \code{TRUE}, \code{d} is taken as an absolute distance along the vectors; otherwise it
 is calculated as a relative distance, i.e., a fraction of the length of the vectors.}
 
-\item{...}{Arguments passed to \code{link[graphics]{lines}} or to \code{link[rgl]{lines3d}}}
+\item{...}{Arguments passed to \code{\link[graphics]{lines}} or to \code{\link[rgl]{lines3d}}}
 }
 \value{
 none
