@@ -28,12 +28,12 @@ The default is \code{paste0("x", 1:ncol(A)}.}
 
 \item{simplify}{logical; try to simplify the equations?}
 
-\item{fractions}{logical; express numbers as rational fractions, using the \code{\link[MASS]{fractions}} 
+\item{fractions}{logical; express numbers as rational fractions, using the \code{\link[MASS]{fractions}}
 function; if you require greater accuracy, you can set the \code{cycles} (default 10)
 and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
 \code{options(fractions=list(cycles=100, max.denominator=10^4))}.}
 
-\item{..., }{arguments to be passed to \code{link{gaussianElimination}} and \code{\link{showEqn}}}
+\item{..., }{arguments to be passed to \code{\link{gaussianElimination}} and \code{\link{showEqn}}}
 }
 \value{
 the function is used primarily for its side effect of printing the solution in a
@@ -41,7 +41,7 @@ the function is used primarily for its side effect of printing the solution in a
 }
 \description{
 Solve the equation system \eqn{Ax = b}, given the coefficient matrix
-\eqn{A} and right-hand side vector \eqn{b}, using \code{link{gaussianElimination}}.
+\eqn{A} and right-hand side vector \eqn{b}, using \code{\link{gaussianElimination}}.
 Display the solutions using \code{\link{showEqn}}.
 }
 \details{

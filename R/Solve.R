@@ -5,7 +5,7 @@
 #' Solve and Display Solutions for Systems of Linear Simultaneous Equations
 #'
 #' Solve the equation system \eqn{Ax = b}, given the coefficient matrix
-#' \eqn{A} and right-hand side vector \eqn{b}, using \code{link{gaussianElimination}}.
+#' \eqn{A} and right-hand side vector \eqn{b}, using \code{\link{gaussianElimination}}.
 #' Display the solutions using \code{\link{showEqn}}.
 #'
 #' @details This function mimics the base function \code{\link[base]{solve}} when supplied with two arguments,
@@ -21,11 +21,11 @@
 #'        The default is \code{paste0("x", 1:ncol(A)}.
 #' @param verbose, logical; show the steps of the Gaussian elimination algorithm?
 #' @param simplify logical; try to simplify the equations?
-#' @param fractions logical; express numbers as rational fractions, using the \code{\link[MASS]{fractions}} 
+#' @param fractions logical; express numbers as rational fractions, using the \code{\link[MASS]{fractions}}
 #'    function; if you require greater accuracy, you can set the \code{cycles} (default 10)
 #'    and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a global option, e.g.,
 #'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
-#' @param ..., arguments to be passed to \code{link{gaussianElimination}} and \code{\link{showEqn}}
+#' @param ..., arguments to be passed to \code{\link{gaussianElimination}} and \code{\link{showEqn}}
 #' @return the function is used primarily for its side effect of printing the solution in a
 #'  readable form, but it invisibly returns the solution as a character vector
 #' @export

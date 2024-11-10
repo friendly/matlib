@@ -23,7 +23,7 @@
 #' squares is the squared length of the \code{e} vector, and the regression sum of squares is
 #' the squared length of the \code{yhat} vector.
 #'
-#' The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
+#' The drawing functions \code{\link{vectors}} and \code{\link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
 #' reasonably well if the variables are shown on commensurate scales, i.e., with
 #' either \code{scale=TRUE} or \code{normalize=TRUE}.
 #'
@@ -189,7 +189,7 @@ regvec3d.default <- function(x1, x2, y, scale=FALSE, normalize=TRUE,
 #' A 2D diagram, using the first two columns of the result, can be used to show the projection
 #' of the space in the \code{x1}, \code{x2} plane.
 #'
-#' The drawing functions \code{\link{vectors}} and \code{link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
+#' The drawing functions \code{\link{vectors}} and \code{\link{vectors3d}} used by the \code{\link{plot.regvec3d}} method only work
 #' reasonably well if the variables are shown on commensurate scales, i.e., with
 #' either \code{scale=TRUE} or \code{normalize=TRUE}.
 #'
