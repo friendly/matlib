@@ -50,7 +50,7 @@
 #' into your macOS account or to reboot your Mac.
 #'
 #' @name matlib-package
-#' @aliases matlib-package
+#' @aliases matlib-package matlib _PACKAGE
 #' @importFrom MASS fractions
 #' @aliases matlib
 #' @references
