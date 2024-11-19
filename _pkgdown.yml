@@ -120,7 +120,9 @@ reference:
     desc: Some small data sets used in examples
     contents:
       - class
+      - coffee
       - therapy
       - workers
+      
 
 

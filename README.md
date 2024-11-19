@@ -156,4 +156,10 @@ June 2016, useR! Conference, Stanford.
 
 * Ivan Savov, [Linear algebra explained in four pages](https://souravsengupta.com/cds2016/lectures/Savov_Notes.pdf)
 
+* Michael Rodriguez & Andrew Zieffler [Matrix Algebra for Educational Scientists](https://zief0002.github.io/matrix-algebra/).
+An online book describing matrix operations and their statistical applications, with R code for many examples.
+
+
+
+
 
