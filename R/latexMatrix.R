@@ -72,9 +72,16 @@
 #' You may need to use \code{extra_dependencies: ["amsmath"]} in your YAML header of a \code{Rmd} or \code{qmd} file.
 #'
 #' You can supply a numeric matrix as the \code{symbol}, but the result will not be pretty
-#' unless the elements are integers or are rounded. For a LaTeX representation of general numeric matrices, use
+#' unless the elements are integers or are rounded. You can control the number of digits
+#' displayed using the global option \code{options("digits")}, for example: \code{options(digits = 4)}.
+#' For a LaTeX representation of general numeric matrices, use
 #' \code{\link{matrix2latex}}.
 #' 
+#' \bold{Other functions}
+#'
+#' \code{rbind()} and \code{cbind()} join \code{"latexMatrix"} objects together, and indexing,
+#' via \code{[ , ]} subsets rows/columns just as they do for regular matrices.
+#'
 #' The \code{partition()} function modifies (only) the printed LaTeX representation of a \code{"latexMatrix"}
 #' object to include partition lines by rows and/or columns.
 #'
@@ -82,8 +89,10 @@
 #' \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
 #' components of the returned object.
 #' 
+#' \bold{print.latexMatrix options}
+#' 
 #' Some LaTeX typesetting details are controlled by the \code{"print.latexMatrix"} option,
-#' which can be a list with one or more of the following elements (see the
+#' which can be a \bold{list} with one or more of the following elements (see the
 #' arguments to the \code{print.latexMatrix()} method for more information):
 #' \code{"bordermatrix"}, 
 #' \code{"cell.spacing"}, 
@@ -92,6 +101,12 @@
 #' \code{"display.labels"}, 
 #' \code{"mathtext"},
 #' and \code{"mathtext.size"}.
+#' 
+#' Most of these have to do with the display of matrices which have row and/or column labels
+#' in their \code{\link[base]{dimnames}} or by being set with the \code{rownames} and \code{rownames} 
+#' arguments to \code{latexMatrix}.
+#' You can turn off their display using
+#' \code{options(print.latexMatrix = list(display.labels=FALSE))}.
 #' 
 #' Various functions and operators for \code{"latexMatrix"} objects are
 #' documented separately; see, \code{\link{latexMatrixOperations}}.
