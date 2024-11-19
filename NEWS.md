@@ -6,6 +6,7 @@
 - Fix bug in `print.latexMatrix(sparse=TRUE)`
 - `plotEqn()` gains a `...` to pass other graphical parameters
 - added `coffee` data (modified from `spida2`)
+- Improve documentation of `latexMatrix()` and it's `print()` method to more clearly indicate how to set global options.
 
 # matlib 1.0.0
 
