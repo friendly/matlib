@@ -268,14 +268,16 @@ for  \code{"Rownames<-()"} and \code{"Colnames<-()"}, a
 vector of names.}
 }
 \value{
-\code{latexMatrix()} returns an object of class \code{"latexMatrix"}
-         which contains the LaTeX representation of the matrix as a character string,
-         in the returned object are named:
+\code{latexMatrix()} returns an object of class \code{"latexMatrix"}.
+         This is a list which contains the LaTeX representation of the matrix as a character string 
+         and other information.
+         The elements in the returned object are named:
          \itemize{
          \item \code{"matrix"} (the LaTeX representation of the matrix); 
          \item \code{"dim"} (\code{nrow} and \code{ncol}); 
          \item \code{"body"} (a character matrix of LaTeX expressions for the cells of the matrix);
          \item \code{"wrapper"}(the beginning and ending lines for the LaTeX matrix environment).
+         \item \code{"dimnames"}(the rownames and colnames for the matrix, if specified)
          }
          
          \code{partition()}, \code{rbind()}, \code{cbind()}, and indexing of
@@ -288,8 +290,10 @@ the LaTeX code for matrices of various types programmatically. The objects produ
 by the function can also be manipulated, e.g., with standard arithmetic functions and operators:
 See \code{\link{latexMatrixOperations}}.
 
-The \code{latexMatrix()} function can construct the LaTeX code for a symbolic matrix, whose elements are a \code{symbol}, with row and column subscripts.
-For example:
+The \code{latexMatrix()} function can construct the LaTeX code for a symbolic matrix 
+whose elements are a \code{symbol}, like \eqn{x}, with row and column subscripts.
+For example, with no arguments, the call \code{latexMatrix()} generates this LaTeX representation
+of an \eqn{n \times m} matrix with elements \eqn{x_{ij}}.
 \preformatted{
  \\begin{pmatrix}
    x_{11}  & x_{12}  & \\dots  & x_{1m}  \\
@@ -312,10 +316,12 @@ For example:
 % \figure{man/figures/symbMat-x.png}{options: width=150 alt="LaTeX result for the symbolic n x m matrix"}.
 
 Alternatively, instead of characters,
-the number of rows and/or columns can be \bold{integers}, generating a matrix of given size.
+the number of rows and/or columns can be \bold{integers}, generating a matrix of given size,
+as in \code{latexMatrix(nrow = 2, ncol = 3)}.
 
 As well, instead of a character for the matrix \code{symbol}, you can supply a \bold{matrix} of arbitrary character
-strings (in LaTeX notation) or numbers, and these will be used as the elements of the matrix.
+strings (in LaTeX notation) or numbers, and these will be used as the elements of the matrix,
+as in \code{latexMatrix(matrix(1:6, nrow = 2, ncol = 6))}.
 
 The resulting LaTeX code is printed to the console by default. When the result is assigned to a variable,
 you can send it to the clipboard using \code{\link[clipr]{write_clip}()}. Perhaps most convenient of all,
@@ -370,6 +376,11 @@ The accessor functions \code{getLatex()}, \code{getBody()}, \code{getWrapper()},
 \code{getDim()}, \code{getNrow()}, and \code{getNcol()} may be used to retrieve
 components of the returned object.
 
+Various arithmetic functions and operators (like \code{+}, \code{-}, matrix product \code{\%*\%}, ...)  for \code{"latexMatrix"} objects are
+documented separately; see, \code{\link{latexMatrixOperations}}.
+
+
+
 \bold{print.latexMatrix options}
 
 Some LaTeX typesetting details are controlled by the \code{"print.latexMatrix"} option,
@@ -386,11 +397,12 @@ and \code{"mathtext.size"}.
 Most of these have to do with the display of matrices which have row and/or column labels
 in their \code{\link[base]{dimnames}} or by being set with the \code{rownames} and \code{rownames} 
 arguments to \code{latexMatrix}.
-You can turn off their display using
-\code{options(print.latexMatrix = list(display.labels=FALSE))}.
 
-Various functions and operators for \code{"latexMatrix"} objects are
-documented separately; see, \code{\link{latexMatrixOperations}}.
+You can turn off their display using:
+
+\preformatted{options(print.latexMatrix = list(display.labels=FALSE))}
+
+and similarly you can change any other of these options.
 }
 \examples{
 latexMatrix()
