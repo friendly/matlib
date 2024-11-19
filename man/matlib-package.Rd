@@ -3,6 +3,7 @@
 \name{matlib-package}
 \alias{matlib-package}
 \alias{matlib}
+\alias{_PACKAGE}
 \title{matlib: Matrix Functions for Teaching and Learning Linear Algebra and Multivariate Statistics.}
 \description{
 These functions are designed mainly for tutorial purposes in teaching & learning matrix algebra

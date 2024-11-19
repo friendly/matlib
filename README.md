@@ -4,7 +4,7 @@
 [![R-universe](https://friendly.r-universe.dev/badges/matlib)](https://friendly.r-universe.dev)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/matlib)](https://cran.r-project.org/package=matlib)
 [![downloads](http://cranlogs.r-pkg.org/badges/matlib)](https://cran.r-project.org/package=matlib)
-
+[![pkgdown](https://img.shields.io/badge/documentation-blue)](https://friendly.github.io/matlib)
 <!-- [![Dependencies](https://tinyverse.netlify.com/badge/matlib)](https://cran.r-project.org/package=matlib) -->
 
 <!-- badges: end -->
@@ -40,7 +40,7 @@ angles and arcs.
 
 * `regvec3d()` calculates and plot vectors representing a bivariate regression model, `lm(y ~ x1 + x2)`
 
-## Installation
+## Installation 📦
 
 Get the released version from CRAN:
 
@@ -59,7 +59,8 @@ The development version can also be installed to your R library directly from th
 The functions that draw 3D graphs use the **rgl** package. On macOS, **rgl** requires that [XQuartz](https://www.xquartz.org/) be installed. After installing XQuartz, it's necessary either to log out of and back into your macOS account or to reboot your Mac.
 
 
-## Topics
+## Topics 🍪
+
 The functions in this package are grouped under the following topics
 
 1. **Convenience functions**:  
