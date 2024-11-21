@@ -3,29 +3,117 @@
 # Use case: I want to show the equation SSP_T = SSP_H + SSP_E with the matrix names at the top
 #
 
-overset <- function(x, over){
-  paste0("\\overset{", over, "} {", x, "}" )
+overset <- function(x, 
+                    label,
+                    label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
+                    )
+ {
+  if (missing(label) && is.matrix(x)) label <- deparse(substitute(x))
+  if (is.matrix(x)) x <- latexMatrix(x)  |> getLatex(x)
+  label.style <- match.arg(label.style)
+  if (label.style != " ") label <- paste0("\\", label.style, "{", label, "}")
+  over <- paste0("\\overset{", label, "}")
+  return(c(over, "\n{", x, "}\n" ))
+  }
+
+# Is it useful to allow for label.size, or could this just be handled by label = "\Large(A)" ?
+# overset <- function(x, 
+#                     label,
+#                     label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " "),
+#                     label.size = c("normalsize", "large", "Large", "LARGE")
+#                     )
+#   {
+#   if (missing(label) && is.matrix(x)) label <- deparse(substitute(x))
+#   if (is.matrix(x)) x <- latexMatrix(x) |> getLatex()
+#   label.style <- match.arg(label.style)
+#   label.size <- match.arg(label.size)
+#   if (label.size != "normalsize") label <- paste0("\\", label.size, "{", label, "}")
+#   if (label.style != " ") label <- paste0("\\", label.style, "{", label, "}")
+#   over <- paste0("\\overset{", label, "}")
+#   return(c(over, "\n{", x, "}\n" ))
+#   }
+
+underset <- function(x, 
+                     label, 
+                     label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
+                    )
+{
+  if (missing(label) && is.matrix(x)) label <- deparse(substitute(x))
+  if (is.matrix(x)) x <- latexMatrix(x) |> getLatex(x)
+  label.style <- match.arg(label.style)
+  if (label.style != " ") label <- paste0("\\", label.style, "{", label, "}")
+  under <- paste0("\\underset{", label, "}")
+  return(c(under, "\n{", x, "}\n" ))
 }
 
-underset <- function(x, under){
-  paste0("\\underset{", under, "} {", x, "}" )
-}
 
-overbrace <- function(x, label=NULL){
-  res <- paste0("\\overbrace{", x, "}")
-  if (!is.null(label)) res <- paste0(res, "^{", label, "}")
+
+overbrace <- function(x, 
+                      label=NULL,
+                      label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
+                      )
+  {
+  if(is.matrix(x)) x <- latexMatrix(x)
+  res <- paste0("\\overbrace{", getLatex(x), "}")
+  if (!is.null(label)) {
+    label.style <- match.arg(label.style)
+    if (label.style != " ") label <- paste0("\\", label.style, "{", label, "}")
+    res <- paste0(res, "^{", label, "}")
+    }
   res
-}
+  }
 
-underbrace <- function(x, label=NULL){
-  res <- paste0("\\underbrace{", x, "}")
-  if (!is.null(label)) res <- paste0(res, "_{", label, "}")
+underbrace <- function(x, 
+                       label=NULL,
+                       label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
+                       )
+  {
+  if(is.matrix(x)) x <- latexMatrix(x)
+  res <- paste0("\\overbrace{", getLatex(x), "}")
+  if (!is.null(label)) {
+    label.style <- match.arg(label.style)
+    if (label.style != " ") label <- paste0("\\", label.style, "{", label, "}")
+    res <- paste0(res, "_{", label, "}")
+  }
   res
-}
+  }
 
 if (FALSE) {
+  library(matlib)
+  A <- matrix(1:4, 2, 2)
+  B <- matrix(4:1, 2, 2)
+  AB <- A + B
+  Eqn(overset(A, "A"))
+  # test missing label
+  Eqn(overset(A))
+  # test just a character LaTeX
+  Eqn('a', overset('=', '?'), 'b')
+  
+  # test label styles
+  Eqn(overset(A, "A", label.style = "mathtt"))
+  Eqn(overset(A, "AAAAA", label.style = "mathcal"))
+  Eqn(overset(A, "A", label.style = " "))
+  Eqn(overset(A, "\\Large{A}", label.style = " "))
 
-  data(dogfood, package = "heplots")
+  # test equations
+  Eqn(overset(A, "A"), "+",
+      overset(B, "B"), "=",
+      underset(AB, "A+B"))
+  
+  # test latexMatrix objects
+  Lambda <- latexMatrix("\\lambda", nrow=2, ncol=2,
+                   diag=TRUE)
+  # OK -- but note the docs use "\lambda" here
+  Eqn(Lambda)
+  # fails miserably
+  Eqn(overset(Lambda, "\\Lambda"))
+
+  # over/underbrace
+
+  Eqn(overbrace(A, "A"))
+  
+  # data(dogfood, package = "heplots") -- not yet on CRAN
+  load(here::here("dev", "dogfood.RData"))
   dogfood.mod <- lm(cbind(start, amount) ~ formula, data=dogfood) 
   dogfood.aov <- car::Anova(dogfood.mod) 
   SSP_H <- dogfood.aov$SSP[["formula"]]   |> round(digits = 2)
@@ -37,7 +125,7 @@ if (FALSE) {
   # do overbrace directly: WORKS
   Eqn("\\overset{\\mathbf{SSP}_T}{", SSP_T, "}")
   
-  # but these don't work:
+  # these now work:
   Eqn(overset(SSP_H, "\\mathbf{SSP_H}"))
   Eqn(overset(SSP_E, "\\mathbf{SSP_E}"))
   
@@ -46,37 +134,29 @@ if (FALSE) {
   Eqn(overset(H, "\\mathbf{SSP_H}"))
 
   # show SSP_H + SSP_E = (SSP_H+SSP_E)
-  # What I want to get here:
-  eqn <- "
-\begin{equation*}
-\overset{\mathbf{SSP}_T}
-  {\begin{pmatrix} 
-   35.4 & -59.2 \\ 
-  -59.2 & 975.9 \\ 
-  \end{pmatrix}}
-=
-\overset{\mathbf{SSP}_H}
-  {\begin{pmatrix} 
-    9.69 & -70.94 \\ 
-  -70.94 & 585.69 \\ 
-  \end{pmatrix}}
-+
-\overset{\mathbf{SSP}_E}
-  {\begin{pmatrix} 
-   25.8 &  11.8 \\ 
-   11.8 & 390.3 \\ 
-  \end{pmatrix}}
-\end{equation*} 
- "
-  
-  # this generates an error:
-  # argument is missing, with no default
-  Eqn("\\overset{\\mathbf{SSP_T}}{", SSP_T, "}", 
+  Eqn(overset(SSP_T, "\\mathbf{SSP}_T"), "=",
+      overset(SSP_H, "\\mathbf{SSP}_H"), "+",
+      overset(SSP_E, "\\mathbf{SSP}_E")
+      )
+
+  # This works too:
+  Eqn("\\overset{\\mathbf{SSP}_T}{", SSP_T, "}", 
       "+",
-      "\\overset{\\mathbf{SSP_H}}{", SSP_H, "}",
+      "\\overset{\\mathbf{SSP}_H}{", SSP_H, "}",
       "=",
-      "\\overset{\\mathbf{SSP_E}}{", SSP_E, "}",
+      "\\overset{\\mathbf{SSP}_E}{", SSP_E, "}"
+    )
+  # And this
+  Eqn("\\overset{\\mathbf{SSP}_T}{", latexMatrix(SSP_T), "}", 
+      "+",
+      "\\overset{\\mathbf{SSP}_H}{", latexMatrix(SSP_H), "}",
+      "=",
+      "\\overset{\\mathbf{SSP}_E}{", latexMatrix(SSP_E), "}"
   )
+  
+  
+
+  
   
  ## -------Underbrace: 
   # I want to generate the equation \hat{y} = X (X'X)^{-1} X' y with a brace underneath showing the H matrix

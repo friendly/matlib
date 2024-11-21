@@ -6,8 +6,13 @@ engine: knitr
 ```{r}
 #| include : FALSE
 library(matlib)
+library(car)
 ```
 
+Quarto has it's own syntax for creating displayed equations with equation numbers and a way to refer to them in text.
+We illustrate these here.
+
+## Simple equations
 A standard equation and reference, as a displayed equation in Quarto:
 
 $$
@@ -23,7 +28,7 @@ Eqn("f\\left(k\\right) = \\binom{n}{k} p^k\\left(1-p\\right)^{n-k}",
     quarto=TRUE)
 ```
 
-Rendered:
+Using `results: 'asis'` in the chunk renders this as:
 
 ```{r}
 #| results: 'asis'
@@ -31,7 +36,7 @@ Eqn("f\\left(k\\right) = \\binom{n}{k} p^k\\left(1-p\\right)^{n-k}",
     quarto=TRUE)
 ```
 
-With equation label and number.
+Add an equation label and number:
 
 ```{r}
 #| results: 'asis'
@@ -64,6 +69,22 @@ Eqn("f\\left(k\\right) = \\binom{n}{k} p^k\\left(1-p\\right)^{n-k}", label = 'eq
 
 See `{r} ref("eq-auto", quarto=TRUE)` for auto-detected quarto label. Of course, the @ notation still works too; e.g., see @eq-auto for details
 
+## Testing `latexMatrix()`
+
+Even this simple test doesn't work:
+
+```{r}
+Eqn("\\mathbf{X}=", latexMatrix(), quarto=TRUE)
+```
+
+Rendered:
+
+```{r}
+#| results: 'asis'
+Eqn("\\mathbf{X}=", latexMatrix(), quarto=TRUE)
+```
+
+
 ## A more complex example
 
 Here, we illustrate the decomposition of sums of squares and product (SSP) matrices in a simple one-way MANOVA design.
@@ -72,6 +93,32 @@ data(dogfood, package = "heplots")
 str(dogfood)
 
 #fit the model
-dogfood.mod <- lm(cbind(start, amount) ~ formula, data=dogfood) 
+dogfood.mod <- lm(cbind(start, amount) ~ formula, data=dogfood)
+```
+
+Do the MANOVA tests and extract the SSP_H and SSP_E:
+
+```{r}
+dogfood.aov <- Anova(dogfood.mod)
+SSP_H <- dogfood.aov$SSP[["formula"]]  |> print()
+SSP_E <- dogfood.aov$SSPE              |> print()
+SSP_T <- SSP_H + SSP_E
+```
+
+Now, show that `SSP_T = SSP_H + SSP_E` numerically. As generated, each of these matrices have `rownames()` and `colnames()`. 
+
+```{r}
+options(print.latexMatrix = list(display.labels=FALSE))
+options(digits = 4)
+Eqn(latexMatrix(SSP_T), "=", latexMatrix(SSP_H), "+", latexMatrix(SSP_E),
+    quarto = TRUE)
+```
+
+Rendered by Quarto:
+
+```{r}
+#| results: asis
+Eqn(latexMatrix(SSP_T), "=", latexMatrix(SSP_H), "+", latexMatrix(SSP_E),
+    quarto = TRUE)
 ```
 
