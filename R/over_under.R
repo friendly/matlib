@@ -1,11 +1,6 @@
 # Functions to add decorators over or under matrices
 #
-
-#' @name over_under
-#' @aliases overset underset overbrace underbrace 
-#' @aliases Eqn_overset Eqn_underset Eqn_overbrace Eqn_underbrace 
-#' @title 
-#' Functions to Add Labels and/or Braces 
+#' @title Functions to Add Labels and/or Braces 
 #' 
 #' @description
 #' 
@@ -86,9 +81,7 @@
 #' # Combine this with overbrace
 #' Eqn(overbrace(underbrace(H, "\\mathbf{H}"), "\\LARGE\\mathbf{\\hat{y}}"))
 #'
-#'
-#' @rdname over_under
-#' @export
+
 overset <- function(x,
                     label,
                     label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
