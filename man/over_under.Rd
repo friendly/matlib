@@ -86,6 +86,7 @@ or a \code{"latexMatrix"} object.
    \item{\code{overset} and \code{underset} typesets a label over or under an object}
    \item{\code{overbrace} and \code{underbrace} typesets a brace, with an optional label over or under an object}
 }
+Each of these have \code{Eqn_*} aliases to fit with the style of \code{\link{Eqn}} helper functions.
 
 For example, given the matrix \code{A = matrix(1:4), 2, 2)}, the call \code{Eqn(overset(A, "A"))}
 generates:
