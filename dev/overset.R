@@ -1,9 +1,11 @@
 # Functions to add decorators over or under matrices
 #
-#' @name over_under
+
+#' @name overset
 #' @aliases overset underset overbrace underbrace 
 #' @aliases Eqn_overset Eqn_underset Eqn_overbrace Eqn_underbrace 
-#' @title Functions to Add Labels and/or Braces 
+#' @title 
+#' Functions to Add Labels and/or Braces 
 #' 
 #' @description
 #' 
@@ -14,7 +16,7 @@
 #'    \item{\code{overbrace} and \code{underbrace} typesets a brace, with an optional label over or under an object}
 #' }
 #' 
-#' For example, given the matrix \code{A = matrix(1:4), 2, 2)}, the call \code{Eqn(overset(A, "A"))}
+#' For example, with the matrix \code{A = matrix(1:4), 2, 2}, the call \code{Eqn(overset(A, "A"))}
 #' generates:
 #' \preformatted{
 #' \overset{\mathbf{A}} 
@@ -50,7 +52,7 @@
 #'        but you can use a size modifier to change this, for example \code{'\\Large{"A"}'}.  
 #' @param label.style The name of a math font used to to typeset the label. One of
 #'        \code{c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")}.
-#'        The default, \code{"mathbf"} wraps the label inside \code{"\\mathbf{ }"}
+#'        The default, \code{"mathbf} wraps the label inside \code{"\\mathbf{ }"}
 #'        commonly used for the name of a matrix.
 #'
 #' @return Returns a character vector containing the LaTeX expressions for the given operation. You can pass
@@ -64,11 +66,8 @@
 #' B <- matrix(4:1, 2, 2)
 #' AB <- A + B
 #' Eqn(overset(A, "A"))
-#'   #  missing label: uses the name of the object
-#' Eqn(overset(A))
-#'
-#' # test just a character LaTeX expression
-#' Eqn('a', overset('=', '?'), 'b')
+#'   # test missing label
+#  Eqn(overset(A))
 #' 
 #' # a labelled latexMatrix equation
 #' Eqn(overset(A, "A"), "+",
@@ -87,9 +86,9 @@
 #' # Combine this with overbrace
 #' Eqn(overbrace(underbrace(H, "\\mathbf{H}"), "\\LARGE\\mathbf{\\hat{y}}"))
 #'
-#' @rdname over_under
+#'
+#' @rdname overset
 #' @export
-
 overset <- function(x,
                     label,
                     label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
@@ -122,7 +121,7 @@ overset <- function(x,
 #   return(c(over, "\n{", x, "}\n" ))
 #   }
 
-#' @rdname over_under
+#' @rdname overset
 #' @export
 underset <- function(x,
                      label,
@@ -140,7 +139,7 @@ underset <- function(x,
 }
 
 
-#' @rdname over_under
+#' @rdname overset
 #' @export
 overbrace <- function(x,
                       label=NULL,
@@ -159,7 +158,7 @@ overbrace <- function(x,
   res
   }
 
-#' @rdname over_under
+#' @rdname overset
 #' @export
 underbrace <- function(x,
                        label=NULL,
@@ -180,19 +179,19 @@ underbrace <- function(x,
 
 # Make these aliases of Eqn_ functions
 
-#' @rdname over_under
+#' @rdname overset
 #' @export
 Eqn_overset <- overset
 
-#' @rdname over_under
+#' @rdname overset
 #' @export
 Eqn_underset <- underset
 
-#' @rdname over_under
+#' @rdname overset
 #' @export
 Eqn_overbrace <- overbrace
 
-#' @rdname over_under
+#' @rdname overset
 #' @export
 Eqn_underbrace <- underbrace
 
