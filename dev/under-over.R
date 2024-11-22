@@ -75,7 +75,7 @@ underbrace <- function(x,
                        )
   {
   if(is.matrix(x)) x <- latexMatrix(x)
-  res <- paste0("\\overbrace{",
+  res <- paste0("\\underbrace{",
                 ifelse(inherits(x, 'latexMatrix'), getLatex(x), x),
                 "}")
   if (!is.null(label)) {
@@ -115,10 +115,12 @@ if (FALSE) {
   Eqn(Lambda)
   # fails miserably
   Eqn(overset(Lambda, "\\Lambda"))
+  Eqn(underset(Lambda, "\\Lambda"))
 
   # over/underbrace
 
   Eqn(overbrace(A, "A"))
+  Eqn(underbrace(A, "A"))
 
   # data(dogfood, package = "heplots") -- not yet on CRAN
   load(here::here("dev", "dogfood.RData"))
@@ -169,10 +171,10 @@ if (FALSE) {
  ## -------Underbrace:
   # I want to generate the equation \hat{y} = X (X'X)^{-1} X' y with a brace underneath showing the H matrix
   # This manual LaTeX works:
-  eqn <- "
-  \mathbf{\hat{y}}
-   = \underbrace{\mathbf{X}(\mathbf{X}^{\top}\mathbf{X})^{-1}\mathbf{X}^{\top}}_\mathbf{H}\mathbf{y}
-  "
+  # eqn <- "
+  # \mathbf{\hat{y}}
+  #  = \underbrace{\mathbf{X}(\mathbf{X}^{\top}\mathbf{X})^{-1}\mathbf{X}^{\top}}_\mathbf{H}\mathbf{y}
+  # "
 
   # generate this with underbrace()
   H <- "\\mathbf{X}(\\mathbf{X}^{\\top}\\mathbf{X})^{-1}\\mathbf{X}^{\\top}"
