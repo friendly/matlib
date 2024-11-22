@@ -1,7 +1,86 @@
 # Functions to add decorators over or under matrices
 #
-# Use case: I want to show the equation SSP_T = SSP_H + SSP_E with the matrix names at the top
-#
+#' @title Functions to Add Labels and/or Braces 
+#' 
+#' @description
+#' 
+#' These functions extend \code{\link{Eqn}} to add labels or braces over or under a LaTeX expression
+#' or a \code{"latexMatrix"} object.
+#' \itemize{
+#'    \item{\code{overset} and \code{underset} typesets a label over or under an object}
+#'    \item{\code{overbrace} and \code{underbrace} typesets a brace, with an optional label over or under an object}
+#' }
+#' 
+#' For example, with the matrix \code{A = matrix(1:4), 2, 2}, the call \code{Eqn(overset(A, "A"))}
+#' generates:
+#' \preformatted{
+#' \overset{\mathbf{A}} 
+#'  { \begin{pmatrix} 
+#'   1 & 3 \\ 
+#'   2 & 4 \\ 
+#'   \end{pmatrix}
+#'  }
+#' }
+#'
+#'  When rendered in LaTeX, this produces:
+#'  \deqn{
+#'  \overset{\mathbf{A}} 
+#'  { \begin{pmatrix} 
+#'   1 & 3 \\ 
+#'   2 & 4 \\ 
+#'   \end{pmatrix}
+#'  }
+#'  }
+#'  
+#'  You can also use these for straight LaTeX expressions, such this equation showing and labeling
+#'  the Hat matrix in regression. See the examples for the call to \code{underbrace} for this.
+#'  \deqn{\mathbf{\hat{y}} =
+#'        \underbrace{\mathbf{X}(\mathbf{X}^{\top}\mathbf{X})^{-1}
+#'        \mathbf{X}^{\top}}_{\mathbf{\mathbf{H}}}\mathbf{y}} 
+#' 
+#'
+#' @param x     a numeric or character matrix, or a character string LaTeX expression or 
+#'        a \code{"latexMatrix"} object
+#' @param label   a character string used as the label above or below the object \code{x}.
+#'        If missing, and a \code{"matrix"} object was passed, it's name is used as the label.
+#'        In LaTeX, these are rendered in a size appropriate for superscripts and subscripts,
+#'        but you can use a size modifier to change this, for example \code{'\\Large{"A"}'}.  
+#' @param label.style The name of a math font used to to typeset the label. One of
+#'        \code{c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")}.
+#'        The default, \code{"mathbf} wraps the label inside \code{"\\mathbf{ }"}
+#'        commonly used for the name of a matrix.
+#'
+#' @return Returns a character vector containing the LaTeX expressions for the given operation. You can pass
+#'        this to \code{\link{cat}} to display the result on the console, or include it inside a call
+#'        to \code{Eqn} to typeset it.
+#' @export
+#'
+#' @examples
+#' library(matlib)
+#' A <- matrix(1:4, 2, 2)
+#' B <- matrix(4:1, 2, 2)
+#' AB <- A + B
+#' Eqn(overset(A, "A"))
+#'   # test missing label
+#  Eqn(overset(A))
+#' 
+#' # a labelled latexMatrix equation
+#' Eqn(overset(A, "A"), "+",
+#'     overset(B, "B"), "=",
+#'     underset(AB, "A+B"))
+#'     
+#'  # using a LaTeX expression as the label  
+#'  Lambda <- latexMatrix("\\lambda", nrow=2, ncol=2,
+#'                        diag=TRUE)
+#'  Eqn(overset(Lambda, "\\Lambda"))
+#'
+#'  # generate LaTeX expression for the Hat matrix, label as "H"
+#' H <- "\\mathbf{X} (\\mathbf{X}^{\\top}\\mathbf{X})^{-1} \\mathbf{X}^{\\top}"
+#' Eqn("\\mathbf{\\hat{y}} =", underbrace(H, "\\mathbf{H}"), "\\mathbf{y}")
+#' 
+#' # Combine this with overbrace
+#' Eqn(overbrace(underbrace(H, "\\mathbf{H}"), "\\LARGE\\mathbf{\\hat{y}}"))
+#'
 
 overset <- function(x,
                     label,
@@ -35,6 +114,8 @@ overset <- function(x,
 #   return(c(over, "\n{", x, "}\n" ))
 #   }
 
+#' @rdname over_under
+#' @export
 underset <- function(x,
                      label,
                      label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
@@ -51,7 +132,8 @@ underset <- function(x,
 }
 
 
-
+#' @rdname over_under
+#' @export
 overbrace <- function(x,
                       label=NULL,
                       label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
@@ -69,6 +151,8 @@ overbrace <- function(x,
   res
   }
 
+#' @rdname over_under
+#' @export
 underbrace <- function(x,
                        label=NULL,
                        label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")
@@ -86,6 +170,24 @@ underbrace <- function(x,
   res
   }
 
+# Make these aliases of Eqn_ functions
+
+#' @rdname over_under
+#' @export
+Eqn_overset <- overset
+
+#' @rdname over_under
+#' @export
+Eqn_underset <- underset
+
+#' @rdname over_under
+#' @export
+Eqn_overbrace <- overbrace
+
+#' @rdname over_under
+#' @export
+Eqn_underbrace <- underbrace
+
 if (FALSE) {
   library(matlib)
   A <- matrix(1:4, 2, 2)
@@ -102,6 +204,10 @@ if (FALSE) {
   Eqn(overset(A, "AAAAA", label.style = "mathcal"))
   Eqn(overset(A, "A", label.style = " "))
   Eqn(overset(A, "\\Large{A}", label.style = " "))
+  
+  # character matrix
+  abcd <- matrix(letters[1:4], 2, 2)
+  Eqn(overset(abcd))
 
   # test equations
   Eqn(overset(A, "A"), "+",
@@ -111,16 +217,27 @@ if (FALSE) {
   # test latexMatrix objects
   Lambda <- latexMatrix("\\lambda", nrow=2, ncol=2,
                    diag=TRUE)
-  # OK -- but note the docs use "\lambda" here
+  # OK -- 
   Eqn(Lambda)
-  # fails miserably
   Eqn(overset(Lambda, "\\Lambda"))
   Eqn(underset(Lambda, "\\Lambda"))
 
   # over/underbrace
-
   Eqn(overbrace(A, "A"))
   Eqn(underbrace(A, "A"))
+  
+  ## -------Underbrace:
+  
+  # generate Hat matrix, label as H
+  H <- "\\mathbf{X}(\\mathbf{X}^{\\top}\\mathbf{X})^{-1}\\mathbf{X}^{\\top}"
+
+  # Do this with Eqn()
+  Eqn("\\mathbf{\\hat{y}} =", underbrace(H, "\\mathbf{H}"), "\\mathbf{y}")
+  
+  # We can even combine this with overbrace
+  Eqn(overbrace(underbrace(H, "\\mathbf{H}"), "\\LARGE\\mathbf{\\hat{y}}"))
+  
+  
 
   # data(dogfood, package = "heplots") -- not yet on CRAN
   load(here::here("dev", "dogfood.RData"))
@@ -163,27 +280,5 @@ if (FALSE) {
       "=",
       "\\overset{\\mathbf{SSP}_E}{", latexMatrix(SSP_E), "}"
   )
-
-
-
-
-
- ## -------Underbrace:
-  # I want to generate the equation \hat{y} = X (X'X)^{-1} X' y with a brace underneath showing the H matrix
-  # This manual LaTeX works:
-  # eqn <- "
-  # \mathbf{\hat{y}}
-  #  = \underbrace{\mathbf{X}(\mathbf{X}^{\top}\mathbf{X})^{-1}\mathbf{X}^{\top}}_\mathbf{H}\mathbf{y}
-  # "
-
-  # generate this with underbrace()
-  H <- "\\mathbf{X}(\\mathbf{X}^{\\top}\\mathbf{X})^{-1}\\mathbf{X}^{\\top}"
-  underbrace(H, "\\mathbf{H}")
-
-  # Do this with Eqn() - WORKS, at least when all the elements are just symbols, not matrices
-  Eqn("\\mathbf{\\hat{y}} =", underbrace(H, "\\mathbf{H}"), "\\mathbf{y}")
-
-  # We can even combine this with overbrace
-  Eqn(overbrace(underbrace(H, "\\mathbf{H}"), "\\mathbf{\\hat{y}}"))
 
 }

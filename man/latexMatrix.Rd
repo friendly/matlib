@@ -290,7 +290,7 @@ the LaTeX code for matrices of various types programmatically. The objects produ
 by the function can also be manipulated, e.g., with standard arithmetic functions and operators:
 See \code{\link{latexMatrixOperations}}.
 
-The \code{latexMatrix()} function can construct the LaTeX code for a symbolic matrix 
+The \code{latexMatrix()} function can construct the \\LaTeX code for a symbolic matrix 
 whose elements are a \code{symbol}, like \eqn{x}, with row and column subscripts.
 For example, with no arguments, the call \code{latexMatrix()} generates this LaTeX representation
 of an \eqn{n \times m} matrix with elements \eqn{x_{ij}}.
@@ -329,7 +329,7 @@ the function can be used used in a markdown chunk in a \code{Rmd} or \code{qmd} 
 
 \preformatted{
 ```{r results = "asis"}
-latexMatrix("\\lambda", nrow=2, ncol=2,
+latexMatrix("\\\\lambda", nrow=2, ncol=2,
                diag=TRUE)
 ```
 }
@@ -344,6 +344,8 @@ This generates
 
 The function \code{\link{Eqn}} can be used to construct matrix equations, and in RStudio generates a preview of
 an equation in the Viewer panel.
+
+Various options control the printing of \code{"latexMatrix"} objects, described in Details.
 }
 \details{
 This implementation assumes that the LaTeX \code{amsmath} package will be available because it uses the shorthands
