@@ -1,6 +1,6 @@
 # Functions to add decorators over or under matrices
 #
-#' @name over_under
+#' @name Eqn_helpers
 #' @aliases overset underset overbrace underbrace 
 #' @aliases Eqn_overset Eqn_underset Eqn_overbrace Eqn_underbrace 
 #' @title Functions to Add Labels and/or Braces 
@@ -88,7 +88,7 @@
 #' # Combine this with overbrace
 #' Eqn(overbrace(underbrace(H, "\\mathbf{H}"), "\\LARGE\\mathbf{\\hat{y}}"))
 #'
-#' @rdname over_under
+#' @rdname Eqn_helpers
 #' @export
 
 overset <- function(x,
@@ -123,7 +123,7 @@ overset <- function(x,
 #   return(c(over, "\n{", x, "}\n" ))
 #   }
 
-#' @rdname over_under
+#' @rdname Eqn_helpers
 #' @export
 underset <- function(x,
                      label,
@@ -141,7 +141,7 @@ underset <- function(x,
 }
 
 
-#' @rdname over_under
+#' @rdname Eqn_helpers
 #' @export
 overbrace <- function(x,
                       label=NULL,
@@ -160,7 +160,7 @@ overbrace <- function(x,
   res
   }
 
-#' @rdname over_under
+#' @rdname Eqn_helpers
 #' @export
 underbrace <- function(x,
                        label=NULL,
@@ -181,19 +181,19 @@ underbrace <- function(x,
 
 # Make these aliases of Eqn_ functions
 
-#' @rdname over_under
+#' @rdname Eqn_helpers
 #' @export
 Eqn_overset <- overset
 
-#' @rdname over_under
+#' @rdname Eqn_helpers
 #' @export
 Eqn_underset <- underset
 
-#' @rdname over_under
+#' @rdname Eqn_helpers
 #' @export
 Eqn_overbrace <- overbrace
 
-#' @rdname over_under
+#' @rdname Eqn_helpers
 #' @export
 Eqn_underbrace <- underbrace
 
