@@ -97,6 +97,16 @@ Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}", label='eq:svd')
 ```
 }
 
+Note that you can avoid the "leaning toothpick syndrome" of all those doubled backslashes by using R's new (as of 4.0.0)
+"raw strings", composed as \code{r"(...)"} or \code{r"{...}"}
+
+\preformatted{
+```{r results = "asis", echo = FALSE}
+Eqn(r"{\mathbf{X} = \mathbf{U} \mathbf{\Lambda} \mathbf{V}}", label = 'eq:svn')
+```
+}
+
+
 A collection of helper functions, such as \code{\link{Eqn_newline}}, \code{\link{Eqn_hspace}}
 facilitate formatting of equations and functions like \code{\link{Eqn_overset}} and \code{\link{Eqn_overbrace}}
 provide for decorators over or under a LaTeX expression or matrix. See \code{\link{Eqn_helpers}}
@@ -192,6 +202,9 @@ Eqn('e = mc^2', label='eq-einstein', quarto=TRUE)
 ref('eq:einstein', quarto=TRUE)
 ref('eq:einstein', quarto=TRUE, parentheses=FALSE)
 
+}
+\references{
+Josiah Parry, Raw strings in R, \url{https://josiahparry.com/posts/2023-01-19-raw-strings-in-r.html}
 }
 \seealso{
 \code{\link{Eqn_helpers}}, \code{\link{latexMatrix}}, \code{\link{matrix2latex}}, \code{\link{ref}}

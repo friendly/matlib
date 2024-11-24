@@ -223,6 +223,16 @@ Eqn(overbrace(underbrace(H, "\\\\mathbf{H}"), "\\\\LARGE\\\\mathbf{\\\\hat{y}}")
 Eqn_newline()
 Eqn_newline('10ex')
 
+# more complete example  
+Eqn(underset("\\\\mathbf{X}", "(4 \\\\times 3)"), "& = \\\\mathbf{U} \\\\mathbf{\\\\Lambda} \\\\mathbf{V}^\\\\top",
+    Eqn_newline('1ex'),
+    ' & =',
+    latexMatrix("u", 4, 3),
+    latexMatrix("\\\\lambda", 3, 3, diag=TRUE),
+    latexMatrix("v", 3, 3, transpose = TRUE),
+    align=TRUE)
+
+
 
 Eqn_hspace()
 Eqn_hspace(3) # smaller
@@ -248,4 +258,7 @@ string <- 'e = mc^2'
 Eqn_size(string, size=1)
 
 
+}
+\author{
+Michael Friendly, Phil Chalmers
 }

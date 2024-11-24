@@ -95,6 +95,7 @@
 #' # Combine this with overbrace
 #' Eqn(overbrace(underbrace(H, "\\mathbf{H}"), "\\LARGE\\mathbf{\\hat{y}}"))
 #'
+#' @author Michael Friendly, Phil Chalmers
 #' @rdname Eqn_helpers
 #' @export
 
@@ -113,22 +114,6 @@ overset <- function(x,
     "}\n" )
   }
 
-# Is it useful to allow for label.size, or could this just be handled by label = "\Large(A)" ?
-# overset <- function(x,
-#                     label,
-#                     label.style = c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " "),
-#                     label.size = c("normalsize", "large", "Large", "LARGE")
-#                     )
-#   {
-#   if (missing(label) && is.matrix(x)) label <- deparse(substitute(x))
-#   if (is.matrix(x)) x <- latexMatrix(x) |> getLatex()
-#   label.style <- match.arg(label.style)
-#   label.size <- match.arg(label.size)
-#   if (label.size != "normalsize") label <- paste0("\\", label.size, "{", label, "}")
-#   if (label.style != " ") label <- paste0("\\", label.style, "{", label, "}")
-#   over <- paste0("\\overset{", label, "}")
-#   return(c(over, "\n{", x, "}\n" ))
-#   }
 
 #' @rdname Eqn_helpers
 #' @export
@@ -217,6 +202,16 @@ Eqn_underbrace <- underbrace
 #'
 #' Eqn_newline()
 #' Eqn_newline('10ex')
+#'
+#' # more complete example  
+#' Eqn(underset("\\mathbf{X}", "(4 \\times 3)"), "& = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
+#'     Eqn_newline('1ex'),
+#'     ' & =',
+#'     latexMatrix("u", 4, 3),
+#'     latexMatrix("\\lambda", 3, 3, diag=TRUE),
+#'     latexMatrix("v", 3, 3, transpose = TRUE),
+#'     align=TRUE)
+#'
 #'
 Eqn_newline <- function(space = 0){
   ret <- if(space > 0){

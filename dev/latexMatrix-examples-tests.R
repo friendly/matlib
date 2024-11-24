@@ -265,11 +265,11 @@ letters*W # error (expected)
 # linear hypotheses
 
 Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
-    latexMatrix(latexMatrix(matrix(c(0, 1, 0, 0,
-                                     0, 0, 1, 0), nrow=2, byrow=TRUE),
-                            matrix = "bmatrix")),
+    latexMatrix(matrix(c(0, 1, 0, 0,
+                         0, 0, 1, 0), nrow=2, byrow=TRUE),
+                            matrix = "bmatrix"),
     latexMatrix('\\beta', ncol = 3, nrow=4, comma=TRUE, prefix.col = 'y_'),
-    Eqn_newline(), Eqn_newline(),
+    Eqn_newline(), "& =",
     latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_'),
     align=TRUE)
 
@@ -288,11 +288,22 @@ C %*% B
 
 Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
     C, B,
-    Eqn_newline(), Eqn_newline(),
+    Eqn_newline('1ex'),
     '&\n',
     B0,
     "= \\mathbf{0}_{(2 \\times 3)}",
     align=TRUE)
+
+# use overset
+
+Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
+    overset(C, "C"), overset(B, "B"),
+    Eqn_newline('1ex'),
+    '& =\n',
+    B0,
+    "= \\mathbf{0}_{(2 \\times 3)}",
+    align=TRUE)
+
 
 
 # Partitioned matrices

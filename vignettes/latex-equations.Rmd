@@ -62,9 +62,9 @@ matrices.
 
 There are already some tools available in R for producing LaTeX output:
 
-* tables (e.g, `xtable::xtable()`, `tables::toLatex()`), 
-* R objects (`Hmisc::latex()`),
-* statistical models (`equatiomatic::extract_eq()`),
+* tables (e.g, `xtable::xtable()`, `tables::toLatex()`);
+* most R objects (`Hmisc::latex()`),
+* `equatiomatic::extract_eq()` renders in LaTeX statistical models fit with `lm()` or any model where there is a `broom::tidy()` method
 * `knitr::knit_print()` can be used to define [methods for printing objects of class `"matrix"`](https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable). 
 * The [`mathpix`](https://cran.r-project.org/package=mathpix) package
 can take an image of a an equation or formula and produce the LaTeX code which should generate that image.
@@ -78,10 +78,10 @@ for a more comprehensive list
 The `matlib` package extends these, providing a collection of functions that simplify using LaTeX notation for matrices, vectors and equations in documentation and in writing:
 
 * `latexMatrix()`: Constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. `latexMatrix()` also supports matrices with numeric elements, and the objects it produces may be used in various kinds of matrix computations, both symbolic and numeric.
-* `Eqn()`: A wrapper to produce LaTeX expressions or equations that can be used directly in `.Rmd` or `.qmd` documents to compile to equations. It also provides for direct preview of the resulting equation.
+* `Eqn()`: A wrapper to produce LaTeX expressions or equations that can be used directly in `.Rmd` or `.qmd` documents to compile to equations. It also provides for direct preview of the resulting equation in the RStudio **Viewer** panel.
 * `showEqn()`: Shows what matrices $\mathbf{A}, \mathbf{b}$ look like as the system of linear equations, $\mathbf{A x} = \mathbf{b}$, but written out as a set of equations.
 
-When used directly in R, these functions produce their output to the console (using `cat()`).
+When used directly in an R session, these functions produce their output to the console (using `cat()`).
 In a `.Rmd` or `.qmd` document, use the chunk options: `results='asis', echo=FALSE`
 so that `knitr` just outputs the text of the equations to the document.
 The rendering of the equations is mediated by [`pandoc`](https://pandoc.org/) for standard Rmarkdown or Quarto documents.
@@ -197,7 +197,8 @@ Eqn("\\mathbf{X} =",
 This produces the two numbered equations:[^eqn-pkgdown]
 
 [^eqn-pkgdown]: At present equation numbers don't work in vignettes rendered as
-articles by `pkgdown`.
+articles by `pkgdown`. Equations are also labeled differently in `.Rmd` processed with `knitr`
+and `.qmd` files for `quarto`.
 
 ```{r eqn-svd,results='asis', echo=FALSE}
 Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
@@ -210,7 +211,9 @@ The matrix names in Equation `r ref("eq:svd")` are printed in a **boldface** mat
 (`\mathbf{}`), typically used for matrices
 and vectors. Note that when using
 LaTeX code in R expressions each backslash (`\`) must be doubled (`\\`) in R because `\` is the
-escape character.
+escape character. #' You can avoid this "leaning toothpick syndrome" of by using R's new (as of 4.0.0)
+_raw strings_, composed as `r"(...)"` or `r"{...}"`.
+
 
 Note that the first equation can be referenced because it was labeled:  "As seen in Equation `r ref("eq:svd")` \ldots ". References to equations can entered in text using an inline call to
 `ref()`, e.g, `` `r knitr::inline_expr('ref("eq:svd")')` ``
@@ -236,11 +239,12 @@ Section [showEqn](#showEqn) describes another way to display systems of equation
 
 You can also align separate equations relative to some symbol like an `=` sign to show separate
 steps of re-expression, using the option `Eqn(..., align=TRUE)`. Alignment points are marked by
-`&` in LaTeX.
+`&` in LaTeX. 
 
-Show the singular value decomposition again, but now as two separate equations aligned after the `=`
+Below we show the singular value decomposition again, but now as two separate equations aligned after the `=`
 sign. Note the locations of the `&` operator for alignment, specified as the left-hand side (`lhs`)
-of the second equation.
+of the second equation: You get the most pleasing result by placing the `&` **before** the symbol to be aligned
+at, e.g, use `& =` or `& +`.
 
 
 ```{r eqn-align,results='asis'}
@@ -254,7 +258,44 @@ Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
 ```
 
 Note that in this example, there are three calls to `latexMatrix()`, wrapped inside `Eqn()`.
-`Eqn_newline()` emits a newline (`\\`) between equations.
+`Eqn_newline()` emits a newline (`\\`) between equations. 
+
+
+### Decorators
+
+A set of "Eqn helpers" facilitate adding typeset label on top or under a LaTeX expression or matrix,
+and adding braces over "{"  or under "}" components in a matrix. Here's a simple example:
+
+```{r overset, results = 'asis'}
+A <- matrix(1:4, 2, 2)
+B <- matrix(4:1, 2, 2)
+AB <- A + B
+Eqn(overset(A), "+",
+    overset(B), Eqn_hspace(mid = '='),
+    overbrace(AB, "A+B"))
+```
+
+
+This generates a labeled expression showing the Hat matrix ($\mathbf{H}$) in least squares regression.
+Note you can create LaTeX expressions as character strings, and use those inside `Eqn()` to keep the code
+simpler.
+
+```{r hat-matrix, results = 'asis'}
+H <- "\\mathbf{X} (\\mathbf{X}^{\\top}\\mathbf{X})^{-1} \\mathbf{X}^{\\top}"
+Eqn("\\mathbf{\\hat{y}} =", underbrace(H, "\\mathbf{H}"), "\\mathbf{y}")
+```
+
+Here's a gaudy version of the SVD equation:
+
+```{r eqn-over-under,results='asis'}
+Eqn(underset("\\mathbf{X}", "(n \\times p)"), "& = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
+    Eqn_newline(),
+    ' & =',
+    underbrace(latexMatrix("u", "n", "k"), "\\mathbf{U}"),
+    overbrace(latexMatrix("\\lambda", "k", "k", diag=TRUE),"\\mathbf{\\Lambda}"),
+    underbrace(latexMatrix("v", "k", "p", transpose = TRUE), "\\mathbf{V}^\\top"),
+    align=TRUE)
+```
 
 
 ## Computing with `"latexMatrix"` objects {#computing}
