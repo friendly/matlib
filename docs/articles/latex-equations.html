@@ -81,7 +81,7 @@
                         <h4 data-toc-skip class="author">Phil Chalmers,
 John Fox, Michael Friendly</h4>
             
-            <h4 data-toc-skip class="date">2024-11-19</h4>
+            <h4 data-toc-skip class="date">2024-11-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/friendly/matlib/blob/HEAD/vignettes/latex-equations.Rmd" class="external-link"><code>vignettes/latex-equations.Rmd</code></a></small>
       <div class="d-none name"><code>latex-equations.Rmd</code></div>
@@ -117,9 +117,12 @@ menu-driven interface with fill-in templates for matrices.</p>
 output:</p>
 <ul>
 <li>tables (e.g, <code><a href="https://rdrr.io/pkg/xtable/man/xtable.html" class="external-link">xtable::xtable()</a></code>,
-<code><a href="https://rdrr.io/r/utils/toLatex.html" class="external-link">tables::toLatex()</a></code>),</li>
-<li>R objects (<code><a href="https://rdrr.io/pkg/Hmisc/man/latex.html" class="external-link">Hmisc::latex()</a></code>),</li>
-<li>statistical models (<code><a href="https://datalorax.github.io/equatiomatic/reference/extract_eq.html" class="external-link">equatiomatic::extract_eq()</a></code>),</li>
+<code><a href="https://rdrr.io/r/utils/toLatex.html" class="external-link">tables::toLatex()</a></code>);</li>
+<li>most R objects (<code><a href="https://rdrr.io/pkg/Hmisc/man/latex.html" class="external-link">Hmisc::latex()</a></code>),</li>
+<li>
+<code><a href="https://datalorax.github.io/equatiomatic/reference/extract_eq.html" class="external-link">equatiomatic::extract_eq()</a></code> renders in LaTeX statistical
+models fit with <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> or any model where there is a
+<code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">broom::tidy()</a></code> method</li>
 <li>
 <code><a href="https://rdrr.io/pkg/knitr/man/knit_print.html" class="external-link">knitr::knit_print()</a></code> can be used to define <a href="https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable" class="external-link">methods
 for printing objects of class <code>"matrix"</code></a>.</li>
@@ -147,7 +150,8 @@ computations, both symbolic and numeric.</li>
 <code><a href="../reference/Eqn.html">Eqn()</a></code>: A wrapper to produce LaTeX expressions or
 equations that can be used directly in <code>.Rmd</code> or
 <code>.qmd</code> documents to compile to equations. It also provides
-for direct preview of the resulting equation.</li>
+for direct preview of the resulting equation in the RStudio
+<strong>Viewer</strong> panel.</li>
 <li>
 <code><a href="../reference/showEqn.html">showEqn()</a></code>: Shows what matrices
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐀</mi><mo>,</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A}, \mathbf{b}</annotation></semantics></math>
@@ -155,9 +159,9 @@ look like as the system of linear equations,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi>𝐀</mi><mi>𝐱</mi></mrow><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A x} = \mathbf{b}</annotation></semantics></math>,
 but written out as a set of equations.</li>
 </ul>
-<p>When used directly in R, these functions produce their output to the
-console (using <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>). In a <code>.Rmd</code> or
-<code>.qmd</code> document, use the chunk options:
+<p>When used directly in an R session, these functions produce their
+output to the console (using <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>). In a <code>.Rmd</code>
+or <code>.qmd</code> document, use the chunk options:
 <code>results='asis', echo=FALSE</code> so that <code>knitr</code> just
 outputs the text of the equations to the document. The rendering of the
 equations is mediated by <a href="https://pandoc.org/" class="external-link"><code>pandoc</code></a> for standard
@@ -314,7 +318,9 @@ separate equations, center aligned.</p>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"\\lambda"</span>, <span class="st">"k"</span>, <span class="st">"k"</span>, diag<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"v"</span>, <span class="st">"k"</span>, <span class="st">"p"</span>, transpose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, label<span class="op">=</span><span class="st">'eq:svdmats'</span><span class="op">)</span></span></code></pre></div>
 <p>This produces the two numbered equations:<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;At present equation numbers don’t work in vignettes
-rendered as articles by &lt;code&gt;pkgdown&lt;/code&gt;.&lt;/p&gt;"><sup>1</sup></a></p>
+rendered as articles by &lt;code&gt;pkgdown&lt;/code&gt;. Equations are also labeled
+differently in &lt;code&gt;.Rmd&lt;/code&gt; processed with &lt;code&gt;knitr&lt;/code&gt; and
+&lt;code&gt;.qmd&lt;/code&gt; files for &lt;code&gt;quarto&lt;/code&gt;.&lt;/p&gt;"><sup>1</sup></a></p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>#</mi><mi>e</mi><mi>q</mi><mo>:</mo><mi>s</mi><mi>v</mi><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>𝐗</mi><mo>=</mo><mi>𝐔</mi><mi>𝚲</mi><msup><mi>𝐕</mi><mi>⊤</mi></msup></mrow><annotation encoding="application/x-tex">\begin{equation}
 (\#eq:svd)
 \mathbf{X} = \mathbf{U} \mathbf{\Lambda} \mathbf{V}^\top\end{equation}</annotation></semantics></math></p>
@@ -343,8 +349,10 @@ rendered as articles by &lt;code&gt;pkgdown&lt;/code&gt;.&lt;/p&gt;"><sup>1</sup
 <strong>boldface</strong> math font (<code>\mathbf{}</code>), typically
 used for matrices and vectors. Note that when using LaTeX code in R
 expressions each backslash (<code>\</code>) must be doubled
-(<code>\\</code>) in R because <code>\</code> is the escape
-character.</p>
+(<code>\\</code>) in R because <code>\</code> is the escape character.
+#’ You can avoid this “leaning toothpick syndrome” of by using R’s new
+(as of 4.0.0) <em>raw strings</em>, composed as <code>r"(...)"</code> or
+<code>r"{...}"</code>.</p>
 <p>Note that the first equation can be referenced because it was
 labeled: “As seen in Equation @ref(eq:svd) ”. References to equations
 can entered in text using an inline call to <code><a href="../reference/Eqn.html">ref()</a></code>, e.g,
@@ -361,7 +369,7 @@ written out using symbolic matrices.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"a"</span>, nrow <span class="op">=</span> <span class="st">"m"</span>, ncol<span class="op">=</span><span class="st">"n"</span>, matrix<span class="op">=</span><span class="st">"bmatrix"</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"x"</span>, nrow <span class="op">=</span> <span class="st">"n"</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="../reference/Eqn.html">Eqn_hspace</a></span><span class="op">(</span>mid<span class="op">=</span><span class="st">'='</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">Eqn_hspace</a></span><span class="op">(</span>mid<span class="op">=</span><span class="st">'='</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"b"</span>, nrow <span class="op">=</span> <span class="st">"m"</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>12</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mn>1</mn><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>22</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mn>2</mn><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mi>m</mi><mn>1</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mi>m</mi><mn>2</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mi>n</mi></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="1.0em"></mspace><mo>=</mo><mspace width="1.0em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mi>m</mi></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{equation*}
 \begin{bmatrix} 
@@ -383,7 +391,7 @@ written out using symbolic matrices.</p>
   b_{m} \\ 
 \end{pmatrix}
 \end{equation*}</annotation></semantics></math></p>
-<p>Extra symmetric white space is added via <code><a href="../reference/Eqn.html">Eqn_hspace()</a></code>,
+<p>Extra symmetric white space is added via <code><a href="../reference/Eqn_helpers.html">Eqn_hspace()</a></code>,
 which can also be used for standard spacing such as <code>\quad</code>
 (default size), <code>\,</code>, <code>'1cm'</code> for
 <code>\hspace{}</code>, etc.</p>
@@ -398,13 +406,16 @@ display systems of equations.</p>
 <code>=</code> sign to show separate steps of re-expression, using the
 option <code>Eqn(..., align=TRUE)</code>. Alignment points are marked by
 <code>&amp;</code> in LaTeX.</p>
-<p>Show the singular value decomposition again, but now as two separate
-equations aligned after the <code>=</code> sign. Note the locations of
-the <code>&amp;</code> operator for alignment, specified as the
-left-hand side (<code>lhs</code>) of the second equation.</p>
+<p>Below we show the singular value decomposition again, but now as two
+separate equations aligned after the <code>=</code> sign. Note the
+locations of the <code>&amp;</code> operator for alignment, specified as
+the left-hand side (<code>lhs</code>) of the second equation: You get
+the most pleasing result by placing the <code>&amp;</code>
+<strong>before</strong> the symbol to be aligned at, e.g, use
+<code>&amp; =</code> or <code>&amp; +</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{X} &amp; = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top"</span>,</span>
-<span>    <span class="fu"><a href="../reference/Eqn.html">Eqn_newline</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">Eqn_newline</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    <span class="st">' &amp; ='</span>,</span>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"n"</span>, <span class="st">"k"</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"\\lambda"</span>, <span class="st">"k"</span>, <span class="st">"k"</span>, diag<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -433,8 +444,82 @@ left-hand side (<code>lhs</code>) of the second equation.</p>
 \end{align*}</annotation></semantics></math></p>
 <p>Note that in this example, there are three calls to
 <code><a href="../reference/latexMatrix.html">latexMatrix()</a></code>, wrapped inside <code><a href="../reference/Eqn.html">Eqn()</a></code>.
-<code><a href="../reference/Eqn.html">Eqn_newline()</a></code> emits a newline (<code>\\</code>) between
+<code><a href="../reference/Eqn_helpers.html">Eqn_newline()</a></code> emits a newline (<code>\\</code>) between
 equations.</p>
+</div>
+<div class="section level3">
+<h3 id="decorators">Decorators<a class="anchor" aria-label="anchor" href="#decorators"></a>
+</h3>
+<p>A set of “Eqn helpers” facilitate adding typeset label on top or
+under a LaTeX expression or matrix, and adding braces over “{” or under
+“}” components in a matrix. Here’s a simple example:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">AB</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op">+</span> <span class="va">B</span></span>
+<span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="fu"><a href="../reference/Eqn_helpers.html">overset</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>, <span class="st">"+"</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">overset</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span>, <span class="fu"><a href="../reference/Eqn_helpers.html">Eqn_hspace</a></span><span class="op">(</span>mid <span class="op">=</span> <span class="st">'='</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">overbrace</a></span><span class="op">(</span><span class="va">AB</span>, <span class="st">"A+B"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>𝐀</mi></mover><mo>+</mo><mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>𝐁</mi></mover><mspace width="1.0em"></mspace><mo>=</mo><mspace width="1.0em"></mspace><mover><mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo accent="true">⏞</mo></mover><mrow><mi>𝐀</mi><mo mathvariant="bold">+</mo><mi>𝐁</mi></mrow></mover></mrow><annotation encoding="application/x-tex">\begin{equation*}
+\overset{\mathbf{A}} 
+{ \begin{pmatrix} 
+1 &amp; 3 \\ 
+2 &amp; 4 \\ 
+\end{pmatrix}
+ }
++\overset{\mathbf{B}} 
+{ \begin{pmatrix} 
+4 &amp; 2 \\ 
+3 &amp; 1 \\ 
+\end{pmatrix}
+ }
+\quad=\quad\overbrace{\begin{pmatrix} 
+5 &amp; 5 \\ 
+5 &amp; 5 \\ 
+\end{pmatrix}
+}^{\mathbf{A+B}}\end{equation*}</annotation></semantics></math></p>
+<p>This generates a labeled expression showing the Hat matrix
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐇</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>)
+in least squares regression. Note you can create LaTeX expressions as
+character strings, and use those inside <code><a href="../reference/Eqn.html">Eqn()</a></code> to keep the
+code simpler.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="st">"\\mathbf{X} (\\mathbf{X}^{\\top}\\mathbf{X})^{-1} \\mathbf{X}^{\\top}"</span></span>
+<span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{\\hat{y}} ="</span>, <span class="fu"><a href="../reference/Eqn_helpers.html">underbrace</a></span><span class="op">(</span><span class="va">H</span>, <span class="st">"\\mathbf{H}"</span><span class="op">)</span>, <span class="st">"\\mathbf{y}"</span><span class="op">)</span></span></code></pre></div>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>𝐲</mi><mo accent="true">̂</mo></mover><mo>=</mo><munder><munder><mrow><mi>𝐗</mi><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>𝐗</mi><mi>⊤</mi></msup><mi>𝐗</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mi>𝐗</mi><mi>⊤</mi></msup></mrow><mo accent="true">⏟</mo></munder><mi>𝐇</mi></munder><mi>𝐲</mi></mrow><annotation encoding="application/x-tex">\begin{equation*}
+\mathbf{\hat{y}} =\underbrace{\mathbf{X} (\mathbf{X}^{\top}\mathbf{X})^{-1} \mathbf{X}^{\top}}_{\mathbf{\mathbf{H}}}\mathbf{y}\end{equation*}</annotation></semantics></math></p>
+<p>Here’s a gaudy version of the SVD equation:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="fu"><a href="../reference/Eqn_helpers.html">underset</a></span><span class="op">(</span><span class="st">"\\mathbf{X}"</span>, <span class="st">"(n \\times p)"</span><span class="op">)</span>, <span class="st">"&amp; = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top"</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">Eqn_newline</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    <span class="st">' &amp; ='</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">underbrace</a></span><span class="op">(</span><span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"n"</span>, <span class="st">"k"</span><span class="op">)</span>, <span class="st">"\\mathbf{U}"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">overbrace</a></span><span class="op">(</span><span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"\\lambda"</span>, <span class="st">"k"</span>, <span class="st">"k"</span>, diag<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,<span class="st">"\\mathbf{\\Lambda}"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">underbrace</a></span><span class="op">(</span><span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"v"</span>, <span class="st">"k"</span>, <span class="st">"p"</span>, transpose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="st">"\\mathbf{V}^\\top"</span><span class="op">)</span>,</span>
+<span>    align<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><munder><mi>𝐗</mi><mrow><mo stretchy="true" form="prefix" mathvariant="bold">(</mo><mi>𝐧</mi><mo mathvariant="bold">×</mo><mi>𝐩</mi><mo stretchy="true" form="postfix" mathvariant="bold">)</mo></mrow></munder></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>𝐔</mi><mi>𝚲</mi><msup><mi>𝐕</mi><mi>⊤</mi></msup></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><munder><munder><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>12</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mrow><mn>1</mn><mi>k</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>22</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mrow><mn>2</mn><mi>k</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mrow><mi>n</mi><mn>1</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mrow><mi>n</mi><mn>2</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mrow><mi>n</mi><mi>k</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo accent="true">⏟</mo></munder><mi>𝐔</mi></munder><mover><mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>λ</mi><mn>1</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>λ</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mo>⋱</mo></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>λ</mi><mi>k</mi></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo accent="true">⏞</mo></mover><mi>𝚲</mi></mover><munder><munder><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mn>12</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mrow><mn>1</mn><mi>p</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mn>22</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mrow><mn>2</mn><mi>p</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mrow><mi>k</mi><mn>1</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mrow><mi>k</mi><mn>2</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mrow><mi>k</mi><mi>p</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>⊤</mi></msup><mo accent="true">⏟</mo></munder><msup><mi>𝐕</mi><mi mathvariant="bold">⊤</mi></msup></munder></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
+\underset{\mathbf{(n \times p)}} 
+{ \mathbf{X} }
+&amp; = \mathbf{U} \mathbf{\Lambda} \mathbf{V}^\top \\ 
+ &amp; =\underbrace{\begin{pmatrix} 
+  u_{11} &amp; u_{12} &amp; \cdots &amp; u_{1k} \\ 
+  u_{21} &amp; u_{22} &amp; \cdots &amp; u_{2k} \\ 
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\ 
+  u_{n1} &amp; u_{n2} &amp; \cdots &amp; u_{nk} \\ 
+\end{pmatrix}
+}_{\mathbf{\mathbf{U}}}\overbrace{\begin{pmatrix} 
+  \lambda_{1} &amp; 0           &amp; \cdots      &amp; 0           \\ 
+  0           &amp; \lambda_{2} &amp; \cdots      &amp; 0           \\ 
+  \vdots      &amp; \vdots      &amp; \ddots      &amp; \vdots      \\ 
+  0           &amp; 0           &amp; \cdots      &amp; \lambda_{k} \\ 
+\end{pmatrix}
+}^{\mathbf{\mathbf{\Lambda}}}\underbrace{\begin{pmatrix} 
+  v_{11} &amp; v_{12} &amp; \cdots &amp; v_{1p} \\ 
+  v_{21} &amp; v_{22} &amp; \cdots &amp; v_{2p} \\ 
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\ 
+  v_{k1} &amp; v_{k2} &amp; \cdots &amp; v_{kp} \\ 
+\end{pmatrix}^\top
+}_{\mathbf{\mathbf{V}^\top}}\end{align*}</annotation></semantics></math></p>
 </div>
 </div>
 <div class="section level2">
@@ -486,25 +571,25 @@ these computations in this section.</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">c_{ij}</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">d_{ij}</annotation></semantics></math></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix} </span></span>
 <span><span class="co">##  1 &amp;  0 \\ </span></span>
 <span><span class="co">## -3 &amp;  1 \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix} </span></span>
 <span><span class="co">##  5 &amp; -1 \\ </span></span>
 <span><span class="co">##  3 &amp;  4 \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span>symbol<span class="op">=</span><span class="st">"c"</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix} </span></span>
 <span><span class="co">##   c_{11} &amp; c_{12} &amp; c_{13} \\ </span></span>
 <span><span class="co">##   c_{21} &amp; c_{22} &amp; c_{23} \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span>symbol<span class="op">=</span><span class="st">"d"</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix} </span></span>
 <span><span class="co">##   d_{11} &amp; d_{12} &amp; d_{13} \\ </span></span>
@@ -513,38 +598,38 @@ and
 <p>The usual arithmetic operations work for these
 <code>"latexMatrix"</code> objects, and return LaTeX representations of
 the result:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op">+</span> <span class="va">B</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">##  6 &amp; -1 \\ </span></span>
 <span><span class="co">##  0 &amp;  5 \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
 <p>Some other examples:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op">-</span> <span class="va">B</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## -4 &amp;  1 \\ </span></span>
 <span><span class="co">## -6 &amp; -3 \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">-</span><span class="va">A</span>            <span class="co"># unary minus</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## -1 &amp;  0 \\ </span></span>
 <span><span class="co">##  3 &amp; -1 \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">2</span><span class="op">*</span><span class="va">A</span>           <span class="co"># scalar multiplication</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## 2 \cdot 1    &amp; 2 \cdot 0 \\ </span></span>
 <span><span class="co">## 2 \cdot (-3) &amp; 2 \cdot 1 \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">C</span> <span class="op">+</span> <span class="va">D</span>         <span class="co"># sum of symbolics</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## c_{11} + d_{11} &amp; c_{12} + d_{12} &amp; c_{13} + d_{13} \\ </span></span>
 <span><span class="co">## c_{21} + d_{21} &amp; c_{22} + d_{22} &amp; c_{23} + d_{23} \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"\\pi"</span> <span class="op">*</span> <span class="va">C</span>    <span class="co"># everything should be multiplied by pi</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## \pi \cdot c_{11} &amp; \pi \cdot c_{12} &amp; \pi \cdot c_{13} \\ </span></span>
@@ -559,14 +644,14 @@ the result:</p>
 \end{equation*}</annotation></semantics></math></p>
 <p>Some of these operations produce numeric results and so can be
 coerced to numeric matrices; for example:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      [,1] [,2]</span></span>
 <span><span class="co">## [1,]    6   -1</span></span>
 <span><span class="co">## [2,]    0    5</span></span></code></pre>
 <p>Using these tools, it is easy to typeset complete matrix equations,
 giving multiple arguments to <code><a href="../reference/Eqn.html">Eqn()</a></code>:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{A} + \\mathbf{B} ="</span>, <span class="va">A</span>, <span class="st">" + "</span>, <span class="va">B</span>, <span class="st">" = "</span>, <span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐀</mi><mo>+</mo><mi>𝐁</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{equation*}
 \mathbf{A} + \mathbf{B} =\begin{pmatrix} 
@@ -584,14 +669,14 @@ giving multiple arguments to <code><a href="../reference/Eqn.html">Eqn()</a></co
 \end{equation*}</annotation></semantics></math></p>
 <p>If the elements of a matrix are valid R variable names, then it is
 also possible to give these elements numeric values, as in</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix} </span></span>
 <span><span class="co">## a &amp; d &amp; g \\ </span></span>
 <span><span class="co">## b &amp; e &amp; h \\ </span></span>
 <span><span class="co">## c &amp; f &amp; i \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">*</span><span class="va">M</span>, locals<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>, b<span class="op">=</span><span class="fl">0</span>, c<span class="op">=</span><span class="op">-</span><span class="fl">2</span>, d<span class="op">=</span><span class="op">-</span><span class="fl">4</span>, e<span class="op">=</span><span class="fl">7</span>, f<span class="op">=</span><span class="op">-</span><span class="fl">1</span>, g<span class="op">=</span><span class="fl">0</span>, h<span class="op">=</span><span class="fl">4</span>, i<span class="op">=</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
 <span><span class="co">## [1,]   -2    8    0</span></span>
@@ -603,7 +688,7 @@ also possible to give these elements numeric values, as in</p>
 <p>The product of two matrices is given by <code>%*%</code> for
 <code>"latexMatrix"</code> objects. When the arguments are both numeric,
 the numeric result is evaluated and presented in LaTeX form.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span></span></code></pre></div>
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>12</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>7</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix}  
   5 &amp;  -1 \\ 
@@ -611,7 +696,7 @@ the numeric result is evaluated and presented in LaTeX form.</p>
 \end{pmatrix}</annotation></semantics></math><p>But the result is symbolic if either argument is symbolic:</p>
 <!-- To get the numeric result evaluated, use `as.double()` and perform ordinary -->
 <!-- matrix multiplication: -->
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>12</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><msub><mi>b</mi><mn>11</mn></msub><mo>+</mo><msub><mi>b</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><msub><mi>b</mi><mn>12</mn></msub><mo>+</mo><msub><mi>b</mi><mn>22</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix}  
 b_{11}                     &amp; b_{12}                     \\ 
@@ -623,7 +708,7 @@ by default. This can be changed by changing
 <code>options(latexMultSymbol)</code>, e.g, to use the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math>
 symbol instead, use:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>latexMultSymbol <span class="op">=</span> <span class="st">"\\times"</span><span class="op">)</span></span></code></pre></div>
 <p>The transpose, <code><a href="https://rdrr.io/r/base/t.html" class="external-link">t()</a></code> of <code>"latexMatrix"</code> objects
 is similarly straightforward. This directly transposes the matrix, as
@@ -632,20 +717,20 @@ opposed to superscript notation,
 or
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>𝐃</mi><mi>′</mi></msup><annotation encoding="application/x-tex">\mathbf{D}^\prime</annotation></semantics></math>
 which is implicit.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix} </span></span>
 <span><span class="co">##   d_{11} &amp; d_{12} &amp; d_{13} \\ </span></span>
 <span><span class="co">##   d_{21} &amp; d_{22} &amp; d_{23} \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## d_{11} &amp; d_{21} \\ </span></span>
 <span><span class="co">## d_{12} &amp; d_{22} \\ </span></span>
 <span><span class="co">## d_{13} &amp; d_{23} \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## a \cdot d_{11} + d \cdot d_{12} + g \cdot d_{13} &amp; a \cdot d_{21} + d \cdot d_{22} + g \cdot d_{23} \\ </span></span>
@@ -678,23 +763,23 @@ of determinants</a> for explanation.)</p>
 <p>The method is applicable to a matrix of any order, although beyond an
 order-3 matrix, the resulting expression gets very long. A couple of
 examples:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix} </span></span>
 <span><span class="co">##  1 &amp;  0 \\ </span></span>
 <span><span class="co">## -3 &amp;  1 \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">determinant</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "1 \\cdot 1 - 0 \\cdot (-3)"</span></span></code></pre>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix} </span></span>
 <span><span class="co">## a &amp; d &amp; g \\ </span></span>
 <span><span class="co">## b &amp; e &amp; h \\ </span></span>
 <span><span class="co">## c &amp; f &amp; i \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">determinant</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "a \\cdot (e \\cdot i - h \\cdot f) - d \\cdot (b \\cdot i - h \\cdot c) + g \\cdot (b \\cdot f - e \\cdot c)"</span></span></code></pre>
 <p>The determinant of a matrix is a single number.
@@ -707,7 +792,7 @@ for multiplication.</p>
 a \cdot (e \cdot i - h \cdot f) - d \cdot (b \cdot i - h \cdot c) + g \cdot (b \cdot f - e \cdot c)\end{equation*}</annotation></semantics></math></p>
 <p>The inverse of a square matrix is computed from its determinant and
 adjoint matrix; for example:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## 1 &amp; 0 \\ </span></span>
@@ -717,7 +802,7 @@ adjoint matrix; for example:</p>
 <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> puts the inverse determinant before the adjoint
 matrix and returns a latex expression rather than a
 <code>"latexMatrix"</code> object; for example:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">M</span>, simplify<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "\\frac{1}{a \\cdot (e \\cdot i - h \\cdot f) - d \\cdot (b \\cdot i - h \\cdot c) + g \\cdot (b \\cdot f - e \\cdot c)} \n\\begin{pmatrix}  \ne \\cdot i - h \\cdot f    &amp; -(d \\cdot i - g \\cdot f) &amp; d \\cdot h - g \\cdot e    \\\\ \n-(b \\cdot i - h \\cdot c) &amp; a \\cdot i - g \\cdot c    &amp; -(a \\cdot h - g \\cdot b) \\\\ \nb \\cdot f - e \\cdot c    &amp; -(a \\cdot f - d \\cdot c) &amp; a \\cdot e - d \\cdot b    \\\\ \n\\end{pmatrix}\n"</span></span></code></pre>
 <p>which typesets as</p>
@@ -730,14 +815,14 @@ b \cdot f - e \cdot c    &amp; -(a \cdot f - d \cdot c) &amp; a \cdot e - d \cdo
 \end{pmatrix}
 \end{equation*}</annotation></semantics></math> We can also supply
 values for the elements of the matrix to obtain a numeric inverse:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fractions.html" class="external-link">fractions</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span>, </span>
 <span>                          locals<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>, b<span class="op">=</span><span class="fl">0</span>, c<span class="op">=</span><span class="op">-</span><span class="fl">2</span>, d<span class="op">=</span><span class="op">-</span><span class="fl">4</span>, e<span class="op">=</span><span class="fl">7</span>, f<span class="op">=</span><span class="op">-</span><span class="fl">1</span>, g<span class="op">=</span><span class="fl">0</span>, h<span class="op">=</span><span class="fl">4</span>, i<span class="op">=</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      [,1]  [,2]  [,3] </span></span>
 <span><span class="co">## [1,] 23/39  4/13 -8/39</span></span>
 <span><span class="co">## [2,] -4/39  1/13 -2/39</span></span>
 <span><span class="co">## [3,]  7/39  3/26  7/78</span></span></code></pre>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fractions.html" class="external-link">fractions</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/det.html" class="external-link">det</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="va">M</span>, </span>
 <span>                              locals<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span>, b<span class="op">=</span><span class="fl">0</span>, c<span class="op">=</span><span class="op">-</span><span class="fl">2</span>, d<span class="op">=</span><span class="op">-</span><span class="fl">4</span>, e<span class="op">=</span><span class="fl">7</span>, f<span class="op">=</span><span class="op">-</span><span class="fl">1</span>, g<span class="op">=</span><span class="fl">0</span>, h<span class="op">=</span><span class="fl">4</span>, i<span class="op">=</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 78</span></span></code></pre>
@@ -787,7 +872,7 @@ several arguments are used to: (a) start row indices at zero
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
 (<code>prefix.col</code>); (c) insert a comma between row/column
 subscripts.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">'\\beta'</span>, ncol <span class="op">=</span> <span class="fl">3</span>, nrow<span class="op">=</span><span class="fl">4</span>, </span>
 <span>                 comma<span class="op">=</span><span class="cn">TRUE</span>, prefix.col <span class="op">=</span> <span class="st">'y_'</span>,</span>
 <span>                 zero.based<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -808,7 +893,7 @@ rows of
 are zero. To do this, we specify a 2-row
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐂</mi><annotation encoding="application/x-tex">\mathbf{C}</annotation></semantics></math>
 matrix that simply selects those rows:</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>,</span>
 <span>                           <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">2</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>, </span>
 <span>                 matrix <span class="op">=</span> <span class="st">"bmatrix"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -818,11 +903,11 @@ matrix that simply selects those rows:</p>
 \end{bmatrix}</annotation></semantics></math><p>Then, the hypothesis to be tested can be expressed as follows, using
 <code><a href="../reference/Eqn.html">Eqn()</a></code> to wrap a set of LaTeX expressions and calls to
 <code>matlib</code> functions.</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">B0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">'\\beta'</span>, ncol <span class="op">=</span> <span class="fl">3</span>, nrow<span class="op">=</span><span class="fl">2</span>, comma<span class="op">=</span><span class="cn">TRUE</span>, prefix.col <span class="op">=</span> <span class="st">'y_'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} &amp; = "</span>,</span>
 <span>    <span class="va">C</span>, <span class="va">B</span>,</span>
-<span>    <span class="fu"><a href="../reference/Eqn.html">Eqn_newline</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">Eqn_newline</a></span><span class="op">(</span><span class="op">)</span>, </span>
 <span>    <span class="st">'&amp; ='</span>,</span>
 <span>    <span class="va">B0</span>,</span>
 <span>    <span class="st">"= \\mathbf{0}_{(2 \\times 3)}"</span>, </span>
@@ -866,7 +951,7 @@ which is partitioned in
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math>
 blocks, which are labeled
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐌</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">\mathbf{M}_{i,j}</annotation></semantics></math>.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"m"</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">Mpart</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">'\\mathbf{M}'</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span>, comma <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{M} ="</span>, <span class="va">Mpart</span>,</span>
@@ -902,13 +987,13 @@ blocks, which are labeled
 operator can be used for LaTeX matrices, e.g.,
 <code>M[rows, cols]</code>. The following extracts 4 the sub-matrices of
 <code>M</code>:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M11</span> <span class="op">&lt;-</span> <span class="va">M</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## \begin{pmatrix}  </span></span>
 <span><span class="co">## m_{11} &amp; m_{12} \\ </span></span>
 <span><span class="co">## m_{21} &amp; m_{22} \\ </span></span>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M12</span> <span class="op">&lt;-</span> <span class="va">M</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="va">M21</span> <span class="op">&lt;-</span> <span class="va">M</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="va">M22</span> <span class="op">&lt;-</span> <span class="va">M</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></code></pre></div>
@@ -917,7 +1002,7 @@ operator can be used for LaTeX matrices, e.g.,
 defined for <code>"latexMatrices"</code>. This code puts the 4 pieces of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐌</mi><annotation encoding="application/x-tex">\mathbf{M}</annotation></semantics></math>
 back together:</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">M11</span>, <span class="va">M12</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">M21</span>, <span class="va">M22</span><span class="op">)</span></span>
@@ -930,9 +1015,9 @@ back together:</p>
 <span><span class="co">## \end{pmatrix}</span></span></code></pre>
 <p>And, of course you can also format the sub-matrices together using
 <code><a href="../reference/Eqn.html">Eqn()</a></code>:</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="va">M11</span>, <span class="va">M12</span>,</span>
-<span>    <span class="fu"><a href="../reference/Eqn.html">Eqn_newline</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">Eqn_newline</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    <span class="va">M21</span>, <span class="va">M22</span>,</span>
 <span>    align <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>12</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>22</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>13</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>14</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>23</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>24</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>31</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>32</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>41</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>42</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>33</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>34</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>43</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>m</mi><mn>44</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
@@ -961,7 +1046,7 @@ LaTeX <code>\begin{array} ... \end{array}</code> environment, using
 <code>|</code> in <code>{c c | c c}</code> for the vertical lines and
 <code>\hline</code> for horizontal lines. This may be the simplest way
 to portray partitioned matrices in writing.</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/latexMatrix.html">partition</a></span><span class="op">(</span><span class="va">M</span>, rows<span class="op">=</span><span class="fl">2</span>, columns<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <span class="math display">$$\begin{pmatrix}  
 \begin{array}{c c | c c}
@@ -973,7 +1058,7 @@ m_{41} &amp; m_{42} &amp; m_{43} &amp; m_{44}\\
 \end{pmatrix}$$</span>
 <p>Note that <code><a href="../reference/latexMatrix.html">partition()</a></code> can show more than one horizontal
 and vertical partition lines (or no line at all):</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/latexMatrix.html">partition</a></span><span class="op">(</span><span class="va">M</span>, rows<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, columns<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <span class="math display">$$\begin{pmatrix}  
 \begin{array}{c | c c | c}
@@ -990,7 +1075,7 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐃</mi><annotation encoding="application/x-tex">\mathbf{D}</annotation></semantics></math>
 are of the same size, their sum is just the sum of corresponding
 sub-matrices:</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"\\mathbf{C}"</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">"\\mathbf{D}"</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{C} + \\mathbf{D} ="</span>,</span>
@@ -1037,19 +1122,19 @@ each preceded by the unit vector
 </annotation></semantics></math></p>
 <p>This is implemented in the <code>%O%</code> operator and the
 <code><a href="https://rdrr.io/r/base/kronecker.html" class="external-link">kronecker()</a></code> function in the package. For example,</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 
 1 &amp; 3 \\ 
 2 &amp; 4 \\ 
-\end{pmatrix}</annotation></semantics></math><div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+\end{pmatrix}</annotation></semantics></math><div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>7</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>8</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 
 5 &amp; 7 \\ 
 6 &amp; 8 \\ 
-\end{pmatrix}</annotation></semantics></math><div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+\end{pmatrix}</annotation></semantics></math><div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/kronecker.html" class="external-link">kronecker</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/latexMatrix.html">partition</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="fl">2</span>, columns <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <span class="math display">$$\begin{pmatrix}  
 \begin{array}{c c | c c}
@@ -1063,16 +1148,16 @@ each preceded by the unit vector
 the Kronecker product more explicitly. In the following,
 <code>KAB</code> is the product in symbolic form;
 <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> is used to evaluate the result numerically.</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Bmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="st">'\\mathbf{B}'</span>, ncol<span class="op">=</span><span class="fl">1</span>, nrow<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">KABmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/kronecker.html" class="external-link">kronecker</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">Bmat</span><span class="op">)</span></span>
 <span><span class="va">KAB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/kronecker.html" class="external-link">kronecker</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="st">"\\mathbf{A} \\otimes \\mathbf{B} = &amp;"</span>,</span>
 <span>    <span class="va">KABmat</span>,</span>
-<span>    <span class="fu"><a href="../reference/Eqn.html">Eqn_newline</a></span><span class="op">(</span>space <span class="op">=</span> <span class="st">'1.5ex'</span><span class="op">)</span>, <span class="st">"= &amp; "</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">Eqn_newline</a></span><span class="op">(</span>space <span class="op">=</span> <span class="st">'1.5ex'</span><span class="op">)</span>, <span class="st">"= &amp; "</span>,</span>
 <span>    <span class="va">KAB</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/latexMatrix.html">partition</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="fl">2</span>, columns <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="../reference/Eqn.html">Eqn_newline</a></span><span class="op">(</span>space <span class="op">=</span> <span class="st">'1.5ex'</span><span class="op">)</span>, <span class="st">"= &amp; "</span>,</span>
+<span>    <span class="fu"><a href="../reference/Eqn_helpers.html">Eqn_newline</a></span><span class="op">(</span>space <span class="op">=</span> <span class="st">'1.5ex'</span><span class="op">)</span>, <span class="st">"= &amp; "</span>,</span>
 <span>    <span class="fu"><a href="../reference/latexMatrix.html">latexMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="va">KAB</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/latexMatrix.html">partition</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="fl">2</span>, columns <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
 <span>    align <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">$$\begin{align*}
@@ -1105,7 +1190,7 @@ the Kronecker product more explicitly. In the following,
 <p>The <code><a href="../reference/matrix2latex.html">matrix2latex()</a></code> function can also generate symbolic
 equations from numeric or character matrices. For numeric matrices, it
 can round the values or show results as fractions.</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, nrow<span class="op">=</span><span class="fl">3</span>, ncol<span class="op">=</span><span class="fl">4</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">/</span> <span class="fl">6</span></span>
 <span><span class="fu"><a href="../reference/matrix2latex.html">matrix2latex</a></span><span class="op">(</span><span class="va">A</span>, fractions <span class="op">=</span> <span class="cn">TRUE</span>, brackets <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><mn>1</mn><mi>/</mi><mn>6</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>1</mn><mi>/</mi><mn>3</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>1</mn><mi>/</mi><mn>2</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>2</mn><mi>/</mi><mn>3</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mn>5</mn><mi>/</mi><mn>6</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>1</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>7</mn><mi>/</mi><mn>6</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>4</mn><mi>/</mi><mn>3</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mn>3</mn><mi>/</mi><mn>2</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>5</mn><mi>/</mi><mn>3</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>11</mn><mi>/</mi><mn>6</mn></mtd><mtd columnalign="left" style="text-align: left"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
@@ -1121,19 +1206,19 @@ can round the values or show results as fractions.</p>
 involved in the system of equations
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐀</mi><mi>𝐱</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">\mathbf{A} \mathbf{x} = \mathbf{b}</annotation></semantics></math>.
 Create these as a character matrix and vector:</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'a_'</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>, <span class="fl">3</span>, <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      [,1]  [,2]  [,3] </span></span>
 <span><span class="co">## [1,] "a_1" "a_2" "a_3"</span></span>
 <span><span class="co">## [2,] "a_4" "a_5" "a_6"</span></span>
 <span><span class="co">## [3,] "a_7" "a_8" "a_9"</span></span></code></pre>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"\\beta_"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "\\beta_1" "\\beta_2" "\\beta_3"</span></span></code></pre>
 <p>Then use <code><a href="../reference/matrix2latex.html">matrix2latex()</a></code> on <code>cbind(A,b)</code> and
 pipe the result of <code><a href="../reference/matrix2latex.html">matrix2latex()</a></code> to
 <code><a href="../reference/Eqn.html">Eqn()</a></code>:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/matrix2latex.html">matrix2latex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">A</span>,<span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>β</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>4</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>5</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>6</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>β</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>7</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>8</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>9</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>β</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
 \left[
@@ -1162,20 +1247,20 @@ but written out as a set of equations individually. With the option
 matrix <code>A</code>, whose elements are of the form
 <code>a_{ij}</code> and two character vectors, <code>b_i</code> and
 <code>x_i</code>.</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"a_{"</span>, <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, FUN  <span class="op">=</span> <span class="va">paste0</span><span class="op">)</span>, <span class="st">"}"</span><span class="op">)</span>, </span>
 <span>            nrow<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      [,1]     [,2]     [,3]    </span></span>
 <span><span class="co">## [1,] "a_{11}" "a_{12}" "a_{13}"</span></span>
 <span><span class="co">## [2,] "a_{21}" "a_{22}" "a_{23}"</span></span>
 <span><span class="co">## [3,] "a_{31}" "a_{32}" "a_{33}"</span></span></code></pre>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"b_"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p><code>showEqn(..., latex = TRUE)</code> produces the three equations
 in a single <code>\begin{array} ... \begin{array}</code>
 environment.</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/showEqn.html">showEqn</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">b</span>, vars <span class="op">=</span> <span class="va">x</span>, latex<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>If this line was run in an R console, it would produce:</p>
 <pre><code>\begin{array}{lllllll}
@@ -1185,7 +1270,7 @@ a_{31} \cdot x_1 &amp;+&amp; a_{32} \cdot x_2 &amp;+&amp; a_{33} \cdot x_3  &amp
 \end{array}</code></pre>
 <p>Evaluating the above code in an unnumbered LaTeX math environment via
 <code><a href="../reference/Eqn.html">Eqn()</a></code> gives the desired result:</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/showEqn.html">showEqn</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">b</span>, vars <span class="op">=</span> <span class="va">x</span>, latex<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/Eqn.html">Eqn</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>11</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mi>+</mi></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>12</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>2</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mi>+</mi></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>13</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>b</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>21</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mi>+</mi></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>22</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>2</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mi>+</mi></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>23</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>b</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>31</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mi>+</mi></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>32</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>2</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mi>+</mi></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>a</mi><mn>33</mn></msub><mo>⋅</mo><msub><mi>x</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{equation*}
 \begin{array}{lllllll}

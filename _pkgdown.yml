@@ -67,6 +67,7 @@ reference:
       - latexMatrix
       - latexMatrixOperations
       - Eqn
+      - Eqn_helpers
 
   - title: Gaussian elimination
     desc:  Functions for illustrating Gaussian elimination
