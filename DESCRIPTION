@@ -26,6 +26,7 @@ Language: en-US
 URL: https://github.com/friendly/matlib, http://friendly.github.io/matlib/
 BugReports: https://github.com/friendly/matlib/issues
 LazyData: TRUE
+Depends: R (>= 3.5.0)
 Suggests:
     carData,
     webshot2,
