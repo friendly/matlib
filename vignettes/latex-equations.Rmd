@@ -68,6 +68,7 @@ There are already some tools available in R for producing LaTeX output:
 * `knitr::knit_print()` can be used to define [methods for printing objects of class `"matrix"`](https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable). 
 * The [`mathpix`](https://cran.r-project.org/package=mathpix) package
 can take an image of a an equation or formula and produce the LaTeX code which should generate that image.
+There's also a [mathpix app](https://mathpix.com/) that let's you do this by drag and drop.
 * The [`texPreview`](https://cran.r-project.org/package=texPreview) package
 compiles snippets of LaTeX directly into images from the R console to view in the RStudio viewer pane, Shiny apps and Rmarkdown documents.
 
