@@ -88,7 +88,7 @@ Eqn_size(string, size = 0)
 size(string, size = 0)
 }
 \arguments{
-\item{x}{a numeric or character matrix, or a character string LaTeX expression or 
+\item{x}{a numeric or character matrix, or a character string LaTeX expression or
 a \code{"latexMatrix"} object}
 
 \item{label}{a character string used as the label above or below the object \code{x}.
@@ -149,24 +149,24 @@ Each of these (except \code{Eqn_text}) have aliases without the \code{Eqn_} pref
 For example, given the matrix \code{A = matrix(1:4), 2, 2)}, the call \code{Eqn(overset(A, "A"))}
 generates:
 \preformatted{
-\overset{\mathbf{A}} 
- { \begin{pmatrix} 
-  1 & 3 \\ 
-  2 & 4 \\ 
+\overset{\mathbf{A}}
+ { \begin{pmatrix}
+  1 & 3 \\
+  2 & 4 \\
   \end{pmatrix}
  }
 }
 
  When rendered in LaTeX, this produces:
  \deqn{
- \overset{\mathbf{A}} 
- { \begin{pmatrix} 
-  1 & 3 \\ 
-  2 & 4 \\ 
+ \overset{\mathbf{A}}
+ { \begin{pmatrix}
+  1 & 3 \\
+  2 & 4 \\
   \end{pmatrix}
  }
  }
- 
+
  You can also use these for straight LaTeX expressions, such this equation showing and labeling
  the Hat matrix in regression. See the examples for the call to \code{underbrace} for this.
  \deqn{\mathbf{\hat{y}} =
@@ -206,8 +206,8 @@ Eqn('a', overset('=', '?'), 'b')
 Eqn(overset(A, "A"), "+",
     overset(B, "B"), "=",
     underset(AB, "A+B"))
-    
- # using a LaTeX expression as the label  
+
+ # using a LaTeX expression as the label
  Lambda <- latexMatrix("\\\\lambda", nrow=2, ncol=2,
                        diag=TRUE)
  Eqn(overset(Lambda, "\\\\Lambda"))
@@ -223,8 +223,9 @@ Eqn(overbrace(underbrace(H, "\\\\mathbf{H}"), "\\\\LARGE\\\\mathbf{\\\\hat{y}}")
 Eqn_newline()
 Eqn_newline('10ex')
 
-# more complete example  
-Eqn(underset("\\\\mathbf{X}", "(4 \\\\times 3)"), "& = \\\\mathbf{U} \\\\mathbf{\\\\Lambda} \\\\mathbf{V}^\\\\top",
+# more complete example
+Eqn(underset("\\\\mathbf{X}", "(4 \\\\times 3)"),
+    "& = \\\\mathbf{U} \\\\mathbf{\\\\Lambda} \\\\mathbf{V}^\\\\top",
     Eqn_newline('1ex'),
     ' & =',
     latexMatrix("u", 4, 3),
