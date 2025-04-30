@@ -204,7 +204,8 @@ Eqn_underbrace <- underbrace
 #' Eqn_newline('10ex')
 #'
 #' # more complete example  
-#' Eqn(underset("\\mathbf{X}", "(4 \\times 3)"), "& = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
+#' Eqn(underset("\\mathbf{X}", "(4 \\times 3)"), 
+#'     "& = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
 #'     Eqn_newline('1ex'),
 #'     ' & =',
 #'     latexMatrix("u", 4, 3),
