@@ -1,15 +1,15 @@
 # Functions to add decorators over or under matrices
 #
 #' @name Eqn_helpers
-#' @aliases overset underset overbrace underbrace 
+#' @aliases overset underset overbrace underbrace
 #' @aliases Eqn_overset Eqn_underset Eqn_overbrace Eqn_underbrace
 #' @aliases Eqn_newline Eqn_hspace Eqn_vspace Eqn_size Eqn_text
 #' @aliases newline hspace vspace size
-#' 
-#' @title Helpers to Compose Equations with Eqn 
-#' 
+#'
+#' @title Helpers to Compose Equations with Eqn
+#'
 #' @description
-#' 
+#'
 #' These functions extend \code{\link{Eqn}} to facilitate composing LaTeX equations with desirable features
 #' and pleasant typography.
 #'
@@ -21,41 +21,41 @@
 #'    \item{\code{Eqn_size} changes size of LaTeX text; \code{Eqn_text} includes a literal string in equations.}
 #' }
 #' Each of these (except \code{Eqn_text}) have aliases without the \code{Eqn_} prefix for brevity.
-#' 
+#'
 #' For example, given the matrix \code{A = matrix(1:4), 2, 2)}, the call \code{Eqn(overset(A, "A"))}
 #' generates:
 #' \preformatted{
-#' \overset{\mathbf{A}} 
-#'  { \begin{pmatrix} 
-#'   1 & 3 \\ 
-#'   2 & 4 \\ 
+#' \overset{\mathbf{A}}
+#'  { \begin{pmatrix}
+#'   1 & 3 \\
+#'   2 & 4 \\
 #'   \end{pmatrix}
 #'  }
 #' }
 #'
 #'  When rendered in LaTeX, this produces:
 #'  \deqn{
-#'  \overset{\mathbf{A}} 
-#'  { \begin{pmatrix} 
-#'   1 & 3 \\ 
-#'   2 & 4 \\ 
+#'  \overset{\mathbf{A}}
+#'  { \begin{pmatrix}
+#'   1 & 3 \\
+#'   2 & 4 \\
 #'   \end{pmatrix}
 #'  }
 #'  }
-#'  
+#'
 #'  You can also use these for straight LaTeX expressions, such this equation showing and labeling
 #'  the Hat matrix in regression. See the examples for the call to \code{underbrace} for this.
 #'  \deqn{\mathbf{\hat{y}} =
 #'        \underbrace{\mathbf{X}(\mathbf{X}^{\top}\mathbf{X})^{-1}
-#'        \mathbf{X}^{\top}}_{\mathbf{\mathbf{H}}}\mathbf{y}} 
-#' 
+#'        \mathbf{X}^{\top}}_{\mathbf{\mathbf{H}}}\mathbf{y}}
 #'
-#' @param x     a numeric or character matrix, or a character string LaTeX expression or 
+#'
+#' @param x     a numeric or character matrix, or a character string LaTeX expression or
 #'        a \code{"latexMatrix"} object
 #' @param label   a character string used as the label above or below the object \code{x}.
 #'        If missing, and a \code{"matrix"} object was passed, it's name is used as the label.
 #'        In LaTeX, these are rendered in a size appropriate for superscripts and subscripts,
-#'        but you can use a size modifier to change this, for example \code{'\\Large{"A"}'}.  
+#'        but you can use a size modifier to change this, for example \code{'\\Large{"A"}'}.
 #' @param label.style The name of a math font used to to typeset the label. One of
 #'        \code{c("mathbf", "mathrm", "mathit", "mathsf", "mathcal", "mathtt", " ")}.
 #'        The default, \code{"mathbf"} wraps the label inside \code{"\\mathbf{ }"}
@@ -77,13 +77,13 @@
 #'
 #' # test just a character LaTeX expression
 #' Eqn('a', overset('=', '?'), 'b')
-#' 
+#'
 #' # a labelled latexMatrix equation
 #' Eqn(overset(A, "A"), "+",
 #'     overset(B, "B"), "=",
 #'     underset(AB, "A+B"))
-#'     
-#'  # using a LaTeX expression as the label  
+#'
+#'  # using a LaTeX expression as the label
 #'  Lambda <- latexMatrix("\\lambda", nrow=2, ncol=2,
 #'                        diag=TRUE)
 #'  Eqn(overset(Lambda, "\\Lambda"))
@@ -91,7 +91,7 @@
 #'  # generate LaTeX expression for the Hat matrix, label as "H"
 #' H <- "\\mathbf{X} (\\mathbf{X}^{\\top}\\mathbf{X})^{-1} \\mathbf{X}^{\\top}"
 #' Eqn("\\mathbf{\\hat{y}} =", underbrace(H, "\\mathbf{H}"), "\\mathbf{y}")
-#' 
+#'
 #' # Combine this with overbrace
 #' Eqn(overbrace(underbrace(H, "\\mathbf{H}"), "\\LARGE\\mathbf{\\hat{y}}"))
 #'
@@ -203,8 +203,8 @@ Eqn_underbrace <- underbrace
 #' Eqn_newline()
 #' Eqn_newline('10ex')
 #'
-#' # more complete example  
-#' Eqn(underset("\\mathbf{X}", "(4 \\times 3)"), 
+#' # more complete example
+#' Eqn(underset("\\mathbf{X}", "(4 \\times 3)"),
 #'     "& = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
 #'     Eqn_newline('1ex'),
 #'     ' & =',
@@ -274,7 +274,7 @@ Eqn_text <- function(text) sprintf("\\text{%s}", text)
 #' Eqn_hspace(mid='=', times=2)
 #'
 Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
-  
+
   spacer <- function(inp){
     space <- if(is.numeric(inp)){
       stopifnot(inp <= 6 && inp >= -1)
@@ -294,7 +294,7 @@ Eqn_hspace <- function(lhs = 5, mid='', rhs=NULL, times=1){
     }
     space
   }
-  
+
   stopifnot(is.character(lhs) || is.numeric(lhs))
   if(!is.null(rhs))
     stopifnot(is.character(rhs) || is.numeric(rhs))
