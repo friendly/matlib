@@ -182,7 +182,6 @@ Eqn <- function(...,
       tmpfile <- tempfile()
       # everything except the kitchen ...
       sink(tmpfile)
-      on.exit(file.remove(tmpfile), add = TRUE)
       preview.header <- if(!is.null(preview.packages) && preview.pdf){
           preview.header <- sprintf('\noutput:\n    pdf_document:\n      extra_dependencies: [%s]',
                                     paste(preview.packages, collapse=','))
