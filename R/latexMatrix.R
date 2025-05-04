@@ -356,9 +356,7 @@ latexMatrix <- function(
   
   # start composing output string:
   
-  result <- paste0(if (fractions) "\\renewcommand*{\\arraystretch}{1.5} \n",
-                   "\\begin{", matrix, "} \n"
-  )
+  result <- paste0("\\begin{", matrix, "} \n")
   
   # matrix input:
   
