@@ -1,0 +1,198 @@
+---
+title: "Linear transformations and matrix inverse in 3D"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Linear transformations and matrix inverse in 3D}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  echo = TRUE,
+  collapse = TRUE,
+  fig.height = 5,
+  fig.width = 5
+)
+options(digits=4)
+par(mar=c(4,4,1,1)+.1)
+```
+```{r setuprgl, echo=FALSE}
+library(rgl)
+library(knitr)
+knit_hooks$set(webgl = hook_webgl)
+```
+
+```{r}
+library(matlib)   # use the package
+library(rgl)      # also using rgl
+```
+
+This vignette illustrates how linear transformations can be represented in 3D using
+the [`rgl` package](https://dmurdoch.github.io/rgl/).
+It is explained more fully in this StackExchange discussion
+[3D geometric interpretations of matrix inverse](https://math.stackexchange.com/questions/1948184/3d-geometric-interpretations-of-matrix-inverse).
+It also illustrates the determinant, $\det(\mathbf{A})$, as the volume of the transformed
+cube, and the relationship between $\mathbf{A}$ and $\mathbf{A}^{-1}$.
+
+
+## The unit cube
+Start with a unit cube, which represents the identity matrix $\mathbf{I}_{3 \times 3}$ = `diag(3)` in 3 dimensions.
+In `rgl` this is given by `cube3d()` which returns a `"mesh3d"` object containing the vertices from -1 to 1
+on each axis. I translate and scale this to make each vertex go from 0 to 1.
+These are represented in homogeneous coordinates to handle perspective and transformations.
+See `help("identityMatrix")` for details.
+
+```{r unit-cube}
+library(rgl)
+library(matlib)
+# cube, with each face colored differently
+colors <- rep(2:7, each=4)
+c3d <- cube3d()
+# make it a unit cube at the origin
+c3d <- scale3d(translate3d(c3d, 1, 1, 1),
+               .5, .5, .5)
+str(c3d)
+```
+
+The vertices are the 8 columns of the `vb` component of the object.
+```{r vertices}
+c3d$vb
+```
+
+I want to show the transformation of $\mathbf{I}$ by a matrix $\mathbf{A}$ as the corresponding transformation of the cube.
+
+```{r matrix-A}
+# matrix A: 
+A <- matrix(c( 1, 0, 1, 
+               0, 2, 0,  
+               1, 0, 2), 3, 3) |> print()
+det(A)
+
+# A can be produced by elementary row operations on the identity matrix
+I <- diag( 3 )
+
+AA <- I |>
+  rowadd(3, 1, 1) |>   # add 1 x row 3 to row 1
+  rowadd(1, 3, 1) |>   # add 1 x row 1 to row 3
+  rowmult(2, 2)        # multiply row 2 by 2
+
+all(AA==A)
+```
+
+## Define some useful functions
+
+I want to be able to display 3D mesh objects, with colored points, lines and faces.
+This is a little tricky, because in rgl colors are applied to vertices, not faces. The faces are colored by interpolating the colors at the vertices. See the StackOverflow discussion
+[drawing a cube with colored faces, vertex points and lines](https://stackoverflow.com/questions/39730889/rgl-drawing-a-cube-with-colored-faces-vertex-points-and-lines).
+The function `draw3d()` handles this for `"mesh3d"` objects.
+Another function, `vlabels()` allows for labeling vertices.
+
+```{r draw3d}
+# draw a mesh3d object with vertex points and lines
+draw3d <- function(object, col=rep(rainbow(6), each=4), 
+                   alpha=0.6,  
+                   vertices=TRUE, 
+                   lines=TRUE, 
+                   reverse = FALSE,
+                   ...) {
+  if(reverse) col <- rev(col)
+	shade3d(object, col=col, alpha=alpha, ...)
+	vert <- t(object$vb)
+	indices <- object$ib
+	if (vertices) points3d(vert, size=5)
+	if (lines) {
+	for (i in 1:ncol(indices))
+		lines3d(vert[indices[,i],])
+		}
+}
+
+# label vertex points
+vlabels <- function(object, vertices, labels=vertices, ...) {
+	text3d( t(object$vb[1:3, vertices] * 1.05), texts=labels, ...)
+}
+```
+
+## Show $\mathbf{I}$ and $\mathbf{A}$ all together in one figure
+
+We can show the cube representing the identity matrix $\mathbf{I}$ using `draw3d()`.
+Transforming this by $\mathbf{A}$ is accomplished using `transform3d()`.
+
+```{r 3d-demo1, webgl=TRUE}
+open3d()
+draw3d(c3d)
+vlabels(c3d, c(1,2,3,5))
+
+axes <- rbind( diag(3), -diag(3) )
+rownames(axes) <- c("x", "y", "z", rep(" ", 3))
+vectors3d(axes, frac.lab=1.2, headlength = 0.2, radius=1/20, lwd=3)
+
+c3t<- transform3d(c3d, A) 
+draw3d(c3t)
+vlabels(c3t, c(1,2,3,5))
+```
+
+## Same, but using separate figures, shown side by side
+
+```{r 3d-demo2, webgl=TRUE}
+# NB: this scales each one separately, so can't see relative size
+open3d()
+mfrow3d(1,2, sharedMouse=TRUE)
+draw3d(c3d)
+vectors3d(axes, frac.lab=1.2, headlength = 0.2, radius=1/20, lwd=3)
+
+next3d()	
+draw3d(c3t)
+vectors3d(axes, frac.lab=1.2, headlength = 0.2, radius=1/20, lwd=3)
+```
+
+## $A$ and $A^{-1}$
+
+
+The inverse of `A` is found using `solve()
+```{r AI}
+AI <- solve(A) |> print()
+```
+
+The determinant of the matrix `A` here is 2. The determinant of $\mathbf{A}^{-1}$ is the reciprocal,
+$1/ \det(\mathbf{A})$. Geometrically, this means that the larger $\mathbf{A}^{-1}$ is the smaller is
+$\mathbf{A}^{-1}$.
+
+```{r det-AI}
+det(A)
+det(AI)
+```
+
+You can see the relation between them by graphing both together in the same plot.
+It is clear that $\mathbf{A}^{-1}$ is small in the directions $\mathbf{A}$ is large,
+and vice versa.
+
+```{r 3d-demo3, webgl=TRUE}
+open3d()
+draw3d(c3t)
+c3Inv <- transform3d(c3d, solve(A))
+draw3d(c3Inv)
+vectors3d(axes, frac.lab=1.2, headlength = 0.2, radius=1/20, lwd=3)
+vlabels(c3t, 8, "A", cex=1.5)
+vlabels(c3t, c(2,3,5))
+
+vlabels(c3Inv, 4, "Inv", cex=1.5)
+vlabels(c3Inv, c(2,3,5))
+```
+
+## Animate
+
+The `rgl` graphic can be animated by spinning it around an axis using `spin3d()`.
+This can be played on screen using `play3d()` or
+saved to a `.gif` file using `movie3d()`.
+
+```{r 3d-demo4, webgl=TRUE}
+play3d(spin3d(rpm=15),  duration=4)
+
+#movie3d(spin3d(rpm=15), duration=4, movie="inv-demo", dir=".")
+```
+

@@ -1,4 +1,14 @@
-# matlib 0.9.95
+# matlib 1.0.1
+
+- Rename vignettes to put them in order
+- Add `papers/matlib-useR-2016.pdf` to avoid bad URL
+- Consolidate options for `print.latexMatrix`
+- Fix bug in `print.latexMatrix(sparse=TRUE)`
+- `plotEqn()` gains a `...` to pass other graphical parameters
+- added `coffee` data (modified from `spida2`)
+- Improve documentation of `latexMatrix()` and it's `print()` method to more clearly indicate how to set global options.
+
+# matlib 1.0.0
 
 - added `latexMatrix()` to create a symbolic matrix
 - `latexMatrix()` made more general to handle much wider variety of cases, with LaTeX output [JF]

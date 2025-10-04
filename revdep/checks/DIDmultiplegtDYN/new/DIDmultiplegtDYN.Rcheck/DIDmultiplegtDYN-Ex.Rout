@@ -1,6 +1,6 @@
 
-R version 4.4.1 (2024-06-14 ucrt) -- "Race for Your Life"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R version 4.5.1 (2025-06-13 ucrt) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -37,59 +37,9 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
-> # In the following example, we use data from Favara and Imbs (2015). 
-> # The dataset can be downloaded from GitHub:
-> repo <- "chaisemartinPackages/ApplicationData/main" 
-> file <- "favara_imbs_did_multiplegt_dyn.dta"
-> url <- paste("https://raw.githubusercontent.com", repo, file, sep = "/")
-> favara_imbs <-  haven::read_dta(url)
 > 
-> # Estimating 3 non-normalized event-study effects and two placebo 
-> # effects of banking deregulations on loans volume:
-> summary(did_multiplegt_dyn(
-+     df = favara_imbs,
-+     outcome = "Dl_vloans_b",
-+     group = "county",
-+     time = "year",
-+     treatment = "inter_bra",
-+     effects = 2,
-+     placebo = 1,
-+     cluster = "state_n",
-+     graph_off = TRUE
-+ ))
-
-----------------------------------------------------------------------
-       Estimation of treatment effects: Event-study effects
-----------------------------------------------------------------------
-             Estimate SE      LB CI    UB CI   N     Switchers
-Effect_1     0.04348  0.03354 -0.02226 0.10922 3,810 905      
-Effect_2     0.03871  0.03936 -0.03843 0.11585 2,990 905      
-
-Test of joint nullity of the effects : p-value = 0.4316
-----------------------------------------------------------------------
-    Average cumulative (total) effect per treatment unit
-----------------------------------------------------------------------
- Estimate        SE     LB CI     UB CI         N Switchers 
-  0.01869   0.01554  -0.01176   0.04914     5,102     1,810 
-Average number of time periods over which a treatment effect is accumulated: 1.5010
-
-----------------------------------------------------------------------
-     Testing the parallel trends and no anticipation assumptions
-----------------------------------------------------------------------
- Estimate        SE     LB CI     UB CI         N Switchers 
-  0.05481   0.04593  -0.03522   0.14484     2,777       896 
-
-
-
-
-The development of this package was funded by the European Union.
-ERC REALLYCREDIBLE - GA N. 101043899
+> # See the did_multiplegt_dyn GitHub page for examples and details.
 > 
-> # Please note that some of the standard errors displayed above could differ from those 
-> # reported in de Chaisemartin and D'Haultfoeuille (2020b) due to coverage-improving 
-> # changes to the variance estimator.
-> 
-> # See the did_multiplegt_dyn GitHub page for further examples and details.
 > 
 > 
 > 
@@ -98,7 +48,7 @@ ERC REALLYCREDIBLE - GA N. 101043899
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.89 4.61 20.73 NA NA 
+Time elapsed:  0.97 0.21 1.21 NA NA 
 > grDevices::dev.off()
 null device 
           1 

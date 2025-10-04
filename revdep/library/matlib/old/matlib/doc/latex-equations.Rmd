@@ -1,0 +1,684 @@
+---
+title: "LaTeX Equations with latexMatrix, Eqn and matrix2latex"
+author: Phil Chalmers, John Fox, Michael Friendly
+date: "`r Sys.Date()`"
+output: 
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    number_sections: false
+    toc: true
+  pdf_document:
+    toc: true
+    keep_tex: true
+bibliography: "references.bib"
+vignette: >
+  %\VignetteIndexEntry{LaTeX Equations with latexMatrix, Eqn and matrix2latex}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r nomessages, echo = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+options(digits=4)
+par(mar=c(5,4,1,1)+.1)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+library(matlib)
+```
+
+
+LaTeX is the de facto standard for communication and publication in scientific documents and it is very easy to typeset mathematical expressions
+like Pythagoras' theorem, $a^2 + b^2 = c^2$ (using `a^2 + b^2 = c^2`) once you learn
+the notation. With a bit of practice, the PDF of the normal distribution can be written as
+
+```
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} 
+  \exp\left[ -\left(\frac{x-\mu}{2\sigma}\right)^{\!2}\,\right]
+```
+which renders as
+
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} 
+  \exp\left[ -\left(\frac{x-\mu}{2\sigma}\right)^{\!2}\,\right]
+$$
+
+Writing equations with arrays, matrices and vectors is
+somewhat more challenging. Many people rely on interactive LaTeX editors like [Overleaf](https://www.overleaf.com/), [MathType](https://www.wiris.com/en/mathtype/), or online
+versions like [Lagrida LaTeX Equation Editor](https://latexeditor.lagrida.com/)
+that provide a menu-driven interface with fill-in templates for
+matrices.
+
+There are already some tools available in R for producing LaTeX output:
+
+* tables (e.g, `xtable::xtable()`, `tables::toLatex()`), 
+* R objects (`Hmisc::latex()`),
+* statistical models (`equatiomatic::extract_eq()`),
+* `knitr::knit_print()` can be used to define [methods for printing objects of class `"matrix"`](https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable). 
+* The [`mathpix`](https://cran.r-project.org/package=mathpix) package
+can take an image of a an equation or formula and produce the LaTeX code which should generate that image.
+* The [`texPreview`](https://cran.r-project.org/package=texPreview) package
+compiles snippets of LaTeX directly into images from the R console to view in the RStudio viewer pane, Shiny apps and Rmarkdown documents.
+
+See [Tools for making latex tables in R](https://stackoverflow.com/questions/5465314/tools-for-making-latex-tables-in-r)
+for a more comprehensive list
+
+
+The `matlib` package extends these, providing a collection of functions that simplify using LaTeX notation for matrices, vectors and equations in documentation and in writing:
+
+* `latexMatrix()`: Constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. `latexMatrix()` also supports matrices with numeric elements, and the objects it produces may be used in various kinds of matrix computations, both symbolic and numeric.
+* `Eqn()`: A wrapper to produce LaTeX expressions or equations that can be used directly in `.Rmd` or `.qmd` documents to compile to equations. It also provides for direct preview of the resulting equation.
+* `showEqn()`: Shows what matrices $\mathbf{A}, \mathbf{b}$ look like as the system of linear equations, $\mathbf{A x} = \mathbf{b}$, but written out as a set of equations.
+
+When used directly in R, these functions produce their output to the console (using `cat()`).
+In a `.Rmd` or `.qmd` document, use the chunk options: `results='asis', echo=FALSE`
+so that `knitr` just outputs the text of the equations to the document.
+The rendering of the equations is mediated by [`pandoc`](https://pandoc.org/) for standard Rmarkdown or Quarto documents.
+
+**Note**: There are several different engines for rendering mathematics in HTML documents for the Web:
+[`mathml`](https://developer.mozilla.org/en-US/docs/Web/MathML),
+[`katex`](https://katex.org/), and
+[`mathjax`](https://www.mathjax.org/) and others, all of which can be made to work with
+`pandoc`.
+The features we describe below work in standard Rmarkdown or Quarto documents.
+However, some more advanced
+features (horizontal and vertical lines for partitioned matrices)
+require `katex`
+to work with [`pkgdown`](https://pkgdown.r-lib.org/).
+Equation numbers and cross-references to them still do not work in `pkgdown`.
+See the discussion in [this pkgdown issue](https://github.com/r-lib/pkgdown/issues/2739).
+Rendering of matrix equations doesn't seem to work at all in the
+[friendly.r-universe.dev](https://friendly.r-universe.dev/articles/matlib/latex-equations.html) version of this vignette.
+
+
+
+## Using `latexMatrix()` and `Eqn()`
+
+`latexMatrix()` constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. For example, by default (with no arguments) it produces the expression for an $n \times m$ matrix $\mathbf{X}$ whose elements
+are $x_{ij}$ in a LaTeX `\begin{pmatrix} ... \end{pmatrix}`
+environment. The LaTeX code generated looks like this:
+
+```
+\begin{pmatrix} 
+  x_{11} & x_{12} & \cdots & x_{1m} \\ 
+  x_{21} & x_{22} & \cdots & x_{2m} \\ 
+  \vdots & \vdots &        & \vdots \\ 
+  x_{n1} & x_{n2} & \cdots & x_{nm} \\ 
+\end{pmatrix}
+```
+
+The code above appears in the console. To render this as a matrix in a document, this must
+be wrapped in a display math environment, typically specified as `$$ ... $$`
+or `\[ ... \]`.
+This is provided by `Eqn()` and used in a code
+chunk with the `results = 'asis'` option, giving the rendered expression.
+
+```{r eqn1,results='asis'}
+latexMatrix() |> Eqn()
+```
+
+For chunk output in a document, you will get a LaTeX error, "missing $ inserted" if you forget
+to use `Eqn()` or otherwise fail to make the LaTeX appear inside a math environment.
+
+Some other examples:
+
+* A $3 \times 3$ identity matrix with square brackets, specified as an equation with a left-hand side $\mathbf{I}_3$. The first argument to
+`latexMatrix()` can be any numeric matrix. The `matrix="bmatrix"` argument here
+specifies square brackets around the matrix.
+
+```{r eqn2,results='asis'}
+Eqn("\\mathbf{I}_3 =", latexMatrix(diag(3), matrix="bmatrix"))
+```
+
+* A row or column vector; the first argument to `latexMatrix()` must be a **matrix**, so wrap an R vector in `matrix()`, supplying `nrow=1` (or `ncol = 1`):
+
+```{r eqn3,results='asis'}
+latexMatrix(matrix(LETTERS[1:4], nrow=1), matrix="Bmatrix") |> Eqn()
+```
+
+```{r eqn4,results='asis'}
+latexMatrix(matrix(letters[1:3], ncol=1), matrix = "vmatrix") |> Eqn()
+```
+
+The above examples illustrate, some styles of matrix delimiters using the `matrix` argument.
+
+A wide variety of options are available for the matrix element symbols, fonts, subscripts and decorations: 
+
+* The typical element can use any LaTeX math font, e.g., `\\mathbb{}, \mathcal{}, ...`;
+* the row/column subscripts can start at 0 or 1;
+* they can be separated by a comma, and 
+* one can apply an exponent ($\bullet^{-1}$) or transpose symbol ($\bullet^\top$ or $\bullet^\prime$)
+
+```{r eqn5,results='asis'}
+latexMatrix("\\mathbb{q}", 3, 3, 
+            matrix = "bmatrix",
+            zero.based = c(TRUE, FALSE), 
+            comma=TRUE, 
+            exponent="-1") |>
+  Eqn()
+```
+
+
+### The SVD
+As a more complicated example,
+here we write out the LaTeX equation for the [singular value decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) (SVD) of a 
+general $n \times p$ matrix $\mathbf{X}$
+using `Eqn()` and `latexMatrix()`. In Rmd markup, `Eqn()` can be given an equation 
+**label** (using the `label` argument), which will both label and number the equations.
+
+Two calls to `Eqn()` produce separate equations in the output below.
+Both of these equations are numbered.
+(`Eqn()` uses the LaTeX `equation` environment, `\begin{equation} ... \end{equation}`,
+or `equation*` if the equation does not include a `label`).
+The two calls to `Eqn()` are rendered as separate equations, center aligned.
+
+<!-- (In this example, using `echo = TRUE` gives output that -->
+<!-- intersperses the code with the equation output for some reason.) -->
+
+```{r eval=FALSE}
+Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
+Eqn("\\mathbf{X} =",
+    latexMatrix("u", "n", "k"),
+    latexMatrix("\\lambda", "k", "k", diag=TRUE),
+    latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
+```
+
+This produces the two numbered equations:[^eqn-pkgdown]
+
+[^eqn-pkgdown]: At present equation numbers don't work in vignettes rendered as
+articles by `pkgdown`.
+
+```{r eqn-svd,results='asis', echo=FALSE}
+Eqn("\\mathbf{X} = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top", label='eq:svd')
+Eqn(latexMatrix("u", "n", "k"),
+    latexMatrix("\\lambda", "k", "k", diag=TRUE),
+    latexMatrix("v", "k", "p", transpose = TRUE), label='eq:svdmats')
+```
+
+The matrix names in Equation `r ref("eq:svd")` are printed in a **boldface** math font
+(`\mathbf{}`), typically used for matrices
+and vectors. Note that when using
+LaTeX code in R expressions each backslash (`\`) must be doubled (`\\`) in R because `\` is the
+escape character.
+
+Note that the first equation can be referenced because it was labeled:  "As seen in Equation `r ref("eq:svd")` \ldots ". References to equations can entered in text using an inline call to
+`ref()`, e.g, `` `r knitr::inline_expr('ref("eq:svd")')` ``
+(In Quarto, equation labels must be of the form `#eq-label` and equation references are of the form `@eq-label`)
+
+### Systems of equations
+
+As another example, the chunk below shows a system of equations $\mathbf{A} \mathbf{x} = \mathbf{b}$
+written out using symbolic matrices. 
+
+```{r eqn-Axb,symbMat, results='asis'}
+Eqn(latexMatrix("a", nrow = "m", ncol="n", matrix="bmatrix"),
+    latexMatrix("x", nrow = "n", ncol=1),
+    Eqn_hspace(mid='='),
+    latexMatrix("b", nrow = "m", ncol=1))
+```
+
+Extra symmetric white space is added via `Eqn_hspace()`, which can also be used for standard spacing such as `\quad` (default size), `\,`, `'1cm'` for `\hspace{}`, etc.
+
+Section [showEqn](#showEqn) describes another way to display systems of equations.
+
+### `aligned` environment
+
+You can also align separate equations relative to some symbol like an `=` sign to show separate
+steps of re-expression, using the option `Eqn(..., align=TRUE)`. Alignment points are marked by
+`&` in LaTeX.
+
+Show the singular value decomposition again, but now as two separate equations aligned after the `=`
+sign. Note the locations of the `&` operator for alignment, specified as the left-hand side (`lhs`)
+of the second equation.
+
+
+```{r eqn-align,results='asis'}
+Eqn("\\mathbf{X} & = \\mathbf{U} \\mathbf{\\Lambda} \\mathbf{V}^\\top",
+    Eqn_newline(),
+    ' & =',
+    latexMatrix("u", "n", "k"),
+    latexMatrix("\\lambda", "k", "k", diag=TRUE),
+    latexMatrix("v", "k", "p", transpose = TRUE),
+    align=TRUE)
+```
+
+Note that in this example, there are three calls to `latexMatrix()`, wrapped inside `Eqn()`.
+`Eqn_newline()` emits a newline (`\\`) between equations.
+
+
+## Computing with `"latexMatrix"` objects {#computing}
+
+Objects returned by `latexMatrix()` that have **definite** (i.e., numeric) dimensions--- for example, a 3-by-2 matrix as opposed to an "n"-by-"m" matrix---may be employed in a variety of standard symbolic and numeric matrix computations. They provide some reasonable means to compose 
+meaningful matrix equations in LaTeX far easier than doing this manually, matrix by matrix.
+
+These computations include:
+
+* the R arithmetic operators `+` (matrix addition), `-` (matrix subtraction and negation), `*` (product of a scalar and a matrix), 
+* `^` (raise to a power), and 
+* `%*%` (matrix multiplication), and the functions `t()` (transpose), `determinant()`, and `solve()` (matrix inverse), 
+* `%O%` (kronecker product),
+* Selecting sub-matrices using indexing `X[rows, cols]` and binding rows/columns with `rbind()`, `cbind()`
+
+There are also function equivalents of the operators that are more flexible via optional arguments.  For example, using the operator `A %*% B` multiplies the two matrices `A` and `B`, returning a symbolic result. The corresponding function `matmult()` multiplies two _or more_ matrices, and can simplify the result 
+(with `simplify = TRUE`, default) and/or produce the numeric representation of the product (with `as.numeric = TRUE`, default).
+
+With the exception of `determinant()`, which (because it is a scalar quantity)  returns a character string with a LaTeX expression for the determinant, these operators and functions return `"latexMatrix"` objects, which can be printed, typeset, or used in further computations. Additionally, in many instances a `"latexMatrix"` object can be coerced to a numeric matrix by 
+<!-- `as.numeric()` or  -->
+`as.double()`. We illustrate these computations in this section.
+
+Consider, first, basic matrix arithmetic. Define some matrices: `A` and `B` are numeric,
+but `C` and `D` are symbolic, with elements $c_{ij}$ and $d_{ij}$
+
+```{r matrix-arithmetic}
+(A <- latexMatrix(matrix(c(1, -3, 0, 1), 2, 2)))
+(B <- latexMatrix(matrix(c(5, 3, -1, 4), 2, 2)))
+(C <- latexMatrix(symbol="c", 2, 3))
+(D <- latexMatrix(symbol="d", 2, 3))
+```
+
+The usual arithmetic operations work for these `"latexMatrix"` objects, and return
+LaTeX representations of the result:
+```{r matrix-arithmetic2}
+A + B
+```
+
+Some other examples:
+```{r matrix-arithmetic3}
+A - B
+-A            # unary minus
+2*A           # scalar multiplication
+C + D         # sum of symbolics
+"\\pi" * C    # everything should be multiplied by pi
+```
+
+Typesetting the last result produces:
+```{r scalar-product-displayed, results='asis', echo=FALSE}
+Eqn("\\pi" * C)
+```
+
+Some of these operations produce numeric results and so can be coerced to numeric matrices; for example:
+```{r coerce-to-numeric}
+as.numeric(A + B)
+```
+
+Using these tools, it is easy to typeset complete matrix equations, giving multiple
+arguments to `Eqn()`:
+
+```{r matrix-arith-equation, results='asis'}
+Eqn("\\mathbf{A} + \\mathbf{B} =", A, " + ", B, " = ", A + B)
+```
+
+If the elements of a matrix are valid R variable names, then it is also possible to give these elements numeric values, as in
+```{r coerce-to-numeric-with-locals}
+(M <- latexMatrix(matrix(letters[1:9], 3, 3)))
+as.double(-2*M, locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))
+```
+
+### Matrix products and transpose
+
+The product of two matrices is given by `%*%` for `"latexMatrix"` objects.
+When the arguments are both numeric, the numeric result is evaluated
+and presented in LaTeX form.
+
+
+```{r product1, results='asis'}
+A %*% B
+```
+
+But the result is symbolic if either argument is symbolic:
+
+<!-- To get the numeric result evaluated, use `as.double()` and perform ordinary -->
+<!-- matrix multiplication: -->
+
+```{r product2, results='asis'}
+A %*% latexMatrix("b", 2, 2)
+```
+
+The LaTeX symbol for multiplication is a centered dot, `\\cdot` ($\cdot$), by default.
+This can be changed by changing `options(latexMultSymbol)`,
+e.g, to use the $\times$ symbol instead, use:
+
+```{r multSymbol, eval=FALSE}
+options(latexMultSymbol = "\\times")
+```
+
+
+The transpose, `t()` of `"latexMatrix"` 
+objects is similarly straightforward. This directly transposes the matrix, as opposed to superscript notation,
+$\mathbf{D}^\top$ or $\mathbf{D}^\prime$ which is implicit.
+
+```{r transpose}
+D
+t(D)
+M %*% t(D)
+```
+The matrix product in the previous example typesets as
+```{r matrix-product-displayed, results='asis', echo=FALSE}
+Eqn(M %*% t(D))
+```
+
+### Determinants & inverse
+
+The determinant is computed _recursively_ by finding the _cofactors_ of the first row of the matrix,
+i.e., $\det(\mathbf{A}_{n \times n}) = \Sigma_j^n \, a_{ij}\: C_{ij}$ where the cofactors
+$C_{ij}$ involve the determinants of the $(n-1) \times (n-1)$ minors $\mathbf{A}_{ij}$.
+(See the vignette [Evaluation of determinants](http://friendly.github.io/matlib/articles/det-ex2.html) for explanation.)
+
+The method is applicable to a matrix of any order, although beyond an order-3 matrix, the resulting expression gets very long. A couple of examples:
+```{r determinant}
+A
+determinant(A)
+M
+determinant(M)
+```
+
+The determinant of a matrix is a single number. `determinant()` returns the expression that computes it in LaTeX notation, using `\\cdot` to represent $\cdot$ for multiplication.
+
+Typesetting the output from the last command produces
+```{r determinant-displayed, results='asis', echo=FALSE}
+Eqn(determinant(M))
+```
+
+The inverse of a square matrix is computed from its determinant and adjoint matrix; for example:
+```{r inverse}
+solve(A)
+```
+Specifying the argument `simplify = TRUE` to `solve()` puts the inverse determinant before the adjoint matrix and returns a latex expression rather than a `"latexMatrix"` object; for example:
+```{r simplify-inverse}
+solve(M, simplify=TRUE)
+```
+which typesets as
+```{r inverse-displayed, results='asis', echo=FALSE}
+Eqn(solve(M, simplify=TRUE))
+```
+We can also supply values for the elements of the matrix to obtain a numeric inverse:
+```{r numeric-inverse}
+MASS::fractions(as.double(solve(M), 
+                          locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6)))
+MASS::fractions(det(as.double(M, 
+                              locals=c(a=1, b=0, c=-2, d=-4, e=7, f=-1, g=0, h=4, i=6))))
+```
+
+### Linear hypotheses
+
+As an example of the more general use of these functions, consider the general linear hypothesis used to test hypotheses and contrasts in linear models.
+We consider a multivariate regression model 
+$\mathbf{Y} = \mathbf{X} \mathbf{B} + \mathbf{E}$ with $q$ regressors
+$\mathbf{x}_0, \mathbf{x}_1, \dots, \mathbf{x}_q$ (including the constant
+$\mathbf{x}_0$ for the intercept)
+and 
+$p$ responses,
+$\mathbf{y}_1, \mathbf{y}_2, \dots, \mathbf{y}_p$.
+
+<!-- [**Intercept* ignored here. Fix notation or description] -->
+
+Suppose we want to test the hypothesis that a subset of rows (predictors)
+and/or columns (responses) simultaneously have null effects.
+This can be expressed in the general linear test,
+$$
+\mathcal{H}_0 : \mathbf{C}_{h \times q} \, \mathbf{B}_{q \times p} = \mathbf{0}_{h \times p} \: ,
+$$
+where $\mathbf{C}$ is a  full rank $h \le q$ hypothesis matrix of constants, that selects 
+subsets or linear combinations (contrasts) of the coefficients in $\mathbf{B}$ to be tested
+in a $h$ degree-of-freedom hypothesis.
+
+For example, for a multivariate regression model 
+with
+three responses $y_1, y_2, y_3$ and three predictors $x_1, x_2, x_3$, the coefficients $\mathbf{B}$ are given by the following `latexMatrix()` expression, where several arguments are used to:
+(a) start row indices at zero (`zero.based`);
+(b) make the column indices a subscript of $y$ (`prefix.col`);
+(c) insert a comma between row/column subscripts.
+
+```{r linhyp-beta, results='asis'}
+(B <- latexMatrix('\\beta', ncol = 3, nrow=4, 
+                 comma=TRUE, prefix.col = 'y_',
+                 zero.based=c(TRUE, FALSE)))
+```
+
+
+We can test the hypothesis
+that neither $x_2$ nor $x_3$ contribute at all to the predicting the $y$s in terms of the hypothesis that
+the coefficients for the corresponding rows of $\mathbf{B}$ are zero.
+To do this, we specify a 2-row $\mathbf{C}$ matrix that
+simply selects those rows:
+
+```{r linhyp-C, results='asis'}
+(C <- latexMatrix(matrix(c(0, 1, 0, 0,
+                           0, 0, 1, 0), nrow=2, byrow=TRUE), 
+                 matrix = "bmatrix"))
+```
+
+Then, the hypothesis to be tested can be expressed as follows,
+using `Eqn()` to wrap a set of LaTeX expressions and calls to `matlib` functions. 
+
+```{r linear-hypotheses, results='asis'}
+B0 <- latexMatrix('\\beta', ncol = 3, nrow=2, comma=TRUE, prefix.col = 'y_')
+Eqn("\\mathcal{H}_0 : \\mathbf{C} \\mathbf{B} & = ",
+    C, B,
+    Eqn_newline(), 
+    '& =',
+    B0,
+    "= \\mathbf{0}_{(2 \\times 3)}", 
+    align=TRUE)
+```
+
+In this example, note that the R objects `C`, `B` and `B0` are the results
+of `latexMatrix()` calls, which are character strings containing LaTeX
+expressions.
+
+### Partitioned matrices, indexing & binding
+
+Matrix notation sometimes portrays matrices whose elements are themselves
+matrices and vectors (rather than scalars) in order to show a higher-level
+structure. Such matrices, called **partitioned** or **block** matrices
+have similar [arithmetic and algebraic properties](https://www.statlect.com/matrix-algebra/properties-of-block-matrices) to those of ordinary matrices.
+
+For example, the code below represents a $4 \times 4$ matrix
+$\mathbf{M}$, which is partitioned in $2 \times 2$ blocks, which are
+labeled $\mathbf{M}_{i,j}$.
+
+```{r partition1}
+M <- latexMatrix("m", 4, 4)
+Mpart <- latexMatrix('\\mathbf{M}', nrow = 2, ncol = 2, comma = TRUE)
+Eqn("\\mathbf{M} =", Mpart,
+    " =", M)
+```
+
+This typesets as:
+
+```{r partition2, results='asis', echo=FALSE}
+M <- latexMatrix("m", 4, 4)
+Mpart <- latexMatrix('\\mathbf{M}', nrow = 2, ncol = 2, comma = TRUE)
+Eqn("\\mathbf{M} =", Mpart,
+    " =", M)
+```
+
+Just as rows and columns can be selected using `X[rows, cols]` indexing
+for ordinary matrices, the same operator can be used for LaTeX matrices,
+e.g., `M[rows, cols]`.  The following extracts 4 the sub-matrices of `M`:
+
+```{r partition3}
+M11 <- M[1:2, 1:2] |> print()
+M12 <- M[1:2, 3:4]
+M21 <- M[3:4, 1:2]
+M22 <- M[3:4, 3:4]
+```
+
+The operations of joining matrices by rows, with `rbind()`, and by columns, with
+`cbind()` are also defined for `"latexMatrices"`. This code puts the 4 pieces
+of $\mathbf{M}$ back together:
+
+```{r partition4}
+rbind(
+  cbind(M11, M12),
+  cbind(M21, M22)
+)
+```
+
+And, of course you can also format the sub-matrices together using `Eqn()`:
+
+```{r partition5, results='asis'}
+Eqn(M11, M12,
+    Eqn_newline(),
+    M21, M22,
+    align = TRUE)
+```
+
+Finally, the `partition()` function alters the print representation of a matrix
+using horizontal and  vertical lines separating the sub-matrices.
+It does this by re-wrapping the matrix in a LaTeX `\begin{array} ... \end{array}`
+environment, using `|` in `{c c | c c}` for the vertical lines and `\hline` for horizontal lines. 
+This may be the simplest way to portray partitioned matrices
+in writing.
+
+```{r partition6, results='asis'}
+partition(M, rows=2, columns=2)
+```
+
+Note that `partition()` can show more than one horizontal and vertical partition lines (or no line at all):
+
+```{r partition7, results='asis'}
+partition(M, rows=c(1,3), columns=c(1,3))
+```
+
+Using this notation, we can illustrate matrix arithmetic with partitioned
+matrices. For example, assuming the partitions of matrices $\mathbf{C}$ and $\mathbf{D}$ are of the same size, their sum is just the sum of corresponding
+sub-matrices:
+
+
+```{r partition8, results='asis'}
+C <- latexMatrix("\\mathbf{C}", 2, 2)
+D <- latexMatrix("\\mathbf{D}", 2, 2)
+Eqn("\\mathbf{C} + \\mathbf{D} =",
+    C, "+", D, "=", 
+    C + D)
+```
+
+
+### Kronecker products
+
+The Kronecker product of two matrices, $\mathbf{A}_{m \times n} \otimes \mathbf{B}_{p \times q}$ is the $mp \times nq$ block matrix consisting of each element $a_{ij}$ multiplied by
+$\mathbf{B}$. This has many uses in statistics, among these the nice result [@Bock:75;@Sunwoo1996]
+that
+the design matrix $\mathbf{X}$ in the linear ANOVA model for factors A, B, C, ...
+can be generated as the Kronecker product of their contrast matrices
+$\mathbf{C}_A, \mathbf{C}_B, \mathbf{C}_C \dots$, each
+preceded by the unit vector $\mathbf{1}$.
+
+$$
+\mathbf{X}_{ABC\dots} = 
+  [\mathbf{1} \mid \mathbf{C}_A] \;\otimes\;
+  [\mathbf{1} \mid  \mathbf{C}_B] \;\otimes\;
+  [\mathbf{1} \mid  \mathbf{C}_B] \;\otimes\; \dots
+$$
+
+This is implemented in the `%O%` operator and the `kronecker()` function in the package.
+For example,
+
+```{r kronecker1, results='asis'}
+A <- matrix(1:4, nrow = 2) |> 
+  latexMatrix() |> print()
+B <- matrix(5:8, nrow = 2) |> 
+  latexMatrix() |> print()
+kronecker(A, B) |> partition(rows = 2, columns = 2)
+```
+
+You can also use `Eqn()` to illustrate the definition of the Kronecker product
+more explicitly. In the following, `KAB` is the product in symbolic form;
+`as.double()` is used to evaluate the result numerically.
+
+
+```{r kronecker2, results='asis'}
+Bmat <- latexMatrix('\\mathbf{B}', ncol=1, nrow=1)
+KABmat <- kronecker(A, Bmat)
+KAB <- kronecker(A, B)
+
+Eqn("\\mathbf{A} \\otimes \\mathbf{B} = &",
+    KABmat,
+    Eqn_newline(), Eqn_vspace("1.5ex"), "= & ",
+    KAB |> partition(rows = 2, columns = 2),
+    Eqn_newline(), Eqn_vspace("1.5ex"), "= & ",
+    latexMatrix(as.double(KAB)) |> partition(rows = 2, columns = 2),
+    align = TRUE)
+```
+
+
+## matrix2latex {#matrix2latex}
+
+The `matrix2latex()` function can also generate symbolic equations from numeric or character matrices.
+For numeric matrices, it can round the values or show results as fractions.
+
+```{r results='asis'}
+A <- matrix(1:12, nrow=3, ncol=4, byrow = TRUE) / 6
+matrix2latex(A, fractions = TRUE, brackets = "b") |> Eqn()
+```
+
+
+Say we want to show the matrix $[\mathbf{A} | \mathbf{b}]$ involved in the system of equations
+$\mathbf{A} \mathbf{x} = \mathbf{b}$.
+Create these as a character matrix and vector:
+
+```{r}
+A <- matrix(paste0('a_', 1:9), 3, 3, byrow = TRUE) |> print()
+b <- paste0("\\beta_", 1:3) |> print()
+```
+
+Then use `matrix2latex()` on `cbind(A,b)` and pipe the result of `matrix2latex()` to `Eqn()`:
+
+```{r results='asis'}
+matrix2latex(cbind(A,b)) |> Eqn()
+```
+
+All the R tricks for creating and modifying matrices can be used in this way.
+
+## showEqn {#showEqn}
+
+`showEqn()` is designed to show a system of linear equations, $\mathbf{A x} = \mathbf{b}$, but written out as a set of equations individually. With the option `latex = TRUE` it writes these out in LaTeX form.
+
+<!-- `showEqn()` can also write LaTeX, but writes out the equations individually. -->
+<!-- However, but the `array` environment needs to be included -->
+<!-- inside `$$ ... $$` to be evaluated in a chunk, so this chunk is not evaluated (it causes a LaTeX error). -->
+
+Here, we create a character matrix containing
+the elements of a $3 \times 3$ matrix `A`, whose elements are of the form
+`a_{ij}` and two character vectors, `b_i` and `x_i`. 
+```{r}
+A <- matrix(paste0("a_{", outer(1:3, 1:3, FUN  = paste0), "}"), 
+            nrow=3) |> print()
+
+b <- paste0("b_", 1:3)
+x <- paste0("x", 1:3)
+```
+
+`showEqn(..., latex = TRUE)` produces the three equations in a single `\begin{array} ... \begin{array}`
+environment.
+
+```{r showEqn0, eval=FALSE}
+showEqn(A, b, vars = x, latex=TRUE)
+```
+
+If this line was run in an R console, it would produce:
+
+```
+\begin{array}{lllllll}
+a_{11} \cdot x_1 &+& a_{12} \cdot x_2 &+& a_{13} \cdot x_3  &=&  b_1 \\ 
+a_{21} \cdot x_1 &+& a_{22} \cdot x_2 &+& a_{23} \cdot x_3  &=&  b_2 \\ 
+a_{31} \cdot x_1 &+& a_{32} \cdot x_2 &+& a_{33} \cdot x_3  &=&  b_3 \\ 
+\end{array}
+```
+
+Evaluating the above code in an unnumbered LaTeX math environment via `Eqn()` gives the
+desired result:
+
+```{r results='asis'}
+showEqn(A, b, vars = x, latex=TRUE) |> Eqn()
+```
+
+## References

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Michael Friendly" />
 
-<meta name="date" content="2024-07-25" />
+<meta name="date" content="2024-10-02" />
 
 <title>Gram-Schmidt Orthogonalization and Regression</title>
 
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Gram-Schmidt Orthogonalization and
 Regression</h1>
 <h4 class="author">Michael Friendly</h4>
-<h4 class="date">2024-07-25</h4>
+<h4 class="date">2024-10-02</h4>
 
 
 
@@ -369,12 +369,12 @@ a response variable</p>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                   <span class="at">IQ =</span> <span class="fu">round</span>(<span class="dv">20</span> <span class="sc">+</span> height <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>age <span class="sc">-</span>.<span class="dv">1</span><span class="sc">*</span>weight <span class="sc">-</span><span class="dv">3</span><span class="sc">*</span>male <span class="sc">+</span> <span class="dv">10</span><span class="sc">*</span><span class="fu">rnorm</span>(<span class="fu">nrow</span>(class))))</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">head</span>(class)</span></code></pre></div>
 <pre><code>##         sex age height weight male  IQ
-## Alfred    M  14   69.0  112.5    1 138
-## Alice     F  13   56.5   84.0    0 118
-## Barbara   F  13   65.3   98.0    0 126
-## Carol     F  14   62.8  102.5    0 119
-## Henry     M  14   63.5  102.5    1 112
-## James     M  12   57.3   83.0    1 119</code></pre>
+## Alfred    M  14   69.0  112.5    1 124
+## Alice     F  13   56.5   84.0    0 117
+## Barbara   F  13   65.3   98.0    0 105
+## Carol     F  14   62.8  102.5    0 122
+## Henry     M  14   63.5  102.5    1 102
+## James     M  12   57.3   83.0    1  87</code></pre>
 <p>Reorder the predictors we want, forming a numeric matrix,
 <code>X</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(class[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">5</span>)])</span>
@@ -475,12 +475,12 @@ both models</li>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: IQ
-##           Df Sum Sq Mean Sq F value Pr(&gt;F)  
-## height     1   1149    1149    8.84  0.014 *
-## weight     1    144     144    1.11  0.317  
-## age        1      2       2    0.01  0.916  
-## male       1     43      43    0.33  0.577  
-## Residuals 10   1299     130                 
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)   
+## height     1   1131    1131   13.99 0.0038 **
+## weight     1    176     176    2.18 0.1707   
+## age        1    117     117    1.44 0.2570   
+## male       1    226     226    2.79 0.1256   
+## Residuals 10    808      81                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Regression of IQ on the orthogonalized variables in
@@ -490,12 +490,12 @@ both models</li>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: IQ
-##           Df Sum Sq Mean Sq F value Pr(&gt;F)  
-## height     1   1149    1149    8.84  0.014 *
-## weight     1    144     144    1.11  0.317  
-## age        1      2       2    0.01  0.916  
-## male       1     43      43    0.33  0.577  
-## Residuals 10   1299     130                 
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)   
+## height     1   1131    1131   13.99 0.0038 **
+## weight     1    176     176    2.18 0.1707   
+## age        1    117     117    1.44 0.2570   
+## male       1    226     226    2.79 0.1256   
+## Residuals 10    808      81                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This illustrates that <code>anova()</code> tests for linear models

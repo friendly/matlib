@@ -2,6 +2,7 @@ Det                     Determinant of a Square Matrix
 Eigen                   Eigen Decomposition of a Square Symmetric
                         Matrix
 Eqn                     Create a LaTeX Equation Wrapper
+Eqn_helpers             Helpers to Compose Equations with Eqn
 Ginv                    Generalized Inverse of a Matrix
 GramSchmidt             Gram-Schmidt Orthogonalization of a Matrix
 Inverse                 Inverse of a Matrix
@@ -25,6 +26,7 @@ circle                  Draw circles on an existing plot.
 circle3d                Draw a horizontal circle
 class                   Class Data Set
 cofactor                Cofactor of A[i,j]
+coffee                  Data on Coffee, Stress and Heart Damage
 cone3d                  Draw a 3D cone
 corner                  Draw a corner showing the angle between two
                         vectors

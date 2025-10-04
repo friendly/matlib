@@ -134,7 +134,6 @@ glance.multinom         Glance at a(n) multinom object
 glance.negbin           Glance at a(n) negbin object
 glance.nlrq             Glance at a(n) nlrq object
 glance.nls              Glance at a(n) nls object
-glance.orcutt           Glance at a(n) orcutt object
 glance.pam              Glance at a(n) pam object
 glance.plm              Glance at a(n) plm object
 glance.poLCA            Glance at a(n) poLCA object
@@ -238,7 +237,6 @@ tidy.negbin             Tidy a(n) negbin object
 tidy.nlrq               Tidy a(n) nlrq object
 tidy.nls                Tidy a(n) nls object
 tidy.numeric            Tidy atomic vectors
-tidy.orcutt             Tidy a(n) orcutt object
 tidy.pairwise.htest     Tidy a(n) pairwise.htest object
 tidy.pam                Tidy a(n) pam object
 tidy.plm                Tidy a(n) plm object

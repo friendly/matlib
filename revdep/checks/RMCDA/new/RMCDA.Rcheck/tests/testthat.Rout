@@ -1,0 +1,56 @@
+
+R version 4.5.1 (2025-06-13 ucrt) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # This file is part of the standard setup for testthat.
+> # It is recommended that you do not modify it.
+> #
+> # Where should you do additional test configuration?
+> # Learn more about the roles of various files in:
+> # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+> # * https://testthat.r-lib.org/articles/special-files.html
+> 
+> library(testthat)
+> library(RMCDA)
+> 
+> test_check("RMCDA")
+No serious inconsistencies detected.
+No serious inconsistencies detected.
+No serious inconsistencies detected.
+No serious inconsistencies detected.
+No serious inconsistencies detected.
+
+Attaching package: 'matlib'
+
+The following objects are masked from 'package:pracma':
+
+    angle, inv, size
+
+         scores
+[1,] 1 3.357876
+[2,] 2 2.766405
+[3,] 3 4.578583
+[4,] 4 3.966050
+[5,] 5 4.600650
+[6,] 6 4.880394
+[7,] 7 2.075462
+[ FAIL 0 | WARN 28 | SKIP 0 | PASS 123 ]
+
+[ FAIL 0 | WARN 28 | SKIP 0 | PASS 123 ]
+> 
+> proc.time()
+   user  system elapsed 
+   0.90    0.45    1.48 

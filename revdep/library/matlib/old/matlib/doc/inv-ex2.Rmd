@@ -50,7 +50,7 @@ library(matlib)
 
 ### Create a 3 x 3 matrix
 
-```{r }
+```{r create-matrix}
    A <- matrix( c(1, 2, 3,
                   2, 3, 0,
                   0, 1,-2), nrow=3, byrow=TRUE)
@@ -58,7 +58,7 @@ library(matlib)
 
 ### Join an identity matrix to A
 
-```{r }
+```{r cbind-I}
    (AI <-  cbind(A, diag(3)))
 ```
 
@@ -73,7 +73,7 @@ We will do this three ways:
 
 ### 1. Using R arithmetic
 
-```{r }
+```{r solve-manually}
 	(AI[2,] <- AI[2,] - 2*AI[1,])     # row 2 <- row 2 - 2 * row 1
 	(AI[3,] <- AI[3,] + AI[2,])       # row 3 <- row 3 + row 2
 	(AI[2,] <- -1 * AI[2,])           # row 2 <- -1 * row 2
@@ -82,7 +82,7 @@ We will do this three ways:
 
 Now, all elements below the diagonal are zero
 
-```{r }
+```{r solve2}
 	AI
 
       #--continue, making above diagonal == 0
@@ -100,7 +100,7 @@ Now, all elements below the diagonal are zero
 
 ### 2. Do the same, using matlib functions `rowadd()`, `rowmult()` and `rowswap()`
 
-```{r }
+```{r using-rowadd}
    AI <-  cbind(A, diag(3))
 
    AI <- rowadd(AI, 1, 2, -2)        # row 2 <- row 2 - 2 * row 1
@@ -121,14 +121,14 @@ Now, all elements below the diagonal are zero
 ### 3. Using `echelon()`
 `echelon()` does all these steps *row by row*, and returns the result
 
-```{r }
+```{r echelon1}
    echelon( cbind(A, diag(3)))
 ```
 
 It is more interesting to see the steps, using the argument `verbose=TRUE`. In
 many cases, it is informative to see the numbers printed as fractions.
 
-```{r }
+```{r echelon2}
    echelon( cbind(A, diag(3)), verbose=TRUE, fractions=TRUE)
 ```
 

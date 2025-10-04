@@ -68,6 +68,8 @@ Fit the linear model, `y ~ x`. The intercept is `b0 = 2.5` and the slope is `b1 
 ```
 Plot the data and the least squares line.
 ```{r plotmod2}
+#| fig.cap: A plot showing 4 points in data space and the linear regression line
+#| fig.alt: A plot showing 4 points in data space and the linear regression line
 par(mar=c(4,4,1,1)+.1)
 plot(y ~ x, pch=16, cex=1.5)
 abline(mod, lwd=2)
@@ -95,6 +97,8 @@ Each equation corresponds to a line in $(b_0, b_1)$ space. Let's plot them. `plo
 intersection of each pair of lines --- a solution for that pair of observations.
 
 ```{r ploteqn1, echo=2}
+#| fig.cap: Each point in data space corresponds to a line in "beta" space. The figure shows the four lines corresponding to the points in the previous figure.
+#| fig.alt: Each point in data space corresponds to a line in "beta" space. The figure shows the four lines corresponding to the points in the previous figure.
 par(mar=c(4,4,1,1)+.1)
 plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))
 ```
@@ -104,6 +108,7 @@ can be represented in this space by the coefficients of the linear model $y = X 
 already included as the first column in $X$.
 
 ```{r ploteqn2, echo=-1}
+#| fig.alt: The same as the previous plot of lines, but adding the point (b0, b1) that corresponds to the least squares solution
 par(mar=c(4,4,1,1)+.1)
 plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))
 solution <- lm( y ~ 0 + X)
@@ -192,7 +197,8 @@ play3d(spin3d())
 For comparison, we can also show the least squares solution in data or $\beta$ space. Here it is in
 linear equation ($\beta$) space.
 
-```{r}
+```{r ploteqn3, echo=-1}
+#| fig.alt: The least squares solution for three points shown in beta space
 par(mar=c(4,4,1,1)+.1)
 X <- cbind(x0, x1)
 plotEqn(X, y, vars=c("b0", "b1"), xlim=c(-2, 4))

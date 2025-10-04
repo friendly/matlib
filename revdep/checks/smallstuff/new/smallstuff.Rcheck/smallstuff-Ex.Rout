@@ -1,6 +1,6 @@
 
-R version 4.4.1 (2024-06-14 ucrt) -- "Race for Your Life"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R version 4.5.1 (2025-06-13 ucrt) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -230,11 +230,11 @@ NULL
 > g=igraph::graph_from_literal(1-2,2-3:4,3-4:5:6,5-1)
 > split=c("A","A","B","B","A","B")
 > igraph::V(g);split
-+ 6/6 vertices, named, from 7bc78f3:
++ 6/6 vertices, named, from f466bff:
 [1] 1 2 3 4 5 6
 [1] "A" "A" "B" "B" "A" "B"
 > igraph::E(g);crossing2(split,g)
-+ 7/7 edges from 7bc78f3 (vertex names):
++ 7/7 edges from f466bff (vertex names):
 [1] 1--2 1--5 2--3 2--4 3--4 3--5 3--6
 [1] FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE
 > 
@@ -312,14 +312,14 @@ NULL
 > g=igraph::graph_from_literal(1-2,2-3:4,3-4:5:6,5-1)
 > split=c("A","A","B","B","A","B")
 > igraph::V(g);split
-+ 6/6 vertices, named, from 7bd26b7:
++ 6/6 vertices, named, from f4686fb:
 [1] 1 2 3 4 5 6
 [1] "A" "A" "B" "B" "A" "B"
 > igraph::V(get_subgraphs(g,split)[[1]])
-+ 3/3 vertices, named, from 7bd3554:
++ 3/3 vertices, named, from f4688df:
 [1] 1 2 5
 > igraph::V(get_subgraphs(g,split)[[2]])
-+ 3/3 vertices, named, from 7bd4334:
++ 3/3 vertices, named, from f468ac5:
 [1] 3 4 6
 > 
 > 
@@ -339,9 +339,9 @@ NULL
 > g=igraph::graph_from_literal(1-2,2-3:4,3-4:5:6,5-1)
 > df=data.frame(name="Test Graph",descr="A graph")
 > graph_attr_from_df(g,df)
-IGRAPH 7bd5ced UN-- 6 7 -- Test Graph
+IGRAPH f468d9f UN-- 6 7 -- Test Graph
 + attr: name (g/c), descr (g/c), name (v/c)
-+ edges from 7bd5ced (vertex names):
++ edges from f468d9f (vertex names):
 [1] 1--2 1--5 2--3 2--4 3--4 3--5 3--6
 > 
 > 
@@ -806,7 +806,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.42 1.64 9.13 NA NA 
+Time elapsed:  1.01 0.29 1.36 NA NA 
 > grDevices::dev.off()
 null device 
           1 

@@ -24,14 +24,14 @@ but the main thing is that the matrix is **square** and **symmetric**, which gua
 real numbers. Covariance matrices are also **positive semi-definite**, meaning
 that their eigenvalues are non-negative, $\lambda_i \ge 0$.
 
-```{r}
+```{r matA}
 A <- matrix(c(13, -4, 2, -4, 11, -2, 2, -2, 8), 3, 3, byrow=TRUE)
 A
 ```
 
 Get the eigenvalues and eigenvectors using `eigen()`;  this returns a named list, with eigenvalues named `values` and
 eigenvectors named `vectors`.
-```{r}
+```{r eigA}
 ev <- eigen(A)
 # extract components
 (values <- ev$values)
@@ -45,52 +45,52 @@ elements in `values`.
 The following steps illustrate the main properties of eigenvalues and eigenvectors.  We use the notation
 $A = V' \Lambda V$ to express the decomposition of the matrix $A$, where $V$ is the matrix of
 eigenvectors and $\Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_p)$ is the diagonal matrix
-composed of the ordered eivenvalues, $\lambda_1 \ge \lambda_2 \ge \dots \lambda_p$.
+composed of the ordered eigenvalues, $\lambda_1 \ge \lambda_2 \ge \dots \lambda_p$.
 
 0. Orthogonality: Eigenvectors are always orthogonal, $V' V = I$.  `zapsmall()` is handy for cleaning up tiny values.
-```{r}
+```{r orthog}
 crossprod(vectors)
 zapsmall(crossprod(vectors))
 ```
 
 
 1. trace(A) = sum of eigenvalues, $\sum \lambda_i$.
-```{r}
+```{r trace}
 library(matlib)   # use the matlib package
 tr(A)
 sum(values)
 ```
 
 2. sum of squares of A = sum of squares of eigenvalues, $\sum \lambda_i^2$.
-```{r}
+```{r ssq}
 sum(A^2)
 sum(values^2)
 ```
 
-3. determinant = product of eigenvalues, $det(A) = \prod \lambda_i$. This means that the determinant will be zero
+3. determinant = product of eigenvalues, $\det(A) = \prod \lambda_i$. This means that the determinant will be zero
 if any $\lambda_i = 0$.
-```{r}
+```{r prod}
 det(A)
 prod(values)
 ```
 
 4. rank = number of non-zero eigenvalues
-```{r}
+```{r rank}
 R(A)
 sum(values != 0)
 ```
 
 
-5. eigenvalues of $A^{-1}$ = 1/eigenvalues of A. The eigenvectors are the same, except for order, because eigenvalues
+5. eigenvalues of the inverse $A^{-1}$ = 1/eigenvalues of A. The eigenvectors are the same, except for order, because eigenvalues
 are returned in decreasing order.
-```{r}
+```{r solve}
 AI <- solve(A)
 AI
 eigen(AI)$values
 eigen(AI)$vectors
 ```
 
-6. There are similar relations for other powers of a matrix: `values(mpower(A,p)) = values(A)^p`, where 
+6. There are similar relations for other powers of a matrix, $A^2, \dots A^p$: `values(mpower(A,p)) = values(A)^p`, where 
 `mpower(A,2) = A %*% A`, etc.
 ```{r}
 eigen(A %*% A)

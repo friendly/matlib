@@ -54,7 +54,7 @@ A <- matrix(c(3, 1,
 A
 det(A)
 
-## ----fig.width=5, fig.height=5------------------------------------------------
+## ----det-diagram1,fig.width=5, fig.height=5-----------------------------------
 library(matlib)
 xlim <- c(0,6)
 ylim <- c(0,6)
@@ -75,7 +75,7 @@ text(mean(A[,1]), mean(A[,2]), "det(A)", cex=1.25)
 (D <- 2 * diag(2))
 det(D)
 
-## ----fig.width=4, fig.height=4------------------------------------------------
+## ----det-diagram2,fig.width=4, fig.height=4-----------------------------------
 par(mar=c(3,3,1,1)+.1)
 plot(c(0,2), c(0,2), type="n", xlab="X1", ylab="X2", asp=1)
 sum <- D[1,] + D[2,]
@@ -89,7 +89,7 @@ text(mean(D[,1]), mean(D[,2]), "det(D)", cex=1.25)
 (B <- matrix(c(1, 2, 2, 4), 2,2))
 det(B)
 
-## ----fig.width=4, fig.height=4------------------------------------------------
+## ----det-diagram3,fig.width=4, fig.height=4-----------------------------------
 par(mar=c(3,3,1,1)+.1)
 plot(c(0,4), c(0,4), type="n", xlab="X1", ylab="X2", asp=1)
 vectors(B, labels=c("b1", "b2"), pos.lab=c(4,2))

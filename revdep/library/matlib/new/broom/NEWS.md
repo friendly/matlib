@@ -1,3 +1,38 @@
+# broom 1.0.10
+
+* Resolves an R CMD check WARNING related to namespacing on 
+  r-devel (pre-4.6.0, #1255).
+
+# broom 1.0.9
+
+* Increased minimum required R verison to 4.1.
+
+* Resolved errors with the 2.0.85 update of the epiR package.
+
+# broom 1.0.8
+
+## Deprecations
+
+* Removed tidiers for objects from the orcutt package as it was archived from
+  CRAN 4 months prior to the package release.
+
+## Minor Improvements
+
+* `tidy.coeftest` now returns non-`NA` values for `conf.low` and `conf.high` for
+  a model fitted with only a constant term and cluster robust std errors
+  computed using `vcovCL` from `sandwich` (#1227).
+
+* Added support for new column name in lme4 ANOVA output. (lme4 tidiers are
+  technically supplied by broom.mixed, but intermediate output is routed through 
+  broom's `tidy.anova()` method) (#1239).
+
+## Miscellaneous
+
+* Various improvements to infrastructure and testing:
+     - Migrated all messages, warnings, and errors to use the cli package (#1230).
+     - Aligned names of source and test files (#1229).
+     - Transitioned to the third edition of testthat (#1228).
+
 # broom 1.0.7
 
 * Corrected `nobs` entries in `glance.coxph()` output: the package used to 

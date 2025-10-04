@@ -1,0 +1,20 @@
+* using log directory 'C:/Dropbox/R/projects/matlib/revdep/checks/SurprisalAnalysis/new/SurprisalAnalysis.Rcheck'
+* using R version 4.5.1 (2025-06-13 ucrt)
+* using platform: x86_64-w64-mingw32
+* R was compiled by
+    gcc.exe (GCC) 14.2.0
+    GNU Fortran (GCC) 14.2.0
+* running under: Windows 10 x64 (build 19044)
+* using session charset: UTF-8
+* using options '--no-manual --no-build-vignettes'
+* checking for file 'SurprisalAnalysis/DESCRIPTION' ... OK
+* this is package 'SurprisalAnalysis' version '0.2'
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Packages required but not available: 'org.Mm.eg.db', 'org.Hs.eg.db'
+
+See section 'The DESCRIPTION file' in the 'Writing R Extensions'
+manual.
+* DONE
+Status: 1 ERROR

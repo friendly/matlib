@@ -1,7 +1,7 @@
 Type: Package
 Package: rmarkdown
 Title: Dynamic Documents for R
-Version: 2.28
+Version: 2.30
 Authors@R: c(
     person("JJ", "Allaire", , "jj@posit.co", role = "aut"),
     person("Yihui", "Xie", , "xie@yihui.name", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0645-5666")),
@@ -49,7 +49,6 @@ Authors@R: c(
     person("Benct Philip", "Jonsson", role = c("ctb", "cph"), comment = "pagebreak Lua filter"),
     person("Albert", "Krewinkel", role = c("ctb", "cph"), comment = "pagebreak Lua filter")
   )
-Maintainer: Yihui Xie <xie@yihui.name>
 Description: Convert R Markdown documents into a variety of formats.
 License: GPL-3
 URL: https://github.com/rstudio/rmarkdown,
@@ -67,13 +66,14 @@ VignetteBuilder: knitr
 Config/Needs/website: rstudio/quillt, pkgdown
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 NeedsCompilation: no
-Packaged: 2024-08-16 14:12:22 UTC; yihui
+Packaged: 2025-09-25 03:25:30 UTC; yihui
 Author: JJ Allaire [aut],
-  Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
-  Christophe Dervieux [aut] (<https://orcid.org/0000-0003-4474-2498>),
+  Yihui Xie [aut, cre] (ORCID: <https://orcid.org/0000-0003-0645-5666>),
+  Christophe Dervieux [aut] (ORCID:
+    <https://orcid.org/0000-0003-4474-2498>),
   Jonathan McPherson [aut],
   Javier Luraschi [aut],
   Kevin Ushey [aut],
@@ -81,16 +81,17 @@ Author: JJ Allaire [aut],
   Hadley Wickham [aut],
   Joe Cheng [aut],
   Winston Chang [aut],
-  Richard Iannone [aut] (<https://orcid.org/0000-0003-3925-190X>),
-  Andrew Dunning [ctb] (<https://orcid.org/0000-0003-0464-5036>),
-  Atsushi Yasumoto [ctb, cph] (<https://orcid.org/0000-0002-8335-495X>,
-    Number sections Lua filter),
+  Richard Iannone [aut] (ORCID: <https://orcid.org/0000-0003-3925-190X>),
+  Andrew Dunning [ctb] (ORCID: <https://orcid.org/0000-0003-0464-5036>),
+  Atsushi Yasumoto [ctb, cph] (ORCID:
+    <https://orcid.org/0000-0002-8335-495X>, cph: Number sections Lua
+    filter),
   Barret Schloerke [ctb],
-  Carson Sievert [ctb] (<https://orcid.org/0000-0002-4958-2844>),
-  Devon Ryan [ctb] (<https://orcid.org/0000-0002-8549-0971>),
-  Frederik Aust [ctb] (<https://orcid.org/0000-0003-4900-788X>),
+  Carson Sievert [ctb] (ORCID: <https://orcid.org/0000-0002-4958-2844>),
+  Devon Ryan [ctb] (ORCID: <https://orcid.org/0000-0002-8549-0971>),
+  Frederik Aust [ctb] (ORCID: <https://orcid.org/0000-0003-4900-788X>),
   Jeff Allen [ctb],
-  JooYoung Seo [ctb] (<https://orcid.org/0000-0002-4064-6012>),
+  JooYoung Seo [ctb] (ORCID: <https://orcid.org/0000-0002-4064-6012>),
   Malcolm Barrett [ctb],
   Rob Hyndman [ctb],
   Romain Lesur [ctb],
@@ -118,6 +119,7 @@ Author: JJ Allaire [aut],
   Aidan Lister [ctb, cph] (jQuery StickyTabs),
   Benct Philip Jonsson [ctb, cph] (pagebreak Lua filter),
   Albert Krewinkel [ctb, cph] (pagebreak Lua filter)
+Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2024-08-17 04:50:13 UTC
-Built: R 4.4.1; ; 2024-09-26 02:19:59 UTC; windows
+Date/Publication: 2025-09-28 11:30:02 UTC
+Built: R 4.5.1; ; 2025-09-28 23:50:29 UTC; windows

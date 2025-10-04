@@ -1,9 +1,9 @@
 * using log directory 'C:/Dropbox/R/projects/matlib/revdep/checks/biplotbootGUI/old/biplotbootGUI.Rcheck'
-* using R version 4.4.1 (2024-06-14 ucrt)
+* using R version 4.5.1 (2025-06-13 ucrt)
 * using platform: x86_64-w64-mingw32
 * R was compiled by
-    gcc.exe (GCC) 13.2.0
-    GNU Fortran (GCC) 13.2.0
+    gcc.exe (GCC) 14.2.0
+    GNU Fortran (GCC) 14.2.0
 * running under: Windows 10 x64 (build 19044)
 * using session charset: UTF-8
 * using options '--no-manual --no-build-vignettes'

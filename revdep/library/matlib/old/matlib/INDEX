@@ -1,6 +1,7 @@
 Det                     Determinant of a Square Matrix
 Eigen                   Eigen Decomposition of a Square Symmetric
                         Matrix
+Eqn                     Create a LaTeX Equation Wrapper
 Ginv                    Generalized Inverse of a Matrix
 GramSchmidt             Gram-Schmidt Orthogonalization of a Matrix
 Inverse                 Inverse of a Matrix
@@ -31,12 +32,16 @@ echelon                 Echelon Form of a Matrix
 gaussianElimination     Gaussian Elimination
 getYmult                Correct for aspect and coordinate ratio
 gsorth                  Gram-Schmidt Orthogonalization of a Matrix
+latexMatrix             Create and Manipulate LaTeX Representations of
+                        Matrices
+latexMatrixOperations   Various Functions and Operators for
+                        '"latexMatrix"' Objects
 len                     Length of a Vector or Column Lengths of a
                         Matrix
 matlib-package          matlib: Matrix Functions for Teaching and
                         Learning Linear Algebra and Multivariate
                         Statistics.
-matrix2latex            Convert matrix to LaTeX equation
+matrix2latex            (Deprecated) Convert matrix to LaTeX equation
 minor                   Minor of A[i,j]
 mpower                  Matrix Power
 plot.regvec3d           Plot method for regvec3d objects
@@ -46,13 +51,13 @@ pointOnLine             Position of a point along a line
 powerMethod             Power Method for Eigenvectors
 printMatEqn             Print Matrices or Matrix Operations Side by
                         Side
-printMatrix             Print a matrix, allowing fractions or LaTeX
-                        output
+printMatrix             (Deprecated) Print a matrix, allowing fractions
+                        or LaTeX output
 regvec3d                Vector space representation of a two-variable
                         regression model
 rowCofactors            Row Cofactors of A[i,]
 rowMinors               Row Minors of A[i,]
-rowadd                  Add multiples of rows to other rows
+rowadd                  Elementary Row Operations
 rowmult                 Multiply Rows by Constants
 rowswap                 Interchange two rows of a matrix
 showEig                 Show the eigenvectors associated with a

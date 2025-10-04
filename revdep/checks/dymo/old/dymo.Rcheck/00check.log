@@ -1,9 +1,9 @@
 * using log directory 'C:/Dropbox/R/projects/matlib/revdep/checks/dymo/old/dymo.Rcheck'
-* using R version 4.4.1 (2024-06-14 ucrt)
+* using R version 4.5.1 (2025-06-13 ucrt)
 * using platform: x86_64-w64-mingw32
 * R was compiled by
-    gcc.exe (GCC) 13.2.0
-    GNU Fortran (GCC) 13.2.0
+    gcc.exe (GCC) 14.2.0
+    GNU Fortran (GCC) 14.2.0
 * running under: Windows 10 x64 (build 19044)
 * using session charset: UTF-8
 * using options '--no-manual --no-build-vignettes'
@@ -33,7 +33,6 @@
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
-* checking loading without being on the library search path ... OK
 * checking dependencies in R code ... OK
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK

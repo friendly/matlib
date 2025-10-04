@@ -10,6 +10,11 @@ devtools::build()
 # then, test with win builder
 devtools::check_win_devel()
 
+library(revdepcheck)
+revdep_reset()
+revdep_check(num_workers = 4)
+
+
 # submit to cran
 devtools::release()
 

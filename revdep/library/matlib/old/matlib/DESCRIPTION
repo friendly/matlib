@@ -2,8 +2,8 @@ Package: matlib
 Type: Package
 Title: Matrix Functions for Teaching and Learning Linear Algebra and
         Multivariate Statistics
-Version: 0.9.8
-Date: 2024-07-22
+Version: 1.0.0
+Date: 2024-09-27
 Authors@R: c(person(given = "Michael", family = "Friendly", 
                     role=c("aut", "cre"), email="friendly@yorku.ca",
                     comment=c(ORCID="0000-0002-3237-0941")),
@@ -26,18 +26,19 @@ URL: https://github.com/friendly/matlib,
         http://friendly.github.io/matlib/
 BugReports: https://github.com/friendly/matlib/issues
 LazyData: TRUE
-Suggests: knitr, rmarkdown, carData, webshot2, markdown
-Imports: xtable, MASS, rgl, car, methods, dplyr
+Suggests: carData, webshot2, markdown, bookdown, clipr
+Imports: xtable, MASS, rgl, car, methods, dplyr, knitr, rmarkdown,
+        rstudioapi
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2024-07-25 18:13:20 UTC; friendly
+Packaged: 2024-10-02 17:48:09 UTC; friendly
 Author: Michael Friendly [aut, cre] (<https://orcid.org/0000-0002-3237-0941>),
   John Fox [aut] (<https://orcid.org/0000-0002-1196-8012>),
   Phil Chalmers [aut] (<https://orcid.org/0000-0001-5332-2810>),
   Georges Monette [ctb] (<https://orcid.org/0000-0003-0076-5532>),
   Gaston Sanchez [ctb]
 Repository: CRAN
-Date/Publication: 2024-07-25 18:40:02 UTC
-Built: R 4.4.1; ; 2024-09-26 03:39:49 UTC; windows
+Date/Publication: 2024-10-02 18:30:10 UTC
+Built: R 4.5.1; ; 2025-09-29 03:37:38 UTC; windows

@@ -1,6 +1,6 @@
 
-R version 4.4.1 (2024-06-14 ucrt) -- "Race for Your Life"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R version 4.5.1 (2025-06-13 ucrt) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -22,6 +22,7 @@ Type 'q()' to quit R.
 > options(warn = 1)
 > options(pager = "console")
 > library('dymo')
+Warning: replacing previous import 'matlib::size' by 'tictoc::size' when loading 'dymo'
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
@@ -39,7 +40,16 @@ Type 'q()' to quit R.
 > 
 > dymo(time_features[,c(2, 3, 4)], seq_len = 10, dates = time_features$dates)
 Warning: Unknown or uninitialised column: `dates`.
-time: 2.44 sec elapsed
+Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.
+ℹ The deprecated feature was likely used in the dymo package.
+  Please report the issue to the authors.
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the dymo package.
+  Please report the issue to the authors.
+time: 0.47 sec elapsed
 $comb_metrics
   combined_features rank pred_scores        me      mae      mse    rmsse
 1           1, 2, 3    1   0.3608963 -3.100000 21.80730 2206.438 7.677767
@@ -185,7 +195,7 @@ $best_model$plots$AMZN.Close
 
 
 $time_log
-[1] "2S"
+[1] "0S"
 
 > 
 > 
@@ -196,7 +206,7 @@ $time_log
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.13 2.24 13.82 NA NA 
+Time elapsed:  2.15 0.36 2.54 NA NA 
 > grDevices::dev.off()
 null device 
           1 

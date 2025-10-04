@@ -139,7 +139,6 @@ glance.nlrq	glance.nlrq
 glance.nls	glance.nls
 glance.NULL	null_tidiers
 glance.optim	glance_optim
-glance.orcutt	glance.orcutt
 glance.pam	glance.pam
 glance.plm	glance.plm
 glance.poissonmfx	glance.mfx
@@ -204,7 +203,6 @@ nls_tidiers	tidy.nls
 nnet_tidiers	tidy.multinom
 null_tidiers	null_tidiers
 optim_tidiers	tidy_optim
-orcutt_tidiers	tidy.orcutt
 ordinal_tidiers	tidy.clm
 pam_tidiers	tidy.pam
 plm_tidiers	tidy.plm
@@ -325,7 +323,6 @@ tidy.nls	tidy.nls
 tidy.NULL	null_tidiers
 tidy.numeric	vector_tidiers
 tidy.optim	tidy_optim
-tidy.orcutt	tidy.orcutt
 tidy.pairwise.htest	tidy.pairwise.htest
 tidy.pam	tidy.pam
 tidy.plm	tidy.plm

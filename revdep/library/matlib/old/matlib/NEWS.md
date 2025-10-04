@@ -1,3 +1,15 @@
+# matlib 0.9.95
+
+- added `latexMatrix()` to create a symbolic matrix
+- `latexMatrix()` made more general to handle much wider variety of cases, with LaTeX output [JF]
+- this is fleshed out with an `Eqn()` wrapper to work with other LaTeX-generating code in the package [PC]
+- added a vignette, `inv-3d` illustrating linear transformations and matrix inverse in 3D using `rgl`
+- `latexMatrix()` gets operators for matrix arithmetic (`+,-, %*%`) and operators (`t()`)
+- added vignette, `latex-equations.Rmd` illustrating the variety of functions in the package for constructing matrix equations in LaTeX
+- added functions `matmult()`, `matsum()`, `matpower()` similar to the operators, but providing `simplify = TRUE`, `as.numeric = TRUE`
+- `Eqn()` gains a `preview` argument, rendering a LaTeX matrix expression in a Viewer pane.
+- `latexMatrix()` now allows row/column names to be displayed with a matrix.
+
 # matlib 0.9.8
 
 - added `circle()` for drawing circles in diagrams

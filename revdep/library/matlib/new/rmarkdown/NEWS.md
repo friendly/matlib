@@ -1,3 +1,43 @@
+rmarkdown 2.30
+================================================================================
+
+- `pandoc_convert()` will throw an error if Pandoc is not available (thanks, @brianperdomo, #2600).
+
+- Use the argument `--syntax-highlighting=none` for Pandoc >= 3.8 since `--no-highlight` has been deprecated (#2602).
+
+- Dropped the temporary workaround that used to support syntax highlighting of `|>` and `=>`. The workaround has no longer been necessary since [Pandoc 2.18](https://github.com/jgm/pandoc/releases/tag/2.18), which was released more than 3 years ago (#2290).
+
+- `convert_ipynb()` no longer drops raw cells with no `format` in metadata (thanks, @katrinabrock, #2587).
+
+- Fixed a bug that prevents `render()` from working when converting `.md` input to PDF (thanks, @mrainers, #2599).
+
+
+rmarkdown 2.29
+================================================================================
+
+- `find_external_resources()` now correctly detects knitr child document provided with option like `child = c("child.Rmd")` (thanks, @rempsyc, #2574).
+
+- `knit_params_ask()` uses a `select` input for parameters which allow multiple selected values. Previously, a `radio` input was incorrectly used when the parameter had a small number of choices.
+
+    ```yaml
+    params:
+        primaries:
+            choices: ["red", "yellow", "blue"]
+            multiple: true
+    ```
+    
+    When `multiple` is not enabled, parameter configuration still uses `radio` when there are fewer than five choices.
+
+    The `input` parameter field can still be used to force the configuration control.
+    
+    ```yaml
+    params:
+        grade:
+            input: radio
+            choices: ["A", "B", "C", "D", "F"]
+    ```
+
+
 rmarkdown 2.28
 ================================================================================
 

@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Phil Chalmers, John Fox, Michael Friendly" />
+
+<meta name="date" content="2024-10-02" />
+
+<title>LaTeX Equations with latexMatrix, Eqn and matrix2latex</title>
+
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">LaTeX Equations with latexMatrix, Eqn and matrix2latex</h1>
+<h4 class="author">Phil Chalmers, John Fox, Michael Friendly</h4>
+<h4 class="date">2024-10-02</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#using-latexmatrix-and-eqn" id="toc-using-latexmatrix-and-eqn">Using <code>latexMatrix()</code> and <code>Eqn()</code></a>
+<ul>
+<li><a href="#the-svd" id="toc-the-svd">The SVD</a></li>
+<li><a href="#systems-of-equations" id="toc-systems-of-equations">Systems of equations</a></li>
+<li><a href="#aligned-environment" id="toc-aligned-environment"><code>aligned</code> environment</a></li>
+</ul></li>
+<li><a href="#computing" id="toc-computing">Computing with <code>&quot;latexMatrix&quot;</code> objects</a>
+<ul>
+<li><a href="#matrix-products-and-transpose" id="toc-matrix-products-and-transpose">Matrix products and transpose</a></li>
+<li><a href="#determinants-inverse" id="toc-determinants-inverse">Determinants &amp; inverse</a></li>
+<li><a href="#linear-hypotheses" id="toc-linear-hypotheses">Linear hypotheses</a></li>
+<li><a href="#partitioned-matrices-indexing-binding" id="toc-partitioned-matrices-indexing-binding">Partitioned matrices, indexing &amp; binding</a></li>
+<li><a href="#kronecker-products" id="toc-kronecker-products">Kronecker products</a></li>
+</ul></li>
+<li><a href="#matrix2latex" id="toc-matrix2latex">matrix2latex</a></li>
+<li><a href="#showEqn" id="toc-showEqn">showEqn</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</div>
+
+<p>LaTeX is the de facto standard for communication and publication in scientific documents and it is very easy to typeset mathematical expressions
+like Pythagoras’ theorem, <span class="math inline">\(a^2 + b^2 = c^2\)</span> (using <code>a^2 + b^2 = c^2</code>) once you learn
+the notation. With a bit of practice, the PDF of the normal distribution can be written as</p>
+<pre><code>f(x) = \frac{1}{\sigma\sqrt{2\pi}} 
+  \exp\left[ -\left(\frac{x-\mu}{2\sigma}\right)^{\!2}\,\right]</code></pre>
+<p>which renders as</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}
+  \exp\left[ -\left(\frac{x-\mu}{2\sigma}\right)^{\!2}\,\right]
+\]</span></p>
+<p>Writing equations with arrays, matrices and vectors is
+somewhat more challenging. Many people rely on interactive LaTeX editors like <a href="https://www.overleaf.com/">Overleaf</a>, <a href="https://www.wiris.com/en/mathtype/">MathType</a>, or online
+versions like <a href="https://latexeditor.lagrida.com/">Lagrida LaTeX Equation Editor</a>
+that provide a menu-driven interface with fill-in templates for
+matrices.</p>
+<p>There are already some tools available in R for producing LaTeX output:</p>
+<ul>
+<li>tables (e.g, <code>xtable::xtable()</code>, <code>tables::toLatex()</code>),</li>
+<li>R objects (<code>Hmisc::latex()</code>),</li>
+<li>statistical models (<code>equatiomatic::extract_eq()</code>),</li>
+<li><code>knitr::knit_print()</code> can be used to define <a href="https://stackoverflow.com/questions/45591286/for-r-markdown-how-do-i-display-a-matrix-from-r-variable">methods for printing objects of class <code>&quot;matrix&quot;</code></a>.</li>
+<li>The <a href="https://cran.r-project.org/package=mathpix"><code>mathpix</code></a> package
+can take an image of a an equation or formula and produce the LaTeX code which should generate that image.</li>
+<li>The <a href="https://cran.r-project.org/package=texPreview"><code>texPreview</code></a> package
+compiles snippets of LaTeX directly into images from the R console to view in the RStudio viewer pane, Shiny apps and Rmarkdown documents.</li>
+</ul>
+<p>See <a href="https://stackoverflow.com/questions/5465314/tools-for-making-latex-tables-in-r">Tools for making latex tables in R</a>
+for a more comprehensive list</p>
+<p>The <code>matlib</code> package extends these, providing a collection of functions that simplify using LaTeX notation for matrices, vectors and equations in documentation and in writing:</p>
+<ul>
+<li><code>latexMatrix()</code>: Constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. <code>latexMatrix()</code> also supports matrices with numeric elements, and the objects it produces may be used in various kinds of matrix computations, both symbolic and numeric.</li>
+<li><code>Eqn()</code>: A wrapper to produce LaTeX expressions or equations that can be used directly in <code>.Rmd</code> or <code>.qmd</code> documents to compile to equations. It also provides for direct preview of the resulting equation.</li>
+<li><code>showEqn()</code>: Shows what matrices <span class="math inline">\(\mathbf{A}, \mathbf{b}\)</span> look like as the system of linear equations, <span class="math inline">\(\mathbf{A x} = \mathbf{b}\)</span>, but written out as a set of equations.</li>
+</ul>
+<p>When used directly in R, these functions produce their output to the console (using <code>cat()</code>).
+In a <code>.Rmd</code> or <code>.qmd</code> document, use the chunk options: <code>results=&#39;asis&#39;, echo=FALSE</code>
+so that <code>knitr</code> just outputs the text of the equations to the document.
+The rendering of the equations is mediated by <a href="https://pandoc.org/"><code>pandoc</code></a> for standard Rmarkdown or Quarto documents.</p>
+<p><strong>Note</strong>: There are several different engines for rendering mathematics in HTML documents for the Web:
+<a href="https://developer.mozilla.org/en-US/docs/Web/MathML"><code>mathml</code></a>,
+<a href="https://katex.org/"><code>katex</code></a>, and
+<a href="https://www.mathjax.org/"><code>mathjax</code></a> and others, all of which can be made to work with
+<code>pandoc</code>.
+The features we describe below work in standard Rmarkdown or Quarto documents.
+However, some more advanced
+features (horizontal and vertical lines for partitioned matrices)
+require <code>katex</code>
+to work with <a href="https://pkgdown.r-lib.org/"><code>pkgdown</code></a>.
+Equation numbers and cross-references to them still do not work in <code>pkgdown</code>.
+See the discussion in <a href="https://github.com/r-lib/pkgdown/issues/2739">this pkgdown issue</a>.
+Rendering of matrix equations doesn’t seem to work at all in the
+<a href="https://friendly.r-universe.dev/articles/matlib/latex-equations.html">friendly.r-universe.dev</a> version of this vignette.</p>
+<div id="using-latexmatrix-and-eqn" class="section level2">
+<h2>Using <code>latexMatrix()</code> and <code>Eqn()</code></h2>
+<p><code>latexMatrix()</code> constructs the LaTeX code for a symbolic matrix, whose elements are a symbol, with row and column subscripts. For example, by default (with no arguments) it produces the expression for an <span class="math inline">\(n \times m\)</span> matrix <span class="math inline">\(\mathbf{X}\)</span> whose elements
+are <span class="math inline">\(x_{ij}\)</span> in a LaTeX <code>\begin{pmatrix} ... \end{pmatrix}</code>
+environment. The LaTeX code generated looks like this:</p>
+<pre><code>\begin{pmatrix} 
+  x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1m} \\ 
+  x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2m} \\ 
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\ 
+  x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nm} \\ 
+\end{pmatrix}</code></pre>
+<p>The code above appears in the console. To render this as a matrix in a document, this must
+be wrapped in a display math environment, typically specified as <code>$$ ... $$</code>
+or <code>\[ ... \]</code>.
+This is provided by <code>Eqn()</code> and used in a code
+chunk with the <code>results = &#39;asis&#39;</code> option, giving the rendered expression.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">latexMatrix</span>() <span class="sc">|&gt;</span> <span class="fu">Eqn</span>()</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\begin{pmatrix}
+  x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1m} \\
+  x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2m} \\
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\
+  x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nm} \\
+\end{pmatrix}
+\end{equation*}\]</span></p>
+<p>For chunk output in a document, you will get a LaTeX error, “missing $ inserted” if you forget
+to use <code>Eqn()</code> or otherwise fail to make the LaTeX appear inside a math environment.</p>
+<p>Some other examples:</p>
+<ul>
+<li>A <span class="math inline">\(3 \times 3\)</span> identity matrix with square brackets, specified as an equation with a left-hand side <span class="math inline">\(\mathbf{I}_3\)</span>. The first argument to
+<code>latexMatrix()</code> can be any numeric matrix. The <code>matrix=&quot;bmatrix&quot;</code> argument here
+specifies square brackets around the matrix.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{I}_3 =&quot;</span>, <span class="fu">latexMatrix</span>(<span class="fu">diag</span>(<span class="dv">3</span>), <span class="at">matrix=</span><span class="st">&quot;bmatrix&quot;</span>))</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\mathbf{I}_3 =\begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1 \\
+\end{bmatrix}
+\end{equation*}\]</span></p>
+<ul>
+<li>A row or column vector; the first argument to <code>latexMatrix()</code> must be a <strong>matrix</strong>, so wrap an R vector in <code>matrix()</code>, supplying <code>nrow=1</code> (or <code>ncol = 1</code>):</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">latexMatrix</span>(<span class="fu">matrix</span>(LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">nrow=</span><span class="dv">1</span>), <span class="at">matrix=</span><span class="st">&quot;Bmatrix&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">Eqn</span>()</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\begin{Bmatrix}
+A &amp; B &amp; C &amp; D \\
+\end{Bmatrix}
+\end{equation*}\]</span></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">latexMatrix</span>(<span class="fu">matrix</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">ncol=</span><span class="dv">1</span>), <span class="at">matrix =</span> <span class="st">&quot;vmatrix&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">Eqn</span>()</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\begin{vmatrix}
+a \\
+b \\
+c \\
+\end{vmatrix}
+\end{equation*}\]</span></p>
+<p>The above examples illustrate, some styles of matrix delimiters using the <code>matrix</code> argument.</p>
+<p>A wide variety of options are available for the matrix element symbols, fonts, subscripts and decorations:</p>
+<ul>
+<li>The typical element can use any LaTeX math font, e.g., <code>\\mathbb{}, \mathcal{}, ...</code>;</li>
+<li>the row/column subscripts can start at 0 or 1;</li>
+<li>they can be separated by a comma, and</li>
+<li>one can apply an exponent (<span class="math inline">\(\bullet^{-1}\)</span>) or transpose symbol (<span class="math inline">\(\bullet^\top\)</span> or <span class="math inline">\(\bullet^\prime\)</span>)</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">latexMatrix</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbb{q}&quot;</span>, <span class="dv">3</span>, <span class="dv">3</span>, </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>            <span class="at">matrix =</span> <span class="st">&quot;bmatrix&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>            <span class="at">zero.based =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>            <span class="at">comma=</span><span class="cn">TRUE</span>, </span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>            <span class="at">exponent=</span><span class="st">&quot;-1&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="fu">Eqn</span>()</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+  \mathbb{q}_{0,1} &amp; \mathbb{q}_{0,2} &amp; \mathbb{q}_{0,3} \\
+  \mathbb{q}_{1,1} &amp; \mathbb{q}_{1,2} &amp; \mathbb{q}_{1,3} \\
+  \mathbb{q}_{2,1} &amp; \mathbb{q}_{2,2} &amp; \mathbb{q}_{2,3} \\
+\end{bmatrix}^{-1}
+\end{equation*}\]</span></p>
+<div id="the-svd" class="section level3">
+<h3>The SVD</h3>
+<p>As a more complicated example,
+here we write out the LaTeX equation for the <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> (SVD) of a
+general <span class="math inline">\(n \times p\)</span> matrix <span class="math inline">\(\mathbf{X}\)</span>
+using <code>Eqn()</code> and <code>latexMatrix()</code>. In Rmd markup, <code>Eqn()</code> can be given an equation
+<strong>label</strong> (using the <code>label</code> argument), which will both label and number the equations.</p>
+<p>Two calls to <code>Eqn()</code> produce separate equations in the output below.
+Both of these equations are numbered.
+(<code>Eqn()</code> uses the LaTeX <code>equation</code> environment, <code>\begin{equation} ... \end{equation}</code>,
+or <code>equation*</code> if the equation does not include a <code>label</code>).
+The two calls to <code>Eqn()</code> are rendered as separate equations, center aligned.</p>
+<!-- (In this example, using `echo = TRUE` gives output that -->
+<!-- intersperses the code with the equation output for some reason.) -->
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{X} = </span><span class="sc">\\</span><span class="st">mathbf{U} </span><span class="sc">\\</span><span class="st">mathbf{</span><span class="sc">\\</span><span class="st">Lambda} </span><span class="sc">\\</span><span class="st">mathbf{V}^</span><span class="sc">\\</span><span class="st">top&quot;</span>, <span class="at">label=</span><span class="st">&#39;eq:svd&#39;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{X} =&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="st">&quot;u&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="st">&quot;k&quot;</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">lambda&quot;</span>, <span class="st">&quot;k&quot;</span>, <span class="st">&quot;k&quot;</span>, <span class="at">diag=</span><span class="cn">TRUE</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="st">&quot;v&quot;</span>, <span class="st">&quot;k&quot;</span>, <span class="st">&quot;p&quot;</span>, <span class="at">transpose =</span> <span class="cn">TRUE</span>), <span class="at">label=</span><span class="st">&#39;eq:svdmats&#39;</span>)</span></code></pre></div>
+<p>This produces the two numbered equations:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><span class="math display" id="eq:svd">\[\begin{equation}
+\tag{1}
+\mathbf{X} = \mathbf{U} \mathbf{\Lambda} \mathbf{V}^\top\end{equation}\]</span></p>
+<p><span class="math display" id="eq:svdmats">\[\begin{equation}
+\tag{2}
+\begin{pmatrix}
+  u_{11} &amp; u_{12} &amp; \cdots &amp; u_{1k} \\
+  u_{21} &amp; u_{22} &amp; \cdots &amp; u_{2k} \\
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\
+  u_{n1} &amp; u_{n2} &amp; \cdots &amp; u_{nk} \\
+\end{pmatrix}
+\begin{pmatrix}
+  \lambda_{1} &amp; 0           &amp; \cdots      &amp; 0           \\
+  0           &amp; \lambda_{2} &amp; \cdots      &amp; 0           \\
+  \vdots      &amp; \vdots      &amp; \ddots      &amp; \vdots      \\
+  0           &amp; 0           &amp; \cdots      &amp; \lambda_{k} \\
+\end{pmatrix}
+\begin{pmatrix}
+  v_{11} &amp; v_{12} &amp; \cdots &amp; v_{1p} \\
+  v_{21} &amp; v_{22} &amp; \cdots &amp; v_{2p} \\
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\
+  v_{k1} &amp; v_{k2} &amp; \cdots &amp; v_{kp} \\
+\end{pmatrix}^\top
+\end{equation}\]</span></p>
+<p>The matrix names in Equation <a href="#eq:svd">(1)</a> are printed in a <strong>boldface</strong> math font
+(<code>\mathbf{}</code>), typically used for matrices
+and vectors. Note that when using
+LaTeX code in R expressions each backslash (<code>\</code>) must be doubled (<code>\\</code>) in R because <code>\</code> is the
+escape character.</p>
+<p>Note that the first equation can be referenced because it was labeled: “As seen in Equation <a href="#eq:svd">(1)</a> ”. References to equations can entered in text using an inline call to
+<code>ref()</code>, e.g, <code>`r ref(&quot;eq:svd&quot;)`</code>
+(In Quarto, equation labels must be of the form <code>#eq-label</code> and equation references are of the form <code>@eq-label</code>)</p>
+</div>
+<div id="systems-of-equations" class="section level3">
+<h3>Systems of equations</h3>
+<p>As another example, the chunk below shows a system of equations <span class="math inline">\(\mathbf{A} \mathbf{x} = \mathbf{b}\)</span>
+written out using symbolic matrices.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="fu">latexMatrix</span>(<span class="st">&quot;a&quot;</span>, <span class="at">nrow =</span> <span class="st">&quot;m&quot;</span>, <span class="at">ncol=</span><span class="st">&quot;n&quot;</span>, <span class="at">matrix=</span><span class="st">&quot;bmatrix&quot;</span>),</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="st">&quot;x&quot;</span>, <span class="at">nrow =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol=</span><span class="dv">1</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="fu">Eqn_hspace</span>(<span class="at">mid=</span><span class="st">&#39;=&#39;</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="st">&quot;b&quot;</span>, <span class="at">nrow =</span> <span class="st">&quot;m&quot;</span>, <span class="at">ncol=</span><span class="dv">1</span>))</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+  a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+  a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\
+  a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
+\end{bmatrix}
+\begin{pmatrix}
+  x_{1} \\
+  x_{2} \\
+  \vdots \\
+  x_{n} \\
+\end{pmatrix}
+\quad=\quad\begin{pmatrix}
+  b_{1} \\
+  b_{2} \\
+  \vdots \\
+  b_{m} \\
+\end{pmatrix}
+\end{equation*}\]</span></p>
+<p>Extra symmetric white space is added via <code>Eqn_hspace()</code>, which can also be used for standard spacing such as <code>\quad</code> (default size), <code>\,</code>, <code>&#39;1cm&#39;</code> for <code>\hspace{}</code>, etc.</p>
+<p>Section <a href="#showEqn">showEqn</a> describes another way to display systems of equations.</p>
+</div>
+<div id="aligned-environment" class="section level3">
+<h3><code>aligned</code> environment</h3>
+<p>You can also align separate equations relative to some symbol like an <code>=</code> sign to show separate
+steps of re-expression, using the option <code>Eqn(..., align=TRUE)</code>. Alignment points are marked by
+<code>&amp;</code> in LaTeX.</p>
+<p>Show the singular value decomposition again, but now as two separate equations aligned after the <code>=</code>
+sign. Note the locations of the <code>&amp;</code> operator for alignment, specified as the left-hand side (<code>lhs</code>)
+of the second equation.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{X} &amp; = </span><span class="sc">\\</span><span class="st">mathbf{U} </span><span class="sc">\\</span><span class="st">mathbf{</span><span class="sc">\\</span><span class="st">Lambda} </span><span class="sc">\\</span><span class="st">mathbf{V}^</span><span class="sc">\\</span><span class="st">top&quot;</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="fu">Eqn_newline</span>(),</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="st">&#39; &amp; =&#39;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="st">&quot;u&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="st">&quot;k&quot;</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">lambda&quot;</span>, <span class="st">&quot;k&quot;</span>, <span class="st">&quot;k&quot;</span>, <span class="at">diag=</span><span class="cn">TRUE</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="st">&quot;v&quot;</span>, <span class="st">&quot;k&quot;</span>, <span class="st">&quot;p&quot;</span>, <span class="at">transpose =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>    <span class="at">align=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p><span class="math display">\[\begin{align*}
+\mathbf{X} &amp; = \mathbf{U} \mathbf{\Lambda} \mathbf{V}^\top \\
+&amp; =\begin{pmatrix}
+  u_{11} &amp; u_{12} &amp; \cdots &amp; u_{1k} \\
+  u_{21} &amp; u_{22} &amp; \cdots &amp; u_{2k} \\
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\
+  u_{n1} &amp; u_{n2} &amp; \cdots &amp; u_{nk} \\
+\end{pmatrix}
+\begin{pmatrix}
+  \lambda_{1} &amp; 0           &amp; \cdots      &amp; 0           \\
+  0           &amp; \lambda_{2} &amp; \cdots      &amp; 0           \\
+  \vdots      &amp; \vdots      &amp; \ddots      &amp; \vdots      \\
+  0           &amp; 0           &amp; \cdots      &amp; \lambda_{k} \\
+\end{pmatrix}
+\begin{pmatrix}
+  v_{11} &amp; v_{12} &amp; \cdots &amp; v_{1p} \\
+  v_{21} &amp; v_{22} &amp; \cdots &amp; v_{2p} \\
+  \vdots &amp; \vdots &amp;        &amp; \vdots \\
+  v_{k1} &amp; v_{k2} &amp; \cdots &amp; v_{kp} \\
+\end{pmatrix}^\top
+\end{align*}\]</span></p>
+<p>Note that in this example, there are three calls to <code>latexMatrix()</code>, wrapped inside <code>Eqn()</code>.
+<code>Eqn_newline()</code> emits a newline (<code>\\</code>) between equations.</p>
+</div>
+</div>
+<div id="computing" class="section level2">
+<h2>Computing with <code>&quot;latexMatrix&quot;</code> objects</h2>
+<p>Objects returned by <code>latexMatrix()</code> that have <strong>definite</strong> (i.e., numeric) dimensions— for example, a 3-by-2 matrix as opposed to an “n”-by-“m” matrix—may be employed in a variety of standard symbolic and numeric matrix computations. They provide some reasonable means to compose
+meaningful matrix equations in LaTeX far easier than doing this manually, matrix by matrix.</p>
+<p>These computations include:</p>
+<ul>
+<li>the R arithmetic operators <code>+</code> (matrix addition), <code>-</code> (matrix subtraction and negation), <code>*</code> (product of a scalar and a matrix),</li>
+<li><code>^</code> (raise to a power), and</li>
+<li><code>%*%</code> (matrix multiplication), and the functions <code>t()</code> (transpose), <code>determinant()</code>, and <code>solve()</code> (matrix inverse),</li>
+<li><code>%O%</code> (kronecker product),</li>
+<li>Selecting sub-matrices using indexing <code>X[rows, cols]</code> and binding rows/columns with <code>rbind()</code>, <code>cbind()</code></li>
+</ul>
+<p>There are also function equivalents of the operators that are more flexible via optional arguments. For example, using the operator <code>A %*% B</code> multiplies the two matrices <code>A</code> and <code>B</code>, returning a symbolic result. The corresponding function <code>matmult()</code> multiplies two <em>or more</em> matrices, and can simplify the result
+(with <code>simplify = TRUE</code>, default) and/or produce the numeric representation of the product (with <code>as.numeric = TRUE</code>, default).</p>
+<p>With the exception of <code>determinant()</code>, which (because it is a scalar quantity) returns a character string with a LaTeX expression for the determinant, these operators and functions return <code>&quot;latexMatrix&quot;</code> objects, which can be printed, typeset, or used in further computations. Additionally, in many instances a <code>&quot;latexMatrix&quot;</code> object can be coerced to a numeric matrix by
+<!-- `as.numeric()` or  -->
+<code>as.double()</code>. We illustrate these computations in this section.</p>
+<p>Consider, first, basic matrix arithmetic. Define some matrices: <code>A</code> and <code>B</code> are numeric,
+but <code>C</code> and <code>D</code> are symbolic, with elements <span class="math inline">\(c_{ij}\)</span> and <span class="math inline">\(d_{ij}\)</span></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>)))</span></code></pre></div>
+<pre><code>## \begin{pmatrix} 
+##  1 &amp;  0 \\ 
+## -3 &amp;  1 \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>(B <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">4</span>), <span class="dv">2</span>, <span class="dv">2</span>)))</span></code></pre></div>
+<pre><code>## \begin{pmatrix} 
+##  5 &amp; -1 \\ 
+##  3 &amp;  4 \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>(C <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="at">symbol=</span><span class="st">&quot;c&quot;</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## \begin{pmatrix} 
+##   c_{11} &amp; c_{12} &amp; c_{13} \\ 
+##   c_{21} &amp; c_{22} &amp; c_{23} \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>(D <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="at">symbol=</span><span class="st">&quot;d&quot;</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## \begin{pmatrix} 
+##   d_{11} &amp; d_{12} &amp; d_{13} \\ 
+##   d_{21} &amp; d_{22} &amp; d_{23} \\ 
+## \end{pmatrix}</code></pre>
+<p>The usual arithmetic operations work for these <code>&quot;latexMatrix&quot;</code> objects, and return
+LaTeX representations of the result:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>A <span class="sc">+</span> B</span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+##  6 &amp; -1 \\ 
+##  0 &amp;  5 \\ 
+## \end{pmatrix}</code></pre>
+<p>Some other examples:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>A <span class="sc">-</span> B</span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## -4 &amp;  1 \\ 
+## -6 &amp; -3 \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="sc">-</span>A            <span class="co"># unary minus</span></span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## -1 &amp;  0 \\ 
+##  3 &amp; -1 \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>A           <span class="co"># scalar multiplication</span></span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## 2 \cdot 1    &amp; 2 \cdot 0 \\ 
+## 2 \cdot (-3) &amp; 2 \cdot 1 \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>C <span class="sc">+</span> D         <span class="co"># sum of symbolics</span></span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## c_{11} + d_{11} &amp; c_{12} + d_{12} &amp; c_{13} + d_{13} \\ 
+## c_{21} + d_{21} &amp; c_{22} + d_{22} &amp; c_{23} + d_{23} \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="st">&quot;</span><span class="sc">\\</span><span class="st">pi&quot;</span> <span class="sc">*</span> C    <span class="co"># everything should be multiplied by pi</span></span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## \pi \cdot c_{11} &amp; \pi \cdot c_{12} &amp; \pi \cdot c_{13} \\ 
+## \pi \cdot c_{21} &amp; \pi \cdot c_{22} &amp; \pi \cdot c_{23} \\ 
+## \end{pmatrix}</code></pre>
+<p>Typesetting the last result produces:</p>
+<p><span class="math display">\[\begin{equation*}
+\begin{pmatrix}  
+\pi \cdot c_{11} &amp; \pi \cdot c_{12} &amp; \pi \cdot c_{13} \\
+\pi \cdot c_{21} &amp; \pi \cdot c_{22} &amp; \pi \cdot c_{23} \\
+\end{pmatrix}
+\end{equation*}\]</span></p>
+<p>Some of these operations produce numeric results and so can be coerced to numeric matrices; for example:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">as.numeric</span>(A <span class="sc">+</span> B)</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    6   -1
+## [2,]    0    5</code></pre>
+<p>Using these tools, it is easy to typeset complete matrix equations, giving multiple
+arguments to <code>Eqn()</code>:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{A} + </span><span class="sc">\\</span><span class="st">mathbf{B} =&quot;</span>, A, <span class="st">&quot; + &quot;</span>, B, <span class="st">&quot; = &quot;</span>, A <span class="sc">+</span> B)</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\mathbf{A} + \mathbf{B} =\begin{pmatrix}
+1 &amp;  0 \\
+-3 &amp;  1 \\
+\end{pmatrix}
++ \begin{pmatrix}
+5 &amp; -1 \\
+3 &amp;  4 \\
+\end{pmatrix}
+= \begin{pmatrix}  
+6 &amp; -1 \\
+0 &amp;  5 \\
+\end{pmatrix}
+\end{equation*}\]</span></p>
+<p>If the elements of a matrix are valid R variable names, then it is also possible to give these elements numeric values, as in</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>(M <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="fu">matrix</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="dv">3</span>, <span class="dv">3</span>)))</span></code></pre></div>
+<pre><code>## \begin{pmatrix} 
+## a &amp; d &amp; g \\ 
+## b &amp; e &amp; h \\ 
+## c &amp; f &amp; i \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">as.double</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>M, <span class="at">locals=</span><span class="fu">c</span>(<span class="at">a=</span><span class="dv">1</span>, <span class="at">b=</span><span class="dv">0</span>, <span class="at">c=</span><span class="sc">-</span><span class="dv">2</span>, <span class="at">d=</span><span class="sc">-</span><span class="dv">4</span>, <span class="at">e=</span><span class="dv">7</span>, <span class="at">f=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">g=</span><span class="dv">0</span>, <span class="at">h=</span><span class="dv">4</span>, <span class="at">i=</span><span class="dv">6</span>))</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -2    8    0
+## [2,]    0  -14   -8
+## [3,]    4    2  -12</code></pre>
+<div id="matrix-products-and-transpose" class="section level3">
+<h3>Matrix products and transpose</h3>
+<p>The product of two matrices is given by <code>%*%</code> for <code>&quot;latexMatrix&quot;</code> objects.
+When the arguments are both numeric, the numeric result is evaluated
+and presented in LaTeX form.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>A <span class="sc">%*%</span> B</span></code></pre></div>
+<span class="math display">\[\begin{pmatrix}  
+  5 &amp;  -1 \\
+-12 &amp;   7 \\
+\end{pmatrix}\]</span>
+<p>But the result is symbolic if either argument is symbolic:</p>
+<!-- To get the numeric result evaluated, use `as.double()` and perform ordinary -->
+<!-- matrix multiplication: -->
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>A <span class="sc">%*%</span> <span class="fu">latexMatrix</span>(<span class="st">&quot;b&quot;</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
+<span class="math display">\[\begin{pmatrix}  
+b_{11}                     &amp; b_{12}                     \\
+(-3) \cdot b_{11} + b_{21} &amp; (-3) \cdot b_{12} + b_{22} \\
+\end{pmatrix}\]</span>
+<p>The LaTeX symbol for multiplication is a centered dot, <code>\\cdot</code> (<span class="math inline">\(\cdot\)</span>), by default.
+This can be changed by changing <code>options(latexMultSymbol)</code>,
+e.g, to use the <span class="math inline">\(\times\)</span> symbol instead, use:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">latexMultSymbol =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">times&quot;</span>)</span></code></pre></div>
+<p>The transpose, <code>t()</code> of <code>&quot;latexMatrix&quot;</code>
+objects is similarly straightforward. This directly transposes the matrix, as opposed to superscript notation,
+<span class="math inline">\(\mathbf{D}^\top\)</span> or <span class="math inline">\(\mathbf{D}^\prime\)</span> which is implicit.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>D</span></code></pre></div>
+<pre><code>## \begin{pmatrix} 
+##   d_{11} &amp; d_{12} &amp; d_{13} \\ 
+##   d_{21} &amp; d_{22} &amp; d_{23} \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">t</span>(D)</span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## d_{11} &amp; d_{21} \\ 
+## d_{12} &amp; d_{22} \\ 
+## d_{13} &amp; d_{23} \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>M <span class="sc">%*%</span> <span class="fu">t</span>(D)</span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## a \cdot d_{11} + d \cdot d_{12} + g \cdot d_{13} &amp; a \cdot d_{21} + d \cdot d_{22} + g \cdot d_{23} \\ 
+## b \cdot d_{11} + e \cdot d_{12} + h \cdot d_{13} &amp; b \cdot d_{21} + e \cdot d_{22} + h \cdot d_{23} \\ 
+## c \cdot d_{11} + f \cdot d_{12} + i \cdot d_{13} &amp; c \cdot d_{21} + f \cdot d_{22} + i \cdot d_{23} \\ 
+## \end{pmatrix}</code></pre>
+<p>The matrix product in the previous example typesets as</p>
+<p><span class="math display">\[\begin{equation*}
+\begin{pmatrix}  
+a \cdot d_{11} + d \cdot d_{12} + g \cdot d_{13} &amp; a \cdot d_{21} + d \cdot d_{22} + g \cdot d_{23} \\
+b \cdot d_{11} + e \cdot d_{12} + h \cdot d_{13} &amp; b \cdot d_{21} + e \cdot d_{22} + h \cdot d_{23} \\
+c \cdot d_{11} + f \cdot d_{12} + i \cdot d_{13} &amp; c \cdot d_{21} + f \cdot d_{22} + i \cdot d_{23} \\
+\end{pmatrix}
+\end{equation*}\]</span></p>
+</div>
+<div id="determinants-inverse" class="section level3">
+<h3>Determinants &amp; inverse</h3>
+<p>The determinant is computed <em>recursively</em> by finding the <em>cofactors</em> of the first row of the matrix,
+i.e., <span class="math inline">\(\det(\mathbf{A}_{n \times n}) = \Sigma_j^n \, a_{ij}\: C_{ij}\)</span> where the cofactors
+<span class="math inline">\(C_{ij}\)</span> involve the determinants of the <span class="math inline">\((n-1) \times (n-1)\)</span> minors <span class="math inline">\(\mathbf{A}_{ij}\)</span>.
+(See the vignette <a href="http://friendly.github.io/matlib/articles/det-ex2.html">Evaluation of determinants</a> for explanation.)</p>
+<p>The method is applicable to a matrix of any order, although beyond an order-3 matrix, the resulting expression gets very long. A couple of examples:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>## \begin{pmatrix} 
+##  1 &amp;  0 \\ 
+## -3 &amp;  1 \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="fu">determinant</span>(A)</span></code></pre></div>
+<pre><code>## [1] &quot;1 \\cdot 1 - 0 \\cdot (-3)&quot;</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a>M</span></code></pre></div>
+<pre><code>## \begin{pmatrix} 
+## a &amp; d &amp; g \\ 
+## b &amp; e &amp; h \\ 
+## c &amp; f &amp; i \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="fu">determinant</span>(M)</span></code></pre></div>
+<pre><code>## [1] &quot;a \\cdot (e \\cdot i - h \\cdot f) - d \\cdot (b \\cdot i - h \\cdot c) + g \\cdot (b \\cdot f - e \\cdot c)&quot;</code></pre>
+<p>The determinant of a matrix is a single number. <code>determinant()</code> returns the expression that computes it in LaTeX notation, using <code>\\cdot</code> to represent <span class="math inline">\(\cdot\)</span> for multiplication.</p>
+<p>Typesetting the output from the last command produces</p>
+<p><span class="math display">\[\begin{equation*}
+a \cdot (e \cdot i - h \cdot f) - d \cdot (b \cdot i - h \cdot c) + g \cdot (b \cdot f - e \cdot c)\end{equation*}\]</span></p>
+<p>The inverse of a square matrix is computed from its determinant and adjoint matrix; for example:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">solve</span>(A)</span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## 1 &amp; 0 \\ 
+## 3 &amp; 1 \\ 
+## \end{pmatrix}</code></pre>
+<p>Specifying the argument <code>simplify = TRUE</code> to <code>solve()</code> puts the inverse determinant before the adjoint matrix and returns a latex expression rather than a <code>&quot;latexMatrix&quot;</code> object; for example:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="fu">solve</span>(M, <span class="at">simplify=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;\\frac{1}{a \\cdot (e \\cdot i - h \\cdot f) - d \\cdot (b \\cdot i - h \\cdot c) + g \\cdot (b \\cdot f - e \\cdot c)} \n\\begin{pmatrix}  \ne \\cdot i - h \\cdot f    &amp; -(d \\cdot i - g \\cdot f) &amp; d \\cdot h - g \\cdot e    \\\\ \n-(b \\cdot i - h \\cdot c) &amp; a \\cdot i - g \\cdot c    &amp; -(a \\cdot h - g \\cdot b) \\\\ \nb \\cdot f - e \\cdot c    &amp; -(a \\cdot f - d \\cdot c) &amp; a \\cdot e - d \\cdot b    \\\\ \n\\end{pmatrix}\n&quot;</code></pre>
+<p>which typesets as</p>
+<p><span class="math display">\[\begin{equation*}
+\frac{1}{a \cdot (e \cdot i - h \cdot f) - d \cdot (b \cdot i - h \cdot c) + g \cdot (b \cdot f - e \cdot c)}
+\begin{pmatrix}  
+e \cdot i - h \cdot f    &amp; -(d \cdot i - g \cdot f) &amp; d \cdot h - g \cdot e    \\
+-(b \cdot i - h \cdot c) &amp; a \cdot i - g \cdot c    &amp; -(a \cdot h - g \cdot b) \\
+b \cdot f - e \cdot c    &amp; -(a \cdot f - d \cdot c) &amp; a \cdot e - d \cdot b    \\
+\end{pmatrix}
+\end{equation*}\]</span>
+We can also supply values for the elements of the matrix to obtain a numeric inverse:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">fractions</span>(<span class="fu">as.double</span>(<span class="fu">solve</span>(M), </span>
+<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a>                          <span class="at">locals=</span><span class="fu">c</span>(<span class="at">a=</span><span class="dv">1</span>, <span class="at">b=</span><span class="dv">0</span>, <span class="at">c=</span><span class="sc">-</span><span class="dv">2</span>, <span class="at">d=</span><span class="sc">-</span><span class="dv">4</span>, <span class="at">e=</span><span class="dv">7</span>, <span class="at">f=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">g=</span><span class="dv">0</span>, <span class="at">h=</span><span class="dv">4</span>, <span class="at">i=</span><span class="dv">6</span>)))</span></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3] 
+## [1,] 23/39  4/13 -8/39
+## [2,] -4/39  1/13 -2/39
+## [3,]  7/39  3/26  7/78</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">fractions</span>(<span class="fu">det</span>(<span class="fu">as.double</span>(M, </span>
+<span id="cb61-2"><a href="#cb61-2" tabindex="-1"></a>                              <span class="at">locals=</span><span class="fu">c</span>(<span class="at">a=</span><span class="dv">1</span>, <span class="at">b=</span><span class="dv">0</span>, <span class="at">c=</span><span class="sc">-</span><span class="dv">2</span>, <span class="at">d=</span><span class="sc">-</span><span class="dv">4</span>, <span class="at">e=</span><span class="dv">7</span>, <span class="at">f=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">g=</span><span class="dv">0</span>, <span class="at">h=</span><span class="dv">4</span>, <span class="at">i=</span><span class="dv">6</span>))))</span></code></pre></div>
+<pre><code>## [1] 78</code></pre>
+</div>
+<div id="linear-hypotheses" class="section level3">
+<h3>Linear hypotheses</h3>
+<p>As an example of the more general use of these functions, consider the general linear hypothesis used to test hypotheses and contrasts in linear models.
+We consider a multivariate regression model
+<span class="math inline">\(\mathbf{Y} = \mathbf{X} \mathbf{B} + \mathbf{E}\)</span> with <span class="math inline">\(q\)</span> regressors
+<span class="math inline">\(\mathbf{x}_0, \mathbf{x}_1, \dots, \mathbf{x}_q\)</span> (including the constant
+<span class="math inline">\(\mathbf{x}_0\)</span> for the intercept)
+and
+<span class="math inline">\(p\)</span> responses,
+<span class="math inline">\(\mathbf{y}_1, \mathbf{y}_2, \dots, \mathbf{y}_p\)</span>.</p>
+<!-- [**Intercept* ignored here. Fix notation or description] -->
+<p>Suppose we want to test the hypothesis that a subset of rows (predictors)
+and/or columns (responses) simultaneously have null effects.
+This can be expressed in the general linear test,
+<span class="math display">\[
+\mathcal{H}_0 : \mathbf{C}_{h \times q} \, \mathbf{B}_{q \times p} = \mathbf{0}_{h \times p} \: ,
+\]</span>
+where <span class="math inline">\(\mathbf{C}\)</span> is a full rank <span class="math inline">\(h \le q\)</span> hypothesis matrix of constants, that selects
+subsets or linear combinations (contrasts) of the coefficients in <span class="math inline">\(\mathbf{B}\)</span> to be tested
+in a <span class="math inline">\(h\)</span> degree-of-freedom hypothesis.</p>
+<p>For example, for a multivariate regression model
+with
+three responses <span class="math inline">\(y_1, y_2, y_3\)</span> and three predictors <span class="math inline">\(x_1, x_2, x_3\)</span>, the coefficients <span class="math inline">\(\mathbf{B}\)</span> are given by the following <code>latexMatrix()</code> expression, where several arguments are used to:
+(a) start row indices at zero (<code>zero.based</code>);
+(b) make the column indices a subscript of <span class="math inline">\(y\)</span> (<code>prefix.col</code>);
+(c) insert a comma between row/column subscripts.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a>(B <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="st">&#39;</span><span class="sc">\\</span><span class="st">beta&#39;</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow=</span><span class="dv">4</span>, </span>
+<span id="cb63-2"><a href="#cb63-2" tabindex="-1"></a>                 <span class="at">comma=</span><span class="cn">TRUE</span>, <span class="at">prefix.col =</span> <span class="st">&#39;y_&#39;</span>,</span>
+<span id="cb63-3"><a href="#cb63-3" tabindex="-1"></a>                 <span class="at">zero.based=</span><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)))</span></code></pre></div>
+<span class="math display">\[\begin{pmatrix}
+  \beta_{0,y_{1}} &amp; \beta_{0,y_{2}} &amp; \beta_{0,y_{3}} \\
+  \beta_{1,y_{1}} &amp; \beta_{1,y_{2}} &amp; \beta_{1,y_{3}} \\
+  \beta_{2,y_{1}} &amp; \beta_{2,y_{2}} &amp; \beta_{2,y_{3}} \\
+  \beta_{3,y_{1}} &amp; \beta_{3,y_{2}} &amp; \beta_{3,y_{3}} \\
+\end{pmatrix}\]</span>
+<p>We can test the hypothesis
+that neither <span class="math inline">\(x_2\)</span> nor <span class="math inline">\(x_3\)</span> contribute at all to the predicting the <span class="math inline">\(y\)</span>s in terms of the hypothesis that
+the coefficients for the corresponding rows of <span class="math inline">\(\mathbf{B}\)</span> are zero.
+To do this, we specify a 2-row <span class="math inline">\(\mathbf{C}\)</span> matrix that
+simply selects those rows:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a>(C <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb64-2"><a href="#cb64-2" tabindex="-1"></a>                           <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">nrow=</span><span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>), </span>
+<span id="cb64-3"><a href="#cb64-3" tabindex="-1"></a>                 <span class="at">matrix =</span> <span class="st">&quot;bmatrix&quot;</span>))</span></code></pre></div>
+<span class="math display">\[\begin{bmatrix}
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+\end{bmatrix}\]</span>
+<p>Then, the hypothesis to be tested can be expressed as follows,
+using <code>Eqn()</code> to wrap a set of LaTeX expressions and calls to <code>matlib</code> functions.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a>B0 <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="st">&#39;</span><span class="sc">\\</span><span class="st">beta&#39;</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow=</span><span class="dv">2</span>, <span class="at">comma=</span><span class="cn">TRUE</span>, <span class="at">prefix.col =</span> <span class="st">&#39;y_&#39;</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathcal{H}_0 : </span><span class="sc">\\</span><span class="st">mathbf{C} </span><span class="sc">\\</span><span class="st">mathbf{B} &amp; = &quot;</span>,</span>
+<span id="cb65-3"><a href="#cb65-3" tabindex="-1"></a>    C, B,</span>
+<span id="cb65-4"><a href="#cb65-4" tabindex="-1"></a>    <span class="fu">Eqn_newline</span>(), </span>
+<span id="cb65-5"><a href="#cb65-5" tabindex="-1"></a>    <span class="st">&#39;&amp; =&#39;</span>,</span>
+<span id="cb65-6"><a href="#cb65-6" tabindex="-1"></a>    B0,</span>
+<span id="cb65-7"><a href="#cb65-7" tabindex="-1"></a>    <span class="st">&quot;= </span><span class="sc">\\</span><span class="st">mathbf{0}_{(2 </span><span class="sc">\\</span><span class="st">times 3)}&quot;</span>, </span>
+<span id="cb65-8"><a href="#cb65-8" tabindex="-1"></a>    <span class="at">align=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p><span class="math display">\[\begin{align*}
+\mathcal{H}_0 : \mathbf{C} \mathbf{B} &amp; = \begin{bmatrix}
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+\end{bmatrix}
+\begin{pmatrix}
+  \beta_{0,y_{1}} &amp; \beta_{0,y_{2}} &amp; \beta_{0,y_{3}} \\
+  \beta_{1,y_{1}} &amp; \beta_{1,y_{2}} &amp; \beta_{1,y_{3}} \\
+  \beta_{2,y_{1}} &amp; \beta_{2,y_{2}} &amp; \beta_{2,y_{3}} \\
+  \beta_{3,y_{1}} &amp; \beta_{3,y_{2}} &amp; \beta_{3,y_{3}} \\
+\end{pmatrix}
+\\
+&amp; =\begin{pmatrix}
+  \beta_{1,y_{1}} &amp; \beta_{1,y_{2}} &amp; \beta_{1,y_{3}} \\
+  \beta_{2,y_{1}} &amp; \beta_{2,y_{2}} &amp; \beta_{2,y_{3}} \\
+\end{pmatrix}
+= \mathbf{0}_{(2 \times 3)}\end{align*}\]</span></p>
+<p>In this example, note that the R objects <code>C</code>, <code>B</code> and <code>B0</code> are the results
+of <code>latexMatrix()</code> calls, which are character strings containing LaTeX
+expressions.</p>
+</div>
+<div id="partitioned-matrices-indexing-binding" class="section level3">
+<h3>Partitioned matrices, indexing &amp; binding</h3>
+<p>Matrix notation sometimes portrays matrices whose elements are themselves
+matrices and vectors (rather than scalars) in order to show a higher-level
+structure. Such matrices, called <strong>partitioned</strong> or <strong>block</strong> matrices
+have similar <a href="https://www.statlect.com/matrix-algebra/properties-of-block-matrices">arithmetic and algebraic properties</a> to those of ordinary matrices.</p>
+<p>For example, the code below represents a <span class="math inline">\(4 \times 4\)</span> matrix
+<span class="math inline">\(\mathbf{M}\)</span>, which is partitioned in <span class="math inline">\(2 \times 2\)</span> blocks, which are
+labeled <span class="math inline">\(\mathbf{M}_{i,j}\)</span>.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="st">&quot;m&quot;</span>, <span class="dv">4</span>, <span class="dv">4</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" tabindex="-1"></a>Mpart <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="st">&#39;</span><span class="sc">\\</span><span class="st">mathbf{M}&#39;</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">comma =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{M} =&quot;</span>, Mpart,</span>
+<span id="cb66-4"><a href="#cb66-4" tabindex="-1"></a>    <span class="st">&quot; =&quot;</span>, M)</span></code></pre></div>
+<pre><code>## 
+## \begin{equation*}
+## \mathbf{M} =\begin{pmatrix} 
+##   \mathbf{M}_{1,1} &amp; \mathbf{M}_{1,2} \\ 
+##   \mathbf{M}_{2,1} &amp; \mathbf{M}_{2,2} \\ 
+## \end{pmatrix}
+##  =\begin{pmatrix} 
+##   m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14} \\ 
+##   m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24} \\ 
+##   m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34} \\ 
+##   m_{41} &amp; m_{42} &amp; m_{43} &amp; m_{44} \\ 
+## \end{pmatrix}
+## \end{equation*}</code></pre>
+<p>This typesets as:</p>
+<p><span class="math display">\[\begin{equation*}
+\mathbf{M} =\begin{pmatrix}
+  \mathbf{M}_{1,1} &amp; \mathbf{M}_{1,2} \\
+  \mathbf{M}_{2,1} &amp; \mathbf{M}_{2,2} \\
+\end{pmatrix}
+=\begin{pmatrix}
+  m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14} \\
+  m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24} \\
+  m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34} \\
+  m_{41} &amp; m_{42} &amp; m_{43} &amp; m_{44} \\
+\end{pmatrix}
+\end{equation*}\]</span></p>
+<p>Just as rows and columns can be selected using <code>X[rows, cols]</code> indexing
+for ordinary matrices, the same operator can be used for LaTeX matrices,
+e.g., <code>M[rows, cols]</code>. The following extracts 4 the sub-matrices of <code>M</code>:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" tabindex="-1"></a>M11 <span class="ot">&lt;-</span> M[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## m_{11} &amp; m_{12} \\ 
+## m_{21} &amp; m_{22} \\ 
+## \end{pmatrix}</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a>M12 <span class="ot">&lt;-</span> M[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb70-2"><a href="#cb70-2" tabindex="-1"></a>M21 <span class="ot">&lt;-</span> M[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb70-3"><a href="#cb70-3" tabindex="-1"></a>M22 <span class="ot">&lt;-</span> M[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
+<p>The operations of joining matrices by rows, with <code>rbind()</code>, and by columns, with
+<code>cbind()</code> are also defined for <code>&quot;latexMatrices&quot;</code>. This code puts the 4 pieces
+of <span class="math inline">\(\mathbf{M}\)</span> back together:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" tabindex="-1"></a><span class="fu">rbind</span>(</span>
+<span id="cb71-2"><a href="#cb71-2" tabindex="-1"></a>  <span class="fu">cbind</span>(M11, M12),</span>
+<span id="cb71-3"><a href="#cb71-3" tabindex="-1"></a>  <span class="fu">cbind</span>(M21, M22)</span>
+<span id="cb71-4"><a href="#cb71-4" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## \begin{pmatrix}  
+## m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14} \\ 
+## m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24} \\ 
+## m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34} \\ 
+## m_{41} &amp; m_{42} &amp; m_{43} &amp; m_{44} \\ 
+## \end{pmatrix}</code></pre>
+<p>And, of course you can also format the sub-matrices together using <code>Eqn()</code>:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" tabindex="-1"></a><span class="fu">Eqn</span>(M11, M12,</span>
+<span id="cb73-2"><a href="#cb73-2" tabindex="-1"></a>    <span class="fu">Eqn_newline</span>(),</span>
+<span id="cb73-3"><a href="#cb73-3" tabindex="-1"></a>    M21, M22,</span>
+<span id="cb73-4"><a href="#cb73-4" tabindex="-1"></a>    <span class="at">align =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><span class="math display">\[\begin{align*}
+\begin{pmatrix}  
+m_{11} &amp; m_{12} \\
+m_{21} &amp; m_{22} \\
+\end{pmatrix}
+\begin{pmatrix}  
+m_{13} &amp; m_{14} \\
+m_{23} &amp; m_{24} \\
+\end{pmatrix}
+\\
+\begin{pmatrix}  
+m_{31} &amp; m_{32} \\
+m_{41} &amp; m_{42} \\
+\end{pmatrix}
+\begin{pmatrix}  
+m_{33} &amp; m_{34} \\
+m_{43} &amp; m_{44} \\
+\end{pmatrix}
+\end{align*}\]</span></p>
+<p>Finally, the <code>partition()</code> function alters the print representation of a matrix
+using horizontal and vertical lines separating the sub-matrices.
+It does this by re-wrapping the matrix in a LaTeX <code>\begin{array} ... \end{array}</code>
+environment, using <code>|</code> in <code>{c c | c c}</code> for the vertical lines and <code>\hline</code> for horizontal lines.
+This may be the simplest way to portray partitioned matrices
+in writing.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" tabindex="-1"></a><span class="fu">partition</span>(M, <span class="at">rows=</span><span class="dv">2</span>, <span class="at">columns=</span><span class="dv">2</span>)</span></code></pre></div>
+<span class="math display">\[\begin{pmatrix}  
+\begin{array}{c c | c c}
+m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14}\\
+m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24}\\
+\hline m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34}\\
+m_{41} &amp; m_{42} &amp; m_{43} &amp; m_{44}\\
+\end{array}
+\end{pmatrix}\]</span>
+<p>Note that <code>partition()</code> can show more than one horizontal and vertical partition lines (or no line at all):</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" tabindex="-1"></a><span class="fu">partition</span>(M, <span class="at">rows=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">columns=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span></code></pre></div>
+<span class="math display">\[\begin{pmatrix}  
+\begin{array}{c | c c | c}
+m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14}\\
+\hline m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24}\\
+m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34}\\
+\hline m_{41} &amp; m_{42} &amp; m_{43} &amp; m_{44}\\
+\end{array}
+\end{pmatrix}\]</span>
+<p>Using this notation, we can illustrate matrix arithmetic with partitioned
+matrices. For example, assuming the partitions of matrices <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(\mathbf{D}\)</span> are of the same size, their sum is just the sum of corresponding
+sub-matrices:</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{C}&quot;</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb76-2"><a href="#cb76-2" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{D}&quot;</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb76-3"><a href="#cb76-3" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{C} + </span><span class="sc">\\</span><span class="st">mathbf{D} =&quot;</span>,</span>
+<span id="cb76-4"><a href="#cb76-4" tabindex="-1"></a>    C, <span class="st">&quot;+&quot;</span>, D, <span class="st">&quot;=&quot;</span>, </span>
+<span id="cb76-5"><a href="#cb76-5" tabindex="-1"></a>    C <span class="sc">+</span> D)</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\mathbf{C} + \mathbf{D} =\begin{pmatrix}
+  \mathbf{C}_{11} &amp; \mathbf{C}_{12} \\
+  \mathbf{C}_{21} &amp; \mathbf{C}_{22} \\
+\end{pmatrix}
++\begin{pmatrix}
+  \mathbf{D}_{11} &amp; \mathbf{D}_{12} \\
+  \mathbf{D}_{21} &amp; \mathbf{D}_{22} \\
+\end{pmatrix}
+=\begin{pmatrix}  
+\mathbf{C}_{11} + \mathbf{D}_{11} &amp; \mathbf{C}_{12} + \mathbf{D}_{12} \\
+\mathbf{C}_{21} + \mathbf{D}_{21} &amp; \mathbf{C}_{22} + \mathbf{D}_{22} \\
+\end{pmatrix}
+\end{equation*}\]</span></p>
+</div>
+<div id="kronecker-products" class="section level3">
+<h3>Kronecker products</h3>
+<p>The Kronecker product of two matrices, <span class="math inline">\(\mathbf{A}_{m \times n} \otimes \mathbf{B}_{p \times q}\)</span> is the <span class="math inline">\(mp \times nq\)</span> block matrix consisting of each element <span class="math inline">\(a_{ij}\)</span> multiplied by
+<span class="math inline">\(\mathbf{B}\)</span>. This has many uses in statistics, among these the nice result <span class="citation">(Bock 1975; Sunwoo 1996)</span>
+that
+the design matrix <span class="math inline">\(\mathbf{X}\)</span> in the linear ANOVA model for factors A, B, C, …
+can be generated as the Kronecker product of their contrast matrices
+<span class="math inline">\(\mathbf{C}_A, \mathbf{C}_B, \mathbf{C}_C \dots\)</span>, each
+preceded by the unit vector <span class="math inline">\(\mathbf{1}\)</span>.</p>
+<p><span class="math display">\[
+\mathbf{X}_{ABC\dots} =
+  [\mathbf{1} \mid \mathbf{C}_A] \;\otimes\;
+  [\mathbf{1} \mid  \mathbf{C}_B] \;\otimes\;
+  [\mathbf{1} \mid  \mathbf{C}_B] \;\otimes\; \dots
+\]</span></p>
+<p>This is implemented in the <code>%O%</code> operator and the <code>kronecker()</code> function in the package.
+For example,</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb77-2"><a href="#cb77-2" tabindex="-1"></a>  <span class="fu">latexMatrix</span>() <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code></pre></div>
+<span class="math display">\[\begin{pmatrix}
+1 &amp; 3 \\
+2 &amp; 4 \\
+\end{pmatrix}\]</span>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb78-2"><a href="#cb78-2" tabindex="-1"></a>  <span class="fu">latexMatrix</span>() <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code></pre></div>
+<span class="math display">\[\begin{pmatrix}
+5 &amp; 7 \\
+6 &amp; 8 \\
+\end{pmatrix}\]</span>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" tabindex="-1"></a><span class="fu">kronecker</span>(A, B) <span class="sc">|&gt;</span> <span class="fu">partition</span>(<span class="at">rows =</span> <span class="dv">2</span>, <span class="at">columns =</span> <span class="dv">2</span>)</span></code></pre></div>
+<span class="math display">\[\begin{pmatrix}  
+\begin{array}{c c | c c}
+1 \cdot 5 &amp; 1 \cdot 7 &amp; 3 \cdot 5 &amp; 3 \cdot 7\\
+1 \cdot 6 &amp; 1 \cdot 8 &amp; 3 \cdot 6 &amp; 3 \cdot 8\\
+\hline 2 \cdot 5 &amp; 2 \cdot 7 &amp; 4 \cdot 5 &amp; 4 \cdot 7\\
+2 \cdot 6 &amp; 2 \cdot 8 &amp; 4 \cdot 6 &amp; 4 \cdot 8\\
+\end{array}
+\end{pmatrix}\]</span>
+<p>You can also use <code>Eqn()</code> to illustrate the definition of the Kronecker product
+more explicitly. In the following, <code>KAB</code> is the product in symbolic form;
+<code>as.double()</code> is used to evaluate the result numerically.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" tabindex="-1"></a>Bmat <span class="ot">&lt;-</span> <span class="fu">latexMatrix</span>(<span class="st">&#39;</span><span class="sc">\\</span><span class="st">mathbf{B}&#39;</span>, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">nrow=</span><span class="dv">1</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" tabindex="-1"></a>KABmat <span class="ot">&lt;-</span> <span class="fu">kronecker</span>(A, Bmat)</span>
+<span id="cb80-3"><a href="#cb80-3" tabindex="-1"></a>KAB <span class="ot">&lt;-</span> <span class="fu">kronecker</span>(A, B)</span>
+<span id="cb80-4"><a href="#cb80-4" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="#cb80-5" tabindex="-1"></a><span class="fu">Eqn</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">mathbf{A} </span><span class="sc">\\</span><span class="st">otimes </span><span class="sc">\\</span><span class="st">mathbf{B} = &amp;&quot;</span>,</span>
+<span id="cb80-6"><a href="#cb80-6" tabindex="-1"></a>    KABmat,</span>
+<span id="cb80-7"><a href="#cb80-7" tabindex="-1"></a>    <span class="fu">Eqn_newline</span>(), <span class="fu">Eqn_vspace</span>(<span class="st">&quot;1.5ex&quot;</span>), <span class="st">&quot;= &amp; &quot;</span>,</span>
+<span id="cb80-8"><a href="#cb80-8" tabindex="-1"></a>    KAB <span class="sc">|&gt;</span> <span class="fu">partition</span>(<span class="at">rows =</span> <span class="dv">2</span>, <span class="at">columns =</span> <span class="dv">2</span>),</span>
+<span id="cb80-9"><a href="#cb80-9" tabindex="-1"></a>    <span class="fu">Eqn_newline</span>(), <span class="fu">Eqn_vspace</span>(<span class="st">&quot;1.5ex&quot;</span>), <span class="st">&quot;= &amp; &quot;</span>,</span>
+<span id="cb80-10"><a href="#cb80-10" tabindex="-1"></a>    <span class="fu">latexMatrix</span>(<span class="fu">as.double</span>(KAB)) <span class="sc">|&gt;</span> <span class="fu">partition</span>(<span class="at">rows =</span> <span class="dv">2</span>, <span class="at">columns =</span> <span class="dv">2</span>),</span>
+<span id="cb80-11"><a href="#cb80-11" tabindex="-1"></a>    <span class="at">align =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><span class="math display">\[\begin{align*}
+\mathbf{A} \otimes \mathbf{B} = &amp;\begin{pmatrix}  
+1 \cdot \mathbf{B} &amp; 3 \cdot \mathbf{B} \\
+2 \cdot \mathbf{B} &amp; 4 \cdot \mathbf{B} \\
+\end{pmatrix}
+\\
+\vspace{1.5ex}
+= &amp; \begin{pmatrix}  
+\begin{array}{c c | c c}
+1 \cdot 5 &amp; 1 \cdot 7 &amp; 3 \cdot 5 &amp; 3 \cdot 7\\
+1 \cdot 6 &amp; 1 \cdot 8 &amp; 3 \cdot 6 &amp; 3 \cdot 8\\
+\hline 2 \cdot 5 &amp; 2 \cdot 7 &amp; 4 \cdot 5 &amp; 4 \cdot 7\\
+2 \cdot 6 &amp; 2 \cdot 8 &amp; 4 \cdot 6 &amp; 4 \cdot 8\\
+\end{array}
+\end{pmatrix} \\
+\vspace{1.5ex}
+= &amp; \begin{pmatrix}  
+\begin{array}{c c | c c}
+5 &amp; 7 &amp; 15 &amp; 21\\
+6 &amp; 8 &amp; 18 &amp; 24\\
+\hline 10 &amp; 14 &amp; 20 &amp; 28\\
+12 &amp; 16 &amp; 24 &amp; 32\\
+\end{array}
+\end{pmatrix}\end{align*}\]</span></p>
+</div>
+</div>
+<div id="matrix2latex" class="section level2">
+<h2>matrix2latex</h2>
+<p>The <code>matrix2latex()</code> function can also generate symbolic equations from numeric or character matrices.
+For numeric matrices, it can round the values or show results as fractions.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">ncol=</span><span class="dv">4</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="dv">6</span></span>
+<span id="cb81-2"><a href="#cb81-2" tabindex="-1"></a><span class="fu">matrix2latex</span>(A, <span class="at">fractions =</span> <span class="cn">TRUE</span>, <span class="at">brackets =</span> <span class="st">&quot;b&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">Eqn</span>()</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\left[
+\begin{array}{llll}
+  1/6 &amp; 1/3 &amp; 1/2 &amp; 2/3 \\
+  5/6 &amp; 1 &amp; 7/6 &amp; 4/3 \\
+  3/2 &amp; 5/3 &amp; 11/6 &amp; 2 \\
+  \end{array} \right]
+\end{equation*}\]</span></p>
+<p>Say we want to show the matrix <span class="math inline">\([\mathbf{A} | \mathbf{b}]\)</span> involved in the system of equations
+<span class="math inline">\(\mathbf{A} \mathbf{x} = \mathbf{b}\)</span>.
+Create these as a character matrix and vector:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">paste0</span>(<span class="st">&#39;a_&#39;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>), <span class="dv">3</span>, <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3] 
+## [1,] &quot;a_1&quot; &quot;a_2&quot; &quot;a_3&quot;
+## [2,] &quot;a_4&quot; &quot;a_5&quot; &quot;a_6&quot;
+## [3,] &quot;a_7&quot; &quot;a_8&quot; &quot;a_9&quot;</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;\\beta_1&quot; &quot;\\beta_2&quot; &quot;\\beta_3&quot;</code></pre>
+<p>Then use <code>matrix2latex()</code> on <code>cbind(A,b)</code> and pipe the result of <code>matrix2latex()</code> to <code>Eqn()</code>:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" tabindex="-1"></a><span class="fu">matrix2latex</span>(<span class="fu">cbind</span>(A,b)) <span class="sc">|&gt;</span> <span class="fu">Eqn</span>()</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\left[
+\begin{array}{llll}
+  a_1 &amp; a_2 &amp; a_3 &amp; \beta_1 \\
+  a_4 &amp; a_5 &amp; a_6 &amp; \beta_2 \\
+  a_7 &amp; a_8 &amp; a_9 &amp; \beta_3 \\
+  \end{array} \right]
+\end{equation*}\]</span></p>
+<p>All the R tricks for creating and modifying matrices can be used in this way.</p>
+</div>
+<div id="showEqn" class="section level2">
+<h2>showEqn</h2>
+<p><code>showEqn()</code> is designed to show a system of linear equations, <span class="math inline">\(\mathbf{A x} = \mathbf{b}\)</span>, but written out as a set of equations individually. With the option <code>latex = TRUE</code> it writes these out in LaTeX form.</p>
+<!-- `showEqn()` can also write LaTeX, but writes out the equations individually. -->
+<!-- However, but the `array` environment needs to be included -->
+<!-- inside `$$ ... $$` to be evaluated in a chunk, so this chunk is not evaluated (it causes a LaTeX error). -->
+<p>Here, we create a character matrix containing
+the elements of a <span class="math inline">\(3 \times 3\)</span> matrix <code>A</code>, whose elements are of the form
+<code>a_{ij}</code> and two character vectors, <code>b_i</code> and <code>x_i</code>.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">paste0</span>(<span class="st">&quot;a_{&quot;</span>, <span class="fu">outer</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">FUN  =</span> paste0), <span class="st">&quot;}&quot;</span>), </span>
+<span id="cb87-2"><a href="#cb87-2" tabindex="-1"></a>            <span class="at">nrow=</span><span class="dv">3</span>) <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code></pre></div>
+<pre><code>##      [,1]     [,2]     [,3]    
+## [1,] &quot;a_{11}&quot; &quot;a_{12}&quot; &quot;a_{13}&quot;
+## [2,] &quot;a_{21}&quot; &quot;a_{22}&quot; &quot;a_{23}&quot;
+## [3,] &quot;a_{31}&quot; &quot;a_{32}&quot; &quot;a_{33}&quot;</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;b_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb89-2"><a href="#cb89-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;x&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<p><code>showEqn(..., latex = TRUE)</code> produces the three equations in a single <code>\begin{array} ... \begin{array}</code>
+environment.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" tabindex="-1"></a><span class="fu">showEqn</span>(A, b, <span class="at">vars =</span> x, <span class="at">latex=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p>If this line was run in an R console, it would produce:</p>
+<pre><code>\begin{array}{lllllll}
+a_{11} \cdot x_1 &amp;+&amp; a_{12} \cdot x_2 &amp;+&amp; a_{13} \cdot x_3  &amp;=&amp;  b_1 \\ 
+a_{21} \cdot x_1 &amp;+&amp; a_{22} \cdot x_2 &amp;+&amp; a_{23} \cdot x_3  &amp;=&amp;  b_2 \\ 
+a_{31} \cdot x_1 &amp;+&amp; a_{32} \cdot x_2 &amp;+&amp; a_{33} \cdot x_3  &amp;=&amp;  b_3 \\ 
+\end{array}</code></pre>
+<p>Evaluating the above code in an unnumbered LaTeX math environment via <code>Eqn()</code> gives the
+desired result:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" tabindex="-1"></a><span class="fu">showEqn</span>(A, b, <span class="at">vars =</span> x, <span class="at">latex=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">Eqn</span>()</span></code></pre></div>
+<p><span class="math display">\[\begin{equation*}
+\begin{array}{lllllll}
+a_{11} \cdot x_1 &amp;+&amp; a_{12} \cdot x_2 &amp;+&amp; a_{13} \cdot x_3  &amp;=&amp;  b_1 \\
+a_{21} \cdot x_1 &amp;+&amp; a_{22} \cdot x_2 &amp;+&amp; a_{23} \cdot x_3  &amp;=&amp;  b_2 \\
+a_{31} \cdot x_1 &amp;+&amp; a_{32} \cdot x_2 &amp;+&amp; a_{33} \cdot x_3  &amp;=&amp;  b_3 \\
+\end{array}\end{equation*}\]</span></p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-Bock:75" class="csl-entry">
+Bock, R. Darrell. 1975. <em>Multivariate Statistical Methods in Behavioral Research</em>. New York: McGraw Hill.
+</div>
+<div id="ref-Sunwoo1996" class="csl-entry">
+Sunwoo, Hasik. 1996. <span>“Simple Algorithms about Kronecker Products in the Linear Model.”</span> <em>Linear Algebra and Its Applications</em> 237–238 (April): 351–58. <a href="https://doi.org/10.1016/0024-3795(95)00675-3">https://doi.org/10.1016/0024-3795(95)00675-3</a>.
+</div>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>At present equation numbers don’t work in vignettes rendered as
+articles by <code>pkgdown</code>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

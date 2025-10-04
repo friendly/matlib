@@ -1,6 +1,6 @@
 
-R version 4.4.1 (2024-06-14 ucrt) -- "Race for Your Life"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R version 4.5.1 (2025-06-13 ucrt) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -112,7 +112,7 @@ ui -5.936412e-07 -3.843258e-08  4.401044e-08
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.11 1.28 12.89 NA NA 
+Time elapsed:  2.39 0.38 2.88 NA NA 
 > grDevices::dev.off()
 null device 
           1 

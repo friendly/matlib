@@ -1,38 +1,36 @@
 # Platform
 
-|field    |value                                       |
-|:--------|:-------------------------------------------|
-|version  |R version 4.4.1 (2024-06-14 ucrt)           |
-|os       |Windows 10 x64 (build 19044)                |
-|system   |x86_64, mingw32                             |
-|ui       |RStudio                                     |
-|language |(EN)                                        |
-|collate  |English_Canada.utf8                         |
-|ctype    |English_Canada.utf8                         |
-|tz       |America/Toronto                             |
-|date     |2024-09-27                                  |
-|rstudio  |2023.06.1+524 Mountain Hydrangea (desktop)  |
-|pandoc   |3.1.2 @ C:/PROGRA~1/Pandoc/ (via rmarkdown) |
+|field    |value                                                                                                                                                                                              |
+|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|version  |R version 4.5.1 (2025-06-13 ucrt)                                                                                                                                                                  |
+|os       |Windows 10 x64 (build 19044)                                                                                                                                                                       |
+|system   |x86_64, mingw32                                                                                                                                                                                    |
+|ui       |RStudio                                                                                                                                                                                            |
+|language |(EN)                                                                                                                                                                                               |
+|collate  |English_Canada.utf8                                                                                                                                                                                |
+|ctype    |English_Canada.utf8                                                                                                                                                                                |
+|tz       |America/Toronto                                                                                                                                                                                    |
+|date     |2025-10-04                                                                                                                                                                                         |
+|rstudio  |2025.05.0+496 Mariposa Orchid (desktop)                                                                                                                                                            |
+|pandoc   |3.4 @ C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools/ (via rmarkdown)                                                                                                                 |
+|quarto   |ERROR: Unknown command "TMPDIR=C:/Users/friendly/AppData/Local/Temp/RtmpaS17gB/file65e42d6c7406". Did you mean command "install"? @ C:\Users\friendly\AppData\Local\Programs\Quarto\bin\quarto.exe |
 
 # Dependencies
 
-|package        |old   |new       |Δ  |
-|:--------------|:-----|:---------|:--|
-|matlib         |0.9.8 |0.9.95    |*  |
-|abind          |NA    |1.4-8     |*  |
-|broom          |NA    |1.0.7     |*  |
-|car            |NA    |3.1-3     |*  |
-|cpp11          |NA    |0.5.0     |*  |
-|Deriv          |NA    |4.1.6     |*  |
-|digest         |NA    |0.6.37    |*  |
-|evaluate       |NA    |1.0.0     |*  |
-|jsonlite       |NA    |1.8.9     |*  |
-|microbenchmark |NA    |1.5.0     |*  |
-|minqa          |NA    |1.2.8     |*  |
-|RcppEigen      |NA    |0.3.4.0.2 |*  |
-|rmarkdown      |NA    |2.28      |*  |
-|tinytex        |NA    |0.53      |*  |
-|xfun           |NA    |0.47      |*  |
+|package   |old   |new    |Δ  |
+|:---------|:-----|:------|:--|
+|matlib    |1.0.0 |1.0.1  |*  |
+|broom     |NA    |1.0.10 |*  |
+|ggplot2   |NA    |4.0.0  |*  |
+|magrittr  |NA    |2.0.4  |*  |
+|pillar    |NA    |1.11.1 |*  |
+|rmarkdown |NA    |2.30   |*  |
 
 # Revdeps
+
+## New problems (1)
+
+|package |version |error |warning |note |
+|:-------|:-------|:-----|:-------|:----|
+|[dymo](problems.md#dymo)|1.1.0   |      |__+1__  |     |
 
