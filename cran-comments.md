@@ -43,5 +43,13 @@ Issues with CRAN packages are summarised below.
 * dymo
   checking whether package 'dymo' can be installed ... WARNING
 
+This is the WARNING. It seems to relate to a change in the dymo package, rather than anything different in matlib.
+I believe this can safely be ignored.
+
+* checking whether package 'dymo' can be installed ... WARNING
+Found the following significant warnings:
+  Warning: replacing previous import 'matlib::size' by 'tictoc::size' when loading 'dymo'
+See 'C:/Dropbox/R/projects/matlib/revdep/checks/dymo/new/dymo.Rcheck/00install.out' for details.
+
 
 
