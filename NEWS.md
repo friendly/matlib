@@ -1,5 +1,7 @@
 # matlib 1.0.1
 
+This is a moderate update, improving usability and documentation
+
 - Rename vignettes to put them in order
 - Add `papers/matlib-useR-2016.pdf` to avoid bad URL
 - Consolidate options for `print.latexMatrix`

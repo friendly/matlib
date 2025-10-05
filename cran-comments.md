@@ -1,10 +1,10 @@
 ## Test environments
 * local Windows 10 install, 4.5.1 (2025-06-13 ucrt)
 * travis.ci on github
-* win-builder  R Under development (unstable) (2024-09-25 r87194 ucrt)
+* win-builder  R Under development (unstable) (2025-10-03 r88899 ucrt)
 
 ## Comments
-This is a major update, adding a system for constructing and rendering matrix expressions, operations and equations in LaTeX
+This is a moderate update, improving usability and documentation
 
 ## R CMD check results
 There were no ERRORs or WARNINGs or NOTEs. 
@@ -44,7 +44,7 @@ Issues with CRAN packages are summarised below.
   checking whether package 'dymo' can be installed ... WARNING
 
 This is the WARNING. It seems to relate to a change in the dymo package, rather than anything different in matlib.
-I believe this can safely be ignored.
+I notified the package maintainer, and he is looking into it. I believe this can safely be ignored. 
 
 * checking whether package 'dymo' can be installed ... WARNING
 Found the following significant warnings:
