@@ -1,3 +1,7 @@
+
+- Added `ticks` logical to `vector3d()` to create ticks along the vectors. Useful when
+  drawing reference axes
+
 # matlib 1.0.1
 
 This is a moderate update, improving usability and documentation

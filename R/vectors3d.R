@@ -54,10 +54,23 @@
 #' corner(p1, p4, p3, col="blue")
 #'
 #' rgl.bringtotop()
+#'
+#' ####
+#' # draw tick marks
+#'
+#' vec0 <- diag(3)
+#' vec <- c(1,1,1)
+#' rownames(vec0) <- c("X", "Y", "Z")
+#' library(rgl)
+#' open3d()
+#' vectors3d(vec0, color="black", lwd=2, ticks=TRUE)
+#' vectors3d(vec, color="red", lwd=2, label='J')
+#'
 
 vectors3d <- function(X, origin=c(0,0,0),
-                       headlength=0.035, ref.length=NULL, radius=1/60,
-                       labels=TRUE, cex.lab=1.2, adj.lab=0.5, frac.lab=1.1, draw=TRUE, ...) {
+                      headlength=0.035, ref.length=NULL, radius=1/60,
+                      labels=TRUE, cex.lab=1.2, adj.lab=0.5, frac.lab=1.1,
+                      ticks = FALSE, draw=TRUE, ...) {
 
   if (is.vector(X)) X <- matrix(X, ncol=3)
   n <- nrow(X)
@@ -68,6 +81,10 @@ vectors3d <- function(X, origin=c(0,0,0),
 #  radius <- 1/60
   ref.length <- arrows3d(OX, headlength=headlength, scale=scale, radius=radius,
                          ref.length=ref.length, draw=draw, ...)
+  if(ticks){
+      for(i in seq(1, nrow(OX), by=2))
+        vector_ticks(OX[i,], OX[i+1,], ...)
+  }
 
   if (draw){
     if (is.logical(labels)) {
@@ -84,5 +101,57 @@ vectors3d <- function(X, origin=c(0,0,0),
     }
   }
   invisible(c(ref.length=ref.length))
+}
+
+
+#' @param p0 base of vector
+#' @param p1 end of vector
+#' @param n_ticks number of ticks
+#' @param tick_length length of ticks
+#' @param color colour
+#' @param label logical; include numeric recording of length?
+vector_ticks <- function(p1, p2, n_ticks = 5,
+                         tick_length = 0.05, color = "black", labels = FALSE, ...) {
+    # 1. Main direction vector and segments
+    v <- p2 - p1
+    v_len <- sqrt(sum(v^2))
+    v_unit <- v / v_len
+
+    # 2. Find a perpendicular vector for the tick direction
+    # If v is parallel to Z, cross with X; otherwise cross with Z
+    if (abs(v_unit[3]) > 0.9) {
+        perp <- c(1, 0, 0)
+    } else {
+        perp <- c(0, 0, 1)
+    }
+    tick_dir <- xprod(v_unit, perp)
+    tick_dir <- tick_dir / sqrt(sum(tick_dir^2)) # normalize
+
+    # 3. Calculate interpolation points along the line
+    t_vals <- seq(0, 1, length.out = n_ticks)
+    t_vals <- t_vals[-length(t_vals)]
+
+    tick_starts <- matrix(NA, nrow = n_ticks, ncol = 3)
+    tick_ends   <- matrix(NA, nrow = n_ticks, ncol = 3)
+
+    for(i in 1:n_ticks) {
+        # Point on the line
+        pt_on_line <- p1 + t_vals[i] * v
+
+        # Tick segment coordinates (centered or jutting out to one side)
+        tick_starts[i, ] <- pt_on_line - (tick_dir * (tick_length / 2))
+        tick_ends[i, ]   <- pt_on_line + (tick_dir * (tick_length / 2))
+
+        # 4. Optional Text Labels
+
+        # Shift text slightly past the end of the tick mark
+        text_pos <- pt_on_line + (tick_dir * (tick_length * 1.5))
+        if (labels) val <- round(t_vals[i] * v_len, 2) else val <- "" # Labeling by distance from p1
+        text3d(text_pos[1], text_pos[2], text_pos[3], texts = val, color = color, cex = 0.8)
+    }
+
+    # 5. Interleave start and end points for segments3d
+    segments_matrix <- matrix(t(cbind(tick_starts, tick_ends)), ncol = 3, byrow = TRUE)
+    segments3d(segments_matrix, color = color, lwd = 1.5)
 }
 
