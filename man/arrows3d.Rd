@@ -51,16 +51,16 @@ This function is meant to be analogous to \code{\link[graphics]{arrows}}, but fo
 \seealso{
 \code{\link{vectors3d}}
 
-Other vector diagrams: 
-\code{\link{Proj}()},
-\code{\link{arc}()},
-\code{\link{circle3d}()},
-\code{\link{corner}()},
-\code{\link{plot.regvec3d}()},
-\code{\link{pointOnLine}()},
-\code{\link{regvec3d}()},
-\code{\link{vectors}()},
-\code{\link{vectors3d}()}
+Other vector diagrams:
+\code{\link[=Proj]{Proj()}},
+\code{\link[=arc]{arc()}},
+\code{\link[=circle3d]{circle3d()}},
+\code{\link[=corner]{corner()}},
+\code{\link[=plot.regvec3d]{plot.regvec3d()}},
+\code{\link[=pointOnLine]{pointOnLine()}},
+\code{\link[=regvec3d]{regvec3d()}},
+\code{\link[=vectors]{vectors()}},
+\code{\link[=vectors3d]{vectors3d()}}
 }
 \author{
 January Weiner, borrowed from the \pkg{pca3d} package, slightly modified by John Fox

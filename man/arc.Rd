@@ -60,15 +60,15 @@ arc(p3, p1, p2, d=.2)
 \url{https://math.stackexchange.com/questions/1507248/find-arc-between-two-tips-of-vectors-in-3d}
 }
 \seealso{
-Other vector diagrams: 
-\code{\link{Proj}()},
-\code{\link{arrows3d}()},
-\code{\link{circle3d}()},
-\code{\link{corner}()},
-\code{\link{plot.regvec3d}()},
-\code{\link{pointOnLine}()},
-\code{\link{regvec3d}()},
-\code{\link{vectors}()},
-\code{\link{vectors3d}()}
+Other vector diagrams:
+\code{\link[=Proj]{Proj()}},
+\code{\link[=arrows3d]{arrows3d()}},
+\code{\link[=circle3d]{circle3d()}},
+\code{\link[=corner]{corner()}},
+\code{\link[=plot.regvec3d]{plot.regvec3d()}},
+\code{\link[=pointOnLine]{pointOnLine()}},
+\code{\link[=regvec3d]{regvec3d()}},
+\code{\link[=vectors]{vectors()}},
+\code{\link[=vectors3d]{vectors3d()}}
 }
 \concept{vector diagrams}

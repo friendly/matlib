@@ -52,12 +52,12 @@ Det(C, method="cofactors")
 
 \code{\link{gaussianElimination}}, \code{\link{Eigen}}
 
-Other determinants: 
-\code{\link{adjoint}()},
-\code{\link{cofactor}()},
-\code{\link{minor}()},
-\code{\link{rowCofactors}()},
-\code{\link{rowMinors}()}
+Other determinants:
+\code{\link[=adjoint]{adjoint()}},
+\code{\link[=cofactor]{cofactor()}},
+\code{\link[=minor]{minor()}},
+\code{\link[=rowCofactors]{rowCofactors()}},
+\code{\link[=rowMinors]{rowMinors()}}
 }
 \author{
 John Fox

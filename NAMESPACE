@@ -140,18 +140,22 @@ import(stats)
 importFrom(MASS,fractions)
 importFrom(car,dataEllipse)
 importFrom(dplyr,case_when)
-importFrom(grDevices,adjustcolor)
-importFrom(grDevices,dev.cur)
-importFrom(grDevices,rainbow)
-importFrom(graphics,abline)
-importFrom(graphics,arrows)
-importFrom(graphics,lines)
-importFrom(graphics,par)
-importFrom(graphics,plot)
-importFrom(graphics,points)
-importFrom(graphics,polygon)
-importFrom(graphics,symbols)
-importFrom(graphics,text)
+importFrom(grDevices,
+  adjustcolor,
+  dev.cur,
+  rainbow
+)
+importFrom(graphics,
+  abline,
+  arrows,
+  lines,
+  par,
+  plot,
+  points,
+  polygon,
+  symbols,
+  text
+)
 importFrom(knitr,is_html_output)
 importFrom(methods,is)
 importFrom(rmarkdown,render)

@@ -9,7 +9,8 @@ printMatrix(
   parent = TRUE,
   fractions = FALSE,
   latex = FALSE,
-  tol = sqrt(.Machine$double.eps)
+  tol = sqrt(.Machine$double.eps),
+  internal = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ and/or \code{max.denominator} (default 2000) arguments to \code{fractions} as a 
 \item{latex}{If \code{TRUE}, print the matrix in LaTeX format}
 
 \item{tol}{Tolerance for rounding small numbers to 0}
+
+\item{internal}{Logical (used in package internals)}
 }
 \value{
 The formatted matrix

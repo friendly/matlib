@@ -34,12 +34,12 @@ M[1,] \%*\% rowCofactors(M,1)
 \seealso{
 \code{\link{Det}} for the determinant
 
-Other determinants: 
-\code{\link{Det}()},
-\code{\link{adjoint}()},
-\code{\link{cofactor}()},
-\code{\link{minor}()},
-\code{\link{rowMinors}()}
+Other determinants:
+\code{\link[=Det]{Det()}},
+\code{\link[=adjoint]{adjoint()}},
+\code{\link[=cofactor]{cofactor()}},
+\code{\link[=minor]{minor()}},
+\code{\link[=rowMinors]{rowMinors()}}
 }
 \author{
 Michael Friendly

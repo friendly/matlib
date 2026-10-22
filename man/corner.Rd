@@ -36,15 +36,15 @@ a line from \code{p1} to \code{p2}, and another line from \code{p2} to \code{p3}
 # none yet
 }
 \seealso{
-Other vector diagrams: 
-\code{\link{Proj}()},
-\code{\link{arc}()},
-\code{\link{arrows3d}()},
-\code{\link{circle3d}()},
-\code{\link{plot.regvec3d}()},
-\code{\link{pointOnLine}()},
-\code{\link{regvec3d}()},
-\code{\link{vectors}()},
-\code{\link{vectors3d}()}
+Other vector diagrams:
+\code{\link[=Proj]{Proj()}},
+\code{\link[=arc]{arc()}},
+\code{\link[=arrows3d]{arrows3d()}},
+\code{\link[=circle3d]{circle3d()}},
+\code{\link[=plot.regvec3d]{plot.regvec3d()}},
+\code{\link[=pointOnLine]{pointOnLine()}},
+\code{\link[=regvec3d]{regvec3d()}},
+\code{\link[=vectors]{vectors()}},
+\code{\link[=vectors3d]{vectors3d()}}
 }
 \concept{vector diagrams}

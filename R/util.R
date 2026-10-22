@@ -12,6 +12,7 @@
 #'    \code{options(fractions=list(cycles=100, max.denominator=10^4))}.
 #' @param latex   If \code{TRUE}, print the matrix in LaTeX format
 #' @param tol     Tolerance for rounding small numbers to 0
+#' @param internal Logical (used in package internals)
 #'
 #' @return        The formatted matrix
 #' @seealso \code{\link[MASS]{fractions}}
@@ -23,9 +24,10 @@
 #' printMatrix(A, latex=TRUE)
 
 printMatrix <- function(A, parent = TRUE, fractions = FALSE, latex = FALSE,
-						tol = sqrt(.Machine$double.eps)){
-    .Deprecated("printMatrix",
-                msg="Function is deprecated. See latexMatrix() and Eqn() for more recent approaches")
+						tol = sqrt(.Machine$double.eps), internal = FALSE){
+    if(!internal)
+        .Deprecated("printMatrix",
+                    msg="Function is deprecated. See latexMatrix() and Eqn() for more recent approaches")
 	if(parent){
 		envir <- as.environment(-1L)
 		if(!is.null(envir$fractions)) fractions <- envir$fractions

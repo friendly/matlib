@@ -80,7 +80,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
     i <- j <- 1
     if (verbose){
         cat("\nInitial matrix:\n")
-        printMatrix(A)
+        printMatrix(A, internal=TRUE)
     }
     while (i <= n && j <= m){
         if (verbose) cat("\nrow:", i, "\n")
@@ -102,14 +102,14 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                 interchanges <- interchanges + 1
                 if (verbose) {
                     cat("\n exchange rows", i, "and", which, "\n")
-                    printMatrix(A)
+                    printMatrix(A, internal=TRUE)
                 }
             }
             A <- rowmult(A, i, 1/pivot) # pivot (E1)
             if (verbose && abs(pivot - 1) > tol){
                 cat("\n multiply row", i, "by",
                     if (fractions) as.character(Fractions(1/pivot)) else 1/pivot, "\n")
-                printMatrix(A)
+                printMatrix(A, internal=TRUE)
             }
             for (k in 1:n){
                 if (k == i) next
@@ -127,7 +127,7 @@ gaussianElimination <- function(A, B, tol=sqrt(.Machine$double.eps),
                     if (factor > 0) cat("\n subtract row", i, "from row", k, "\n")
                     else cat("\n add row", i, "from row", k, "\n")
                   }
-                    printMatrix(A)
+                    printMatrix(A, internal=TRUE)
                 }
             }
             j <- j + 1

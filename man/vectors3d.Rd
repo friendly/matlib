@@ -14,6 +14,7 @@ vectors3d(
   cex.lab = 1.2,
   adj.lab = 0.5,
   frac.lab = 1.1,
+  ticks = FALSE,
   draw = TRUE,
   ...
 )
@@ -81,20 +82,32 @@ corner(p1, p4, p2, col="red")
 corner(p1, p4, p3, col="blue")
 
 rgl.bringtotop()
+
+####
+# draw tick marks
+
+vec0 <- diag(3)
+vec <- c(1,1,1)
+rownames(vec0) <- c("X", "Y", "Z")
+library(rgl)
+open3d()
+vectors3d(vec0, color="black", lwd=2, ticks=TRUE)
+vectors3d(vec, color="red", lwd=2, label='J')
+
 }
 \seealso{
 \code{\link{arrows3d}}, \code{\link[rgl]{texts3d}}, \code{\link[rgl]{rgl.material}}
 
-Other vector diagrams: 
-\code{\link{Proj}()},
-\code{\link{arc}()},
-\code{\link{arrows3d}()},
-\code{\link{circle3d}()},
-\code{\link{corner}()},
-\code{\link{plot.regvec3d}()},
-\code{\link{pointOnLine}()},
-\code{\link{regvec3d}()},
-\code{\link{vectors}()}
+Other vector diagrams:
+\code{\link[=Proj]{Proj()}},
+\code{\link[=arc]{arc()}},
+\code{\link[=arrows3d]{arrows3d()}},
+\code{\link[=circle3d]{circle3d()}},
+\code{\link[=corner]{corner()}},
+\code{\link[=plot.regvec3d]{plot.regvec3d()}},
+\code{\link[=pointOnLine]{pointOnLine()}},
+\code{\link[=regvec3d]{regvec3d()}},
+\code{\link[=vectors]{vectors()}}
 }
 \author{
 Michael Friendly

@@ -32,12 +32,12 @@ cofactor(M, 1, 3)
 \seealso{
 \code{\link{rowCofactors}} for all cofactors of a given row
 
-Other determinants: 
-\code{\link{Det}()},
-\code{\link{adjoint}()},
-\code{\link{minor}()},
-\code{\link{rowCofactors}()},
-\code{\link{rowMinors}()}
+Other determinants:
+\code{\link[=Det]{Det()}},
+\code{\link[=adjoint]{adjoint()}},
+\code{\link[=minor]{minor()}},
+\code{\link[=rowCofactors]{rowCofactors()}},
+\code{\link[=rowMinors]{rowMinors()}}
 }
 \author{
 Michael Friendly

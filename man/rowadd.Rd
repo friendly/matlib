@@ -56,8 +56,8 @@ AA <- I |>
 \seealso{
 \code{\link{echelon}}, \code{\link{gaussianElimination}}
 
-Other elementary row operations: 
-\code{\link{rowmult}()},
-\code{\link{rowswap}()}
+Other elementary row operations:
+\code{\link[=rowmult]{rowmult()}},
+\code{\link[=rowswap]{rowswap()}}
 }
 \concept{elementary row operations}

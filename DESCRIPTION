@@ -2,7 +2,7 @@ Package: matlib
 Type: Package
 Title: Matrix Functions for Teaching and Learning Linear Algebra and
     Multivariate Statistics
-Version: 1.0.2
+Version: 1.0.3
 Date: 2025-10-04
 Authors@R: c(person(given = "Michael", family = "Friendly", 
                     role=c("aut", "cre"), email="friendly@yorku.ca",
@@ -44,5 +44,5 @@ Imports:
     rmarkdown,
     rstudioapi
 VignetteBuilder: knitr
-RoxygenNote: 7.3.2
 Encoding: UTF-8
+Config/roxygen2/version: 8.1.1

@@ -39,8 +39,8 @@ Ab <- cbind(A, b)
 \seealso{
 \code{\link{echelon}}, \code{\link{gaussianElimination}}
 
-Other elementary row operations: 
-\code{\link{rowadd}()},
-\code{\link{rowswap}()}
+Other elementary row operations:
+\code{\link[=rowadd]{rowadd()}},
+\code{\link[=rowswap]{rowswap()}}
 }
 \concept{elementary row operations}

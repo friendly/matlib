@@ -144,15 +144,15 @@ Least-Squares Regression with the matlib Package for R". \emph{useR Conference},
 \seealso{
 \code{\link{plot.regvec3d}}
 
-Other vector diagrams: 
-\code{\link{Proj}()},
-\code{\link{arc}()},
-\code{\link{arrows3d}()},
-\code{\link{circle3d}()},
-\code{\link{corner}()},
-\code{\link{plot.regvec3d}()},
-\code{\link{pointOnLine}()},
-\code{\link{vectors}()},
-\code{\link{vectors3d}()}
+Other vector diagrams:
+\code{\link[=Proj]{Proj()}},
+\code{\link[=arc]{arc()}},
+\code{\link[=arrows3d]{arrows3d()}},
+\code{\link[=circle3d]{circle3d()}},
+\code{\link[=corner]{corner()}},
+\code{\link[=plot.regvec3d]{plot.regvec3d()}},
+\code{\link[=pointOnLine]{pointOnLine()}},
+\code{\link[=vectors]{vectors()}},
+\code{\link[=vectors3d]{vectors3d()}}
 }
 \concept{vector diagrams}

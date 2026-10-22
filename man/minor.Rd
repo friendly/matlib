@@ -31,12 +31,12 @@ minor(M, 1, 3)
 \seealso{
 \code{\link{rowMinors}} for all minors of a given row
 
-Other determinants: 
-\code{\link{Det}()},
-\code{\link{adjoint}()},
-\code{\link{cofactor}()},
-\code{\link{rowCofactors}()},
-\code{\link{rowMinors}()}
+Other determinants:
+\code{\link[=Det]{Det()}},
+\code{\link[=adjoint]{adjoint()}},
+\code{\link[=cofactor]{cofactor()}},
+\code{\link[=rowCofactors]{rowCofactors()}},
+\code{\link[=rowMinors]{rowMinors()}}
 }
 \author{
 Michael Friendly

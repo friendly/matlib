@@ -41,9 +41,9 @@ GramSchmidt <- function (X, normalize = TRUE, verbose = FALSE,
   B[, 2L:ncol(B)] <- 0
   if (verbose) {
     cat("\nInitial matrix:\n")
-    printMatrix(X)
+    printMatrix(X, internal=TRUE)
     cat("\nColumn 1: z1 = x1\n")
-    printMatrix(B)
+    printMatrix(B, internal=TRUE)
   }
   for (i in 2:ncol(X)) {
     res <- X[, i]
@@ -56,7 +56,7 @@ GramSchmidt <- function (X, normalize = TRUE, verbose = FALSE,
                                                   i, j)
       cat(sprintf("\nColumn %i: z%i = x%i - %s\n", i, i,
                   i, paste0(prj_char, collapse = " - ")))
-      printMatrix(B)
+      printMatrix(B, internal=TRUE)
     }
   }
   zeros <- apply(B, 2, function(b) all(b == 0))
@@ -74,7 +74,7 @@ GramSchmidt <- function (X, normalize = TRUE, verbose = FALSE,
     if (!omit_zero_columns && any(zeros)) B[, zeros] <- 0
     if (verbose) {
       cat("\nNormalized matrix: Z * inv(L) \n")
-      printMatrix(B)
+      printMatrix(B, internal=TRUE)
     }
   }
   if (verbose)

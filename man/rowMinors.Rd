@@ -27,12 +27,12 @@ minor(M, 1, 3)
 rowMinors(M, 1)
 }
 \seealso{
-Other determinants: 
-\code{\link{Det}()},
-\code{\link{adjoint}()},
-\code{\link{cofactor}()},
-\code{\link{minor}()},
-\code{\link{rowCofactors}()}
+Other determinants:
+\code{\link[=Det]{Det()}},
+\code{\link[=adjoint]{adjoint()}},
+\code{\link[=cofactor]{cofactor()}},
+\code{\link[=minor]{minor()}},
+\code{\link[=rowCofactors]{rowCofactors()}}
 }
 \author{
 Michael Friendly

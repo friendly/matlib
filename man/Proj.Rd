@@ -52,16 +52,16 @@ P \%*\% P
 all.equal(P, P \%*\% P)
 }
 \seealso{
-Other vector diagrams: 
-\code{\link{arc}()},
-\code{\link{arrows3d}()},
-\code{\link{circle3d}()},
-\code{\link{corner}()},
-\code{\link{plot.regvec3d}()},
-\code{\link{pointOnLine}()},
-\code{\link{regvec3d}()},
-\code{\link{vectors}()},
-\code{\link{vectors3d}()}
+Other vector diagrams:
+\code{\link[=arc]{arc()}},
+\code{\link[=arrows3d]{arrows3d()}},
+\code{\link[=circle3d]{circle3d()}},
+\code{\link[=corner]{corner()}},
+\code{\link[=plot.regvec3d]{plot.regvec3d()}},
+\code{\link[=pointOnLine]{pointOnLine()}},
+\code{\link[=regvec3d]{regvec3d()}},
+\code{\link[=vectors]{vectors()}},
+\code{\link[=vectors3d]{vectors3d()}}
 }
 \author{
 Michael Friendly
